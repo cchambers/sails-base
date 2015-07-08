@@ -20,7 +20,7 @@
     if ( typeof(req.user) == 'undefined' ) {
       return res.view('homepage', { user: false });
     } else {
-      console.log(req.user)
+      // console.log(req.user)
       return res.view('homepage', { user: req.user });
     }
   }
