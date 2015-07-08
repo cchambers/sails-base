@@ -13,5 +13,9 @@
 
    'get /signup': {
      view: 'signup'
+   },
+
+   'get /post': {
+    view: 'post'
    }
  };
