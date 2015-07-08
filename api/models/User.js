@@ -12,6 +12,12 @@ module.exports = {
             minLength: 6,
             required: true
         },
+        username: {
+            type: 'string',
+            minLength: 4,
+            required: true,
+            unique: true
+        },
         toJSON: function() {
             var obj = this.toObject();
             delete obj.password;

@@ -11,24 +11,21 @@
       <% if (!user) { %>
       <div class="row">
         <div class="col-1-4">
-
           <label>Sign up</label>
-
           <form method="POST" action="/user">
-            <input type="email" name="email">
-            <input type="password" name="password">
+            <input type="email" placeholder="email" name="email">
+            <input type="username" placeholder="username" name="username">
+            <input type="password" placeholder="password" name="password">
             <input type="submit" value="submit">
           </form>
         </div>
         <div class="col-1-4">
           <label>Log in</label>
-
           <form method="POST" action="/login">
-            <input type="email" name="email">
-            <input type="password" name="password">
+            <input type="email" placeholder="email" name="email">
+            <input type="password" placeholder="password" name="password">
             <input type="submit" value="submit">
           </form>
-
         </div>
       </div>
       <% } %>
