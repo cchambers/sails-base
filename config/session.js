@@ -67,11 +67,11 @@ module.exports.session = {
   *                                                                          *
   ***************************************************************************/
 
-  adapter: 'mongo',
-  host: '68.119.157.57',
-  port: 27017,
-  db: 'gravy',
-  collection: 'sessions',
+  // adapter: 'mongo',
+  // host: 'localhost',
+  // port: 27017,
+  // db: 'sails',
+  // collection: 'sessions',
 
   /***************************************************************************
   *                                                                          *
