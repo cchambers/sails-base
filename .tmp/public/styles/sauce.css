@@ -197,14 +197,14 @@ section .image + .image {
   min-height: 3rem;
 }
 
-section input {
+/*section input {
   display: block;
   height: 3.1rem;
   width: 100%;
   margin-top: -.9rem;
   background-color: #fff;
   border: 1px solid #999;
-}
+}*/
 
 article .media + header {
   max-width: 50%;
