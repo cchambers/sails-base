@@ -1,8 +1,8 @@
 {
   "name": "sauce",
   "private": true,
-  "version": "0.0.0",
-  "description": "a Sails application",
+  "version": "0.0.1",
+  "description": "a better interweb",
   "keywords": [],
   "dependencies": {
     "ejs": "~0.8.4",

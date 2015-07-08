@@ -1,7 +1,15 @@
 {
   "data": {
     "post": [],
-    "user": []
+    "user": [
+      {
+        "email": "cchambers@gmail.com",
+        "password": "$2a$10$hSF8LGwdwno.QufIcEXGkuDXEimkP2zq9PrHhLRvOmCxCjbPWH9L2",
+        "createdAt": "2015-07-08T03:45:24.466Z",
+        "updatedAt": "2015-07-08T03:45:24.466Z",
+        "id": 2
+      }
+    ]
   },
   "schema": {
     "post": {
@@ -43,7 +51,7 @@
   "counters": {
     "post": {},
     "user": {
-      "id": 1
+      "id": 2
     }
   }
 }
