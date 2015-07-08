@@ -1,0 +1,306 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,300,800);
+body {
+  font-family: "Open Sans";
+  font-size: 1.8rem;
+  color: #505050;
+  overflow-y: scroll;
+  min-height: 200vh;
+}
+
+body > header {
+  height: 6rem;
+  line-height: 6rem;
+  transition: all 250ms ease;
+}
+
+a { color: #ddd }
+a:hover { color: #DF3D82 }
+
+strong {
+  color: #DF3D82;
+}
+.lined {
+  background: linear-gradient( to bottom, rgba(0, 0, 0, .5), #f2f2f2 .1rem);
+  background-size: 100% 3rem;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+main.active article {
+  opacity: .5;
+}
+
+main.active article.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+article {
+  position: relative;
+  min-height: 5rem;
+  overflow: hidden;
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  transition: all 100ms linear;
+}
+
+article ul {
+  display: none;
+}
+
+article.active ul {
+  display: block;
+  width: 100%;
+}
+
+article footer:before {
+  content: '.';
+  display: block;
+  overflow: hidden;
+  height: 0;
+  width: 100%;
+  float: right;
+}
+
+article footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+article footer ul li {
+  float: left;
+  height: 4.5rem;
+  width: 25%;
+  text-align: center;
+  line-height: 4.5rem;
+  font-size: 3rem;
+}
+
+article li:hover {
+  color: #DF3D82;
+}
+
+article header,
+article footer {
+  position: relative;
+  cursor: pointer;
+  z-index: 2;
+  width: 100%;
+}
+
+article:not(.active):hover,
+article.active {
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  opacity: 1;
+}
+
+article.active {
+  box-shadow: 0 1px 2px rgba(0,0,0,.5);
+}
+
+article header {
+  position: relative;
+  display: block;
+}
+
+article header h1 {
+  font-size: 2rem;
+  line-height: 3rem;
+}
+
+article cite {
+  display: block;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+  font-style: normal;
+  color: #505050;
+}
+
+article.active cite {
+  margin: 1.5rem 0;
+}
+
+article cite a {
+  display: inline-block;
+  text-decoration: none;
+  color: #222
+}
+
+article section {
+  max-height: 0;
+  overflow: hidden;
+}
+
+article p:last-child {
+  margin-bottom: 1.5rem;
+}
+
+article.active header {
+  width: 100%;
+}
+
+article.active header h1 {
+  color: #DF3D82;
+}
+
+article.active section {
+  max-height: 500vh;
+}
+
+section p + h1 {
+  margin-top: -.5rem;
+}
+
+section h2 {
+  font-size: 2.6rem;
+  margin-top: .5rem;
+  margin-bottom: -.5rem;
+}
+
+section p + h2,
+section ul + h2,
+section ol + h2 {
+  margin-top: -.4rem;
+}
+
+section h3 {
+  font-size: 2rem;
+  margin-top: .8rem;
+  margin-bottom: -.8rem;
+}
+
+section p {
+  margin-top: .5rem;
+  line-height: 3rem;
+  margin-bottom: 3rem;
+}
+
+section p + p {}
+
+section p:last-child {
+  margin-bottom: 0;
+}
+section ul,
+section ol {
+  margin-top: .8rem;
+  margin-bottom: 3rem;
+  padding-left: 3rem;
+}
+
+section p + .image,
+section ul + .image,
+section ol + .image,
+section .image + .image {
+  margin-top: -.9rem;
+  min-height: 3rem;
+}
+
+section input {
+  display: block;
+  height: 3.1rem;
+  width: 100%;
+  margin-top: -.9rem;
+  background-color: #fff;
+  border: 1px solid #999;
+}
+
+article .media + header {
+  max-width: 50%;
+}
+
+
+article:not(.active) .media {
+  position: absolute;
+  height: 100%;
+  width: 60%;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center left;
+}
+
+article:not(.active):hover .media:before{
+  background-color: #fff
+}
+article:not(.active) .media:before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 500rem;
+  left: -490rem;
+  background-color: #f2f2f2;
+  transform: skew(-45deg);
+  transition: all 250ms ease;
+  z-index: 0;
+}
+
+article:not(.active) p {
+  display: none;
+}
+
+article.active p {
+  display: block;
+}
+
+article.active .media {
+  display: inline-block;
+  height: auto;
+  float: right;
+  max-height: 50vh;
+  width: auto;
+  background-size: 0 0;
+  margin-left: 1.5rem;
+}
+
+article.active .media img {
+  max-height: 50vh;
+}
+
+.palette {
+  position: absolute;
+  width: 1.5rem;
+  top: 0; left: 0;
+  overflow: hidden;
+}
+
+.palette div {
+  height: 1.5rem; 
+  width: 1.5rem; 
+  float: left;
+}
+
+@media (max-width: 800px) {
+  .palette {
+    display: none;
+  }
+  
+  body {
+    padding-top: 6rem;
+  }
+  
+  body > header {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    background-color: #222;
+    color: #ddd;
+    z-index: 5;
+  }
+  
+  article.has-media:not(.active) header {
+    max-width: 60%;
+  }
+  
+  article .media {
+    max-width: 50%;
+  }
+  article:not(.active) .media:before {
+    transform: skew(-5deg);
+    width: 25rem;
+    left: -20rem;
+  }
+}
