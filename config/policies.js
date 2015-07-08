@@ -1,8 +1,9 @@
 module.exports.policies = {
-
-   '*': true,
-
+  '*': true,
   'PostController': {
+    '*': 'isAuthenticated'
+  },
+  'FrontpageController': {
     '*': 'isAuthenticated'
   },
 

@@ -1,20 +1,22 @@
 <!-- Default home page -->
+<article class="active">
+  <div class="contain">
+    <header>
+      <h1>Here we go...</h1>
+      <% if (typeof username != 'undefined') { %>
+      <h2 class="px14">you are posting as <%= username %></h2>
+      <% } %>
+    </header>
+    <section>
+      <ul>
+        <li><a href="/signup">sign up!</a></li>
+        <li><a href="/login">log in</a></li>
+        <li><a href="/logout">log out</a></li>
+        <li><a href="/post">testing</a></li>
+      </ul>
+    </section>
+    <footer>
 
-  <article class="active">
-    <div class="contain">
-      <header>
-        <h1>Here we go...</h1>
-      </header>
-      <section>
-        <ul>
-          <li><a href="/signup">sign up!</a></li>
-          <li><a href="/login">log in</a></li>
-          <li><a href="/logout">log out</a></li>
-          <li><a href="/post">testing</a></li>
-        </ul>
-      </section>
-      <footer>
-
-      </footer>
-    </div>
-  </article>
+    </footer>
+  </div>
+</article>
