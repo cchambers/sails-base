@@ -11,5 +11,7 @@ module.exports.routes = {
   'get /signup': {
     view: 'signup'
   },
-  'get /user': 'FrontpageController.init'
+  'get /user': 'FrontpageController.init',
+
+  'get /userlist': 'UserController.list'
 };
