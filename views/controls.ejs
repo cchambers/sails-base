@@ -1,0 +1,12 @@
+<% if (user) { %>
+<div class="px14">you are posting as <span class="bold"><%= user.username %></span></div>
+<a class="px10" href="/userlist">userlist</a>
+<a class="px10 disabled" href="#">messages</a>
+<a class="px10" href="/logout">log out</a>
+<% } else { %>
+<form method="POST" action="/login">
+  <input type="email" placeholder="email" name="email">
+  <input type="password" placeholder="password" name="password">
+  <button type="submit" value="submit">log in</button>
+</form>
+<% } %>
