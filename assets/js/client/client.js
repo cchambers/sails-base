@@ -5,6 +5,10 @@ var client = {
 
   setup: function () {
     $("a.log-in").on("click", client.submitLogin);
+
+    $(".login-form input").on("keyup", function (e){
+      if (e.which == 13) client.submitLogin();
+    })
   },
 
   submitLogin: function () {
