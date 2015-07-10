@@ -1,0 +1,31 @@
+a.button {
+  display: inline-block;
+  position: relative;
+  line-height: 3rem;
+  padding: 0 .75rem;
+  font-size: 1.4rem;
+  box-shadow: 1px 1px 2px rgba(0,0,0,.5);
+}
+
+input + a.button {
+  margin-left: 1.5rem;
+}
+
+a.button:not(.disabled):after {
+  display: block;
+  position: absolute;
+  left: 0; left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: red;
+  opacity: 0;
+}
+
+a.button:not(.disabled):hover:after {
+  opacity: 1;
+}
+
+a.button.primary {
+  background-color: #DF3D82;
+  color: #f2f2f2;
+}
