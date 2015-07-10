@@ -1,16 +1,15 @@
-var app = {
+var client = {
   init: function () {
-    app.setup();
+    client.setup();
   },
 
   setup: function () {
-    $("a.log-in").on("click", app.submitLogin)
+    $("a.log-in").on("click", client.submitLogin);
   },
 
   submitLogin: function () {
     var url = "/login";
     var data = $(".login-form").serialize();
-    console.log(data);
     $.ajax({
       type: "POST",
       url: url,
@@ -19,7 +18,7 @@ var app = {
       if (data.user) {
           window.location.reload(); // success
         } else {
-          app.loginFailure(data.message);
+          client.loginFailure(data.message);
         }
       }
     });
@@ -31,4 +30,4 @@ var app = {
   }
 }
 
-app.init();
+client.init();
