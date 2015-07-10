@@ -1,0 +1,16 @@
+<div class="panel absolute text-right lh20" style="top:1.5rem; right: 1.5rem; z-index: 5">
+  <% if (user.username) { %>
+  <div class="px14">you are posting as <span class="bold"><%= user.username %></span></div>
+  <div class="px10">
+    <a href="/">home</a>
+    <a href="/userlist">userlist</a>
+    <a href="/logout">log out</a>
+  </div>
+  <% } else { %>
+  <form method="POST" action="/login">
+    <input type="email" placeholder="email" name="email">
+    <input type="password" placeholder="password" name="password">
+    <button type="submit" value="submit">log in</button>
+  </form>
+  <% } %>
+</div>

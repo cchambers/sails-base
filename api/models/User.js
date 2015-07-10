@@ -7,17 +7,35 @@ module.exports = {
             required: true,
             unique: true
         },
+
         password: {
             type: 'string',
             minLength: 6,
             required: true
         },
+
         username: {
             type: 'string',
             minLength: 3,
             required: true,
             unique: true
         },
+
+        online: {
+          type: 'boolean',
+          defaultsTo: false
+        },
+
+        admin: {
+          type: 'boolean',
+          defaultsTo: false
+        },
+
+        verified: {
+          type: 'boolean',
+          defaultsTo: false
+        },
+
         toJSON: function() {
             var obj = this.toObject();
             delete obj.password;

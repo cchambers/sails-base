@@ -36,7 +36,6 @@ strong {
 .lined {
   background: linear-gradient( to bottom, rgba(0, 0, 0, .5), #f2f2f2 .1rem);
   background-size: 100% 3rem;
-  min-height: 100vh;
   overflow: hidden;
 }
 
@@ -44,7 +43,8 @@ main.active article {
   opacity: .5;
 }
 
-main.active article.active {
+main.active article.active,
+ {
   opacity: 1;
   z-index: 2;
 }
