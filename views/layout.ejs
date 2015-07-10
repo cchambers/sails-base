@@ -1,29 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>sauce</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="/styles/basi.css">
-    <link rel="stylesheet" href="/styles/importer.css">
-    <link rel="stylesheet" href="/styles/sauce.css">
-  </head>
+<head>
+  <title>sauce</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="/styles/basi.css">
+  <link rel="stylesheet" href="/styles/importer.css">
+  <link rel="stylesheet" href="/styles/sauce.css">
+</head>
 
-  <body>
+<body>
   <header>
     <div class="contain">
       <strong>sauce</strong> &rarr; gravy.io
+      <%- include controls %>
     </div>
   </header>
   <main>
     <%- body %>
-    <!-- TEMPLATES START -->
-    
-    <!-- TEMPLATES END -->
-    </main>
-    <footer></footer>
-    <!-- SCRIPTS START -->
-    <script src="/js/dependencies/sails.io.js"></script>
-    <!-- SCRIPTS END -->
+  </main>
+  <footer></footer>
 
-  </body>
+  <script src="/js/dependencies/sails.io.js"></script>
+</body>
 </html>

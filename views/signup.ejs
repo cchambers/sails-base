@@ -1,8 +1,15 @@
+<% if (!user) { %>
 <div class="contain">
-  <h1>Signup</h1>
-  <form method="POST" action="/user">
-    <input type="email" name="email">
-    <input type="password" name="password">
-    <input type="submit" value="submit">
-  </form>
+  <div class="row pad-lips-light">
+    <div class="col-1-3">
+      <label>Sign up</label>
+      <form method="POST" action="/user">
+        <input type="email" placeholder="email" name="email"> <br>
+        <input type="username" placeholder="username" name="username"> <br>
+        <input type="password" placeholder="password" name="password"> <br>
+        <input type="submit" value="submit">
+      </form>
+    </div>
+  </div>
 </div>
+<% } %>
