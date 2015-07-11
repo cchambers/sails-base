@@ -28,7 +28,9 @@ var client = {
       url: url,
       data: data,
       success: function (data) {
-        client[callback](data);
+        if (client[callback]){
+          client[callback](data);
+        }
       }
     });
   },
@@ -41,6 +43,10 @@ var client = {
       var $output = $(".login-form output");
       $output.text(data.message);
     }
+  },
+
+  signUp: function (data) { 
+    console.log(data);
   },
 
   convertMarkdown: function (data) {

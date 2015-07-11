@@ -2,12 +2,14 @@
 <div class="row pad-lips-light">
   <div class="contain">
     <label>Sign up</label>
-    <form method="POST" action="/user">
-      <input type="email" placeholder="email" name="email">
-      <input type="text" placeholder="username" name="username">
-      <input type="password" placeholder="password" name="password">
-      <input class="button primary" type="submit" value="submit">
-    </form>
+    <div class="sign-up">
+    <form method="POST" data-callback="signUp" action="/user">
+        <input type="email" placeholder="email" name="email">
+        <input type="text" placeholder="username" name="username">
+        <input type="password" placeholder="password" name="password"><!-- <a class="button primary submit">sign up</a> -->
+        <button class="button primary" type="submit">sign up</button>
+      </form>
+    </div>
   </div>
 </div>
 <% } %>
