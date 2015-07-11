@@ -3,18 +3,19 @@
   <div class="px14">you are posting as <span class="bold"><%= user.username %></span></div>
   <ul>
     <li><a href="/">home</a></li>
-    <li><a href="/entry/new">new entry</a></li>
+    <li><a href="/new/entry">new entry</a></li>
+    <li><a href="/new/sub">create sub</a></li>
     <li><a href="/logout">log out</a></li>
     <% if (user.admin) { %>
     <li><a href="/userlist">userlist</a></li>
     <% } %>
   </ul>
   <% } else { %>
-  <form class="login-form">
+  <form class="login-form" data-callback="checkLogin" action="/login">
     <input type="email" placeholder="email" name="email">
     <input type="password" placeholder="password" name="password">
-    <a class="button primary log-in">log in</a>
-    <a class="button secondary log-in">sign up</a>
+    <a class="button primary submit">log in</a>
+    <a class="button secondary sign-up">sign up</a>
     <output></output>
   </form>
   <% } %>

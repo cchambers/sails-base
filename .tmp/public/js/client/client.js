@@ -4,35 +4,43 @@ var client = {
   },
 
   setup: function () {
-    $("a.log-in").on("click", client.submitLogin);
+    $("form").on("click", ".submit", function () {
+      var $form = $(this).parents("form");
+      client.submitForm($form);
+    });
 
-    $(".login-form input").on("keyup", function (e){
-      if (e.which == 13) client.submitLogin();
+    $("form").on("keyup", "input", function (e){
+      if (e.which == 13) {
+        var $form = $(this).parents("form");
+        client.submitForm($form);
+      }
     })
 
     $(".entry").on("keyup", client.entryKeypressHandler)
   },
 
-  submitLogin: function () {
-    var url = "/login";
-    var data = $(".login-form").serialize();
+  submitForm: function ($form) {
+    var callback = $form.data().callback;
+    var url = $form.attr("action");
+    var data = $form.serialize();
     $.ajax({
       type: "POST",
       url: url,
       data: data,
       success: function (data) {
-        if (data.user) {
-          window.location.reload(); // success
-        } else {
-          client.loginFailure(data.message);
-        }
+        client[callback](data);
       }
     });
   },
 
-  loginFailure: function (message) {
-    var $output = $(".login-form output");
-    $output.text(message);
+  checkLogin: function (data) {
+    console.log("Checking login..")
+    if (data.user) {
+      window.location.reload(); // success
+    } else {
+      var $output = $(".login-form output");
+      $output.text(data.message);
+    }
   },
 
   convertMarkdown: function (data) {
@@ -43,7 +51,7 @@ var client = {
   },
 
   entryKeypressHandler: function (e) {
-    
+
   }
 }
 

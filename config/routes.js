@@ -15,11 +15,12 @@ module.exports.routes = {
   'get /userlist': 'FrontpageController.userlist',
   'post /op/make-admin': 'UserController.makeadmin',
 
-  'get /entry/new': 'EntryController.new',
-  'post /entry/new': 'EntryController.create',
+  'get /new/entry': 'EntryController.new',
+  'post /new/entry': 'EntryController.create',
 
-  'get /sub/new': 'SubController.new',
-  'post /sub/new': 'SubController.create',
+  'get /new/sub': 'SubController.new',
+  'post /new/sub': 'SubController.create',
+  
   'get /sub/:sub': 'SubController.index',
   'get /sub/:sub/:entry': 'EntryController.index'
 
