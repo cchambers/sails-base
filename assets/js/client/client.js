@@ -9,6 +9,8 @@ var client = {
     $(".login-form input").on("keyup", function (e){
       if (e.which == 13) client.submitLogin();
     })
+
+    $(".entry").on("keyup", client.entryKeypressHandler)
   },
 
   submitLogin: function () {
@@ -19,7 +21,7 @@ var client = {
       url: url,
       data: data,
       success: function (data) {
-      if (data.user) {
+        if (data.user) {
           window.location.reload(); // success
         } else {
           client.loginFailure(data.message);
@@ -31,6 +33,17 @@ var client = {
   loginFailure: function (message) {
     var $output = $(".login-form output");
     $output.text(message);
+  },
+
+  convertMarkdown: function (data) {
+    var converter = new showdown.Converter();
+    var text = data;
+    var html = converter.makeHtml(text);
+    return html;
+  },
+
+  entryKeypressHandler: function (e) {
+    
   }
 }
 

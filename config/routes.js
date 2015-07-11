@@ -1,5 +1,5 @@
 module.exports.routes = {
-  '/': 'FrontpageController.init',
+  '/': 'FrontpageController.index',
 
   'get /login': {
     view: 'login'
@@ -13,5 +13,15 @@ module.exports.routes = {
   },
 
   'get /userlist': 'FrontpageController.userlist',
-  'get /make-admin': 'UserController.makeadmin',
+  'post /op/make-admin': 'UserController.makeadmin',
+
+  'get /entry/new': 'EntryController.new',
+  'post /entry/new': 'EntryController.create',
+
+  'get /sub/new': 'SubController.new',
+  'post /sub/new': 'SubController.create',
+  'get /sub/:sub': 'SubController.index',
+  'get /sub/:sub/:entry': 'EntryController.index'
+
+
 };

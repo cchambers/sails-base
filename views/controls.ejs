@@ -3,14 +3,18 @@
   <div class="px14">you are posting as <span class="bold"><%= user.username %></span></div>
   <ul>
     <li><a href="/">home</a></li>
-    <li><a href="/userlist">userlist</a></li>
+    <li><a href="/entry/new">new entry</a></li>
     <li><a href="/logout">log out</a></li>
+    <% if (user.admin) { %>
+    <li><a href="/userlist">userlist</a></li>
+    <% } %>
   </ul>
   <% } else { %>
   <form class="login-form">
     <input type="email" placeholder="email" name="email">
     <input type="password" placeholder="password" name="password">
     <a class="button primary log-in">log in</a>
+    <a class="button secondary log-in">sign up</a>
     <output></output>
   </form>
   <% } %>

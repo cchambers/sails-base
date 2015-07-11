@@ -1,5 +1,5 @@
 module.exports = function(req, res, next) {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated() && req.user.admin) {
     return next();
   }
   return res.redirect('/');

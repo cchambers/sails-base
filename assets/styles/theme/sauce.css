@@ -4,7 +4,6 @@ body {
   font-size: 1.8rem;
   color: #505050;
   overflow-y: scroll;
-  min-height: 200vh;
 }
 
 p a,
@@ -149,10 +148,6 @@ article.active .media img {
 @media (max-width: 800px) {
   .palette {
     display: none;
-  }
-
-  .panel * {
-    color: #f2f2f2;
   }
 
   body {

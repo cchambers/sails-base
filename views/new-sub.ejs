@@ -1,0 +1,23 @@
+<div class="contain new-thing">
+  <div class="row">
+    <div class="col-1-2">
+      <div class="row pad-bottom-light">
+        <label for="created-by">use</label>
+        <select name="created-by" id="posted-by">
+          <option selected value="<%= user.username %>"><%= user.username %></option>
+        </select>
+      </div>
+      <div class="row pad-bottom-light">
+        <label for="name">name it</label>
+        <input type="text" name="name" id="name">
+      </div>
+      <div class="row pad-bottom-light">
+        <label for="tagline">tagline (optional)</label>
+        <input type="text" name="tagline" id="tagline">
+      </div>
+      <div class="row pad-bottom-light">
+        <a class="button primary">make it</a>
+      </div>
+    </div>
+  </div>
+</div>

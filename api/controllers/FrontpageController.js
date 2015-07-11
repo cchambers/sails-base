@@ -5,7 +5,7 @@ module.exports = {
     rest: false
   },
 
-  init: function (req, res) {
+  index: function (req, res) {
     if ( typeof(req.user) == 'undefined' ) {
       return res.view('homepage', { user: false });
     } else {
