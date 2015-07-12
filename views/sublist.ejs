@@ -9,8 +9,12 @@
     </div>
     <% for (sub in data) { %>
     <div class="row">
-      <div class="name col-1-6"><%= data[sub].name %></div>
-      <div class="creator col-1-6"><%= data[sub].creator %></div>
+      <div class="name col-1-6">
+        <p><a href="/sub/<%= data[sub].name %>"><%= data[sub].name %></a></p>
+      </div>
+      <div class="creator col-1-6">
+        <p><%= data[sub].creator %></p>
+      </div>
     </div>
     <% } %>
   </div>

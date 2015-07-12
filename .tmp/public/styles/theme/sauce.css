@@ -6,6 +6,12 @@ body {
   overflow-y: scroll;
 }
 
+.logo a {
+  font-weight: bold;
+  font-size: 3rem;
+}
+
+.logo a,
 p a,
 li a { 
   color: #191919;
@@ -13,9 +19,9 @@ li a {
   border-top: 1px solid transparent;
   text-decoration: none;
   transition: all 100ms linear;
-  font-size: .8em;
 }
 
+.logo a:hover,
 p a:hover,
 li a:hover { 
   color: #DF3D82;
@@ -26,11 +32,17 @@ strong {
   color: #DF3D82;
 }
 
-
 body > header {
   height: 6rem;
-  line-height: 6rem;
   transition: all 250ms ease;
+}
+
+body > header .logo {
+  line-height: 6rem;
+}
+
+body > header .logo a {
+  color: #DF3D82;
 }
 
 
@@ -52,8 +64,6 @@ article {
   padding-bottom: .75rem;
   transition: all 100ms linear;
 }
-
-
 
 article header,
 article footer {

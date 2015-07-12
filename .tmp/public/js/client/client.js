@@ -1,10 +1,9 @@
-String.prototype.trunc =
-     function(n,useWordBoundary){
-         var toLong = this.length>n,
-             s_ = toLong ? this.substr(0,n-1) : this;
-         s_ = useWordBoundary && toLong ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
-         return  toLong ? s_ : s_;
-      };
+String.prototype.trunc = function(n,useWordBoundary){
+  var toLong = this.length>n,
+  s_ = toLong ? this.substr(0,n-1) : this;
+  s_ = useWordBoundary && toLong ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
+  return toLong ? s_ : s_;
+};
 
 var client = {
   init: function () {
@@ -24,17 +23,17 @@ var client = {
       }
     });
 
+    $(".new-thing").on("keyup", "[name=markdown]", client.updatePreview);
+
     $(".new-thing").on("keyup", "[name=title]", client.generateSlug);
 
     $(".entry").on("keyup", client.entryKeypressHandler)
   },
 
   submitForm: function ($form) {
-    console.log("Submitting a form!")
     var callback = $form.data().callback;
     var url = $form.attr("action");
     var data = $form.serialize();
-    console.log(callback, url, data)
     $.ajax({
       type: "POST",
       url: url,
@@ -70,13 +69,23 @@ var client = {
   },
 
   newEntry: function (data) {
-    console.log(data);
+    if (data.slug) {
+      location.href = "/sub/" + data.postedTo + "/" + data.slug
+    }
   },
 
   generateSlug: function (data) {
     var title = $("input[name=title]").val().trunc(64);;
     var slug = title.toLowerCase().replace(/[^a-zA-Z0-9\s]/g,'').replace(/\s/g, "-");
     $("input[name=slug]").val(slug);
+  },
+
+  updatePreview: function (data) {
+    var converter = new showdown.Converter();
+    var text = $("textarea[name=markdown]").val();
+    var html = converter.makeHtml(text);
+    $("textarea[name=content]").val(html);
+    $(".preview").html(html);
   },
 
   convertMarkdown: function (data) {

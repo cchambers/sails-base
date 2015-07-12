@@ -1,15 +1,13 @@
-<div class="panel absolute text-right lh20" style="top:1.5rem; right: 1.5rem; z-index: 5">
+<div class="panel">
   <% if (typeof(user) != 'undefined') {  %>
-
   <div class="px14">you are posting as <span class="bold"><%= user.username %></span></div>
   <ul>
-    <li><a href="/">home</a></li>
     <li><a href="/new/entry">new entry</a></li>
     <li><a href="/new/sub">create sub</a></li>
     <li><a href="/sublist">list subs</a></li>
     <li><a href="/logout">log out</a></li>
     <% if (user.admin) { %>
-    <li class="px10 bold pad-left">admin shit:</li>
+    <li class="px10 lh12 bold pad-left">admin<br>shit:</li>
     <li><a href="/userlist">userlist</a></li>
     <% } %>
   </ul>
