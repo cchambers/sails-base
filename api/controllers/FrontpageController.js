@@ -31,6 +31,14 @@ module.exports = {
       }
       return res.view('sublist', { user: req.user, data: data })
     });
+  },
+
+  sub: function (req, res) {
+    console.log(req.params.name);
+    Entry.find({ postedTo: req.params.name }).exec(function(err, data) {
+      if (err) return next(err);
+      return res.view('sub', { user: req.user, data: data })
+    });
   }
 };
 

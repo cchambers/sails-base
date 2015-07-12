@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="contain">
+  <h1>Listing</h1>
+    <div class="entries">
+    <% for (entry in data) { %>
+      <div class="pad-lips-light">
+      <strong><%= data[entry].title %></strong> by <%= data[entry].postedBy %>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</div>

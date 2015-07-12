@@ -53,6 +53,16 @@ var client = {
     console.log(data);
   },
 
+  createSub: function (data) {
+    if (data.name) {
+      location.href = "/sub/" + data.name
+    }
+  },
+
+  newEntry: function (data) {
+    console.log(data);
+  },
+
   convertMarkdown: function (data) {
     var converter = new showdown.Converter();
     var text = data;
