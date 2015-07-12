@@ -33,11 +33,24 @@ module.exports = {
     });
   },
 
-  sub: function (req, res) {
-    console.log(req.params.name);
-    Entry.find({ postedTo: req.params.name }).exec(function(err, data) {
+  listing: function (req, res) {
+    if (req.params.sub) {
+      Entry.find({ postedTo: req.params.sub }).exec(function(err, data) {
+        if (err) return next(err);
+        return res.view('listing', { user: req.user, data: data })
+      });
+    } else {
+      Entry.find().exec(function(err, data) {
+        if (err) return next(err);
+        return res.view('listing', { user: req.user, data: data })
+      });
+    }
+  },
+
+  single: function (req, res) {
+    Entry.find({ slug: req.params.slug }).exec(function(err, data) {
       if (err) return next(err);
-      return res.view('sub', { user: req.user, data: data })
+      return res.view('entry', { user: req.user, data: data })
     });
   }
 };

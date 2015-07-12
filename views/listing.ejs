@@ -1,0 +1,13 @@
+<article class="row active">
+  <div class="contain">
+    <div class="entries">
+      <% for (entry in data) { %>
+      <div class="pad-lips-light">
+        <p>
+          <a href="/sub/<%= data[entry].postedTo %>/<%= data[entry].slug %>"><%= data[entry].title %></a> by <%= data[entry].postedBy %> on <%= data[entry].createdAt %> 
+        </p>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</article>

@@ -1,7 +1,7 @@
 module.exports.policies = {
   '*': true,
   'EntryController': {
-    '*': 'isAuthenticated'
+    'new': 'isAuthenticated'
   },
   'FrontPageController': {
     'userlist': 'isAdmin'

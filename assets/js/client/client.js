@@ -1,3 +1,11 @@
+String.prototype.trunc =
+     function(n,useWordBoundary){
+         var toLong = this.length>n,
+             s_ = toLong ? this.substr(0,n-1) : this;
+         s_ = useWordBoundary && toLong ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
+         return  toLong ? s_ : s_;
+      };
+
 var client = {
   init: function () {
     client.setup();
@@ -14,7 +22,9 @@ var client = {
         var $form = $(this).parents("form");
         client.submitForm($form);
       }
-    })
+    });
+
+    $(".new-thing").on("keyup", "[name=title]", client.generateSlug);
 
     $(".entry").on("keyup", client.entryKeypressHandler)
   },
@@ -63,6 +73,12 @@ var client = {
     console.log(data);
   },
 
+  generateSlug: function (data) {
+    var title = $("input[name=title]").val().trunc(64);;
+    var slug = title.toLowerCase().replace(/[^a-zA-Z0-9\s]/g,'').replace(/\s/g, "-");
+    $("input[name=slug]").val(slug);
+  },
+
   convertMarkdown: function (data) {
     var converter = new showdown.Converter();
     var text = data;
@@ -74,5 +90,7 @@ var client = {
 
   }
 }
+
+
 
 client.init();

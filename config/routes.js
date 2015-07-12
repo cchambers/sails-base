@@ -1,5 +1,5 @@
 module.exports.routes = {
-  '/': 'FrontpageController.index',
+  '/': 'FrontpageController.listing',
 
   'get /userlist': 'FrontpageController.userlist',
   'get /sublist': 'FrontpageController.sublist',
@@ -15,6 +15,7 @@ module.exports.routes = {
 
   'post /op/make-admin': 'UserController.makeadmin',
 
-  'get /sub/:name': 'FrontpageController.sub'
+  'get /sub/:sub': 'FrontpageController.listing',
+  'get /sub/:sub/:slug': 'FrontpageController.single',
 
 };

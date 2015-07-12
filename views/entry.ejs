@@ -2,13 +2,13 @@
   <article class="active">
     <div class="contain">
       <header>
-        <h1><%= title %></h1>
+        <h1><%= data[0].title %></h1>
       </header>
       <section>
-        <p><%= content %></p>
+        <p><%= data[0].content %></p>
       </section>
       <footer>
-        <cite><strong><%= author %></strong> &rarr; <%= postedTo[0] %></cite>
+        <cite><strong><%= data[0].postedBy %></strong> &rarr; <%= data[0].postedTo %></cite>
       </footer>
     </div>
   </article>

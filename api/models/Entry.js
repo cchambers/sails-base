@@ -6,6 +6,12 @@ module.exports = {
       required: true
     },
 
+    slug: {
+      type: 'string',
+      required: true,
+      unique: true
+    },
+
     media: {
       type: 'string',
       minLength: 2
