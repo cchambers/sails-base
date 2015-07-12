@@ -1,21 +1,20 @@
 <article class="active">
   <div class="contain">
     <header>
-      <h1>Userlist</h1>
+      <h1>User list</h1>
     </header>
     <div class="row">
-      <div class="online col-1-8"><h4>Online</h4></div>
-      <div class="username col-1-8"><h4>Admin?</h4></div>
+      <div class="online col-1-8"><h4>Online?</h4></div>
+      <div class="admin col-1-8"><h4>Admin?</h4></div>
       <div class="username col-1-6"><h4>Username</h4></div>
       <div class="email col-1-5"><h4>Email</h4></div>
     </div>
-    <% for (account in users) { %>
+    <% for (account in data) { %>
     <div class="row">
-      <div class="online col-1-8"><%= users[account].online %></div>
-      <div class="admin col-1-8"><%= users[account].admin %></div>
-      
-      <div class="username col-1-6"><%= users[account].username %></div>
-      <div class="email col-1-5"><%= users[account].email %></div>
+      <div class="online col-1-8"><%= data[account].online %></div>
+      <div class="admin col-1-8"><%= data[account].admin %></div>
+      <div class="username col-1-6"><%= data[account].username %></div>
+      <div class="email col-1-5"><%= data[account].email %></div>
     </div>
     <% } %>
   </div>

@@ -1,4 +1,4 @@
-<% if (!user) { %>
+<% if (typeof(user) == 'undefined') { %>
 <div class="row pad-lips-light">
   <div class="contain">
     <label>Sign up</label>
@@ -6,8 +6,10 @@
     <form method="POST" data-callback="signUp" action="/user">
         <input type="email" placeholder="email" name="email">
         <input type="text" placeholder="username" name="username">
-        <input type="password" placeholder="password" name="password"><!-- <a class="button primary submit">sign up</a> -->
-        <button class="button primary" type="submit">sign up</button>
+        <input type="password" placeholder="password" name="password">
+        <a class="button primary submit">sign up</a>
+        <!-- <button class="button primary" type="submit">sign up</button> -->
+        <output></output>
       </form>
     </div>
   </div>

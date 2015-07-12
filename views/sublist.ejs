@@ -1,0 +1,17 @@
+<article class="active">
+  <div class="contain">
+    <header>
+      <h1>Sub list</h1>
+    </header>
+    <div class="row">
+      <div class="name col-1-6"><h4>Name</h4></div>
+      <div class="creator col-1-6"><h4>Creator</h4></div>
+    </div>
+    <% for (sub in data) { %>
+    <div class="row">
+      <div class="name col-1-6"><%= data[sub].name %></div>
+      <div class="creator col-1-6"><%= data[sub].creator %></div>
+    </div>
+    <% } %>
+  </div>
+</article>

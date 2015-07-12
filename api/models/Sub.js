@@ -3,6 +3,7 @@ module.exports = {
     name: {
       type: 'string',
       minLength: 4,
+      required: true,
       unique: true
     },
 
@@ -11,7 +12,8 @@ module.exports = {
     },
 
     creator: {
-      type: 'string'
+      type: 'string',
+      required: true
     },
 
     style: {

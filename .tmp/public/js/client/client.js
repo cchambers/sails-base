@@ -20,9 +20,11 @@ var client = {
   },
 
   submitForm: function ($form) {
+    console.log("Submitting a form!")
     var callback = $form.data().callback;
     var url = $form.attr("action");
     var data = $form.serialize();
+    console.log(callback, url, data)
     $.ajax({
       type: "POST",
       url: url,
@@ -45,7 +47,9 @@ var client = {
     }
   },
 
-  signUp: function (data) { 
+  signUp: function (data) {
+    var $output = $(".sign-up output");
+    $output.text(data);
     console.log(data);
   },
 
