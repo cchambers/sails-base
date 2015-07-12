@@ -8,13 +8,13 @@ module.exports = {
         return res.render('homepage', {user: false });
       }
 
-      // passport.authenticate('local')(req, res, function () {
-      //   if (user) {
-      //     return res.view('homepage', { user: false });
-      //   } else {
-      //     return res.view('homepage', { user: req.user });
-      //   }
-      // });
+      passport.authenticate('local')(req, res, function () {
+        if (user) {
+          return res.view('homepage', { user: false });
+        } else {
+          return res.view('homepage', { user: req.user });
+        }
+      });
     });
   },
 

@@ -18,6 +18,7 @@ module.exports = {
       }
       req.logIn(user, function(err) {
         if (err) res.send(err);
+        req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30;
         return res.send({
           message: info.message,
           user: user
