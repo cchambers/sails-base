@@ -1,0 +1,4 @@
+.entry {
+  float: left;
+  width: calc(100% - 7.5rem);
+}

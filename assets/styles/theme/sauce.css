@@ -76,6 +76,7 @@ article footer {
 
 article:not(.active):hover,
 article.active {
+  padding: 0.75rem;
   background-color: #fff;
   box-shadow: 0 1px 2px rgba(0,0,0,.15);
   opacity: 1;
@@ -117,10 +118,10 @@ article .media + header {
 
 article:not(.active) .media {
   position: absolute;
-  height: 100%;
+  height: 10rem;
   width: 60%;
   right: 0;
-  top: 0;
+  top: -1.5rem;
   z-index: 1;
   background-size: cover;
   background-repeat: no-repeat;
@@ -144,13 +145,12 @@ article:not(.active) .media:before {
 
 article.active .media {
   display: inline-block;
-  height: auto;
   float: left;
-  max-height: 50vh;
-  width: auto;
   background-size: 0 0;
   margin-right: 1.5rem;
   margin-bottom: 1.5rem;
+  max-height: 50vh;
+  max-width: 50vw;
 }
 
 article .media img {
@@ -159,13 +159,15 @@ article .media img {
 
 article.active .media img {
   display: block;
-  max-height: 50vh;
+  max-height: 100%;
+  max-width: 100%;
 }
 
 article ul, 
 article ol {
   padding-left: 3rem;
 }
+
 
 @media (max-width: 800px) {
   .palette {
@@ -196,5 +198,9 @@ article ol {
     transform: skew(-5deg);
     width: 25rem;
     left: -20rem;
+  }
+
+  article:not(.active) h1 {
+    max-width: 60%;
   }
 }

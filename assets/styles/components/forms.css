@@ -50,3 +50,7 @@ form output {
 .new-thing textarea {
   min-height: 15rem;
 }
+
+input + br + input {
+  margin-top: .75rem;
+}

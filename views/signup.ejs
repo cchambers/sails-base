@@ -1,17 +1,18 @@
 <% if (typeof(user) == 'undefined') { %>
-<div class="row pad-lips-light">
+<div class="row pad-lips-light sign-up">
   <div class="contain">
-    <label>Sign up</label>
-    <div class="sign-up">
     <form method="POST" data-callback="signUp" action="/user">
-        <input type="email" placeholder="email" name="email">
-        <input type="text" placeholder="username" name="username">
-        <input type="password" placeholder="password" name="password">
-        <a class="button primary submit">sign up</a>
-        <!-- <button class="button primary" type="submit">sign up</button> -->
-        <output></output>
-      </form>
+      <div class="row">
+        <div class="float-right">
+          <label class="on lh30">Create an account:</label>
+          <input type="email" placeholder="email" name="email"><br>
+          <input type="text" placeholder="username" name="username"><br>
+          <input type="password" placeholder="password" name="password"><br>
+          <a class="button primary submit margin-top-light">sign up</a>
+          <output></output>
+        </div>
+      </div>
     </div>
-  </div>
+  </form>
 </div>
 <% } %>
