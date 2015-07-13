@@ -75,7 +75,9 @@ var client = {
   signUp: function (data) {
     var $output = $(".sign-up output");
     $output.text(data);
-    console.log(data);
+    $(".login-form [name=email]").val( $(".sign-up [name=email]").val() );
+    $(".login-form [name=password]").val( $(".sign-up [name=password]").val() );
+    $(".login-form .submit").trigger("click");
   },
 
   createSub: function (data) {
