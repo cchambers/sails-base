@@ -1,10 +1,13 @@
-<div class="row">
+<div class="row single-entry">
   <article class="active">
     <div class="contain">
       <header>
         <h1><%= data[0].title %></h1>
       </header>
       <section>
+        <% if (data[0].media) { %>
+        <div class="media"><img src="<%= data[0].media %>"></div>
+        <% } %>
         <%- data[0].content %>
       </section>
       <footer>

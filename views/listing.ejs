@@ -1,13 +1,22 @@
-<article class="row active">
-  <div class="contain">
-    <div class="entries">
-      <% for (entry in data) { %>
-      <div class="pad-lips-light">
-        <p>
-          <a href="/sub/<%= data[entry].postedTo %>/<%= data[entry].slug %>"><%= data[entry].title %></a> by <%= data[entry].postedBy %> on <%= data[entry].createdAt %> 
-        </p>
-      </div>
-      <% } %>
+<div class="row entries">
+  <% for (entry in data) { %>
+  <article class="row" data-timestamp="<%= data[entry].createdAt %>">
+    <div class="contain">
+      <header>
+        <h1>
+          <%= data[entry].title %>
+        </h1>
+      </header>
+      <section>
+        <% if (data[entry].media) { %>
+        <div class="media" style="background-image:url(<%= data[entry].media %>)"><img src="<%= data[entry].media %>"></div>
+        <% } %>
+        <%- data[entry].content %>
+      </section>
+      <footer>
+        <cite><strong><%= data[entry].postedBy %></strong> &rarr; <a href="/sub/<%= data[entry].postedTo %>/<%= data[entry].slug %>"><%= data[entry].postedTo %></a></cite>
+      </footer>
     </div>
-  </div>
-</article>
+  </article>
+  <% } %>
+</div>

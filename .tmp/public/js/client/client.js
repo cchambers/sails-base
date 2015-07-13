@@ -11,6 +11,12 @@ var client = {
   },
 
   setup: function () {
+    client.keys = {
+      nextItem: [115,108,32],
+      prevItem: [119,107]
+    }
+
+    /* make some way to only bind on the pages that need it */
     $("form").on("click", ".submit", function () {
       var $form = $(this).parents("form");
       client.submitForm($form);
@@ -27,7 +33,17 @@ var client = {
 
     $(".new-thing").on("keyup", "[name=title]", client.generateSlug);
 
-    $(".entry").on("keyup", client.entryKeypressHandler)
+    $(".entry").on("keyup", client.entryKeypressHandler);
+
+    $(".entries").on("click", "h1", function () {
+      $("entries article").removeClass("active");
+      var $article = $(this).parents("article");
+      $article.toggleClass("active");
+    });
+
+    $(".entries article").each( function () {
+      $(this).find("footer").append('<ul><li class="good">&uarr;</li><li class="bad">&darr;</li><li class="save">♨</li><li class="report">✗</li></ul>');
+    });
   },
 
   submitForm: function ($form) {

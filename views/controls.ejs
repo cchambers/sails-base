@@ -1,6 +1,8 @@
 <div class="panel">
   <% if (typeof(user) != 'undefined') {  %>
-  <div class="px14">you are posting as <span class="bold"><%= user.username %></span></div>
+  <p class="px14">
+    you are posting as <span class="bold"><a href="/me"><%= user.username %></a></span>
+  </p>
   <ul>
     <li><a href="/new/entry">new entry</a></li>
     <li><a href="/new/sub">create sub</a></li>

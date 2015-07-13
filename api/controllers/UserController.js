@@ -18,12 +18,25 @@ module.exports = {
     });
   },
 
-
   makeAdmin: function (req, res) {
-    User.findOne({ email: req.user.email }, function (err, doc){
+    User.findOne({ email: req.user.email }, function (err, doc) {
       doc.admin = true;
       doc.save();
       return res.redirect("/userlist");
+    });
+  },
+
+  myProfile: function (req, res) {
+    User.find({ username: req.user.username }, function (err, data) {
+      if (err) return next(err);
+      return res.view('my-profile', { user: req.user, data: data });
+    });
+  },
+
+  userProfile: function (req, res) {
+    User.find({ username: req.user.username }, function (err, data) {
+      if (err) return next(err);
+      return res.view('user-profile', { user: req.user, data: data });
     });
   }
 };

@@ -24,7 +24,7 @@ module.exports = {
   },
 
   sublist: function (req, res) {
-    Sub.find().exec(function(err, data) {
+    Sub.find().exec( function (err, data) {
       if (err) return next(err);
       if (!req.user) {
         return res.redirect("/");
@@ -35,12 +35,12 @@ module.exports = {
 
   listing: function (req, res) {
     if (req.params.sub) {
-      Entry.find({ postedTo: req.params.sub }).exec(function(err, data) {
+      Entry.find({ postedTo: req.params.sub }).sort({ createdAt: 'desc' }).exec( function (err, data) {
         if (err) return next(err);
         return res.view('listing', { user: req.user, data: data })
       });
     } else {
-      Entry.find().exec(function(err, data) {
+      Entry.find().sort({createdAt: 'desc'}).exec(function(err, data) {
         if (err) return next(err);
         return res.view('listing', { user: req.user, data: data })
       });

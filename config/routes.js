@@ -4,6 +4,7 @@ module.exports.routes = {
   'get /userlist': 'FrontpageController.userlist',
   'get /sublist': 'FrontpageController.sublist',
 
+  'get /me': 'UserController.myProfile',
 
   'get /signup':   { view: 'signup' },
   'get /login':    { view: 'login' },
@@ -18,4 +19,5 @@ module.exports.routes = {
   'get /sub/:sub': 'FrontpageController.listing',
   'get /sub/:sub/:slug': 'FrontpageController.single',
 
+  'get /user/:user': 'UserController.userProfile'
 };

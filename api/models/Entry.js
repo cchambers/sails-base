@@ -21,6 +21,10 @@ module.exports = {
       type: 'string'
     },
 
+    markdown: {
+      type: 'string'
+    },
+
     postedTo: {
       type: 'string',
       required: true
