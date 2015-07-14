@@ -16,3 +16,17 @@
     </div>
   </article>
 </div>
+<div class="row single-entry">
+    <% for(i = 0; i< data[0].comments.length; i++) {%>
+        <article class="active">
+            <div class="contain">
+                <header>
+                    <%=data[0].comments[i].postedBy %>
+                </header>
+                <section>
+                    <%=data[0].comments[i].content %>
+                </section>
+            </div>
+        </article>
+    <% } %>
+</div>

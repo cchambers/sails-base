@@ -19,10 +19,10 @@
           <%- data[entry].content %>
         </section>
         <footer>
-          <cite><strong><%= data[entry].postedBy %></strong> &rarr; <a href="/sub/<%= data[entry].postedTo %>"><%= data[entry].postedTo %></a> (<a href="/sub/<%= data[entry].postedTo %>/<%= data[entry].slug %>">0&nbspcomments</a>)</cite>
+          <cite><strong><%= data[entry].postedBy %></strong> &rarr; <a href="/sub/<%= data[entry].postedTo %>"><%= data[entry].postedTo %></a> (<a href="/sub/<%= data[entry].postedTo %>/<%= data[entry].slug %>"><%= data[entry].comments.length %>&nbspcomments</a>)</cite>
         </footer>
       </div>
-      
+
     </div>
   </article>
   <% } %>

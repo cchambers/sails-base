@@ -35,7 +35,7 @@ module.exports = {
     }],
 
     postedBy: {
-      type: 'string'
+      model: 'user'
     },
 
     ups: {
@@ -51,6 +51,12 @@ module.exports = {
     special: {
       type: 'boolean',
       defaultsTo: false
+    },
+
+    comments: {
+        collection: 'comment',
+        via: 'entry'
     }
+
   }
 };
