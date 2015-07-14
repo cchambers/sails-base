@@ -35,14 +35,17 @@ module.exports = {
 
   listing: function (req, res) {
     if (req.params.sub) {
-        Entry.find({ postedTo: req.params.sub }).sort({ createdAt: 'desc' })
-            .populate('comments')
-            .exec( function (err, data) {
-                if (err) return next(err);
-                return res.view('listing', { user: req.user, data: data })
-        });
+      Entry.find({ postedTo: req.params.sub })
+      .sort({ createdAt: 'desc' })
+      .populate('comments', 'id')
+      .exec( function (err, data) {
+        if (err) return next(err);
+        return res.view('listing', { user: req.user, data: data })
+      });
     } else {
-      Entry.find().sort({createdAt: 'desc'}).exec(function(err, data) {
+      Entry.find({}).sort({createdAt: 'desc'})
+      .populate('comments', 'id')
+      .exec( function (err, data) {
         if (err) return next(err);
         return res.view('listing', { user: req.user, data: data })
       });
@@ -51,11 +54,11 @@ module.exports = {
 
   single: function (req, res) {
     Entry.find({ slug: req.params.slug })
-        .populate('comments')
+    .populate('comments')
 
-        .exec(function(err, data) {
-            if (err) return next(err);
-            return res.view('entry', { user: req.user, data: data })
+    .exec(function(err, data) {
+      if (err) return next(err);
+      return res.view('entry', { user: req.user, data: data })
     });
   }
 };

@@ -60,9 +60,6 @@ article {
   position: relative;
   min-height: 5rem;
   overflow: hidden;
-  margin-top: .75rem;
-  margin-bottom: .75rem;
-  transition: all 100ms linear;
 }
 
 article header,
@@ -76,7 +73,6 @@ article footer {
 
 article:not(.active):hover,
 article.active {
-  padding: 0.75rem;
   background-color: #fff;
   box-shadow: 0 1px 2px rgba(0,0,0,.15);
   opacity: 1;
@@ -118,7 +114,7 @@ article .media + header {
 
 article:not(.active) .media {
   position: absolute;
-  height: 10rem;
+  height: 20rem;
   width: 60%;
   right: 0;
   top: -1.5rem;

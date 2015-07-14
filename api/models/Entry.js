@@ -39,13 +39,11 @@ module.exports = {
     },
 
     ups: {
-      type: 'integer',
-      defaultsTo: 0
+      type: 'array'
     },
 
     downs: {
-      type: 'integer',
-      defaultsTo: 0
+      type: 'array'
     },
 
     special: {
@@ -56,6 +54,16 @@ module.exports = {
     comments: {
         collection: 'comment',
         via: 'entry'
+    },
+
+    score: function() {
+      return this.ups - this.downs;
+    },
+
+    toJSON: function() {
+      var obj = this.toObject();
+      delete obj.password;
+      return obj;
     }
 
   }

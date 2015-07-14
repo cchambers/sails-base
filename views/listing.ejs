@@ -2,9 +2,10 @@
   <% for (entry in data) { %>
   <article class="row" data-timestamp="<%= data[entry].createdAt %>">
     <div class="contain">
-      <div class="vote">
-        <div class="up">&uarr;</div>
-        <div class="down">&darr;</div>
+      <div class="vote lh20">
+        <!-- <div class="up">&uarr;</div>
+        <div class="down">&darr;</div> -->
+        <div class="score"><%= data[entry].score() %></div>
       </div>
       <div class="entry">
         <header>
