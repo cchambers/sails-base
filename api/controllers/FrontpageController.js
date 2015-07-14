@@ -37,14 +37,14 @@ module.exports = {
     if (req.params.sub) {
       Entry.find({ postedTo: req.params.sub })
       .sort({ createdAt: 'desc' })
-      .populate('comments', 'id')
+      .populate('comments')
       .exec( function (err, data) {
         if (err) return next(err);
         return res.view('listing', { user: req.user, data: data })
       });
     } else {
       Entry.find({}).sort({createdAt: 'desc'})
-      .populate('comments', 'id')
+      .populate('comments')
       .exec( function (err, data) {
         if (err) return next(err);
         return res.view('listing', { user: req.user, data: data })
