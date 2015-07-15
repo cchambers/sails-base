@@ -39,11 +39,13 @@ module.exports = {
     },
 
     ups: {
-      type: 'array'
+      type: 'array',
+      defaultsTo: 1
     },
 
     downs: {
-      type: 'array'
+      type: 'array',
+      defaultsTo: 0
     },
 
     special: {
@@ -54,6 +56,11 @@ module.exports = {
     comments: {
         collection: 'comment',
         via: 'entry'
+    },
+
+    votes: {
+      collection: "vote",
+      via: "entry"
     },
 
     score: function() {

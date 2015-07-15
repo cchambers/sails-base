@@ -9,7 +9,7 @@
     <li><a href="/sublist">list subs</a></li>
     <li><a href="/logout">log out</a></li>
     <% if (user.admin) { %>
-    <li class="px10 lh12 bold pad-left">admin<br>shit:</li>
+    <li class="bold pad-left">admin:</li>
     <li><a href="/userlist">userlist</a></li>
     <% } %>
   </ul>
@@ -17,8 +17,8 @@
   <form class="login-form" data-callback="checkLogin" action="/login">
     <input type="email" placeholder="email" name="email">
     <input type="password" placeholder="password" name="password">
-    <a class="button primary submit">log in</a><!-- 
-    <a class="button secondary sign-up">sign up</a> -->
+    <a class="button primary submit">log in</a>
+    <!-- <a class="button secondary sign-up">sign up</a> -->
     <output></output>
   </form>
   <% } %>

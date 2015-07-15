@@ -13,7 +13,8 @@ body {
 
 .logo a,
 p a,
-li a { 
+li a,
+cite a { 
   color: #191919;
   border-bottom: 1px solid #DF3D82;
   border-top: 1px solid transparent;
@@ -23,7 +24,8 @@ li a {
 
 .logo a:hover,
 p a:hover,
-li a:hover { 
+li a:hover,
+cite a:hover { 
   color: #DF3D82;
   border-top: 1px solid #DF3D82;
 }
@@ -44,7 +46,6 @@ body > header .logo {
 body > header .logo a {
   color: #DF3D82;
 }
-
 
 /* main article */
 main.active article {
@@ -121,10 +122,11 @@ article:not(.active) .media {
   z-index: 1;
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center left;
+  background-position: center center
 }
 
-article:not(.active):hover .media:before{
+
+article:not(.active):hover .media:before {
   background-color: #fff
 }
 article:not(.active) .media:before {

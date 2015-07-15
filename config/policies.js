@@ -8,5 +8,8 @@ module.exports.policies = {
   },
   'UserController': {
     'profile': 'isAuthenticated'
+  },
+  'VoteController': {
+    '*': 'isAuthenticated'
   }
 };

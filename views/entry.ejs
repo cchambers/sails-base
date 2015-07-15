@@ -2,6 +2,7 @@
   <article class="active">
     <div class="contain">
       <header>
+      <% console.log(data[0]) %>
         <h1><%= data[0].title %></h1>
       </header>
       <section>
@@ -11,7 +12,7 @@
         <%- data[0].content %>
       </section>
       <footer>
-        <cite><strong><%= data[0].postedBy %></strong> &rarr; <%= data[0].postedTo %></cite>
+        <cite><a href="/users/entries/<%= data[0].postedBy %>"><%= data[0].postedBy %></a> &rarr; <a href="/sub/<%= data[0].postedTo %>"><%= data[0].postedTo %></a></cite>
       </footer>
     </div>
   </article>
