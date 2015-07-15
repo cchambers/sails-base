@@ -1,22 +1,24 @@
 <% if (data[entry].media.indexOf('imgur') > 0) { %>
-<div class="media" style="background-image:url(<%= data[entry].media %>)"><img src="<%= data[entry].media %>"></div>
+<div class="media imgur" style="background-image:url(<%= data[entry].media %>)"><img src="<%= data[entry].media %>"></div>
 <% } %> 
 
 <% if (data[entry].media.indexOf('gfycat') > 0) { %>
-<div class="media">
-  <iframe src='<%= data[entry].media %>' frameborder='0' scrolling='no' width='650' height='366' style='-webkit-backface-visibility: hidden;-webkit-transform: scale(1);' ></iframe>
+<% var url = "" %>
+<div class="media gfycat" style="height: 40rem">
+  <video id="sampleMovie" loop autoplay src="http://zippy.gfycat.com/OrdinarySlipperyGalapagossealion.webm" controls></video>
 </div>
+
 <% } %> 
 
 <% if (data[entry].media.indexOf('youtube') > 0) { %>
-<div class="media">
+<div class="media youtube">
   <% if (data[entry].media.indexOf('watch?v') > 0) { %>
-    <% var which = data[entry].media.split("=")[1] %>
-    <iframe width="640" height="360" src="https://www.youtube.com/embed/<%= which %>" frameborder="0" allowfullscreen></iframe>
+  <% var which = data[entry].media.split("=")[1] %>
+  <iframe width="640" height="360" src="https://www.youtube.com/embed/<%= which %>" frameborder="0" allowfullscreen></iframe>
   <% } %> 
 
-  <% if (data[entry].media.indexOf('embed') > 0) { %>
-    <iframe width="640" height="360" src="<%= data[entry].media %>" frameborder="0" allowfullscreen></iframe>
+  <% if (data[entry].media.indexOf('embed')) { %>
+  <iframe width="640" height="360" src="<%= data[entry].media %>" frameborder="0" allowfullscreen></iframe>
   <% } %> 
 
 </div>

@@ -2,30 +2,30 @@
   <article class="active">
     <div class="contain">
       <header>
-      <% console.log(data[0]) %>
-        <h1><%= data[0].title %></h1>
+      <% var entry = 0 %>
+        <h1><%= data[entry].title %></h1>
       </header>
       <section>
-        <% if (data[0].media) { %>
-        <div class="media"><img src="<%= data[0].media %>"></div>
+        <% if (data[entry].media) { %>
+        <%- include media-handler %>
         <% } %>
-        <%- data[0].content %>
+        <%- data[entry].content %>
       </section>
       <footer>
-        <cite><a href="/users/entries/<%= data[0].postedBy %>"><%= data[0].postedBy %></a> &rarr; <a href="/sub/<%= data[0].postedTo %>"><%= data[0].postedTo %></a></cite>
+        <cite><a href="/users/entries/<%= data[entry].postedBy %>"><%= data[entry].postedBy %></a> &rarr; <a href="/sub/<%= data[entry].postedTo %>"><%= data[entry].postedTo %></a></cite>
       </footer>
     </div>
   </article>
 </div>
 <div class="row single-entry">
-    <% for(i = 0; i< data[0].comments.length; i++) {%>
+    <% for(i = 0; i< data[entry].comments.length; i++) {%>
         <article class="active">
             <div class="contain">
                 <header>
-                    <%=data[0].comments[i].postedBy %>
+                    <%=data[entry].comments[i].postedBy %>
                 </header>
                 <section>
-                    <%=data[0].comments[i].content %>
+                    <%=data[entry].comments[i].content %>
                 </section>
             </div>
         </article>
