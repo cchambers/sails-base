@@ -35,6 +35,10 @@ module.exports = {
     }],
 
     postedBy: {
+      model: 'name',
+    },
+
+    user: {
       model: 'user'
     },
 
@@ -54,13 +58,13 @@ module.exports = {
     },
 
     comments: {
-        collection: 'comment',
-        via: 'entry'
+      collection: 'comment',
+      via: 'entry'
     },
 
     votes: {
-      collection: "vote",
-      via: "entry"
+      collection: 'vote',
+      via: 'entry'
     },
 
     score: function() {

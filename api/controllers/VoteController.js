@@ -1,11 +1,14 @@
-/**
- * VoteController
- *
- * @description :: Server-side logic for managing Votes
- * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
- */
-
 module.exports = {
-	
+	up: function (req, res) {
+
+  },
+
+  down: function (req, res) {
+
+  },
+
+  unset: function (req, res) {
+
+  }
 };
 

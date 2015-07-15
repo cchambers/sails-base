@@ -8,9 +8,16 @@
 module.exports = {
 
   attributes: {
-    user: 'model',
-    entry: 'model',
-    vote: bool
+    user: {
+      model: 'user'
+    },
+    name: {
+      model: 'name'
+    },
+    entry: {
+      model: 'entry' 
+    },
+    vote: 'boolean'
   }
 };
 

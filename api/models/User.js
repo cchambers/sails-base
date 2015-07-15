@@ -21,11 +21,10 @@ module.exports = {
       unique: true
     },
 
-    usernames: [{
-      type: 'string',
-      minLength: 4,
-      unique: true
-    }],
+    names: {
+      collection: 'name',
+      via: 'user'
+    },
 
     online: {
       type: 'boolean',
@@ -43,8 +42,8 @@ module.exports = {
     },
 
     votes: {
-      collection: "vote",
-      via: "user"
+      collection: 'vote',
+      via: 'user'
     },
 
     toJSON: function() {
