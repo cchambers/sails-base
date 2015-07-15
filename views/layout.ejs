@@ -2,9 +2,9 @@
 <html>
 <head>
   <title>the sauce
-  <% if (req.params.sub) { %>
-  (<%=  req.params.sub %>)
-  <%  }  %>
+    <% if (req.params.sub) { %>
+    (<%=  req.params.sub %>)
+    <%  }  %>
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700' rel='stylesheet' type='text/css'>
@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="/styles/components/control-panel.css">
   <link rel="stylesheet" href="/styles/components/entry.css">
   <link rel="stylesheet" href="/styles/components/forms.css">
+  <link rel="stylesheet" href="/styles/components/notice.css">
   <link rel="stylesheet" href="/styles/components/vote.css">
   <link rel="stylesheet" href="/styles/framework/basi.css">
   <link rel="stylesheet" href="/styles/importer.css">
@@ -32,14 +33,21 @@
       <%- include controls %>
     </div>
   </header>
+  <div class="contain">
+    <div class="notice success">
+      <p>
+        This project is in an early pre-alpha stage. The database may be reset without notice. Please do not share links as the development server is not prepared for traffic and may experience downtime. Thanks!
+      </p>
+    </div>
+  </div>
   <%- include signup %>
   <main>
     <%- body %>
-    <!--TEMPLATES-->
-    
-    <!--TEMPLATES END-->
   </main>
   <footer></footer>
+  <!--TEMPLATES-->
+  
+  <!--TEMPLATES END-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://cdn.rawgit.com/showdownjs/showdown/1.1.0/dist/showdown.min.js"></script>
   <!--SCRIPTS-->

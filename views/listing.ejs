@@ -15,7 +15,7 @@
         </header>
         <section>
           <% if (data[entry].media) { %>
-          <div class="media" style="background-image:url(<%= data[entry].media %>)"><img src="<%= data[entry].media %>"></div>
+          <%- include media-handler %>
           <% } %>
           <%- data[entry].content %>
         </section>
