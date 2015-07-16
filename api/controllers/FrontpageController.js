@@ -34,6 +34,7 @@ module.exports = {
   },
 
   listing: function (req, res) {
+    data = null;
     if (req.params.sub) {
       Entry.find({ postedTo: req.params.sub })
       .sort({ createdAt: 'desc' })
@@ -41,6 +42,11 @@ module.exports = {
       .exec( function (err, data) {
         if (err) return next(err);
         return res.view('listing', { user: req.user, data: data })
+        });
+      Sub.findOne({ name: req.params.sub })
+      .exec( function (err, subData) {
+        if (err) return next(err);
+        data.sub = subData;
       });
     } else {
       Entry.find({}).sort({createdAt: 'desc'})
