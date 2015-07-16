@@ -34,28 +34,46 @@ module.exports = {
   },
 
   listing: function (req, res) {
-    data = null;
-    if (req.params.sub) {
-      Entry.find({ postedTo: req.params.sub })
-      .sort({ createdAt: 'desc' })
-      .populate('comments')
-      .exec( function (err, data) {
-        if (err) return next(err);
-        return res.view('listing', { user: req.user, data: data })
+
+    var listingData = {};
+    var sub = req.params.sub || false;
+
+    function listingView() {
+      return res.view('listing', { user: req.user, data: listingData })
+    }
+
+    function getEntries() {
+      if (sub) {
+        Entry.find({ postedTo: sub })
+        .sort({ createdAt: 'desc' })
+        .populate('comments')
+        .exec( function (err, data) {
+          if (err) return next(err);
+          listingData.entries = data;
+          getSub();
         });
-      Sub.findOne({ name: req.params.sub })
-      .exec( function (err, subData) {
-        if (err) return next(err);
-        data.sub = subData;
-      });
-    } else {
-      Entry.find({}).sort({createdAt: 'desc'})
-      .populate('comments')
+      } else {
+        Entry.find({})
+        .sort({createdAt: 'desc'})
+        .populate('comments')
+        .exec(function (err, data) {
+          if (err) return next(err);
+          listingData.entries = data;
+          listingView();
+        });
+      }
+    }
+
+    function getSub() {
+      Sub.findOne({ name: sub })
       .exec( function (err, data) {
         if (err) return next(err);
-        return res.view('listing', { user: req.user, data: data })
+        listingData.sub = data;
+        listingView();
       });
     }
+
+    getEntries();
   },
 
   single: function (req, res) {
