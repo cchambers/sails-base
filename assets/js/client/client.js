@@ -35,15 +35,18 @@ var client = {
 
     $(".entry").on("keyup", client.entryKeypressHandler);
 
-    $(".entries").on("click", "h1", function () {
-      $("entries article").removeClass("active");
-      var $article = $(this).parents("article");
-      $article.toggleClass("active");
-    });
+    $(".entries").on("click", "h1", client.toggleEntry);
+    $(".entries").on("click", ".media", client.toggleEntry);
 
     $(".entries article").each( function () {
       $(this).find("footer").append('<ul><li class="good">&uarr;</li><li class="bad">&darr;</li><li class="save">♨</li><li class="report">✗</li></ul>');
     });
+  },
+
+  toggleEntry: function () {
+    $("entries article").removeClass("active");
+    var $article = $(this).parents("article");
+    $article.toggleClass("active");
   },
 
   submitForm: function ($form) {

@@ -13,16 +13,13 @@ article footer:before {
   float: right;
 }
 
-article ul {
-  display: none;
-}
-
-article.active ul {
+article.active footer ul {
   display: block;
   width: 100%;
 }
 
 article footer ul {
+  display: none;
   list-style: none;
   padding: 0;
   margin: 0;

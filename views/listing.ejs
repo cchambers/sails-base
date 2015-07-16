@@ -2,9 +2,16 @@
   <% for (entry in data) { %>
   <article class="row" data-timestamp="<%= data[entry].createdAt %>">
     <div class="contain">
-      <div class="vote">
-        <div class="up">&uarr;</div>
-        <div class="down">&darr;</div>
+      <div class="vote lh20">
+        <ul class="score">
+          <li class="ups"><%= data[entry].ups %></li>
+          <li class="downs"><%= data[entry].downs %></li>
+          <li class="totes"><%= data[entry].score() %></li>
+        </ul>
+        <div class="control">
+          <div class="up"></div>
+          <div class="down"></div>
+        </div>
       </div>
       <div class="entry">
         <header>
@@ -14,7 +21,7 @@
         </header>
         <section>
           <% if (data[entry].media) { %>
-          <div class="media" style="background-image:url(<%= data[entry].media %>)"><img src="<%= data[entry].media %>"></div>
+          <%- include media-handler %>
           <% } %>
           <%- data[entry].content %>
         </section>

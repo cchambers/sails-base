@@ -2,3 +2,8 @@
   float: left;
   width: calc(100% - 7.5rem);
 }
+
+.media video {
+  max-height: 100%;
+  max-width: 100%;
+}

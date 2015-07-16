@@ -1,0 +1,44 @@
+.notice:before {
+  content: 'Notice:';
+  text-transform: uppercase;
+  display: block;
+  font-weight: bold;
+  text-indent: 0;
+}
+
+.notice {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 5;
+  font-size: 1.4rem;
+  font-family: "Consolas", monospace;
+  padding: 1.5rem;
+  border-style: dashed;
+  border-width: 1px;
+  border-color: #121212;
+  background-color: #ddd;
+  border-radius: .5rem;
+  text-indent: 1.5rem;
+  max-width: 50rem;
+  opacity: .9;
+  pointer-events: none;
+}
+
+.notice.alert {
+  color: rgba(223, 61, 130, 1);
+  border-color: rgba(223, 61, 130, 1);
+  background-color: rgba(223, 61, 130, .15);
+}
+
+.notice.error {
+  color: rgba(219, 14, 58, 1);
+  border-color: rgba(219, 14, 58, 1);
+  background-color: rgba(219, 14, 58, .15);
+}
+
+.notice.success {
+  color: rgba(56, 150, 21, 1);
+  border-color: rgba(56, 150, 21, 1);
+  background-color: rgba(56, 150, 21, .15);
+}

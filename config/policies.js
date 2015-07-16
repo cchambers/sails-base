@@ -4,9 +4,15 @@ module.exports.policies = {
     'new': 'isAuthenticated'
   },
   'FrontPageController': {
-    'userlist': 'isAdmin'
+    'userlist': ['isAuthenticated', 'isAdmin']
   },
   'UserController': {
     'profile': 'isAuthenticated'
+  },
+  'VoteController': {
+    '*': 'isAuthenticated'
+  },
+  'CommentController': {
+    '*': 'isAuthenticated'
   }
 };

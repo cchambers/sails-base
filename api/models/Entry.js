@@ -35,16 +35,20 @@ module.exports = {
     }],
 
     postedBy: {
+      model: 'name',
+    },
+
+    user: {
       model: 'user'
     },
 
     ups: {
-      type: 'integer',
-      defaultsTo: 0
+      type: 'array',
+      defaultsTo: 1
     },
 
     downs: {
-      type: 'integer',
+      type: 'array',
       defaultsTo: 0
     },
 
@@ -54,8 +58,23 @@ module.exports = {
     },
 
     comments: {
-        collection: 'comment',
-        via: 'entry'
+      collection: 'comment',
+      via: 'entry'
+    },
+
+    votes: {
+      collection: 'vote',
+      via: 'entry'
+    },
+
+    score: function() {
+      return this.ups - this.downs;
+    },
+
+    toJSON: function() {
+      var obj = this.toObject();
+      delete obj.password;
+      return obj;
     }
 
   }

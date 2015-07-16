@@ -1,10 +1,11 @@
 <article class="row active user-profile">
   <div class="contain">
-    <h1>
-      <%= data[0].email %>
-    </h1>
     <p>
-      <%= data[0].username %> &rarr; <%= data[0].createdAt %>
+      <%= data[0].username %> was created on <%= data[0].createdAt %>
     </p>
+    <h2>
+      <%= data[0].entries.length %> posts by <%= data[0].username %> 
+    </h2>
+
   </div>
 </article>

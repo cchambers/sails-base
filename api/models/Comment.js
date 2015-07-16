@@ -9,7 +9,7 @@ module.exports = {
         model: 'comment'
     },
 
-    children:{
+    children: {
         collection: 'comment',
         via: 'parent'
     },

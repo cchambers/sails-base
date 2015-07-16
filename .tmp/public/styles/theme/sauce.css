@@ -13,7 +13,8 @@ body {
 
 .logo a,
 p a,
-li a { 
+li a,
+cite a { 
   color: #191919;
   border-bottom: 1px solid #DF3D82;
   border-top: 1px solid transparent;
@@ -23,7 +24,8 @@ li a {
 
 .logo a:hover,
 p a:hover,
-li a:hover { 
+li a:hover,
+cite a:hover { 
   color: #DF3D82;
   border-top: 1px solid #DF3D82;
 }
@@ -45,7 +47,6 @@ body > header .logo a {
   color: #DF3D82;
 }
 
-
 /* main article */
 main.active article {
   opacity: .5;
@@ -58,11 +59,8 @@ main.active article.active {
 
 article {
   position: relative;
-  min-height: 5rem;
+  min-height: 6rem;
   overflow: hidden;
-  margin-top: .75rem;
-  margin-bottom: .75rem;
-  transition: all 100ms linear;
 }
 
 article header,
@@ -76,7 +74,6 @@ article footer {
 
 article:not(.active):hover,
 article.active {
-  padding: 0.75rem;
   background-color: #fff;
   box-shadow: 0 1px 2px rgba(0,0,0,.15);
   opacity: 1;
@@ -112,56 +109,6 @@ article.active section {
   max-height: 500vh;
 }
 
-article .media + header {
-  max-width: 50%;
-}
-
-article:not(.active) .media {
-  position: absolute;
-  height: 10rem;
-  width: 60%;
-  right: 0;
-  top: -1.5rem;
-  z-index: 1;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center left;
-}
-
-article:not(.active):hover .media:before{
-  background-color: #fff
-}
-article:not(.active) .media:before {
-  content: '';
-  position: absolute;
-  height: 100%;
-  width: 500rem;
-  left: -490rem;
-  background-color: #f2f2f2;
-  transform: skew(-45deg);
-  transition: all 250ms ease;
-  z-index: 0;
-}
-
-article.active .media {
-  display: inline-block;
-  float: left;
-  background-size: 0 0;
-  margin-right: 1.5rem;
-  margin-bottom: 1.5rem;
-  max-height: 50vh;
-  max-width: 50vw;
-}
-
-article .media img {
-  display: none;
-}
-
-article.active .media img {
-  display: block;
-  max-height: 100%;
-  max-width: 100%;
-}
 
 article ul, 
 article ol {

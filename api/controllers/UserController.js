@@ -1,5 +1,4 @@
 module.exports = {
-
   make: function (req, res) {
     User.register(new User({ email : req.body.email }), req.body.password, function(err, account) {
       if (err) {
@@ -34,8 +33,9 @@ module.exports = {
   },
 
   userProfile: function (req, res) {
-    User.find({ username: req.user.username }, function (err, data) {
-      if (err) return next(err);
+    User.find({ username: req.user.username })
+    .populate('entries')
+    .then( function (data) {
       return res.view('user-profile', { user: req.user, data: data });
     });
   }
