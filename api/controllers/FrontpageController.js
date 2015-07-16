@@ -65,11 +65,9 @@ module.exports = {
     }
 
     function getSub() {
-      console.log(sub);
-      Sub.find({ name: sub })
+      Sub.findOne({ name: sub })
       .exec( function (err, data) {
         if (err) return next(err);
-        console.log("DATA", data)
         listingData.sub = data;
         listingView();
       });

@@ -1,5 +1,6 @@
 <div class="row entries">
   <% for (entry in data.entries) { %>
+  <% console.log(data.entries[entry]) %>
   <article class="row" data-timestamp="<%= data.entries[entry].createdAt %>">
     <div class="contain">
       <div class="vote lh20">
