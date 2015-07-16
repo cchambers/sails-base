@@ -1,0 +1,29 @@
+<div class="contain new-thing">
+  <form method="POST" data-callback="editSub" action="/sub">
+    <div class="row">
+      <div class="col-1-2">
+        <div class="row pad-bottom-light">
+          <label for="creator">Use</label>
+          <select name="creator" id="posted-by">
+            <option selected value="<%= user.username %>"><%= user.username %></option>
+          </select>
+        </div>
+        <div class="row pad-bottom-light">
+          <label for="name">Name it</label>
+          <input type="text" name="name" id="name">
+        </div>
+        <div class="row pad-bottom-light">
+          <label for="tagline">Tagline (optional)</label>
+          <input type="text" name="tagline" id="tagline">
+        </div>
+        <div class="row pad-bottom-light">
+          <label for="css">Custom CSS (optional)</label>
+          <input type="textarea" name="css" id="css">
+        </div>
+        <div class="row pad-bottom-light">
+          <a class="button primary submit">make it</a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -8,6 +8,9 @@
     <li><a href="/new/sub">create sub</a></li>
     <li><a href="/sublist">list subs</a></li>
     <li><a href="/logout">log out</a></li>
+    <% if (data.sub && data.sub.creator == user.username) { %>
+    <li><a href="/edit-sub">edit sub</a></li>
+    <% } %>
     <% if (user.admin) { %>
     <li class="bold pad-left">admin:</li>
     <li><a href="/userlist">userlist</a></li>
