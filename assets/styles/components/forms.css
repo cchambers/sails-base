@@ -25,6 +25,10 @@ select option {
   padding: 0 .5rem;
 }
 
+input[type=textarea] {
+  min-height: 30rem;
+}
+
 input + input {
   margin-left: 1.5rem;
 }

@@ -3,25 +3,19 @@
     <div class="row">
       <div class="col-1-2">
         <div class="row pad-bottom-light">
-          <label for="creator">Use</label>
-          <select name="creator" id="posted-by">
-            <option selected value="<%= user.username %>"><%= user.username %></option>
-          </select>
+          <label for="name">Edit Name</label>
+          <input type="text" name="name" id="name" value=<%= data.sub.name %>>
         </div>
         <div class="row pad-bottom-light">
-          <label for="name">Name it</label>
-          <input type="text" name="name" id="name">
+          <label for="tagline">Edit Tagline</label>
+          <input type="text" name="tagline" id="tagline" value=<%= data.sub.tagline %>>
         </div>
         <div class="row pad-bottom-light">
-          <label for="tagline">Tagline (optional)</label>
-          <input type="text" name="tagline" id="tagline">
+          <label for="css">Edit CSS</label>
+          <input type="textarea" name="css" id="css" value=<%= data.sub.css %>>
         </div>
         <div class="row pad-bottom-light">
-          <label for="css">Custom CSS (optional)</label>
-          <input type="textarea" name="css" id="css">
-        </div>
-        <div class="row pad-bottom-light">
-          <a class="button primary submit">make it</a>
+          <a class="button primary submit">make edit</a>
         </div>
       </div>
     </div>
