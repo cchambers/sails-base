@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>the sauce
-    <% if (data.sub) { %>
+    <% if (data && data.sub) { %>
     (<%=  data.sub.name %>)
     <%  }  %>
   </title>
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="/styles/theme/refactor.css">
   <link rel="stylesheet" href="/styles/theme/sauce.css">
   <!--STYLES END-->
-  <% if (data.sub) { if (data.sub.css) {%>
+  <% if (data && data.sub) { if (data.sub.css) {%>
   <style> <%= data.sub.css %> </style>
   <% } }%>
 </head>
