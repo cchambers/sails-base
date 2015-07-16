@@ -13,8 +13,11 @@ module.exports = {
     data = 'undefined';
     var util = require('util');
 
-    console.log(util.inspect(req, {showHidden: false, depth: null}));
-    return res.view('edit-sub', { user: req.user, data: data });
+    Sub.findOne({ user: req.params.sub })
+      .exec( function (err, subData) {
+        if(err) return next(err);
+        return res.view('edit-sub', { user: req.user, data: subData });
+      });
   }
 };
 

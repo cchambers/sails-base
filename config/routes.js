@@ -18,8 +18,7 @@ module.exports.routes = {
 
   'get /sub/:sub': 'FrontpageController.listing',
   'get /sub/:sub/:slug': 'FrontpageController.single',
+  'get /sub/:sub/edit': 'SubController.edit',
 
-  'get /user/:user': 'UserController.userProfile',
-  
-  'get /edit/:sub': 'SubController.edit'
+  'get /user/:user': 'UserController.userProfile'
 };

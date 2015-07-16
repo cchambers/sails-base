@@ -9,7 +9,7 @@
     <li><a href="/sublist">list subs</a></li>
     <li><a href="/logout">log out</a></li>
     <% if (data.sub && data.sub.creator == user.username) { %>
-    <li><a href="/edit/<%= data.sub.name %>">edit sub</a></li>
+    <li><a href="/sub/<%= data.sub.name %>/edit">edit sub</a></li>
     <% } %>
     <% if (user.admin) { %>
     <li class="bold pad-left">admin:</li>
