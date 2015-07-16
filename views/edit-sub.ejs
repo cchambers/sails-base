@@ -3,16 +3,12 @@
     <div class="row">
       <div class="col-1-2">
         <div class="row pad-bottom-light">
-          <label for="name">Edit Name</label>
-          <input type="text" name="name" id="name" value=<%= data.sub.name %>>
-        </div>
-        <div class="row pad-bottom-light">
           <label for="tagline">Edit Tagline</label>
-          <input type="text" name="tagline" id="tagline" value=<%= data.sub.tagline %>>
+          <input type="text" name="tagline" id="tagline" value=<%= data.sub.tagline %> cols="36" rows="99" wrap="virtual">
         </div>
         <div class="row pad-bottom-light">
           <label for="css">Edit CSS</label>
-          <input type="textarea" name="css" id="css" value=<%= data.sub.css %>>
+          <textarea name="css" id="css"><%- data.sub.css %></textarea>
         </div>
         <div class="row pad-bottom-light">
           <a class="button primary submit">make edit</a>

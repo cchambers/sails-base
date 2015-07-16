@@ -10,14 +10,18 @@ module.exports = {
   },
   
   edit: function (req, res) {
-    data = 'undefined';
-    var util = require('util');
-
-    Sub.findOne({ user: req.params.sub })
-      .exec( function (err, subData) {
+    console.log(req.params.sub)
+    Sub.findOne({ name: req.params.sub })
+      .exec( function (err, data) {
         if(err) return next(err);
-        return res.view('edit-sub', { user: req.user, data: subData });
+        console.log("%j",data);
+        data.sub = data;
+        return res.view('edit-sub', { user: req.user, data: data });
       });
+  },
+  
+  submitEdit: function (req, res) {
+    
   }
 };
 
