@@ -3,7 +3,7 @@ module.exports = {
     if ( typeof(req.user) == 'undefined' ) {
       return res.redirect('/');
     } else {
-      return res.view('new-entry', { user: req.user });
+      return res.view('new-entry', { user: req.user, data: false });
     }
   }
 };
