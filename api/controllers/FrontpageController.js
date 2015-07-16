@@ -34,22 +34,48 @@ module.exports = {
   },
 
   listing: function (req, res) {
-    if (req.params.sub) {
-      Entry.find({ postedTo: req.params.sub })
-      .sort({ createdAt: 'desc' })
-      .populate('comments')
+
+    var listingData = {};
+    var sub = req.params.sub || false;
+
+    function listingView() {
+      return res.view('listing', { user: req.user, data: listingData })
+    }
+
+    function getEntries() {
+      if (sub) {
+        Entry.find({ postedTo: sub })
+        .sort({ createdAt: 'desc' })
+        .populate('comments')
+        .exec( function (err, data) {
+          if (err) return next(err);
+          listingData.entries = data;
+          getSub();
+        });
+      } else {
+        Entry.find({})
+        .sort({createdAt: 'desc'})
+        .populate('comments')
+        .exec(function (err, data) {
+          if (err) return next(err);
+          listingData.entries = data;
+          listingView();
+        });
+      }
+    }
+
+    function getSub() {
+      console.log(sub);
+      Sub.find({ name: sub })
       .exec( function (err, data) {
         if (err) return next(err);
-        return res.view('listing', { user: req.user, data: data })
-      });
-    } else {
-      Entry.find({}).sort({createdAt: 'desc'})
-      .populate('comments')
-      .exec( function (err, data) {
-        if (err) return next(err);
-        return res.view('listing', { user: req.user, data: data })
+        console.log("DATA", data)
+        listingData.sub = data;
+        listingView();
       });
     }
+
+    getEntries();
   },
 
   single: function (req, res) {

@@ -1,12 +1,11 @@
 <div class="row entries">
-  <% for (entry in data) { %>
-  <article class="row" data-timestamp="<%= data[entry].createdAt %>">
+  <% for (entry in data.entries) { %>
+  <article class="row" data-timestamp="<%= data.entries[entry].createdAt %>">
     <div class="contain">
       <div class="vote lh20">
         <ul class="score">
-          <li class="ups"><%= data[entry].ups %></li>
-          <li class="downs"><%= data[entry].downs %></li>
-          <li class="totes"><%= data[entry].score() %></li>
+          <li class="ups"><%= data.entries[entry].ups %></li>
+          <li class="downs"><%= data.entries[entry].downs %></li>
         </ul>
         <div class="control">
           <div class="up"></div>
@@ -16,17 +15,17 @@
       <div class="entry">
         <header>
           <h1>
-            <%= data[entry].title %>
+            <%= data.entries[entry].title %>
           </h1>
         </header>
         <section>
-          <% if (data[entry].media) { %>
+          <% if (data.entries[entry].media) { %>
           <%- include media-handler %>
           <% } %>
-          <%- data[entry].content %>
+          <%- data.entries[entry].content %>
         </section>
         <footer>
-          <cite><strong><%= data[entry].postedBy %></strong> &rarr; <a href="/sub/<%= data[entry].postedTo %>"><%= data[entry].postedTo %></a> (<a href="/sub/<%= data[entry].postedTo %>/<%= data[entry].slug %>"><%= data[entry].comments.length %>&nbspcomments</a>)</cite>
+          <cite><strong><%= data.entries[entry].postedBy %></strong> &rarr; <a href="/sub/<%= data.entries[entry].postedTo %>"><%= data.entries[entry].postedTo %></a> (<a href="/sub/<%= data.entries[entry].postedTo %>/<%= data.entries[entry].slug %>"><%= data.entries[entry].comments.length %>&nbspcomments</a>)</cite>
         </footer>
       </div>
 
