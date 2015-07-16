@@ -55,7 +55,6 @@ module.exports = {
   single: function (req, res) {
     Entry.find({ slug: req.params.slug })
     .populate('comments')
-
     .exec(function(err, data) {
       if (err) return next(err);
       return res.view('entry', { user: req.user, data: data })

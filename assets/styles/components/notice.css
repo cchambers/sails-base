@@ -7,6 +7,10 @@
 }
 
 .notice {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 5;
   font-size: 1.4rem;
   font-family: "Consolas", monospace;
   padding: 1.5rem;
@@ -15,9 +19,10 @@
   border-color: #121212;
   background-color: #ddd;
   border-radius: .5rem;
-  margin: 1.5rem 0rem;
   text-indent: 1.5rem;
   max-width: 50rem;
+  opacity: .9;
+  pointer-events: none;
 }
 
 .notice.alert {

@@ -5,7 +5,58 @@
   z-index: 3;
 }
 
-.vote .up,
+.vote:hover .control {
+  opacity: 1;
+}
+
+.vote .control {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 6rem;
+  width: 6rem;
+  transition: all 100ms linear;
+}
+
+.vote .control .up,
+.vote .control .down {
+  height: 50%;
+  width: 100%;
+  opacity: .5;
+  cursor: pointer;
+  transition: opacity 100ms linear;
+}
+
+.vote .control .up:hover,
+.vote .control .down:hover {
+  opacity: 1;
+}
+
+.vote .control .up {
+  background-color: #DF3D82;
+}
+
+.vote .control .down {
+  background-color: #121212;
+}
+
+.vote ul.score {
+  width: 6rem;
+  padding-right: 1.5rem;
+  list-style: none;
+  padding-top: .6rem;
+  text-align: right;
+  font-family: "Consolas";
+  line-height: 1.5rem;
+  font-size: 1.2rem;
+}
+
+.vote .ups { color: #666; }
+.vote .downs { color: #ddd; }
+.vote .totes { color: #121212; font-weight: bold; }
+
+/*.vote .up,
 .vote .down {
   text-align: center;
   width: 3rem;
@@ -25,12 +76,4 @@
   color: #f2f2f2;
   background-color: #121212;
   cursor: pointer;
-}
-
-.vote .score {
-  width: 4.5rem;
-  text-align: center;
-  font-family: "Consolas";
-  line-height: 4rem;
-  font-size: 1.2rem;
-}
+}*/

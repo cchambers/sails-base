@@ -3,9 +3,15 @@
   <article class="row" data-timestamp="<%= data[entry].createdAt %>">
     <div class="contain">
       <div class="vote lh20">
-        <!-- <div class="up">&uarr;</div>
-        <div class="down">&darr;</div> -->
-        <div class="score"><%= data[entry].score() %></div>
+        <ul class="score">
+          <li class="ups"><%= data[entry].ups %></li>
+          <li class="downs"><%= data[entry].downs %></li>
+          <li class="totes"><%= data[entry].score() %></li>
+        </ul>
+        <div class="control">
+          <div class="up"></div>
+          <div class="down"></div>
+        </div>
       </div>
       <div class="entry">
         <header>
