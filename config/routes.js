@@ -19,5 +19,7 @@ module.exports.routes = {
   'get /sub/:sub': 'FrontpageController.listing',
   'get /sub/:sub/:slug': 'FrontpageController.single',
 
-  'get /user/:user': 'UserController.userProfile'
+  'get /user/:user': 'UserController.userProfile',
+
+  'post /vote/:direction/:entry': 'VoteController.vote',
 };

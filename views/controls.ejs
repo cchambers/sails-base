@@ -14,12 +14,7 @@
     <% } %>
   </ul>
   <% } else { %>
-  <form class="login-form" data-callback="checkLogin" action="/login">
-    <input type="email" placeholder="email" name="email">
-    <input type="password" placeholder="password" name="password">
-    <a class="button primary submit">log in</a>
-    <!-- <a class="button secondary sign-up">sign up</a> -->
-    <output></output>
-  </form>
+  <%- include login-form %>
+  <%- include signup-form %>
   <% } %>
 </div>

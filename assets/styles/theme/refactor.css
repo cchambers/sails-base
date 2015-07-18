@@ -28,10 +28,10 @@ article footer ul {
 article footer ul li {
   float: left;
   height: 4.5rem;
-  width: 25%;
-  text-align: center;
-  line-height: 4.5rem;
+  width: 4.5rem;
   font-size: 3rem;
+  line-height: 4.5rem;
+  text-align: center;
 }
 
 article li:hover {

@@ -4,13 +4,10 @@
   <article class="row" data-timestamp="<%= entries[entry].createdAt %>">
     <div class="contain">
       <div class="vote lh20">
-        <ul class="score">
-          <li class="ups"><%= entries[entry].ups %></li>
-          <li class="downs"><%= entries[entry].downs %></li>
-        </ul>
+       
         <div class="control">
-          <div class="up"></div>
-          <div class="down"></div>
+          <div class="up" data-dir="up"></div>
+          <div class="down" data-dir="down"></div>
         </div>
       </div>
       <div class="entry">
@@ -18,6 +15,9 @@
           <h1>
             <%= entries[entry].title %>
           </h1>
+          <div class="score">
+            <span class="totes"><%= entries[entry].score() %></span>  &rarr; <span class="ups">(<%= entries[entry].ups %></span> <span class="downs">- <%= entries[entry].downs %>)</span>
+          </div>
         </header>
         <section>
           <%- include media-handler %>
@@ -25,6 +25,7 @@
         </section>
         <footer>
           <cite><strong><%= entries[entry].postedBy %></strong> &rarr; <a href="/sub/<%= entries[entry].postedTo %>"><%= entries[entry].postedTo %></a> (<a href="/sub/<%= entries[entry].postedTo %>/<%= entries[entry].slug %>"><%= entries[entry].comments.length %>&nbsp;comments</a>)</cite>
+          <ul><li class="close" title="close">✗</li><!--li class="save" title="">♨</li--></ul>
         </footer>
       </div>
 

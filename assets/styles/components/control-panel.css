@@ -22,6 +22,14 @@
   margin-left: 1.5rem;
 }
 
+.panel form {
+  display: none;
+}
+
+.panel form.active {
+  display: block;
+}
+
 @media (max-width: 800px) {
   .panel a {
     color: #f2f2f2;

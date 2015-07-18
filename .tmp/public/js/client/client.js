@@ -5,6 +5,23 @@ String.prototype.trunc = function(n,useWordBoundary){
   return toLong ? s_ : s_;
 };
 
+(function($){
+  $.fn.isActive = function () {
+    return $(this).hasClass("active");
+  };
+
+  $.fn.activate = function (doSiblings, toggle) {
+    if (doSiblings) $(this).siblings().deactivate();
+    if (toggle) return $(this).toggleClass("active");
+    return $(this).addClass("active");
+  };
+
+  $.fn.deactivate = function () {
+    return $(this).removeClass("active");
+  };
+})(jQuery);
+
+
 var client = {
   init: function () {
     client.setup();
@@ -35,18 +52,41 @@ var client = {
 
     $(".entry").on("keyup", client.entryKeypressHandler);
 
-    $(".entries").on("click", "h1", client.toggleEntry);
-    $(".entries").on("click", ".media", client.toggleEntry);
-
-    $(".entries article").each( function () {
-      $(this).find("footer").append('<ul><li class="good">&uarr;</li><li class="bad">&darr;</li><li class="save">♨</li><li class="report">✗</li></ul>');
+    $(".entry").on("click", ".close", function (e) {
+      e.stopPropagation();
+      var $parent = $(this).parents("article");
+      console.log($parent)
+      $parent.removeClass("active");
     });
-  },
 
-  toggleEntry: function () {
-    $("entries article").removeClass("active");
-    var $article = $(this).parents("article");
-    $article.toggleClass("active");
+    $("body").on("click", "article:not(.active)", function (e) {
+      var $target = $(e.target);
+      if (!$(e.target).attr("href")) {
+        $(this).activate(true);
+
+      }
+    });
+
+    $(".entries").on("click", ".control div", function () {
+      // decide to post up, down, or neutral.
+      var dir = $(this).data().dir;
+      var $el = $(this);
+
+      if ($el.isActive()) {
+        $el.deactivate();
+      } else {
+        $el.activate(true);
+      }
+
+    });
+
+    $(".vote .control").on("click", "div", client.doVote);
+
+    $(".panel").on("click", ".swap-panel-forms", function () {
+      $(".panel form").toggleClass("active");
+      $(".panel form.active input").first().focus();
+    });
+    $(".panel form.active input").first().focus();
   },
 
   submitForm: function ($form) {
@@ -118,6 +158,10 @@ var client = {
 
   entryKeypressHandler: function (e) {
 
+  },
+
+  doVote: function () {
+    // decide what kind of vote it is and send it.
   }
 }
 
