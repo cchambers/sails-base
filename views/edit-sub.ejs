@@ -1,5 +1,5 @@
-<div class="contain new-thing">
-  <form method="POST" data-callback="editSub" action="/sub">
+ <div class="contain edit-thing">
+  <form method="POST" data-callback="editSub" action="/sub/<%= data.sub.name %>/edit">
     <div class="row">
       <div class="col-1-2">
         <div class="row pad-bottom-light">
@@ -8,7 +8,7 @@
         </div>
         <div class="row pad-bottom-light">
           <label for="css">Edit CSS</label>
-          <textarea name="css" id="css"><%- data.sub.css %></textarea>
+          <textarea name="css" id="css" wrap="hard"><%- data.sub.css %></textarea>
         </div>
         <div class="row pad-bottom-light">
           <a class="button primary submit">make edit</a>

@@ -47,11 +47,15 @@ form output {
 
 .new-thing input,
 .new-thing textarea,
-.new-thing select {
+.new-thing select,
+.edit-thing input,
+.edit-thing textarea,
+.edit-thing select {
   width: 100%;
 }
 
-.new-thing textarea {
+.new-thing textarea,
+.edit-thing textarea {
   min-height: 15rem;
 }
 
