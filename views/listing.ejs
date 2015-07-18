@@ -1,15 +1,16 @@
 <div class="row entries">
   <% var entries = data.entries %>
   <% for (entry in entries) { %>
-  <article class="row" data-timestamp="<%= entries[entry].createdAt %>">
+  <article class="row" data-timestamp="<%= entries[entry].createdAt %>" data-id="<%= entries[entry].id %>">
     <div class="contain">
+    <% if (user) { %>
       <div class="vote lh20">
-       
         <div class="control">
           <div class="up" data-dir="up"></div>
           <div class="down" data-dir="down"></div>
         </div>
       </div>
+      <% } %>
       <div class="entry">
         <header>
           <h1>

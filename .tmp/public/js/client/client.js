@@ -67,20 +67,7 @@ var client = {
       }
     });
 
-    $(".entries").on("click", ".control div", function () {
-      // decide to post up, down, or neutral.
-      var dir = $(this).data().dir;
-      var $el = $(this);
-
-      if ($el.isActive()) {
-        $el.deactivate();
-      } else {
-        $el.activate(true);
-      }
-
-    });
-
-    $(".vote .control").on("click", "div", client.doVote);
+    $("body").on("click", ".vote .control div", client.doVote);
 
     $(".panel").on("click", ".swap-panel-forms", function () {
       $(".panel form").toggleClass("active");
@@ -161,7 +148,32 @@ var client = {
   },
 
   doVote: function () {
-    // decide what kind of vote it is and send it.
+    var dir = $(this).data().dir;
+    var $el = $(this);
+    var $entry = $(this).parents("article");
+    var id = $entry.data().id;
+
+    if ($el.isActive()) {
+      $el.deactivate();
+      dir = "neutral"
+    } else {
+      $el.activate(true);
+    }
+
+    client.sendVote(id, dir);
+    return;
+  },
+
+  sendVote: function (id, direction) {
+    console.log("Sending vote:", id, direction)
+    $.ajax({
+      type: 'POST',
+      url: '/vote/' + direction + "/" + id,
+      data: { doVote: true },
+      success: function (data) {
+        console.log(data);
+      }
+    });
   }
 }
 

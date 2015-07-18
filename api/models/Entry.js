@@ -43,12 +43,12 @@ module.exports = {
     },
 
     ups: {
-      type: 'array',
+      type: 'integer',
       defaultsTo: 1
     },
 
     downs: {
-      type: 'array',
+      type: 'integer',
       defaultsTo: 0
     },
 

@@ -5,9 +5,7 @@ module.exports.routes = {
   'get /sublist': 'FrontpageController.sublist',
 
   'get /me': 'UserController.myProfile',
-
-  'get /signup':   { view: 'signup' },
-  'get /login':    { view: 'login' },
+  
   'post /login': 'AuthController.login',
   '/logout': 'AuthController.logout',
 
