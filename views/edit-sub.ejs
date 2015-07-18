@@ -1,0 +1,19 @@
+ <div class="contain edit-thing">
+  <form method="POST" data-callback="editSub" action="/sub/<%= data.sub.name %>/edit">
+    <div class="row">
+      <div class="col-1-2">
+        <div class="row pad-bottom-light">
+          <label for="tagline">Edit Tagline</label>
+          <input type="text" name="tagline" id="tagline" value=<%= data.sub.tagline %> cols="36" rows="99" wrap="virtual">
+        </div>
+        <div class="row pad-bottom-light">
+          <label for="css">Edit CSS</label>
+          <textarea name="css" id="css" wrap="hard"><%- data.sub.css %></textarea>
+        </div>
+        <div class="row pad-bottom-light">
+          <a class="button primary submit">make edit</a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

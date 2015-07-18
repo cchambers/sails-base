@@ -26,6 +26,10 @@ module.exports = {
 
     moderators: [{
       type: 'string'
-    }]
+    }],
+    
+    css: {
+      type: 'string'
+    }
   }
 };
