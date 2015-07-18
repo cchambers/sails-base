@@ -67,7 +67,7 @@ var client = {
       }
     });
 
-    $("body").on("click", ".vote .control div", client.doVote);
+    $("body .control").on("click", ".vote", client.doVote);
 
     $(".panel").on("click", ".swap-panel-forms", function () {
       $(".panel form").toggleClass("active");

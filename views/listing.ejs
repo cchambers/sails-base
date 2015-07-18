@@ -3,34 +3,31 @@
   <% for (entry in entries) { %>
   <article class="row" data-timestamp="<%= entries[entry].createdAt %>" data-id="<%= entries[entry].id %>">
     <div class="contain">
-    <% if (user) { %>
-      <div class="vote lh20">
-        <div class="control">
-          <div class="up" data-dir="up"></div>
-          <div class="down" data-dir="down"></div>
-        </div>
-      </div>
-      <% } %>
       <div class="entry">
         <header>
-          <h1>
-            <%= entries[entry].title %>
-          </h1>
-          <div class="score">
-            <span class="totes"><%= entries[entry].score() %></span>  &rarr; <span class="ups">(<%= entries[entry].ups %></span> <span class="downs">- <%= entries[entry].downs %>)</span>
-          </div>
-        </header>
-        <section>
-          <%- include media-handler %>
-          <%- entries[entry].content %>
-        </section>
-        <footer>
-          <cite><strong><%= entries[entry].postedBy %></strong> &rarr; <a href="/sub/<%= entries[entry].postedTo %>"><%= entries[entry].postedTo %></a> (<a href="/sub/<%= entries[entry].postedTo %>/<%= entries[entry].slug %>"><%= entries[entry].comments.length %>&nbsp;comments</a>)</cite>
-          <ul><li class="close" title="close">✗</li><!--li class="save" title="">♨</li--></ul>
-        </footer>
-      </div>
+          <ul class="control"> 
+            <% if (user) { %>
+            <li class="vote up" data-dir="up">up</li>
+            <li class="vote down" data-dir="down">down</li>
+            <% } %>
+            <li class="close" title="close">close</li></ul>
+            <h1>
+              <%= entries[entry].title %>
+            </h1>
+            <div class="score">
+              <span class="totes"><%= entries[entry].score() %></span> &rarr; <span class="ups">(<%= entries[entry].ups %></span> <span class="downs">- <%= entries[entry].downs %>)</span>
+            </div>
+          </header>
+          <section>
+            <%- include media-handler %>
+            <%- entries[entry].content %>
+          </section>
+          <footer>
+            <cite><strong><%= entries[entry].postedBy %></strong> &rarr; <a href="/sub/<%= entries[entry].postedTo %>"><%= entries[entry].postedTo %></a> (<a href="/sub/<%= entries[entry].postedTo %>/<%= entries[entry].slug %>"><%= entries[entry].comments.length %>&nbsp;comments</a>)</cite>
+          </footer>
+        </div>
 
-    </div>
-  </article>
-  <% } %>
-</div>
+      </div>
+    </article>
+    <% } %>
+  </div>
