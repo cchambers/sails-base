@@ -6,6 +6,10 @@ body {
   overflow-y: scroll;
 }
 
+.logo {
+  float: left;
+}
+
 .logo a {
   font-weight: bold;
   font-size: 3rem;
@@ -35,7 +39,8 @@ strong {
 }
 
 body > header {
-  height: 6rem;
+  overflow: hidden;
+  min-height: 6rem;
   transition: all 250ms ease;
 }
 

@@ -2,30 +2,31 @@
   <article class="active">
     <div class="contain">
       <header>
+      <% var entries = data.entries %>
       <% var entry = 0 %>
-        <h1><%= data[entry].title %></h1>
+        <h1><%= entries[entry].title %></h1>
       </header>
       <section>
-        <% if (data[entry].media) { %>
+        <% if (entries[entry].media) { %>
         <%- include media-handler %>
         <% } %>
-        <%- data[entry].content %>
+        <%- entries[entry].content %>
       </section>
       <footer>
-        <cite><a href="/users/entries/<%= data[entry].postedBy %>"><%= data[entry].postedBy %></a> &rarr; <a href="/sub/<%= data[entry].postedTo %>"><%= data[entry].postedTo %></a></cite>
+        <cite><a href="/users/entries/<%= entries[entry].postedBy %>"><%= entries[entry].postedBy %></a> &rarr; <a href="/sub/<%= entries[entry].postedTo %>"><%= entries[entry].postedTo %></a></cite>
       </footer>
     </div>
   </article>
 </div>
 <div class="row single-entry">
-    <% for(i = 0; i< data[entry].comments.length; i++) {%>
+    <% for(i = 0; i < entries[entry].comments.length; i++) {%>
         <article class="active">
             <div class="contain">
                 <header>
-                    <%=data[entry].comments[i].postedBy %>
+                    <%=entries[entry].comments[i].postedBy %>
                 </header>
                 <section>
-                    <%=data[entry].comments[i].content %>
+                    <%=entries[entry].comments[i].content %>
                 </section>
             </div>
         </article>

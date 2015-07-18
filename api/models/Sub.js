@@ -16,6 +16,16 @@ module.exports = {
       required: true
     },
 
+    open: {
+      type: 'boolean',
+      defaultsTo: true
+    },
+
+    nsfw: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
     style: {
       type: 'string'
     },

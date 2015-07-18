@@ -77,10 +77,14 @@ module.exports = {
   },
 
   single: function (req, res) {
-    Entry.find({ slug: req.params.slug })
+    Entry.findOne({ slug: req.params.slug })
     .populate('comments')
-    .exec(function(err, data) {
+    .exec(function(err, doc) {
       if (err) return next(err);
+      var data = {};
+      data.entries = [];
+      data.entries.push(doc);
+      console.log(doc);
       return res.view('entry', { user: req.user, data: data })
     });
   }
