@@ -115,6 +115,10 @@ var client = {
       location.href = "/sub/" + data.name
     }
   },
+  
+  editSub: function (data) {
+    
+  },
 
   newEntry: function (data) {
     if (data.slug) {
