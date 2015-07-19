@@ -19,14 +19,15 @@ module.exports = {
                     content: req.body.message,
                     postedBy: req.user.username
                 }).exec(function(err, comment){
+
                     if(err) return next(err);
-                    console.log(comment);
+
                     Entry.findOne({ slug: req.body.slug })
                         .populate('comments')
                         .exec(function(err, doc) {
 
-                        return res.view('entry', {user: req.user, data: false});
-                        
+                        return;
+
                     });
                 });
 
