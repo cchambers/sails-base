@@ -29,8 +29,10 @@ module.exports = {
             Entry.findOne(entry).exec( function (err, doc) {
               if (data.vote) {
                 doc.ups--;
+                if (doc.ups < 0) doc.ups = 0;
               } else {
                 doc.downs--;
+                if (doc.downs < 0) doc.downs = 0;
               }
               doc.save();
               // console.log("document updated for destroy");
@@ -41,11 +43,11 @@ module.exports = {
           Vote.update({ user: exists.user, entry: exists.entry }, { vote: vote }).exec( function (err, data) {
             Entry.findOne(entry).exec( function (err, doc) {
               if (vote) {
-                doc.ups--;
-                doc.downs++;
-              } else {
-                doc.downs--;
                 doc.ups++;
+                doc.downs--;
+              } else {
+                doc.downs++;
+                doc.ups--;
               }
               doc.save();
               // console.log("document updated for reversal of vote");
