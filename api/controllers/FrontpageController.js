@@ -42,11 +42,16 @@ module.exports = {
       return res.view('listing', { user: req.user, data: listingData })
     }
 
+
     function getEntries() {
+      if (req.user) {
+        var userid = req.user.id || "none";
+      }
       if (sub) {
         Entry.find({ postedTo: sub })
         .sort({ createdAt: 'desc' })
         .populate('comments')
+        .populate('votes', { user: userid })
         .exec( function (err, data) {
           if (err) return next(err);
           listingData.entries = data;
@@ -56,6 +61,7 @@ module.exports = {
         Entry.find({})
         .sort({createdAt: 'desc'})
         .populate('comments')
+        .populate('votes', { user: userid })
         .exec(function (err, data) {
           if (err) return next(err);
           listingData.entries = data;
@@ -84,7 +90,7 @@ module.exports = {
       var data = {};
       data.entries = [];
       data.entries.push(doc);
-      console.log(doc);
+      // console.log(doc);
       return res.view('entry', { user: req.user, data: data })
     });
   }

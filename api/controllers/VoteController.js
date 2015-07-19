@@ -3,49 +3,80 @@ module.exports = {
     var direction = req.params.direction; // up, down, neutral
     var entry = req.params.entry;
     var user = req.user;
+    var vote = (direction == "up");
+    var exists = false;
 
     checkExistence();
 
     function checkExistence() {
-      var exists = false;
-      Vote.find({ entry: entry, user: user.id }).exec( function (err, data) {
+      Vote.findOne({ entry: entry, user: user.id }).exec( function (err, votedata) {
         if (err) return next(err);
-        if (data) {
-          exists = data;
+        if (votedata) {
+          doVote(votedata);
+        } else {
+          doVote();
         }
-        doVote(exists);
       });
     }
 
     function doVote(exists) {
       if (exists) { // update a vote
+        // console.log("VOTE EXISTS", "going " + direction);
         if (direction == "neutral") {
-          // find relative vote and add or remove from entry data
-          exists.destroy();
-          return res.json({ message: "vote neutralized" })
+          //exists.destroy();
+          Vote.destroy({ user: exists.user, entry: exists.entry }).exec( function (err, data) {
+            // console.log("vote destroyed", data);
+            Entry.findOne(entry).exec( function (err, doc) {
+              if (data.vote) {
+                doc.ups--;
+              } else {
+                doc.downs--;
+              }
+              doc.save();
+              // console.log("document updated for destroy");
+              return res.json({ vote: "" });
+            });
+          });
         } else {
-          var vote = (direction == "up");
-          exists.vote = vote;
-          exists.save;
-          return res.json({ message: "vote updated" })
+          Vote.update({ user: exists.user, entry: exists.entry }, { vote: vote }).exec( function (err, data) {
+            Entry.findOne(entry).exec( function (err, doc) {
+              if (vote) {
+                doc.ups--;
+                doc.downs++;
+              } else {
+                doc.downs--;
+                doc.ups++;
+              }
+              doc.save();
+              // console.log("document updated for reversal of vote");
+              return res.json({ vote: "" });
+            });
+          })
+          
         }
       } else { // create NEW vote
-        var bool = (direction == "up");
-        Vote.create({ user: user.id, entry: entry, vote: bool });
-
-        Entry.findOne(entry).exec( function (err, data) {
-          if (bool) {
-            data.ups++
-          } else {
-            data.downs++;
-          }
-          data.save();
+        // console.log("VOTE DOES NOT EXIST")
+        Vote.create({ user: user.id, entry: entry, vote: vote })
+        .exec( function (err, vote) {
+          // console.log("vote created");
+          updateEntry();
         });
-
       }
-      return res.json({ vote: "updated" })
     }
 
+    function updateEntry() {
+      Entry.findOne(entry).exec( function (err, doc) {
+        if (vote) {
+          doc.ups++
+        } else {
+          doc.downs++;
+        }
+        doc.save();
+        // console.log("document updated");
+
+        return res.json({ vote: "vote created" });
+      });
+    }
   },
 };
 
