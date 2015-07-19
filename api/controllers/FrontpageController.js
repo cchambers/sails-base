@@ -83,15 +83,52 @@ module.exports = {
   },
 
   single: function (req, res) {
-    Entry.findOne({ slug: req.params.slug })
-    .populate('comments')
-    .exec(function(err, doc) {
-      if (err) return next(err);
-      var data = {};
-      data.entries = [];
-      data.entries.push(doc);
-      // console.log(doc);
-      return res.view('entry', { user: req.user, data: data })
-    });
+    // Entry.findOne({ slug: req.params.slug })
+    // .populate('comments')
+    // .exec(function(err, doc) {
+    //
+    //
+    //   if (err) return next(err);
+    //   var data = {};
+    //   data.entries = [];
+    //   data.entries.push(doc);
+    //   console.log(doc);
+    //   return res.view('entry', { user: req.user, data: data })
+    // });
+
+    async.auto({
+        entry: function(foo){
+            Entry.findOne({slug: req.params.slug})
+            .populate('comments')
+            .exec(foo);
+        },
+        comments: ['entry', function(foo, results){
+            Comment.find({id: _.pluck(results.entry.comments, 'id')})
+            .populate('children')
+            .populate('parent')
+            .exec(foo);
+        }],
+        map: ['comments', function(foo, results){
+
+            // console.log(results.comments);
+            var comments = _.indexBy(results.comments, 'id');
+            var entry = results.entry.toObject();
+
+            entry.comments = entry.comments.map(function(comment){
+                comment = comments[comment.id];
+                return comment;
+            });
+
+            return foo(null, entry);
+        }]
+    },
+        function finish(err, results){
+            if(err){
+                return res.serverError(err);
+            }
+            // console.log(results);
+            return res.view('entry', { user: req.user, data: results.map });
+        }
+    );
   }
 };

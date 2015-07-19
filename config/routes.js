@@ -21,5 +21,8 @@ module.exports.routes = {
 
   'post /vote/:direction/:entry': 'VoteController.vote',
 
+  'get /new/comment': 'CommentController.new',
+  'post /comment/:id/reply': 'CommentController.reply',
+
   'post /new/comment': 'EntryController.addComment',
 };
