@@ -11,11 +11,13 @@ module.exports = {
   },
   
   edit: function (req, res) {
+    var data = {};
+    if(!req.user) return res.view('login', { user: req.user, data: data } );
     Sub.findOne({ name: req.params.sub })
     .exec( function (err, subdata) {
       if(err) return next(err);
-      var data = {};
       data.sub = subdata;
+      if(data.sub.creator != req.user.namename) return res.view('homepage',{ user: req.user, data: data });
       return res.view('edit-sub', { user: req.user, data: data });
     });
   },
