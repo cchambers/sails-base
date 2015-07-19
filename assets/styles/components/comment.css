@@ -1,0 +1,13 @@
+.comment{
+  margin-top:10px;
+}
+
+.comment>article{
+  padding-top:25px;
+}
+.comment label{
+  padding-bottom:10px;
+}
+.comment textarea{
+  margin-bottom:10px;
+}

@@ -5,7 +5,7 @@ module.exports.routes = {
   'get /sublist': 'FrontpageController.sublist',
 
   'get /me': 'UserController.myProfile',
-  
+
   'post /login': 'AuthController.login',
   '/logout': 'AuthController.logout',
 
@@ -22,4 +22,9 @@ module.exports.routes = {
   'get /user/:user': 'UserController.userProfile',
 
   'post /vote/:direction/:entry': 'VoteController.vote',
+
+  'get /new/comment': 'CommentController.new',
+  'post /comment/:id/reply': 'CommentController.reply',
+
+  'post /new/comment': 'EntryController.addComment',
 };
