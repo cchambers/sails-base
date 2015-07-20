@@ -8,7 +8,6 @@ module.exports = {
     },
 
     addComment: function(req, res){
-
         if ( typeof(req.user) == 'undefined' ) {
             return res.redirect('/');
         } else {
@@ -25,14 +24,12 @@ module.exports = {
                     Entry.findOne({ slug: req.body.slug })
                         .populate('comments')
                         .exec(function(err, doc) {
-
                         return;
 
                     });
                 });
 
             });
-
             return res.redirect('/');
         }
     }

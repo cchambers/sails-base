@@ -26,7 +26,7 @@
           <%= entries[entry].title %>
         </h1>
         <div class="score">
-          <span class="totes"><%= entries[entry].score() %></span>
+          <span class="totes"><%= entries[entry].getScore() %></span>
           <span class="calculated"> &rarr; (<span class="ups"><%= entries[entry].ups %></span> <span class="downs">- <%= entries[entry].downs %></span>)</span> 
         </div>
       </header>

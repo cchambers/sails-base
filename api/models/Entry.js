@@ -67,7 +67,7 @@ module.exports = {
       via: 'entry'
     },
 
-    score: function () {
+    getScore: function () {
       return this.ups - this.downs;
     },
 

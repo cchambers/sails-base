@@ -121,9 +121,9 @@ module.exports = {
       }
       var data = {};
       var hold = results.map.comments;
-      delete(results.map.comments);
+      //delete(results.map.comments);
       data.entries = [results.map];
-      data.entries[0].comments = hold;
+      //data.entries[0].comments = hold;
       return res.view('entry', { user: req.user, data: data });
     });
 }
