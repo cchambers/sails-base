@@ -6,6 +6,13 @@ body {
   overflow-y: scroll;
 }
 
+[data-debug]::before {
+  content: attr(data-debug);
+  display: block;
+  font-weight: bold;
+  color: red;
+}
+
 .logo {
   float: left;
 }

@@ -1,79 +1,86 @@
 <div class="row single-entry">
   <article class="active">
     <div class="contain">
-      <header>
-      <% var entry = data%>
-        <h1><%= entry.title %></h1>
+      <header>  
+        <% var entries = data.entries %>
+        <% var entry = 0 %>
+        <h1><%= entries[entry].title %></h1>
       </header>
       <section>
-        <% if (entry.media) { %>
+        <% if (entries[entry].media) { %>
         <%- include media-handler %>
         <% } %>
-        <%- entry.content %>
+        <%- entries[entry].content %>
       </section>
       <footer>
-        <cite><a href="/users/entries/<%= entry.postedBy %>"><%= entry.postedBy %></a> &rarr; <a href="/sub/<%= entry.postedTo %>"><%= entry.postedTo %></a></cite>
+        <cite><a href="/users/entries/<%= entries[entry].postedBy %>"><%= entries[entry].postedBy %></a> &rarr; <a href="/sub/<%= entries[entry].postedTo %>"><%= entries[entry].postedTo %></a></cite>
       </footer>
     </div>
   </article>
 </div>
 
-<div class="row single-entry">
-    <% for(i = 0; i < entry.comments.length; i++) {%>
-        <article class="active">
-            <div class="contain">
-                <header>
-                    <%=entry.comments[i].postedBy %>
-                </header>
-                <section>
-                    <%=entry.comments[i].content %>
-                </section>
-                <section>
-                  <a href="/new/comment?parent=<%=entry.comments[i].id%>&slug=<%=entry.slug%>">reply</a>
-                </section>
-
-                <%if(entry.comments[i].children){%>
-                    <%= entry.comments[i].children.length%> replies
-                <%}%>
-
-                <% for(j = 0; j < entry.comments[i].children.length; j++) {%>
-                    <article class="active">
-                        <div class="contain">
-                            <header>
-                                <%=entry.comments[i].children[j].postedBy %>
-                            </header>
-                            <section>
-                                <%=entry.comments[i].children[j].content %>
-                            </section>
-                            <section>
-                              <a href="/new/comment?parent=<%=entry.comments[i].children[j].id%>&slug=<%=entry.slug%>">reply</a>
-                            </section>
-                        </div>
-                    </article>
-                <% } %>
-            </div>
-        </article>
-    <% } %>
-</div>
 
 <% if (typeof(user) != 'undefined') {  %>
-    <div class="row single-entry comment">
-      <article class="active">
-        <div class="contain">
-          <div class="contain new-thing">
-            <form method="POST" data-callback="newEntry" action="/new/comment">
-              <div class="row pad-bottom-light">
-                <input type="text" name="slug" hidden value="<%= entry.slug %>">
-                <input type="text" name="postedTo" hidden value="<%= entry.postedTo %>">
-                <label for="title">Add a new comment</label>
-                <textarea name="message"></textarea>
-                <div class="row pad-bottom-light">
-                  <a class="button primary submit">send it</a>
-                </div>
-              </div>
-            </form>
-          </div>
+<div class="row make-comment">
+  <div class="contain new-thing">
+    <form method="POST" data-callback="newComment" action="/new/comment">
+      <div class="row pad-bottom-light">
+        <input type="text" name="slug" hidden value="<%= entries[entry].slug %>">
+        <input type="text" name="postedTo" hidden value="<%= entries[entry].postedTo %>">
+        <label for="title">Add a new comment</label>
+        <textarea name="message"></textarea>
+        <div class="row pad-bottom-light">
+          <a class="button primary submit">send it</a>
         </div>
-      </article>
-    </div>
+      </div>
+    </form>
+  </div>
+</div>
 <% } %>
+
+
+
+<div class="row comments" data-debug="comments">
+  <div class="contain">
+    <% for(i = 0; i < entries[entry].comments.length; i++) {%>
+    <header>
+      <%=entries[entry].comments[i].postedBy %>
+    </header>
+    <section>
+      <%=entries[entry].comments[i].content %>
+    </section>
+    <section>
+      <a href="/new/comment?parent=<%=entries[entry].comments[i].id%>&slug=<%=entries[entry].slug%>">reply</a>
+    </section>
+    <footer>
+
+    </footer>
+  </row>
+  <div class="row">
+    <%if(entries[entry].comments[i].children){%>
+    <%= entries[entry].comments[i].children.length%> replies
+    <%}%>
+    <div class="comments">
+      <% for(j = 0; j < entries[entry].comments[i].children.length; j++) {%>
+      <div class="comment">
+        <header>
+          <%=entries[entry].comments[i].children[j].postedBy %>
+        </header>
+        <section>
+          <%=entries[entry].comments[i].children[j].content %>
+        </section>
+        <footer>
+          <a href="/new/comment?parent=<%=entries[entry].comments[i].children[j].id%>&slug=<%=entries[entry].slug%>">reply</a>
+        </footer>
+      </div>
+      <% } %>
+    </div>
+  </div>
+  <% } %>
+</div>
+
+</div>
+
+
+
+

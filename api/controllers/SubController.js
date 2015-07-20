@@ -1,5 +1,4 @@
 module.exports = {
-
   new: function (req, res) {
     data = 'undefined';
     if ( typeof(req.user) == 'undefined' ) {
@@ -26,7 +25,6 @@ module.exports = {
     .exec( function(err, doc) {
       if(err) return next(err);
       doc.tagline = req.body.tagline;
-      console.log(doc);
       doc.save();
       data = {};
       data.sub = doc;

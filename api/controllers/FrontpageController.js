@@ -14,7 +14,7 @@ module.exports = {
   },
 
   userlist: function (req, res) {
-    User.find().exec(function(err, data) {
+    User.find().exec( function (err, data) {
       if (err) return next(err);
       if (!req.user) {
         return res.redirect("/");
@@ -62,7 +62,7 @@ module.exports = {
         .sort({createdAt: 'desc'})
         .populate('comments')
         .populate('votes', { user: userid })
-        .exec(function (err, data) {
+        .exec( function (err, data) {
           if (err) return next(err);
           listingData.entries = data;
           listingView();
@@ -83,52 +83,42 @@ module.exports = {
   },
 
   single: function (req, res) {
-    // Entry.findOne({ slug: req.params.slug })
-    // .populate('comments')
-    // .exec(function(err, doc) {
-    //
-    //
-    //   if (err) return next(err);
-    //   var data = {};
-    //   data.entries = [];
-    //   data.entries.push(doc);
-    //   console.log(doc);
-    //   return res.view('entry', { user: req.user, data: data })
-    // });
+
 
     async.auto({
-        entry: function(foo){
-            Entry.findOne({slug: req.params.slug})
-            .populate('comments')
-            .exec(foo);
-        },
-        comments: ['entry', function(foo, results){
-            Comment.find({id: _.pluck(results.entry.comments, 'id')})
-            .populate('children')
-            .populate('parent')
-            .exec(foo);
-        }],
-        map: ['comments', function(foo, results){
+      entry: function (foo) {
+        Entry.findOne({slug: req.params.slug})
+        .populate('comments')
+        .exec(foo);
+      },
+      comments: ['entry', function (foo, results) {
+        Comment.find({id: _.pluck(results.entry.comments, 'id')})
+        .populate('children')
+        .populate('parent')
+        .exec(foo);
+      }],
+      map: ['comments', function (foo, results) {
+        var comments = _.indexBy(results.comments, 'id');
+        var entry = results.entry.toObject();
 
-            // console.log(results.comments);
-            var comments = _.indexBy(results.comments, 'id');
-            var entry = results.entry.toObject();
+        entry.comments = entry.comments.map( function (comment) {
+          comment = comments[comment.id];
+          return comment;
+        });
 
-            entry.comments = entry.comments.map(function(comment){
-                comment = comments[comment.id];
-                return comment;
-            });
-
-            return foo(null, entry);
-        }]
+        return foo(null, entry);
+      }]
     },
-        function finish(err, results){
-            if(err){
-                return res.serverError(err);
-            }
-            // console.log(results);
-            return res.view('entry', { user: req.user, data: results.map });
-        }
-    );
+    function finish(err, results) {
+      if(err) {
+        return res.serverError(err);
+      }
+      var data = {};
+      var hold = results.map.comments;
+      delete(results.map.comments);
+      data.entries = [results.map];
+      data.entries[0].comments = hold;
+      return res.view('entry', { user: req.user, data: data });
+    });
   }
 };
