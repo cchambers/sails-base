@@ -46,6 +46,8 @@ var client = {
       }
     });
 
+    $("form").on("keyup",".CodeMirror", function(){mirror.save();});
+
     $(".new-thing").on("keyup", "[name=markdown]", client.updatePreview);
 
     $(".new-thing").on("keyup", "[name=title]", client.generateSlug);
@@ -117,7 +119,7 @@ var client = {
   },
   
   editSub: function (data) {
-    
+    mirror.save();
   },
 
   newEntry: function (data) {

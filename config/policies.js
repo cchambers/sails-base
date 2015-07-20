@@ -14,5 +14,9 @@ module.exports.policies = {
   },
   'CommentController': {
     '*': 'isAuthenticated'
+  },
+  'SubController': {
+    'new' : 'isAuthenticated',
+    'edit': 'isOwner'
   }
 };
