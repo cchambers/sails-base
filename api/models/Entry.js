@@ -67,11 +67,11 @@ module.exports = {
       via: 'entry'
     },
 
-    score: function() {
+    score: function () {
       return this.ups - this.downs;
     },
 
-    toJSON: function() {
+    toJSON: function () {
       var obj = this.toObject();
       delete obj.password;
       return obj;

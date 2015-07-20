@@ -83,8 +83,6 @@ module.exports = {
   },
 
   single: function (req, res) {
-
-
     async.auto({
       entry: function (foo) {
         if (req.user) {
@@ -93,7 +91,6 @@ module.exports = {
           .populate('comments')
           .populate('votes', { user: userid })
           .exec(foo);
-          
         } else {
           Entry.findOne({slug: req.params.slug})
           .populate('comments')
