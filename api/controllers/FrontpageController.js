@@ -93,6 +93,7 @@ module.exports = {
           .populate('comments')
           .populate('votes', { user: userid })
           .exec(foo);
+          
         } else {
           Entry.findOne({slug: req.params.slug})
           .populate('comments')
