@@ -117,7 +117,7 @@ var client = {
   },
   
   editSub: function (data) {
-    
+    mirror.save();
   },
 
   newEntry: function (data) {

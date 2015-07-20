@@ -25,6 +25,7 @@ module.exports = {
     .exec( function(err, doc) {
       if(err) return next(err);
       doc.tagline = req.body.tagline;
+      doc.css = req.body.css;
       doc.save();
       data = {};
       data.sub = doc;
