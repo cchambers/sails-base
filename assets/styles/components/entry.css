@@ -90,6 +90,7 @@ article.active section {
 article ul, 
 article ol {
   padding-left: 3rem;
+  clear: left
 }
 
 article cite {

@@ -1,3 +1,36 @@
+.make-comment {
+  margin-top: 3rem;
+}
+
+
+.comments {
+
+}
+
+.comments > ul {
+  border: 1px solid #121212;
+}
+
+.comments ul {
+  padding-left: 1.5rem;
+  list-style: none;
+}
+
+.comments ul li {
+  margin-top: 1.5rem;
+  padding: .75rem;
+  background-color: #f2f2f2;
+}
+
+.comments ul li > ul li:nth-child(odd) {
+  background-color: #ddd;
+}
+
+.comments ul li > ul li:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+
 .comment{
   margin-top:10px;
 }
