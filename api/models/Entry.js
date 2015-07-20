@@ -43,12 +43,12 @@ module.exports = {
     },
 
     ups: {
-      type: 'array',
+      type: 'integer',
       defaultsTo: 1
     },
 
     downs: {
-      type: 'array',
+      type: 'integer',
       defaultsTo: 0
     },
 
@@ -67,11 +67,11 @@ module.exports = {
       via: 'entry'
     },
 
-    score: function() {
+    getScore: function () {
       return this.ups - this.downs;
     },
 
-    toJSON: function() {
+    toJSON: function () {
       var obj = this.toObject();
       delete obj.password;
       return obj;

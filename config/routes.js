@@ -6,8 +6,6 @@ module.exports.routes = {
 
   'get /me': 'UserController.myProfile',
 
-  'get /signup':   { view: 'signup' },
-  'get /login':    { view: 'login' },
   'post /login': 'AuthController.login',
   '/logout': 'AuthController.logout',
 
@@ -21,5 +19,12 @@ module.exports.routes = {
   'post /sub/:sub/edit': 'SubController.submitEdit',
   'get /sub/:sub/:slug': 'FrontpageController.single',
 
-  'get /user/:user': 'UserController.userProfile'
+  'get /user/:user': 'UserController.userProfile',
+
+  'post /vote/:direction/:entry': 'VoteController.vote',
+
+  'get /new/comment': 'CommentController.new',
+  'post /comment/:id/reply': 'CommentController.reply',
+
+  'post /new/comment': 'EntryController.addComment',
 };

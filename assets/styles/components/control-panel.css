@@ -1,8 +1,8 @@
 .panel {
   text-align: right;
   font-size: 1.4rem;
-  position: absolute;
-  top:1.5rem;
+  float: right;
+  margin-top:1.5rem;
   right: 1.5rem;
   z-index: 5;
   line-height: auto;
@@ -20,6 +20,14 @@
 
 .panel ul li + li {
   margin-left: 1.5rem;
+}
+
+.panel form {
+  display: none;
+}
+
+.panel form.active {
+  display: block;
 }
 
 @media (max-width: 800px) {

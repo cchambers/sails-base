@@ -1,34 +1,6 @@
 <div class="row entries">
   <% var entries = data.entries %>
   <% for (entry in entries) { %>
-  <article class="row" data-timestamp="<%= entries[entry].createdAt %>">
-    <div class="contain">
-      <div class="vote lh20">
-        <ul class="score">
-          <li class="ups"><%= entries[entry].ups %></li>
-          <li class="downs"><%= entries[entry].downs %></li>
-        </ul>
-        <div class="control">
-          <div class="up"></div>
-          <div class="down"></div>
-        </div>
-      </div>
-      <div class="entry">
-        <header>
-          <h1>
-            <%= entries[entry].title %>
-          </h1>
-        </header>
-        <section>
-          <%- include media-handler %>
-          <%- entries[entry].content %>
-        </section>
-        <footer>
-          <cite><strong><%= entries[entry].postedBy %></strong> &rarr; <a href="/sub/<%= entries[entry].postedTo %>"><%= entries[entry].postedTo %></a> (<a href="/sub/<%= entries[entry].postedTo %>/<%= entries[entry].slug %>"><%= entries[entry].comments.length %>&nbsp;comments</a>)</cite>
-        </footer>
-      </div>
-
-    </div>
-  </article>
+    <%- include entry %>
   <% } %>
 </div>

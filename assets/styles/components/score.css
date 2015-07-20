@@ -1,0 +1,18 @@
+.score {
+  float: left;
+  padding-left: 1.5rem;
+  padding-top: 0.1rem;
+  list-style: none;
+  text-align: right;
+  font-family: "Consolas";
+  font-size: 1.2rem;
+}
+
+.score .ups,
+.score .downs {
+  opacity: .5;
+}
+
+.score .ups { color: #DF3D82; }
+.score .downs { color: #121212; }
+.score .totes { color: #DF3D82; font-weight: bold; }

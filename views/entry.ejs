@@ -1,33 +1,54 @@
-<div class="row single-entry">
-  <article class="active">
-    <div class="contain">
+<% var active = "" %>
+<% var entries = data.entries %>
+<% if (req.params.slug) { %> 
+  <% active = "active" %>
+  <% entry = 0 %>
+<% } %>
+
+<article class="row <%= active %>" data-timestamp="<%= entries[entry].createdAt %>" data-id="<%= entries[entry].id %>">
+  <div class="contain">
+    <div class="entry">
       <header>
-      <% var entry = 0 %>
-        <h1><%= data[entry].title %></h1>
+        <ul class="control"> 
+          <% if (user) { %>
+            <% if (entries[entry].votes[0]) { %>
+              <% var up = (entries[entry].votes[0].vote) %>
+              <li class="vote up <% if (up) { %> <%= 'active' %> <% } %>" data-dir="up">&darr;</li>
+              <li class="vote down <% if (!up) { %> <%= 'active' %> <% } %>" data-dir="down">&darr;</li>
+              <% } else { %>
+              <li class="vote up" data-dir="up">&darr;</li>
+              <li class="vote down" data-dir="down">&darr;</li>
+            <% } %>
+          <% } %>
+          <li class="close" title="close">x</li>
+        </ul>
+        <h1>
+          <%= entries[entry].title %>
+        </h1>
+        <div class="score">
+          <span class="totes"><%= entries[entry].getScore() %></span>
+          <span class="calculated"> &rarr; (<span class="ups"><%= entries[entry].ups %></span> <span class="downs">- <%= entries[entry].downs %></span>)</span> 
+        </div>
       </header>
       <section>
-        <% if (data[entry].media) { %>
         <%- include media-handler %>
-        <% } %>
-        <%- data[entry].content %>
+        <%- entries[entry].content %>
       </section>
       <footer>
-        <cite><a href="/users/entries/<%= data[entry].postedBy %>"><%= data[entry].postedBy %></a> &rarr; <a href="/sub/<%= data[entry].postedTo %>"><%= data[entry].postedTo %></a></cite>
+        <cite><strong><%= entries[entry].postedBy %></strong> &rarr; <a href="/sub/<%= entries[entry].postedTo %>"><%= entries[entry].postedTo %></a> (<a href="/sub/<%= entries[entry].postedTo %>/<%= entries[entry].slug %>#comments"><%= entries[entry].comments.length %>&nbsp;comments</a>)</cite>
       </footer>
     </div>
-  </article>
-</div>
-<div class="row single-entry">
-    <% for(i = 0; i< data[entry].comments.length; i++) {%>
-        <article class="active">
-            <div class="contain">
-                <header>
-                    <%=data[entry].comments[i].postedBy %>
-                </header>
-                <section>
-                    <%=data[entry].comments[i].content %>
-                </section>
-            </div>
-        </article>
-    <% } %>
-</div>
+  </div>
+</article>
+
+
+<% if (req.params.slug) { %> 
+<%- include comments %>
+<% } %>
+
+
+
+
+
+
+

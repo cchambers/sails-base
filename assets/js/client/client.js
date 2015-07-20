@@ -5,6 +5,23 @@ String.prototype.trunc = function(n,useWordBoundary){
   return toLong ? s_ : s_;
 };
 
+(function($){
+  $.fn.isActive = function () {
+    return $(this).hasClass("active");
+  };
+
+  $.fn.activate = function (doSiblings, toggle) {
+    if (doSiblings) $(this).siblings().deactivate();
+    if (toggle) return $(this).toggleClass("active");
+    return $(this).addClass("active");
+  };
+
+  $.fn.deactivate = function () {
+    return $(this).removeClass("active");
+  };
+})(jQuery);
+
+
 var client = {
   init: function () {
     client.setup();
@@ -35,18 +52,28 @@ var client = {
 
     $(".entry").on("keyup", client.entryKeypressHandler);
 
-    $(".entries").on("click", "h1", client.toggleEntry);
-    $(".entries").on("click", ".media", client.toggleEntry);
-
-    $(".entries article").each( function () {
-      $(this).find("footer").append('<ul><li class="good">&uarr;</li><li class="bad">&darr;</li><li class="save">♨</li><li class="report">✗</li></ul>');
+    $(".entry").on("click", ".close", function (e) {
+      e.stopPropagation();
+      var $parent = $(this).parents("article");
+      console.log($parent)
+      $parent.removeClass("active");
     });
-  },
 
-  toggleEntry: function () {
-    $("entries article").removeClass("active");
-    var $article = $(this).parents("article");
-    $article.toggleClass("active");
+    $("body").on("click", "article:not(.active)", function (e) {
+      var $target = $(e.target);
+      if (!$(e.target).attr("href")) {
+        $(this).activate(true);
+
+      }
+    });
+
+    $("body .control").on("click", ".vote", client.doVote);
+
+    $(".panel").on("click", ".swap-panel-forms", function () {
+      $(".panel form").toggleClass("active");
+      $(".panel form.active input").first().focus();
+    });
+    $(".panel form.active input").first().focus();
   },
 
   submitForm: function ($form) {
@@ -122,6 +149,35 @@ var client = {
 
   entryKeypressHandler: function (e) {
 
+  },
+
+  doVote: function () {
+    var dir = $(this).data().dir;
+    var $el = $(this);
+    var $entry = $(this).parents("article");
+    var id = $entry.data().id;
+
+    if ($el.isActive()) {
+      $el.deactivate();
+      dir = "neutral"
+    } else {
+      $el.activate(true);
+    }
+
+    client.sendVote(id, dir);
+    return;
+  },
+
+  sendVote: function (id, direction) {
+    console.log("Sending vote:", id, direction)
+    $.ajax({
+      type: 'POST',
+      url: '/vote/' + direction + "/" + id,
+      data: { doVote: true },
+      success: function (data) {
+        console.log(data);
+      }
+    });
   }
 }
 
