@@ -87,9 +87,17 @@ module.exports = {
 
     async.auto({
       entry: function (foo) {
-        Entry.findOne({slug: req.params.slug})
-        .populate('comments')
-        .exec(foo);
+        if (req.user) {
+          var userid = req.user.id || "none";
+          Entry.findOne({slug: req.params.slug})
+          .populate('comments')
+          .populate('votes', { user: userid })
+          .exec(foo);
+        } else {
+          Entry.findOne({slug: req.params.slug})
+          .populate('comments')
+          .exec(foo);
+        }
       },
       comments: ['entry', function (foo, results) {
         Comment.find({id: _.pluck(results.entry.comments, 'id')})
@@ -120,5 +128,5 @@ module.exports = {
       data.entries[0].comments = hold;
       return res.view('entry', { user: req.user, data: data });
     });
-  }
+}
 };

@@ -11,14 +11,14 @@
       <header>
         <ul class="control"> 
           <% if (user) { %>
-          <% if (entries[entry].votes[0]) { %>
-          <% var up = (entries[entry].votes[0].vote) %>
-          <li class="vote up <% if (up) { %> <%= 'active' %> <% } %>" data-dir="up">&darr;</li>
-          <li class="vote down <% if (!up) { %> <%= 'active' %> <% } %>" data-dir="down">&darr;</li>
-          <% } else { %>
-          <li class="vote up" data-dir="up">&darr;</li>
-          <li class="vote down" data-dir="down">&darr;</li>
-          <% } %>
+            <% if (entries[entry].votes[0]) { %>
+              <% var up = (entries[entry].votes[0].vote) %>
+              <li class="vote up <% if (up) { %> <%= 'active' %> <% } %>" data-dir="up">&darr;</li>
+              <li class="vote down <% if (!up) { %> <%= 'active' %> <% } %>" data-dir="down">&darr;</li>
+              <% } else { %>
+              <li class="vote up" data-dir="up">&darr;</li>
+              <li class="vote down" data-dir="down">&darr;</li>
+            <% } %>
           <% } %>
           <li class="close" title="close">x</li>
         </ul>
