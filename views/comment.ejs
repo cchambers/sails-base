@@ -1,0 +1,18 @@
+<li>
+  <header>
+    <%= entries[which].comments[i].postedBy %>
+  </header>
+  <section>
+    <%= entries[which].comments[i].content %>
+  </section>
+  <footer>
+    <a href="/new/comment?parent=<%= entries[which].comments[i].id%>&slug=<%= entries[which].slug%>">reply</a> 
+    <%= entries[which].comments[i].children.length%> replies
+  </footer>
+
+  <% if (comment.children.length > 0) { %>
+  <ul>
+    <%- include comment %>
+  </ul>
+  <% } %>
+</li>

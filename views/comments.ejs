@@ -4,8 +4,8 @@
     <div class="contain new-thing">
       <form method="POST" data-callback="newComment" action="/new/comment">
         <div class="row pad-bottom-light">
-          <input type="text" name="slug" hidden value="<%= entries[entry].slug %>">
-          <input type="text" name="postedTo" hidden value="<%= entries[entry].postedTo %>">
+        <input type="text" name="slug" hidden value="<%= entries[which].slug %>">
+        <input type="text" name="postedTo" hidden value="<%= entries[which].postedTo %>">
           <label for="title">Add a new comment</label>
           <textarea name="message"></textarea>
           <div class="row pad-bottom-light">
@@ -18,37 +18,36 @@
   <% } %>
 
 
-
   <!-- BEGIN COMMENTS -->
   <div class="row comments">
     <div class="contain">
-      <% if (entries[entry].comments.length > 0) { %>
+    <% if (entries[which].comments.length > 0) { %>
       <ul>
-        <% for(i = 0; i < entries[entry].comments.length; i++) {%>
+      <% for(i = 0; i < entries[which].comments.length; i++) {%>
         <li>
           <header>
-            <%= entries[entry].comments[i].postedBy %>
+          <%= entries[which].comments[i].postedBy %>
           </header>
           <section>
-            <%= entries[entry].comments[i].content %>
+          <%= entries[which].comments[i].content %>
           </section>
           <footer>
-            <a href="/new/comment?parent=<%= entries[entry].comments[i].id%>&slug=<%= entries[entry].slug%>">reply</a> 
-            <%= entries[entry].comments[i].children.length%> replies
+          <a href="/new/comment?parent=<%= entries[which].comments[i].id%>&slug=<%= entries[which].slug%>">reply</a> 
+          <%= entries[which].comments[i].children.length%> replies
           </footer>
 
-          <% if (entries[entry].comments[i].children.length > 0) { %>
+          <% if (entries[which].comments[i].children.length > 0) { %>
           <ul>
-            <% for(j = 0; j < entries[entry].comments[i].children.length; j++) {%>
+          <% for(j = 0; j < entries[which].comments[i].children.length; j++) {%>
             <li>
               <header>
-                <%= entries[entry].comments[i].children[j].postedBy %>
+              <%= entries[which].comments[i].children[j].postedBy %>
               </header>
               <section>
-                <%= entries[entry].comments[i].children[j].content %>
+              <%= entries[which].comments[i].children[j].content %>
               </section>
               <footer>
-                <a href="/new/comment?parent=<%= entries[entry].comments[i].children[j].id%>&slug=<%= entries[entry].slug%>">reply</a>
+              <a href="/new/comment?parent=<%= entries[which].comments[i].children[j].id%>&slug=<%= entries[which].slug%>">reply</a>
               </footer>
             </li>
             <% } %>
