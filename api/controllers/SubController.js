@@ -20,7 +20,6 @@ module.exports = {
   },
   
   submitEdit: function (req, res) {
-    console.log(req.body)
     Sub.findOne({ name: req.params.sub })
     .exec( function(err, doc) {
       if(err) return next(err);
