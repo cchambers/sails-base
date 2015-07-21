@@ -9,18 +9,19 @@ module.exports = {
         }
     },
     reply: function(req, res){
-        console.log("maybe?");
-        console.log(req.body);
-        console.log(req.params);
         Comment.findOne({id: req.params.id})
             .exec(function(err, data){
-                Comment.create({
-                    parent: data.id,
-                    content: req.body.message,
-                    postedBy: req.user.username
-                }).exec(function(err, comment){
-                    return;
-                })
+                Entry.findOne({slug: req.body.slug})
+                    .exec(function(err, entry){
+                        Comment.create({
+                            entry: entry.id,
+                            parent: data.id,
+                            content: req.body.message,
+                            postedBy: req.user.username
+                        }).exec(function(err, comment){
+                            return;
+                        })
+                    });
             });
     }
 };

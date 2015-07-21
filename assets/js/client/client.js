@@ -117,7 +117,7 @@ var client = {
       location.href = "/sub/" + data.name
     }
   },
-  
+
   editSub: function (data) {
     mirror.save();
   },
@@ -180,6 +180,12 @@ var client = {
         console.log(data);
       }
     });
+  },
+
+  newComment: function(){
+      //TODO: do this right
+      //Horrible horrible temporal thing
+      window.location.reload();
   }
 }
 

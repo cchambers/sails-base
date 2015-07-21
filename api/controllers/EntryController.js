@@ -70,18 +70,26 @@ module.exports = {
         }
       },
       comments: ['entry', function (foo, results) {
-        Comment.find({id: _.pluck(results.entry.comments, 'id')})
+        Comment.find({parent: {$eq: null}, id: _.pluck(results.entry.comments, 'id')})
         .populate('children')
         .populate('parent')
         .exec(foo);
       }],
       map: ['comments', function (foo, results) {
         var comments = _.indexBy(results.comments, 'id');
+        // console.log(comments);
         var entry = results.entry.toObject();
 
         entry.comments = entry.comments.map( function (comment) {
           comment = comments[comment.id];
           return comment;
+        });
+
+        console.log(entry);
+
+
+        entry.comments = _.filter(entry.comments, function(comment){
+            return comment != null;
         });
 
         return foo(null, entry);
@@ -94,7 +102,7 @@ module.exports = {
       var data = {};
       var hold = results.map.comments;
       data.entries = [results.map];
-      
+
       return res.view('entry', { user: req.user, data: data });
     });
 },

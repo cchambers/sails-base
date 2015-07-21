@@ -46,6 +46,8 @@ var client = {
       }
     });
 
+    $("form").on("keyup",".CodeMirror", function(){mirror.save();});
+
     $(".new-thing").on("keyup", "[name=markdown]", client.updatePreview);
 
     $(".new-thing").on("keyup", "[name=title]", client.generateSlug);
@@ -115,9 +117,9 @@ var client = {
       location.href = "/sub/" + data.name
     }
   },
-  
+
   editSub: function (data) {
-    
+    mirror.save();
   },
 
   newEntry: function (data) {
@@ -178,6 +180,12 @@ var client = {
         console.log(data);
       }
     });
+  },
+
+  newComment: function(){
+      //TODO: do this right
+      //Horrible horrible temporal thing
+      window.location.reload();
   }
 }
 
