@@ -55,74 +55,70 @@ module.exports = {
   },
 
   single: function (req, res) {
-    async.auto({
-      entry: function (foo) {
-        if (req.user) {
-          var userid = req.user.id || "none";
-          Entry.findOne({slug: req.params.slug})
-          .populate('comments')
-          .populate('votes', { user: userid })
-          .exec(foo);
-        } else {
-          Entry.findOne({slug: req.params.slug})
-          .populate('comments')
-          .exec(foo);
-        }
-      },
-      comments: ['entry', function (foo, results) {
-        Comment.find({id: _.pluck(results.entry.comments, 'id')})
-        .populate('children')
-        .populate('parent')
-        .exec(foo);
-      }],
-      map: ['comments', function (foo, results) {
-        var comments = _.indexBy(results.comments, 'id');
-        var entry = results.entry.toObject();
-
-        entry.comments = entry.comments.map( function (comment) {
-          comment = comments[comment.id];
-          return comment;
-        });
-
-        return foo(null, entry);
-      }]
-    },
-    function finish(err, results) {
-      if(err) {
-        return res.serverError(err);
-      }
-      var data = {};
-      var hold = results.map.comments;
-      data.entries = [results.map];
-      
-      return res.view('entry', { user: req.user, data: data });
-    });
-},
-
-addComment: function(req, res){
-  if ( typeof(req.user) == 'undefined' ) {
-    return res.redirect('/');
-  } else {
-    Entry.findOne({slug: req.body.slug})
-    .exec( function (err, data) {
-      Comment.create({
-        entry: data.id,
-        content: req.body.message,
-        postedBy: req.user.username
-      }).exec(function(err, comment){
-
-        if(err) return next(err);
-
-        Entry.findOne({ slug: req.body.slug })
+    var viewData = {
+      entries: []
+    };
+    getEntry();
+    function getEntry() {
+      if (req.user) {
+        var userid = req.user.id || "none";
+        Entry.findOne({slug: req.params.slug})
         .populate('comments')
-        .exec(function(err, doc) {
-          return;
-
+        .populate('votes', { user: userid })
+        .exec(function (err, data) {
+          viewData.entries = [data];
+          getComments();
         });
-      });
+      } else {
+        Entry.findOne({slug: req.params.slug})
+        .populate('comments')
+        .exec(function (err, data) {
+          viewData.entries.push(data);
+          getComments();
+        });
+      }
+    }
 
-    });
-    return res.redirect('/');
+    function getComments() {
+      var ids = _.pluck(viewData.entries[0].comments, 'id');
+      Comment.find({id: ids})
+      .populate('children')
+      .populate('parent')
+      .exec(function (err, data) {
+        viewData.entries[0].comments = data;
+        singleView();
+      });
+    }
+
+    function singleView() {
+      return res.view('entry', { user: req.user, data: viewData });
+    }
+  },
+
+  addComment: function(req, res){
+    if ( typeof(req.user) == 'undefined' ) {
+      return res.redirect('/');
+    } else {
+      Entry.findOne({slug: req.body.slug})
+      .exec( function (err, data) {
+        Comment.create({
+          entry: data.id,
+          content: req.body.message,
+          postedBy: req.user.username
+        }).exec(function(err, comment){
+
+          if(err) return next(err);
+
+          Entry.findOne({ slug: req.body.slug })
+          .populate('comments')
+          .exec(function(err, doc) {
+            return;
+
+          });
+        });
+
+      });
+      return res.redirect('/');
+    }
   }
-}
 };

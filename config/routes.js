@@ -27,4 +27,6 @@ module.exports.routes = {
   'post /comment/:id/reply': 'CommentController.reply',
 
   'post /new/comment': 'EntryController.addComment',
+
+  'get /sockets/join/:room': 'SocketController.joinRoom'
 };

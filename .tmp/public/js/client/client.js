@@ -28,6 +28,9 @@ var client = {
   },
 
   setup: function () {
+    io.socket.get('/sockets/join/home');
+    client.setupSockets();
+
     client.keys = {
       nextItem: [115,108,32],
       prevItem: [119,107]
@@ -76,6 +79,12 @@ var client = {
       $(".panel form.active input").first().focus();
     });
     $(".panel form.active input").first().focus();
+  },
+
+  setupSockets: function () {
+    io.socket.on("message", function(data) {
+      console.log(data);
+    });
   },
 
   submitForm: function ($form) {

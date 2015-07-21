@@ -1,3 +1,7 @@
+.notice:hover {
+  opacity: 1;
+}
+
 .notice:before {
   content: 'Notice:';
   text-transform: uppercase;
@@ -20,9 +24,8 @@
   background-color: #ddd;
   border-radius: .5rem;
   text-indent: 1.5rem;
-  max-width: 50rem;
+  max-width: 30rem;
   opacity: .9;
-  pointer-events: none;
 }
 
 .notice.alert {
