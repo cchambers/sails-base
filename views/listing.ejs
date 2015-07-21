@@ -1,6 +1,6 @@
 <% var active = "" %>
 <% var entries = data.entries %>
-<% if (req.params.slug) { %> 
+<% if (req.params.slug) { %>
 <% active = "active" %>
 <% which = 0 %>
 <% } %>
@@ -11,7 +11,7 @@
     <div class="contain">
       <div class="which">
         <header>
-          <ul class="control"> 
+          <ul class="control">
             <% if (user) { %>
             <% if (entries[which].votes[0]) { %>
             <% var up = (entries[which].votes[0].vote) %>
@@ -29,7 +29,7 @@
           </h1>
           <div class="score">
             <span class="totes"><%= entries[which].getScore() %></span>
-            <span class="calculated"> &rarr; (<span class="ups"><%= entries[which].ups %></span> <span class="downs">- <%= entries[which].downs %></span>)</span> 
+            <span class="calculated"> &rarr; (<span class="ups"><%= entries[which].ups %></span> <span class="downs">- <%= entries[which].downs %></span>)</span>
           </div>
         </header>
         <section>
@@ -44,7 +44,7 @@
   </article>
 
 
-    <% if (req.params.slug) { %> 
+    <% if (req.params.slug) { %>
       <%- include comments %>
     <% } %>
 

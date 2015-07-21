@@ -29,7 +29,7 @@
             <%= entries[which].title %>
           </h1>
           <div class="score">
-            <span class="totes"><%= entries[which].ups - entries[which].downs %></span>
+            <span class="totes"><%= entries[which].getScore() %></span>
             <span class="calculated"> &rarr; (<span class="ups"><%= entries[which].ups %></span> <span class="downs">- <%= entries[which].downs %></span>)</span>
           </div>
         </header>
@@ -37,7 +37,7 @@
           <%- entries[which].content %>
         </section>
         <footer>
-          <cite><strong><%= entries[which].postedBy %></strong> &rarr; <a href="/sub/<%= entries[which].postedTo %>"><%= entries[which].postedTo %></a> (<a href="/sub/<%= entries[which].postedTo %>/<%= entries[which].slug %>#comments"><%= entries[which].comments.length %>&nbsp;comments</a>)</cite>
+          <cite><strong><%= entries[which].postedBy %></strong> &rarr; <a href="/sub/<%= entries[which].postedTo %>"><%= entries[which].postedTo %></a> (<a href="/sub/<%= entries[which].postedTo %>/<%= entries[which].slug %>#comments"><%= entries[which].commentAmmount %>&nbsp;comments</a>)</cite>
         </footer>
       </div>
     </div>

@@ -26,7 +26,12 @@ module.exports = {
         .populate('votes', { user: userid })
         .exec( function (err, data) {
           if (err) return next(err);
-          listingData.entries = data;
+
+          data = _.map(data, function(entry){
+              entry.commentAmmount = entry.comments.length;
+              return entry;
+          });
+
           getSub();
         });
       } else {
@@ -36,6 +41,12 @@ module.exports = {
         .populate('votes', { user: userid })
         .exec( function (err, data) {
           if (err) return next(err);
+
+          data = _.map(data, function(entry){
+              entry.commentAmmount = entry.comments.length;
+              return entry;
+          });
+
           listingData.entries = data;
           listingView();
         });
@@ -70,29 +81,29 @@ module.exports = {
         }
       },
       comments: ['entry', function (foo, results) {
+
         Comment.find({parent: {$eq: null}, id: _.pluck(results.entry.comments, 'id')})
-        .populate('children')
-        .populate('parent')
-        .exec(foo);
+            .populate('children')
+            .populate('parent')
+            .exec(foo);
       }],
       map: ['comments', function (foo, results) {
-        var comments = _.indexBy(results.comments, 'id');
-        // console.log(comments);
-        var entry = results.entry.toObject();
+            var entry = results.entry.toObject();
 
-        entry.comments = entry.comments.map( function (comment) {
-          comment = comments[comment.id];
-          return comment;
-        });
+            entry.commentAmmount = entry.comments.length;
 
-        console.log(entry);
+            var comments = _.indexBy(results.comments, 'id');
 
+            entry.comments = entry.comments.map( function (comment) {
+              comment = comments[comment.id];
+              return comment;
+            });
 
-        entry.comments = _.filter(entry.comments, function(comment){
-            return comment != null;
-        });
+            entry.comments = _.filter(entry.comments, function(comment){
+                return comment != null;
+            });
 
-        return foo(null, entry);
+            return foo(null, entry);
       }]
     },
     function finish(err, results) {

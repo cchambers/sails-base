@@ -71,7 +71,7 @@ module.exports = {
       return this.ups - this.downs;
     },
 
-    toJSON: function () {
+    toJSON: function toJSON() {
       var obj = this.toObject();
       delete obj.password;
       return obj;
