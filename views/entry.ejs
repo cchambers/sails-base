@@ -1,6 +1,5 @@
 <% var active = "" %>
 <% var entries = data.entries %>
-<% console.log("ENTRIES:", data.entries.length) %>
 <% if (req.params.slug) { %> 
 <% active = "active" %>
 <% which = 0 %>
@@ -30,7 +29,7 @@
           </h1>
           <div class="score">
             <span class="totes"><%= entries[which].getScore() %></span>
-            <span class="calculated"> &rarr; (<span class="ups"><%= entries[which].ups %></span> <span class="downs">- <%= entries[which].downs %></span>)</span> 
+            <span class="calculated"> &rarr; (<span class="ups"><%= entries[which].ups %></span> - <span class="downs"><%= entries[which].downs %></span>)</span> 
           </div>
         </header>
         <section>

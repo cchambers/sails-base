@@ -46,6 +46,8 @@ var client = {
       }
     });
 
+    $("form").on("keyup",".CodeMirror", function(){mirror.save();});
+
     $(".new-thing").on("keyup", "[name=markdown]", client.updatePreview);
 
     $(".new-thing").on("keyup", "[name=title]", client.generateSlug);
@@ -117,7 +119,7 @@ var client = {
   },
   
   editSub: function (data) {
-    
+    mirror.save();
   },
 
   newEntry: function (data) {
@@ -156,6 +158,29 @@ var client = {
     var $el = $(this);
     var $entry = $(this).parents("article");
     var id = $entry.data().id;
+    var score = {
+      ups: parseInt($entry.find(".ups").text()),
+      downs: parseInt($entry.find(".downs").text()),
+      total: parseInt($entry.find(".totes").text())
+    }
+
+    console.log(score);
+
+    if ($el.isActive() && dir == "up") {
+      score.ups--;
+    }
+    if (!$el.isActive() && dir == "up") {
+      score.ups++;
+    }
+    if ($el.isActive() && dir == "down") {
+      score.downs--;
+    }
+    if (!$el.isActive() && dir == "down") {
+      score.downs++;
+    }
+    score.total = score.ups - score.downs;
+
+    client.updateVotes($entry, score)
 
     if ($el.isActive()) {
       $el.deactivate();
@@ -166,6 +191,12 @@ var client = {
 
     client.sendVote(id, dir);
     return;
+  },
+
+  updateVotes: function ($entry, score) {
+    $entry.find(".ups").text(score.ups);
+    $entry.find(".downs").text(score.downs);
+    $entry.find(".totes").text(score.total);
   },
 
   sendVote: function (id, direction) {

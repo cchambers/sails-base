@@ -1,0 +1,22 @@
+
+<li>
+  <header>
+    <%= child.postedBy %>
+  </header>
+  <section>
+    <%= child.content %>
+  </section>
+  <footer>
+    <a href="/new/comment?parent=<%= child.id %>&slug=<%= entries[which].slug %>">reply</a> 
+    <%= child.children.length %> replies
+  </footer>
+
+  <% if (child.children.length > 0) { %>
+  <ul>
+    <% for (k = 0; k < child.children.length; k++) { %>
+      <--% var child = child.children[k] %-->
+      <--% console.log(child) %-->
+    <% } %>
+  </ul>
+  <% } %>
+</li>
