@@ -29,7 +29,7 @@
             <%= entries[which].title %>
           </h1>
           <div class="score">
-            <span class="totes"><%= entries[which].getScore() %></span>
+            <span class="totes"><%= entries[which].ups - entries[which].downs %></span>
             <span class="calculated"> &rarr; (<span class="ups"><%= entries[which].ups %></span> <span class="downs">- <%= entries[which].downs %></span>)</span>
           </div>
         </header>
