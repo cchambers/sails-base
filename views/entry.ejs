@@ -6,15 +6,15 @@
 <% } %>
 <div class="row entries">
   <% for (which in entries) { %>
-
-  <article class="row entry <%= active %>" data-timestamp="<%= entries[which].createdAt %>" data-id="<%= entries[which].id %>">
+  <% var entry = entries[which] %>
+  <article class="row entry <%= active %>" data-timestamp="<%= entry.createdAt %>" data-id="<%= entry.id %>">
     <div class="contain">
       <div class="which">
         <header>
           <ul class="control"> 
             <% if (user) { %>
-            <% if (entries[which].votes[0]) { %>
-            <% var up = (entries[which].votes[0].vote) %>
+            <% if (entry.votes[0]) { %>
+            <% var up = (entry.votes[0].vote) %>
             <li class="vote up <% if (up) { %> <%= 'active' %> <% } %>" data-dir="up">&darr;</li>
             <li class="vote down <% if (!up) { %> <%= 'active' %> <% } %>" data-dir="down">&darr;</li>
             <% } else { %>
@@ -25,18 +25,19 @@
             <li class="close" title="close">x</li>
           </ul>
           <h1>
-            <%= entries[which].title %>
+            <%= entry.title %>
           </h1>
           <div class="score">
-            <span class="totes"><%= entries[which].getScore() %></span>
-            <span class="calculated"> &rarr; (<span class="ups"><%= entries[which].ups %></span> - <span class="downs"><%= entries[which].downs %></span>)</span> 
+            <span class="totes"><%= entry.getScore() %></span>
+            <span class="calculated"> &rarr; (<span class="ups"><%= entry.ups %></span> - <span class="downs"><%= entry.downs %></span>)</span> 
           </div>
         </header>
         <section>
-          <%- entries[which].content %>
+          <%- include media-handler %>
+          <%- entry.content %>
         </section>
         <footer>
-          <cite><strong><%= entries[which].postedBy %></strong> &rarr; <a href="/sub/<%= entries[which].postedTo %>"><%= entries[which].postedTo %></a> (<a href="/sub/<%= entries[which].postedTo %>/<%= entries[which].slug %>#comments"><%= entries[which].comments.length %>&nbsp;comments</a>)</cite>
+          <cite><strong><%= entry.postedBy %></strong> &rarr; <a href="/sub/<%= entry.postedTo %>"><%= entry.postedTo %></a> (<a href="/sub/<%= entry.postedTo %>/<%= entry.slug %>#comments"><%= entry.comments.length %>&nbsp;comments</a>)</cite>
         </footer>
       </div>
     </div>
