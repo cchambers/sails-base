@@ -1,8 +1,11 @@
-<div class="panel">
+<a href="#controls" class="triple-bar">≡</a>
+
+<div class="panel" id="controls">
+<a href="#" class="close-panel-inner">&times;</a>
   <% if (typeof(user) != 'undefined') {  %>
-  <p class="px14">
-    you are posting as <span class="bold"><a href="/me"><%= user.username %></a></span>
-  </p>
+  <div class="userinfo">
+    you are posting as <a href="/me"><span class="bold"><%= user.username %></span></a>
+  </div>
   <ul>
     <li><a href="/new/entry">new entry</a></li>
     <li><a href="/new/sub">create sub</a></li>
@@ -21,3 +24,5 @@
   <%- include signup-form %>
   <% } %>
 </div>
+
+<a href="#" class="close-panel"></a>

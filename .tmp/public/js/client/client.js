@@ -64,7 +64,7 @@ var client = {
       $parent.removeClass("active");
     });
 
-    $(".delete").on("click", function (e) {
+    $(".entry").on("click", ".delete", function (e) {
       client.deleteEntry( $(this).parents("article").data().id );
     });
 

@@ -22,7 +22,7 @@ body {
   font-size: 3rem;
 }
 
-.logo a,
+header a,
 p a,
 li a,
 cite a { 
@@ -66,7 +66,7 @@ body > header .logo a {
   }
 
   body {
-    padding-top: 6rem;
+    padding-top: 9rem;
   }
 
   body > header {
