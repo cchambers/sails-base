@@ -7,6 +7,27 @@ module.exports = {
     }
   },
   
+  edit: function(req, res) {
+    Entry.findOne({ id: req.params.id })
+      .exec( function(err, entryData) {
+        if(err) return next(err);
+        var data = {};
+        data.entry = entryData;
+        return res.view('edit-entry', { user: req.user, data: data });
+    });
+  },
+  
+  submitEdit: function(req, res) {
+    Entry.findOne({ id: req.params.id })
+      .exec( function(err, entryData) {
+        if(err) return next(err);
+        entryData.content = req.body.content;
+        entryData.markdown = req.body.markdown;
+        entryData.save();
+        return res.redirect('/sub/' + entryData.postedTo + '/' + entryData.slug);
+    });
+  },
+  
   delete: function (req, res) {
     Entry.findOne({ id: req.params.id })
       .exec( function(err, entryData) {

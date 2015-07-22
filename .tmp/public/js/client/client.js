@@ -52,6 +52,7 @@ var client = {
     $("form").on("keyup",".CodeMirror", function(){mirror.save();});
 
     $(".new-thing").on("keyup", "[name=markdown]", client.updatePreview);
+    $(".edit-thing").on("keyup", "[name=markdown]", client.updatePreview);
 
     $(".new-thing").on("keyup", "[name=title]", client.generateSlug);
 
@@ -66,6 +67,10 @@ var client = {
 
     $(".delete").on("click", function (e) {
       client.deleteEntry( $(this).parents("article").data().id );
+    });
+
+    $(".edit").on("click", function (e) {
+      client.editEntry( $(this).parents("article").data().id );
     });
 
     $("body").on("click", "article:not(.active)", function (e) {
@@ -139,6 +144,10 @@ var client = {
     if (data.slug) {
       location.href = "/sub/" + data.postedTo + "/" + data.slug
     }
+  },
+  
+  editEntry: function (id) {
+//    location.href = "/edit/entry/" + id
   },
 
   generateSlug: function (data) {
