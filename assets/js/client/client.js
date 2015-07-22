@@ -69,7 +69,7 @@ var client = {
       client.deleteEntry( $(this).parents("article").data().id );
     });
 
-    $(".edit").on("click", function (e) {
+    $("body").on("click", ".edit", function (e) {
       client.editEntry( $(this).parents("article").data().id );
     });
 
@@ -161,7 +161,7 @@ var client = {
   },
   
   editEntry: function (id) {
-//    location.href = "/edit/entry/" + id
+    location.href = "/edit/entry/" + id
   },
 
   generateSlug: function (data) {
