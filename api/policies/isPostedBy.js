@@ -1,6 +1,6 @@
 module.exports = function(req, res, next) {
   var postedBy = 'unidentified';
-  Entry.findOne({ slug: req.params.entry })
+  Entry.findOne({ id: req.params.id })
     .exec( function (err, entryData) {
       if(err) return next(err);
       postedBy = entryData.postedBy;

@@ -64,8 +64,8 @@ var client = {
       $parent.removeClass("active");
     });
 
-    $(".delete").on("click", ".delete", function (e) {
-      $(this).deleteEntry();
+    $(".delete").on("click", function (e) {
+      client.deleteEntry( $(this).parents("article").data().id );
     });
 
     $("body").on("click", "article:not(.active)", function (e) {
@@ -224,8 +224,8 @@ var client = {
     });
   },
   
-  deleteEntry: function ($entry) {
-    
+  deleteEntry: function (id) {
+      location.href = "/delete/entry/" + id
   }
 }
 

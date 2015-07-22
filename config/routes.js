@@ -11,7 +11,8 @@ module.exports.routes = {
 
   'get /new/sub': 'SubController.new',
   'get /new/entry': 'EntryController.new',
-  'get /sub/:sub/:entry/delete': 'EntryController.delete',
+  
+  'get /delete/entry/:id': 'EntryController.delete',
 
   'get /op/makeadmin': 'UserController.makeadmin',
 

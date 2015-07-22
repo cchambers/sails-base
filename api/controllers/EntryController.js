@@ -8,7 +8,7 @@ module.exports = {
   },
   
   delete: function (req, res) {
-    Entry.findOne({ slug: req.params.entry })
+    Entry.findOne({ id: req.params.id })
       .exec( function(err, entryData) {
         Entry.destroy({ slug: entryData.slug })
           .exec( function(err, eData) {
