@@ -6,6 +6,16 @@ module.exports = {
       return res.view('new-entry', { user: req.user, data: false });
     }
   },
+  
+  delete: function (req, res) {
+    Entry.findOne({ id: req.params.id })
+      .exec( function(err, entryData) {
+        Entry.destroy({ slug: entryData.slug })
+          .exec( function(err, eData) {
+            return res.redirect('/')
+          });
+      });
+  },
 
   listing: function (req, res) {
     var listingData = {};
