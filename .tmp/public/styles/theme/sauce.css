@@ -67,6 +67,9 @@ body > header .logo a {
   color: #DF3D82;
 }
 
+ul {
+  padding-left: 3rem;
+}
 
 @media (max-width: 800px) {
   .palette {
