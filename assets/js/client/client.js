@@ -163,6 +163,10 @@ var client = {
   editEntry: function (id) {
     location.href = "/edit/entry/" + id
   },
+  
+  submitEntryEdit: function (data) {
+    for(d in data) console.info(d);
+  },
 
   generateSlug: function (data) {
     var title = $("input[name=title]").val().trunc(64);;
