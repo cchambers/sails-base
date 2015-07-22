@@ -20,6 +20,9 @@
             <% } else { %>
             <li class="vote up" data-dir="up">&darr;</li>
             <li class="vote down" data-dir="down">&darr;</li>
+            <% if (entries[which].postedBy == user.username) { %>
+            <li class="delete">delete</li>
+            <% } %>
             <% } %>
             <% } %>
             <li class="close" title="close">x</li>

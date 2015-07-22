@@ -64,6 +64,10 @@ var client = {
       $parent.removeClass("active");
     });
 
+    $(".delete").on("click", ".delete", function (e) {
+      $(this).deleteEntry();
+    });
+
     $("body").on("click", "article:not(.active)", function (e) {
       var $target = $(e.target);
       if (!$(e.target).attr("href")) {
@@ -218,9 +222,11 @@ var client = {
         console.log(data);
       }
     });
+  },
+  
+  deleteEntry: function ($entry) {
+    
   }
 }
-
-
 
 client.init();

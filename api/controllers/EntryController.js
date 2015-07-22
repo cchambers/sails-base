@@ -8,22 +8,12 @@ module.exports = {
   },
   
   delete: function (req, res) {
-    if(req.user) 
-      var name = req.user.username;
-    else
-      return res.view('homepage', { user: req.user, data: req.params.data } );
-    
-    Entry.findOne({ slug:req.params.entry })
-      .exec(function(err, entryData){
-        if(err) return next(err);
-        if(name == entryData.postedBy) {
-          console.info(entryData.slug);
-          Entry.destroy({ slug: entryData.slug });
-          res.view('listing', { user: req.user, data: entryData });
-        } else {
-          console.info("Nope");
-          res.view('listing', { user: req.user, data: entryData });
-        }
+    Entry.findOne({ slug: req.params.entry })
+      .exec( function(err, entryData) {
+        Entry.destroy({ slug: entryData.slug })
+          .exec( function(err, eData) {
+            return res.redirect('/')
+          });
       });
   },
 
