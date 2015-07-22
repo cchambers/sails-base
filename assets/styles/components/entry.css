@@ -49,6 +49,14 @@ article {
   transition: all 250ms linear;
 }
 
+.preview {
+  padding: 1.5rem 0;
+}
+
+.preview ul {
+  padding-left: 3rem;
+}
+
 article header,
 article footer {
   position: relative;

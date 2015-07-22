@@ -35,6 +35,7 @@ module.exports = {
                 if (doc.downs < 0) doc.downs = 0;
               }
               doc.save();
+              blastVoteUpdate(entry, doc);
               // console.log("document updated for destroy");
               return res.json({ vote: "" });
             });
@@ -50,6 +51,7 @@ module.exports = {
                 doc.ups--;
               }
               doc.save();
+              blastVoteUpdate(entry, doc);
               // console.log("document updated for reversal of vote");
               return res.json({ vote: "" });
             });
@@ -66,6 +68,14 @@ module.exports = {
       }
     }
 
+    function blastVoteUpdate (entry, doc) {
+      sails.sockets.blast('vote', {
+        entryid: entry,
+        ups: doc.ups,
+        downs: doc.downs
+      })
+    }
+
     function updateEntry() {
       Entry.findOne(entry).exec( function (err, doc) {
         if (vote) {
@@ -75,7 +85,7 @@ module.exports = {
         }
         doc.save();
         // console.log("document updated");
-
+        blastVoteUpdate(entry, doc);
         return res.json({ vote: "vote created" });
       });
     }

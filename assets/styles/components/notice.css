@@ -11,10 +11,6 @@
 }
 
 .notice {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 5;
   font-size: 1.4rem;
   font-family: "Consolas", monospace;
   padding: 1.5rem;

@@ -1,6 +1,6 @@
 <% if (entry.media) { %>
-  <% if (entry.media.indexOf('imgur') > 0) { %>
-  <div class="media imgur" style="background-image:url(<%= entry.media %>)"><img src="<%= entry.media %>"></div>
+  <% if ( (entry.media.indexOf('.jpg') > 0) || ((entry.media.indexOf('.gif') > 0)) ) { %>
+  <div class="media image" style="background-image:url(<%= entry.media %>)"><img src="<%= entry.media %>"></div>
   <% } %> 
 
   <% if (entry.media.indexOf('gfycat') > 0) { %>

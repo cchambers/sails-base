@@ -65,7 +65,7 @@ var client = {
       $parent.removeClass("active");
     });
 
-    $(".delete").on("click", function (e) {
+    $(".entry").on("click", ".delete", function (e) {
       client.deleteEntry( $(this).parents("article").data().id );
     });
 
@@ -91,8 +91,22 @@ var client = {
   },
 
   setupSockets: function () {
-    io.socket.on("message", function(data) {
+    io.socket.on("message", function (data) {
       console.log(data);
+    });
+    io.socket.on("new-user", function (data) {
+      console.log("USER:",data)
+    });
+
+    io.socket.on("vote", function (data) {
+      console.log("VOTE:",data)
+      var $parent = $("[data-id='"+data.entryid+"']");
+      var $score = $parent.find(".score");
+      var score = data.ups - data.downs;
+      console.log($parent, $score)
+      $score.find(".ups").text(data.ups);
+      $score.find(".downs").text(data.downs);
+      $score.find(".totes").text(score);
     });
   },
 
@@ -234,7 +248,7 @@ var client = {
   },
   
   deleteEntry: function (id) {
-      location.href = "/delete/entry/" + id
+    location.href = "/delete/entry/" + id
   }
 }
 
