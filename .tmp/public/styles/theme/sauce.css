@@ -46,8 +46,7 @@ strong {
 }
 
 body > header {
-  overflow: hidden;
-  min-height: 6rem;
+  height: 6rem;
   transition: all 250ms ease;
 }
 
