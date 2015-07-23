@@ -13,6 +13,15 @@ body {
   font-size: 1.8rem;
   color: #505050;
   overflow-y: scroll;
+  padding-bottom: 9rem;
+}
+
+body:after {
+  display: block;
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+  content: 'created by Koo, Chi, and Khi.';
 }
 
 [data-debug]::before {
