@@ -11,7 +11,7 @@
     <div class="contain">
       <header>
         <ul class="control"> 
-          <li class="close float-right" title="close">-</li>
+          <li class="close" title="close">-</li>
           <% if (user) { %>
           <% if (entry.votes[0]) { %>
           <% var up = (entry.votes[0].vote) %>
@@ -41,7 +41,8 @@
         <%- entry.content %>
       </section>
       <footer>
-        <cite><strong><%= entry.postedBy %></strong> &rarr; <a href="/sub/<%= entry.postedTo %>"><%= entry.postedTo %></a> (<a href="/sub/<%= entry.postedTo %>/<%= entry.slug %>#comments"><%= entry.comments.length %>&nbsp;comments</a>)</cite>
+        <cite><strong><%= entry.postedBy %></strong> &rarr; <a href="/sub/<%= entry.postedTo.slug %>"><%= entry.postedTo.name %></a>
+        (<a href="/sub/<%= entry.postedTo.slug %>/<%= entry.slug %>#comments"><%= entry.comments.length %>&nbsp;comments</a>)</cite>
       </footer>
     </div>
   </article>

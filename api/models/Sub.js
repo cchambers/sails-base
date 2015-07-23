@@ -7,6 +7,13 @@ module.exports = {
       unique: true
     },
 
+    slug: {
+      type: 'string',
+      minLength: 4,
+      required: true,
+      unique: true
+    },
+
     tagline: {
       type: 'string'
     },
@@ -40,6 +47,11 @@ module.exports = {
     
     css: {
       type: 'string'
+    },
+
+    posts: {
+      collection: 'entry',
+      via: 'slug'
     }
   }
 };

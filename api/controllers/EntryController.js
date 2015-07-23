@@ -1,15 +1,18 @@
 module.exports = {
   new: function (req, res) {
+    var data = {};
     if ( typeof(req.user) == 'undefined' ) {
       return res.redirect('/');
     } else {
-      return res.view("new-entry", { user: req.user, data: false });
+      if (req.query.sub) {
+        data.prefill = req.query.sub;
+      }
+      return res.view("new-entry", { user: req.user, data: data });
     }
   },
 
   create: function (req, res) {
     console.log(req.body)
-
     var succeed = true;
 
     function errOut(data) {
@@ -51,19 +54,20 @@ module.exports = {
         succeed = false;
         errOut({ message: "Need a unique slug." });
       } 
-      Sub.findOne({name: entry.postedTo})
+      Sub.findOne({slug: entry.postedTo})
       .exec( function (err, doc) {
         if (!doc) {
           succeed = false;
           return res.json({ message: "That sub doesn't exist." });
         } else {
+          entry.postedTo = doc.id;
           if (succeed) {
             Entry.create(entry)
-            .exec( function (err, doc) {
-              console.log("Entry created:", doc.postedTo + "/" + doc.slug);
-              return res.json({ message: "Success!", redirect: "/sub/" + doc.postedTo + "/" + doc.slug });
+            .exec( function (err, entry) {
+              console.log("Entry created:", doc.slug + "/" + entry.slug);
+              return res.json({ message: "Success!", redirect: "/sub/" + doc.slug + "/" + entry.slug });
             });
-          }
+          } 
         }
       });
     });
@@ -71,35 +75,36 @@ module.exports = {
   
   edit: function(req, res) {
     Entry.findOne({ id: req.params.id })
-    .exec( function(err, entryData) {
+    .populate('postedTo')
+    .exec( function(err, doc) {
       if (err) return next(err);
       var data = {};
-      data.entry = entryData;
+      data.entry = doc;
       return res.view("edit-entry", { user: req.user, data: data });
     });
   },
   
   submitEdit: function(req, res) {
-    Entry.findOne({ id: req.params.id })
-    .exec( function(err, doc) {
+    Entry.findOne(req.params.id)
+    .exec( function (err, doc) {
       if (err) return next(err);
       doc.content = req.body.content;
       doc.markdown = req.body.markdown;
       doc.save();
-      return res.json({ message: "Success!", redirect: "/sub/" + doc.postedTo + "/" + doc.slug });
+      return res.json({ message: "Success!", redirect: "/sub/" + req.params.postedTo + "/" + doc.slug });
     });
   },
   
   delete: function (req, res) {
     Entry.destroy(req.params.id)
     .exec( function(err, doc) {
-      return res.redirect("/sub/" + doc[0].postedTo);
+      return res.redirect("/sub/" + doc[0].postedTo.slug);
     });
   },
 
   listing: function (req, res) {
     var listingData = {};
-    var sub = req.params.sub || false;
+    var slug = req.params.sub || false;
 
     function listingView() {
       return res.view('entry', { user: req.user, data: listingData })
@@ -109,20 +114,34 @@ module.exports = {
       if (req.user) {
         var userid = req.user.id || "none";
       }
-      if (sub) {
-        Entry.find({ postedTo: sub })
-        .sort({ createdAt: 'desc' })
-        .populate('comments')
-        .populate('votes', { user: userid })
-        .exec( function (err, data) {
+      if (slug) {
+        console.log("ACCESSING " + slug)
+
+        Sub.findOne({ slug: slug })
+        .exec( function (err, doc) {
           if (err) return next(err);
-          listingData.entries = data;
-          getSub();
+          if (doc) {
+            listingData.sub = doc;
+            Entry.find({ postedTo: listingData.sub.id })
+            .sort({ createdAt: 'desc' })
+            .populate('comments')
+            .populate('postedTo')
+            .populate('votes', { user: userid })
+            .exec( function (err, data) {
+              if (err) return next(err);
+              listingData.entries = data;
+              listingView();
+            });
+          } else {
+            return res.redirect("/new/sub?name="+req.params.sub)
+          }
         });
+        
       } else {
         Entry.find({})
         .sort({createdAt: 'desc'})
         .populate('comments')
+        .populate('postedTo')
         .populate('votes', { user: userid })
         .exec( function (err, data) {
           if (err) return next(err);
@@ -132,18 +151,6 @@ module.exports = {
       }
     }
 
-    function getSub() {
-      Sub.findOne({ name: sub })
-      .exec( function (err, data) {
-        if (err) return next(err);
-        if (data) {
-          listingData.sub = data;
-          listingView();
-        } else {
-          return res.redirect("/new/sub?name="+req.params.sub)
-        }
-      });
-    }
 
     getEntries();
   },
@@ -158,6 +165,7 @@ module.exports = {
         var userid = req.user.id || "none";
         Entry.findOne({slug: req.params.slug})
         .populate('comments')
+        .populate('postedTo')
         .populate('votes', { user: userid })
         .exec(function (err, data) {
           viewData.entries = [data];
@@ -166,6 +174,7 @@ module.exports = {
       } else {
         Entry.findOne({slug: req.params.slug})
         .populate('comments')
+        .populate('postedTo')
         .exec(function (err, data) {
           viewData.entries.push(data);
           getComments();

@@ -47,6 +47,11 @@ var client = {
         var $form = $(this).parents("form");
         client.submitForm($form);
       }
+
+      if ($(this).hasClass("generate-slug")) {
+        var val = $(this).val();
+        client.generateSlug(val);
+      }
     });
 
     $("form").on("keyup",".CodeMirror", function(){mirror.save();});
@@ -54,7 +59,9 @@ var client = {
     $(".new-thing").on("keyup", "[name=markdown]", client.updatePreview);
     $(".edit-thing").on("keyup", "[name=markdown]", client.updatePreview);
 
-    $(".new-thing").on("keyup", "[name=title]", client.generateSlug);
+    $(".new-thing").on("keyup", "[name=title]", function () {
+      client.generateSlug($(this).val())
+    });
 
     $(".entry").on("keyup", client.entryKeypressHandler);
 
@@ -179,9 +186,10 @@ var client = {
   },
 
   generateSlug: function (data) {
-    var title = $("input[name=title]").val().trunc(64);;
+    var title = data.trunc(64);;
     var slug = title.toLowerCase().replace(/[^a-zA-Z0-9\s]/g,'').replace(/\s/g, "-");
     $("input[name=slug]").val(slug);
+    $(".slug").text(slug);
   },
 
   updatePreview: function (data) {

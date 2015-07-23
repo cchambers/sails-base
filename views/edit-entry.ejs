@@ -10,7 +10,7 @@
         </div>
         <div class="row pad-bottom-light">
           <label for="title">Title (req)</label>
-          <input type="text" name="title" value="<%= data.entry.postedTo %>" readonly>
+          <input type="text" name="title" value="<%= data.entry.title %>" readonly>
         </div>
 
         <div class="row pad-bottom-light">
@@ -27,7 +27,7 @@
 
         <div class="row pad-bottom-light">
           <label for="postedTo">You can post to one sub and cross post (optional) in up to two more</label>
-          <input type="text" name="postedTo" value="<%= data.entry.postedTo %>">
+          <input type="text" name="postedTo" value="<%= data.entry.postedTo.slug %>">
         </div>
 
         <div class="row pad-bottom-light">

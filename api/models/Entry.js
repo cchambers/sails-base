@@ -26,8 +26,7 @@ module.exports = {
     },
 
     postedTo: {
-      type: 'string',
-      required: true
+      model: 'sub'
     },
 
     crossPostedTo: [{

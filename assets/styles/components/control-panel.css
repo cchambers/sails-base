@@ -54,7 +54,6 @@ a.close-panel-inner:hover {
 }
 
 @media (max-width: 800px) {
-
   a.triple-bar {
     display: block;
     position: fixed;
