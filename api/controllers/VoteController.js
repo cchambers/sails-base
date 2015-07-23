@@ -32,18 +32,18 @@ module.exports = {
             .exec( function (err, doc) {
               console.log(voteData[0].vote)
               if (voteData[0].vote) {
-                console.log("removed upvote")
+                // console.log("removed upvote")
                 doc.ups--;
                 if (doc.ups < 0) doc.ups = 0;
               } else {
-                console.log("removed downvote")
+                // console.log("removed downvote")
                 doc.downs--;
                 if (doc.downs < 0) doc.downs = 0;
               }
               doc.save();
               blastVoteUpdate(entry, doc);
-              console.log("document updated for destroy");
-              return res.json({ vote: "" });
+              // console.log("document updated for destroy");
+              return res.json({ message: "Vote destroyed" });
             });
           });
         } else {
@@ -59,7 +59,7 @@ module.exports = {
               doc.save();
               blastVoteUpdate(entry, doc);
               console.log("document updated for reversal of vote");
-              return res.json({ vote: "" });
+              return res.json({ message: "Vote updated" });
             });
           })
           
@@ -92,7 +92,7 @@ module.exports = {
         doc.save();
         console.log("document updated");
         blastVoteUpdate(entry, doc);
-        return res.json({ vote: "vote created" });
+        return res.json({ message: "Vote created" });
       });
     }
   },
