@@ -1,4 +1,11 @@
 <div class="contain new-thing">
+  <% if (data.name) { %>
+  <div class="notice alert">
+    <p>
+    That sub doesn't exist! Check your spelling (<%= data.name %>), or feel free to create it...
+    </p>
+  </div>
+  <% } %>
   <form method="POST" data-callback="createSub" action="/sub">
     <div class="row">
       <div class="col-1-2">
@@ -10,7 +17,7 @@
         </div>
         <div class="row pad-bottom-light">
           <label for="name">Name it</label>
-          <input type="text" name="name" id="name">
+          <input type="text" name="name" id="name" value="<% if (data.name) { %><%=   data.name %><% } %>">
         </div>
         <div class="row pad-bottom-light">
           <label for="tagline">Tagline (optional)</label>

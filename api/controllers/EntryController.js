@@ -3,39 +3,98 @@ module.exports = {
     if ( typeof(req.user) == 'undefined' ) {
       return res.redirect('/');
     } else {
-      return res.view('new-entry', { user: req.user, data: false });
+      return res.view("new-entry", { user: req.user, data: false });
     }
+  },
+
+  create: function (req, res) {
+    console.log(req.body)
+
+    var succeed = true;
+
+    function errOut(data) {
+      console.log("WELL?", succeed);
+      return res.json(data);
+    }
+
+    var entry = {
+      postedBy: req.body.postedBy,
+      title: req.body.title,
+      slug: req.body.slug,
+      media: req.body.media || "",
+      markdown: req.body.markdown || "",
+      content: req.body.content || "",
+      postedTo: req.body.postedTo,
+    }
+
+    if (entry.postedBy != req.user.username) {
+      succeed = false;
+      errOut({ message: "Something's not right here." });
+    }
+
+    if (entry.title == "") {
+      succeed = false;
+      errOut({ message: "Need a title." });
+    }
+    if (entry.slug == "") {
+      succeed = false;
+      errOut({ message: "Bad slug." });
+    }
+    if (entry.postedTo == "") {
+      succeed = false;
+      errOut({ message: "Pick a sub!" });
+    }
+
+    Entry.findOne({slug: entry.slug})
+    .exec( function (err, doc) {
+      if (doc) {
+        succeed = false;
+        errOut({ message: "Need a unique slug." });
+      } 
+      Sub.findOne({name: entry.postedTo})
+      .exec( function (err, doc) {
+        if (!doc) {
+          succeed = false;
+          return res.json({ message: "That sub doesn't exist." });
+        } else {
+          if (succeed) {
+            Entry.create(entry)
+            .exec( function (err, doc) {
+              console.log("Entry created:", doc.postedTo + "/" + doc.slug);
+              return res.json({ message: "Success!", redirect: "/sub/" + doc.postedTo + "/" + doc.slug });
+            });
+          }
+        }
+      });
+    });
   },
   
   edit: function(req, res) {
     Entry.findOne({ id: req.params.id })
-      .exec( function(err, entryData) {
-        if(err) return next(err);
-        var data = {};
-        data.entry = entryData;
-        return res.view('edit-entry', { user: req.user, data: data });
+    .exec( function(err, entryData) {
+      if (err) return next(err);
+      var data = {};
+      data.entry = entryData;
+      return res.view("edit-entry", { user: req.user, data: data });
     });
   },
   
   submitEdit: function(req, res) {
     Entry.findOne({ id: req.params.id })
-      .exec( function(err, entryData) {
-        if(err) return next(err);
-        entryData.content = req.body.content;
-        entryData.markdown = req.body.markdown;
-        entryData.save();
-        return res.redirect('/sub/' + entryData.postedTo + '/' + entryData.slug);
+    .exec( function(err, doc) {
+      if (err) return next(err);
+      doc.content = req.body.content;
+      doc.markdown = req.body.markdown;
+      doc.save();
+      return res.redirect("/sub/" + doc.postedTo + "/" + doc.slug);
     });
   },
   
   delete: function (req, res) {
-    Entry.findOne({ id: req.params.id })
-      .exec( function(err, entryData) {
-        Entry.destroy({ slug: entryData.slug })
-          .exec( function(err, eData) {
-            return res.redirect('/')
-          });
-      });
+    Entry.destroy(req.params.id)
+    .exec( function(err, doc) {
+      return res.redirect("/sub/" + doc[0].postedTo);
+    });
   },
 
   listing: function (req, res) {
@@ -77,8 +136,12 @@ module.exports = {
       Sub.findOne({ name: sub })
       .exec( function (err, data) {
         if (err) return next(err);
-        listingData.sub = data;
-        listingView();
+        if (data) {
+          listingData.sub = data;
+          listingView();
+        } else {
+          return res.redirect("/new/sub?name="+req.params.sub)
+        }
       });
     }
 
@@ -138,7 +201,7 @@ module.exports = {
           postedBy: req.user.username
         }).exec(function(err, comment){
 
-          if(err) return next(err);
+          if (err) return next(err);
 
           Entry.findOne({ slug: req.body.slug })
           .populate('comments')

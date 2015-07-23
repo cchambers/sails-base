@@ -9,50 +9,46 @@
   <% var entry = entries[which] %>
   <article class="row entry <%= active %>" data-timestamp="<%= entry.createdAt %>" data-id="<%= entry.id %>">
     <div class="contain">
-      <div class="which">
-        <header>
-          <ul class="control"> 
-            <% if (user) { %>
-            <% if (entry.votes[0]) { %>
-            <% var up = (entry.votes[0].vote) %>
-            <li class="vote up <% if (up) { %> <%= 'active' %> <% } %>" data-dir="up">&darr;</li>
-            <li class="vote down <% if (!up) { %> <%= 'active' %> <% } %>" data-dir="down">&darr;</li>
-            <% } else { %>
-            <li class="vote up" data-dir="up">&darr;</li>
-            <li class="vote down" data-dir="down">&darr;</li>
-            <li class="close float-right" title="close">-</li>
-            <li class="report float-right" title="close">report</li>
-            <% } %>
-              <% if (entries[which].postedBy == user.username) { %>
-                <li class="edit float-right">edit</li>
-                <li class="delete float-right">delete</li>
-              <% } %>
-            <% } %>
-           
-          </ul>
-          <h1>
-            <%= entry.title %>
-          </h1>
-          <div class="score">
-            <span class="totes"><%= entry.getScore() %></span>
-            <span class="calculated"> &rarr; (<span class="ups"><%= entry.ups %></span> - <span class="downs"><%= entry.downs %></span>)</span> 
-          </div>
-        </header>
-        <section>
-          <%- include media-handler %>
-          <%- entry.content %>
-        </section>
-        <footer>
-          <cite><strong><%= entry.postedBy %></strong> &rarr; <a href="/sub/<%= entry.postedTo %>"><%= entry.postedTo %></a> (<a href="/sub/<%= entry.postedTo %>/<%= entry.slug %>#comments"><%= entry.comments.length %>&nbsp;comments</a>)</cite>
-        </footer>
-      </div>
+      <header>
+        <ul class="control"> 
+          <% if (user) { %>
+          <% if (entry.votes[0]) { %>
+          <% var up = (entry.votes[0].vote) %>
+          <li class="vote up <% if (up) { %> <%= 'active' %> <% } %>" data-dir="up">&darr;</li>
+          <li class="vote down <% if (!up) { %> <%= 'active' %> <% } %>" data-dir="down">&darr;</li>
+          <% } else { %>
+          <li class="vote up" data-dir="up">&darr;</li>
+          <li class="vote down" data-dir="down">&darr;</li>
+          <li class="close float-right" title="close">-</li>
+          <% } %>
+          <% if (entries[which].postedBy == user.username) { %>
+          <li class="edit float-right">edit</li>
+          <li class="delete float-right">delete</li>
+          <% } %>
+          <% } %>
+        </ul>
+        <h1>
+          <%= entry.title %>
+        </h1>
+        <div class="score">
+          <span class="totes"><%= entry.getScore() %></span>
+          <span class="calculated"> &rarr; (<span class="ups"><%= entry.ups %></span> - <span class="downs"><%= entry.downs %></span>)</span> 
+        </div>
+      </header>
+      <section>
+        <%- include media-handler %>
+        <%- entry.content %>
+      </section>
+      <footer>
+        <cite><strong><%= entry.postedBy %></strong> &rarr; <a href="/sub/<%= entry.postedTo %>"><%= entry.postedTo %></a> (<a href="/sub/<%= entry.postedTo %>/<%= entry.slug %>#comments"><%= entry.comments.length %>&nbsp;comments</a>)</cite>
+      </footer>
     </div>
   </article>
 
 
-    <% if (req.params.slug) { %> 
-      <%- include comments %>
-    <% } %>
+  <% if (req.params.slug) { %> 
+  <%- include comments %>
+  <% } %>
 
   <% } %>
 </div>

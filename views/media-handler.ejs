@@ -1,5 +1,5 @@
 <% if (entry.media) { %>
-  <% if ( (entry.media.indexOf('.jpg') > 0) || ((entry.media.indexOf('.gif') > 0)) ) { %>
+  <% if ( entry.media.indexOf('.jpg') || entry.media.indexOf('.jpeg') || entry.media.indexOf('.gif') ) { %>
   <div class="media image" style="background-image:url(<%= entry.media %>)"><img src="<%= entry.media %>"></div>
   <% } %> 
 
