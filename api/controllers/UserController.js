@@ -26,10 +26,14 @@ module.exports = {
   },
 
   myProfile: function (req, res) {
-    User.find({ username: req.user.username }, function (err, data) {
-      if (err) return next(err);
-      return res.view('my-profile', { user: req.user, data: data });
-    });
+    if (req.user) {
+      User.findOne({ username: req.user.username }, function (err, data) {
+        if (err) return next(err);
+        return res.view('my-profile', { user: req.user, data: data });
+      });
+    } else {
+      return res.redirect("/");
+    }
   },
 
   userProfile: function (req, res) {

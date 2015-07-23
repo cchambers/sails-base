@@ -1,10 +1,12 @@
 module.exports = {
   new: function (req, res) {
-    data = 'undefined';
+    data = {};
     if ( typeof(req.user) == 'undefined' ) {
       return res.redirect('/');
     } else {
-      //return res.view('new-sub', { user: req.user, data: false });
+      if (req.query.name) {
+        data.name = req.query.name;
+      }
       return res.view('new-sub', { user: req.user, data: data });
     }
   },

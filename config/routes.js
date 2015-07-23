@@ -11,6 +11,7 @@ module.exports.routes = {
 
   'get /new/sub': 'SubController.new',
   'get /new/entry': 'EntryController.new',
+  'post /new/entry': 'EntryController.create',
   
   'get /edit/entry/:id': 'EntryController.edit',
   'post /edit/entry/:id': 'EntryController.submitEdit',

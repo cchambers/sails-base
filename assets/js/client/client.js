@@ -65,6 +65,9 @@ var client = {
       $parent.removeClass("active");
     });
 
+    $(".entry").on("click", "h1", function (e) {
+    });
+
     $(".entry").on("click", ".delete", function (e) {
       client.deleteEntry( $(this).parents("article").data().id );
     });
@@ -110,6 +113,42 @@ var client = {
     });
   },
 
+  callbacks: {
+    checkLogin: function (data) {
+      console.log("Checking login..")
+      if (data.user) {
+        window.location.reload(); // success
+      } else {
+        var $output = $(".login-form output");
+        $output.text(data.message);
+      }
+    },
+
+    signUp: function (data) {
+      var $output = $(".sign-up output");
+      $output.text(data);
+      $(".login-form [name=email]").val( $(".sign-up [name=email]").val() );
+      $(".login-form [name=password]").val( $(".sign-up [name=password]").val() );
+      $(".login-form .submit").trigger("click");
+    },
+
+    createSub: function (data) {
+      if (data.name) {
+        location.href = "/sub/" + data.name
+      }
+    },
+    output: function (data) {
+      console.log(data);
+      if (data.message) {
+        $("[class*=-thing] output").text(data.message)
+      }
+
+      if (data.redirect) {
+        location.href = data.redirect;
+      }
+    }
+  },
+
   submitForm: function ($form) {
     var callback = $form.data().callback;
     var url = $form.attr("action");
@@ -119,53 +158,19 @@ var client = {
       url: url,
       data: data,
       success: function (data) {
-        if (client[callback]){
-          client[callback](data);
+        if (client.callbacks[callback]){
+          client.callbacks[callback](data);
         }
       }
     });
-  },
-
-  checkLogin: function (data) {
-    console.log("Checking login..")
-    if (data.user) {
-      window.location.reload(); // success
-    } else {
-      var $output = $(".login-form output");
-      $output.text(data.message);
-    }
-  },
-
-  signUp: function (data) {
-    var $output = $(".sign-up output");
-    $output.text(data);
-    $(".login-form [name=email]").val( $(".sign-up [name=email]").val() );
-    $(".login-form [name=password]").val( $(".sign-up [name=password]").val() );
-    $(".login-form .submit").trigger("click");
-  },
-
-  createSub: function (data) {
-    if (data.name) {
-      location.href = "/sub/" + data.name
-    }
   },
   
   editSub: function (data) {
     mirror.save();
   },
-
-  newEntry: function (data) {
-    if (data.slug) {
-      location.href = "/sub/" + data.postedTo + "/" + data.slug
-    }
-  },
   
   editEntry: function (id) {
-    location.href = "/edit/entry/" + id
-  },
-  
-  submitEntryEdit: function (data) {
-    for(d in data) console.info(d);
+    
   },
 
   generateSlug: function (data) {
@@ -250,10 +255,42 @@ var client = {
       }
     });
   },
-  
+
   deleteEntry: function (id) {
     location.href = "/delete/entry/" + id
   }
 }
 
 client.init();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-65514000-1', 'auto');
+ga('send', 'pageview');
+
