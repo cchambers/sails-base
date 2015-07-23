@@ -11,6 +11,7 @@
     <div class="contain">
       <header>
         <ul class="control"> 
+          <li class="close float-right" title="close">-</li>
           <% if (user) { %>
           <% if (entry.votes[0]) { %>
           <% var up = (entry.votes[0].vote) %>
@@ -19,7 +20,7 @@
           <% } else { %>
           <li class="vote up" data-dir="up">&darr;</li>
           <li class="vote down" data-dir="down">&darr;</li>
-          <li class="close float-right" title="close">-</li>
+          
           <% } %>
           <% if (entries[which].postedBy == user.username) { %>
           <li class="edit float-right">edit</li>
