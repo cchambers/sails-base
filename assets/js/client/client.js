@@ -137,6 +137,7 @@ var client = {
         location.href = "/sub/" + data.name
       }
     },
+    
     output: function (data) {
       console.log(data);
       if (data.message) {
@@ -170,7 +171,11 @@ var client = {
   },
   
   editEntry: function (id) {
-    
+    location.href = "/edit/entry/" + id
+  },
+  
+  submitEntryEdit: function(data) {
+    console.info(data);
   },
 
   generateSlug: function (data) {

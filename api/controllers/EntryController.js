@@ -86,7 +86,7 @@ module.exports = {
       doc.content = req.body.content;
       doc.markdown = req.body.markdown;
       doc.save();
-      return res.redirect("/sub/" + doc.postedTo + "/" + doc.slug);
+      return res.json({ message: "Success!", redirect: "/sub/" + doc.postedTo + "/" + doc.slug });
     });
   },
   
