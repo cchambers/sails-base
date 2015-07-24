@@ -19,8 +19,7 @@ module.exports = {
     },
 
     creator: {
-      type: 'string',
-      required: true
+      model: 'name'
     },
 
     open: {

@@ -163,7 +163,7 @@ module.exports = {
     function getEntry() {
       if (req.user) {
         var userid = req.user.id || "none";
-        Entry.findOne({slug: req.params.slug})
+        Entry.findOne({ slug: req.params.slug })
         .populate('comments')
         .populate('postedTo')
         .populate('votes', { user: userid })
@@ -172,7 +172,7 @@ module.exports = {
           getComments();
         });
       } else {
-        Entry.findOne({slug: req.params.slug})
+        Entry.findOne({ slug: req.params.slug })
         .populate('comments')
         .populate('postedTo')
         .exec(function (err, data) {

@@ -2,16 +2,16 @@ module.exports = {
   attributes: {
 
     entry: {
-        model: 'entry',
+      model: 'entry',
     },
 
     parent: {
-        model: 'comment'
+      model: 'comment'
     },
 
     children: {
-        collection: 'comment',
-        via: 'parent'
+      collection: 'comment',
+      via: 'parent'
     },
 
     content: {
@@ -21,7 +21,11 @@ module.exports = {
     },
 
     postedBy: {
-      type: 'string'
+      model: 'name'
+    },
+
+    user: {
+      model: 'user'
     },
 
     ups: {

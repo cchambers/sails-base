@@ -1,10 +1,29 @@
 <article class="row active user-profile">
   <div class="contain">
-    <h1>
-      <%= console.log(data) %>
+    <h1 class="pad-lips">
+      <%= data.email %>
     </h1>
-    <p>
-      
-    </p>
+    <div class="row new-thing">
+      <% for (var x = 0; x < data.names.length ; x ++) { %>
+      <div class="row pad-bottom-light<% if (data.names[x].name == data.username) { %> active<% } %>">
+      <a href="#" class="button primary switch-to" data-name="<%= data.names[x].name %>">switch to</a> <%= data.names[x].name %>
+      </div>
+      <% } %>
+      <form method="POST" data-callback="output" action="/new/name">
+        <div class="row pad-bottom-light">
+         <input type="text" name="name">
+       </div>
+
+       <div class="row pad-bottom-light">
+        <a class="button primary submit">add it</a>
+        <output></output>
+      </div>
+
+    </form>
   </div>
-</article>
+
+  <p>
+
+  </p>
+</div>
+</a

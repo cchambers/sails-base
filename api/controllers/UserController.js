@@ -6,15 +6,14 @@ module.exports = {
       } else {
         return res.render('homepage', {user: false });
       }
-
-      passport.authenticate('local')(req, res, function () {
-        if (user) {
-          return res.view('homepage', { user: false });
-        } else {
-          return res.view('homepage', { user: req.user });
-        }
-      });
     });
+  },
+
+  create: function (req, res) {
+    // check username existence
+    // check email existence
+    // create name
+    // create user
   },
 
   makeAdmin: function (req, res) {
@@ -27,7 +26,10 @@ module.exports = {
 
   myProfile: function (req, res) {
     if (req.user) {
-      User.findOne({ username: req.user.username }, function (err, data) {
+      User.findOne(req.user.id) 
+      .populate('votes') 
+      .populate('names')
+      .exec( function (err, data) {
         if (err) return next(err);
         return res.view('my-profile', { user: req.user, data: data });
       });

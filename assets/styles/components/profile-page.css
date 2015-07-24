@@ -1,0 +1,12 @@
+.switch-to {
+  margin-right: 1.5rem;
+}
+
+.active > .switch-to {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.active > a {
+  
+}

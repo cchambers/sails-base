@@ -98,6 +98,8 @@ var client = {
       $(".panel form.active input").first().focus();
     });
     $(".panel form.active input").first().focus();
+
+    $(".switch-to").on("click", client.switchNames)
   },
 
   setupSockets: function () {
@@ -169,6 +171,25 @@ var client = {
         if (client.callbacks[callback]){
           client.callbacks[callback](data);
         }
+      }
+    });
+  },
+
+  switchNames: function (e) {
+    e.preventDefault();
+    var $el = $(this);
+    var name = $el.data().name;
+    var data = {
+      name: name
+    }
+    $.ajax({
+      type: "POST",
+      url: "/switch",
+      data: data,
+      success: function (data) {
+        $("[data-name]").parent().removeClass("active");
+        $("[data-name=" + name + "]").parent().addClass("active");
+        client.callbacks.output(data);
       }
     });
   },

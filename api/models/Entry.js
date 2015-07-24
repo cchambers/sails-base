@@ -43,7 +43,7 @@ module.exports = {
 
     ups: {
       type: 'integer',
-      defaultsTo: 1
+      defaultsTo: 0
     },
 
     downs: {

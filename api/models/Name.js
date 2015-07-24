@@ -1,14 +1,33 @@
 module.exports = {
-
   attributes: {
     user: {
       model: 'user'
     },
+    
     name: {
-      type: 'string' 
+      type: 'string',
+      required: true,
+      unique: true 
     },
+    
     votes: {
-      model: 'vote'
+      collection: 'vote',
+      via: 'name'
+    },
+    
+    entries: {
+      collection: 'entry',
+      via: 'postedBy'
+    },
+    
+    comments: {
+      collection: 'comment',
+      via: 'postedBy'
+    },
+    
+    active: {
+      type: 'boolean',
+      defaultsTo: false
     }
   }
 };

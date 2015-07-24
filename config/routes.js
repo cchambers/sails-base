@@ -9,6 +9,10 @@ module.exports.routes = {
   'post /login': 'AuthController.login',
   '/logout': 'AuthController.logout',
 
+  'post /new/user': 'UserController.create',
+  'post /new/name': 'NameController.create',
+  'post /switch': 'NameController.switchTo',
+
   'get /new/sub': 'SubController.new',
   'post /new/sub': 'SubController.create',
   'get /new/entry': 'EntryController.new',

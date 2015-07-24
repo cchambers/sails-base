@@ -9,10 +9,11 @@ module.exports = {
     checkExistence();
 
     function checkExistence() {
-      Vote.findOne({ entry: entry, user: user.id }).exec( function (err, votedata) {
+      Vote.findOne({ entry: entry, user: user.id })
+      .exec( function (err, doc) {
         if (err) return next(err);
-        if (votedata) {
-          doVote(votedata);
+        if (doc) {
+          doVote(doc);
         } else {
           doVote();
         }
