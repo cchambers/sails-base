@@ -32,6 +32,11 @@ module.exports = {
       defaultsTo: false
     },
 
+    nsfl: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
     style: {
       type: 'string'
     },

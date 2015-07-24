@@ -1,19 +1,39 @@
 module.exports = {
-  make: function (req, res) {
-    User.register(new User({ email : req.body.email }), req.body.password, function(err, account) {
-      if (err) {
-        return res.render('register', { account : account, user: false });
-      } else {
-        return res.render('homepage', {user: false });
-      }
-    });
-  },
-
+ 
   create: function (req, res) {
+    Name.findOne({ name: req.body.username })
+    .exec( function (err, doc) {
+      if (doc) {
+        return res.json({ message: "Username exists." })
+      }
+      User.create(req.body)
+      .exec( function (err, doc) {
+        var user = doc.id;
+        Name.create({
+          name: req.body.username,
+          user: user
+        }).exec( function (err, doc) {
+          return res.json({ message: "You may now log in." })
+        });
+      });
+    })
     // check username existence
     // check email existence
     // create name
     // create user
+  },
+
+  verify: function (req, res) {
+    User.findOne(req.params.id)
+    .exec( function (err, doc) {
+      doc.verified = true;
+      doc.save();
+      return res.view('message', { 
+        message: "Username verified! Login to continue.", 
+        type: "success",
+        data: false,
+        });
+    });
   },
 
   makeAdmin: function (req, res) {
