@@ -13,7 +13,7 @@ module.exports = {
           name: req.body.username,
           user: user
         }).exec( function (err, doc) {
-          return res.json({ message: "You may now log in." })
+          return res.json({ message: "You may now log in.", callback: "signUp" })
         });
       });
     })

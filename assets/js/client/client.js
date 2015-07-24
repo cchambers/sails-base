@@ -134,10 +134,10 @@ var client = {
     },
 
     signUp: function (data) {
-      var $output = $(".sign-up output");
+      var $output = $(".signup-form output");
       $output.text(data);
-      $(".login-form [name=email]").val( $(".sign-up [name=email]").val() );
-      $(".login-form [name=password]").val( $(".sign-up [name=password]").val() );
+      $(".login-form [name=email]").val( $(".signup-form [name=email]").val() );
+      $(".login-form [name=password]").val( $(".signup-form [name=password]").val() );
       $(".login-form .submit").trigger("click");
     },
 
@@ -159,6 +159,10 @@ var client = {
       if (data.reload) {
         location.reload();
       }
+
+      if (data.callback && client.callbacks[data.callback]) {
+        client.callbacks[data.callback]();
+      }
     }
   },
 
@@ -171,6 +175,7 @@ var client = {
       url: url,
       data: data,
       success: function (data) {
+        console.log("Form post success:", data);
         if (client.callbacks[callback]){
           client.callbacks[callback](data);
         }
