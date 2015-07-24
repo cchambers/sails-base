@@ -16,7 +16,7 @@
 
 .comments section {
   padding: calc(.75rem - 1px);
-  background: #f2f2f2;
+  background: transparent;
 }
 
 .comments > ul {
@@ -28,34 +28,22 @@
 }
 
 .comments ul ul {
-  padding-left: 1.5rem;
+  padding-left: 0.75rem;
 }
 
 .comments ul li {
-  margin-top: 1.5rem;
+  margin: 0.75rem 0.75rem 0.75rem 0;
   padding-left: 1px;
-  background-color: #f2f2f2;
+  background-color: transparent;
+  border: 1px solid rgba(0,0,0,.25);
 }
 
 .comments ul li > ul:nth-child(even) li{
-  background-color: #ddd;
+  background-color: rgba(0,0,0,.25);
 }
 
 .comments ul li > ul:nth-child(odd) li{
-  background-color: #f2f2f2;
+  background-color: transparent;
 }
 
 
-.comment{
-  margin-top:10px;
-}
-
-.comment>article{
-  padding-top:25px;
-}
-.comment label{
-  padding-bottom:10px;
-}
-.comment textarea{
-  margin-bottom:10px;
-}
