@@ -30,6 +30,7 @@ module.exports.routes = {
   'post /sub/:sub/edit': 'SubController.submitEdit',
   'get /sub/:sub/:slug': 'EntryController.single',
 
+  'get /verify/:id': 'UserController.verify',
   'get /user/:user': 'UserController.userProfile',
 
   'post /vote/:direction/:entry': 'VoteController.vote',

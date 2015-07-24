@@ -32,6 +32,15 @@ module.exports = {
     // create user
   },
 
+  verify: function (req, res) {
+    User.findOne(req.params.id)
+    .exec( function (err, doc) {
+      doc.verified = true;
+      doc.save();
+      return res.redirect("/");
+    });
+  },
+
   makeAdmin: function (req, res) {
     User.findOne({ email: req.user.email }, function (err, doc) {
       doc.admin = true;
