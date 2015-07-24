@@ -1,14 +1,5 @@
 module.exports = {
-  make: function (req, res) {
-    User.register(new User({ email : req.body.email }), req.body.password, function(err, account) {
-      if (err) {
-        return res.render('register', { account : account, user: false });
-      } else {
-        return res.render('homepage', {user: false });
-      }
-    });
-  },
-
+ 
   create: function (req, res) {
     Name.findOne({ name: req.body.username })
     .exec( function (err, doc) {
@@ -37,7 +28,11 @@ module.exports = {
     .exec( function (err, doc) {
       doc.verified = true;
       doc.save();
-      return res.redirect("/");
+      return res.view('message', { 
+        message: "Username verified! Login to continue.", 
+        type: "success",
+        data: false,
+        });
     });
   },
 
@@ -45,7 +40,7 @@ module.exports = {
     User.findOne({ email: req.user.email }, function (err, doc) {
       doc.admin = true;
       doc.save();
-      return res.redirect("/userlist");
+      return res.render("/userlist");
     });
   },
 
