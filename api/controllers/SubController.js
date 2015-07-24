@@ -43,7 +43,7 @@ module.exports = {
       if(err) return next(err);
       var data = {};
       data.sub = doc;
-      return res.json({ message: "Success!", reload: true });
+      return res.view('edit-sub', { user: req.user, data: data });
     });
   },
   
