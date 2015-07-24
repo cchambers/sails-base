@@ -141,12 +141,43 @@ module.exports = {
         
       } else {
         Entry.find({})
-        .sort({createdAt: 'desc'})
         .populate('comments')
         .populate('postedTo')
         .populate('votes', { user: userid })
         .exec( function (err, data) {
           if (err) return next(err);
+          
+          var i = 0;
+          var j = 0;
+          var iMax = 0;
+          console.info("====Sorting====");
+          console.info("Array Length: " + data.length);
+          for (j=0; j < data.length-1; j++) {
+            iMax = j;
+            console.info("Max: " + iMax);
+            for (i=j+1; i < data.length; i++) {
+              console.info("data[" + i + "]: " + data[i].ups);
+              if (data[i].ups - data[i].downs > data[iMax].ups - data[iMax].downs) {
+                console.info("data[" + i + "] is greater than data[" + iMax + "]");
+                iMin = i;
+                console.info("New Maximum" + iMax);
+              } else {
+                console.info("data[" + i + "] is less than data[" + iMax + "]");
+              }
+            }
+            console.info(i + ":" + iMax + ":" + j);
+            if(iMax != j){
+              console.info(data[j].title + ":" + data[iMax].title);
+              tmp = data[j];
+              tmp2 = data[iMax];
+              console.info("Switching '" + tmp.title + "' with '" + tmp2.title + "'");
+              data[j] = tmp2;
+              data[iMax] = tmp;
+            }
+            console.info(data[j].title);
+          }
+          console.info("====Done Sorting====");
+          
           listingData.entries = data;
           listingView();
         });
