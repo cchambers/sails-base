@@ -10,6 +10,22 @@ module.exports = {
   },
 
   create: function (req, res) {
+    Name.findOne({ name: req.body.username })
+    .exec( function (err, doc) {
+      if (doc) {
+        return res.json({ message: "Username exists." })
+      }
+      User.create(req.body)
+      .exec( function (err, doc) {
+        var user = doc.id;
+        Name.create({
+          name: req.body.username,
+          user: user
+        }).exec( function (err, doc) {
+          return res.json({ message: "You may now log in." })
+        });
+      });
+    })
     // check username existence
     // check email existence
     // create name
