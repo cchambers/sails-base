@@ -7,6 +7,18 @@
 
 }
 
+.comments header,
+.comments footer {
+  line-height: 3rem;
+  font-size: 1.4rem;
+  padding-left: .75rem;
+}
+
+.comments section {
+  padding: calc(.75rem - 1px);
+  background: #f2f2f2;
+}
+
 .comments > ul {
   border: 1px solid #121212;
 }
@@ -21,15 +33,15 @@
 
 .comments ul li {
   margin-top: 1.5rem;
-  padding: .75rem;
+  padding-left: 1px;
   background-color: #f2f2f2;
 }
 
-.comments ul li > ul li:nth-child(odd) {
+.comments ul li > ul:nth-child(even) li{
   background-color: #ddd;
 }
 
-.comments ul li > ul li:nth-child(even) {
+.comments ul li > ul:nth-child(odd) li{
   background-color: #f2f2f2;
 }
 
