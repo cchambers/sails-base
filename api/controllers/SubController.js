@@ -22,23 +22,28 @@ module.exports = {
         return res.json({ message: "Failure! Sub or slug exists." });
       } else {
         console.log("Creating sub:",req.body);
-        Sub.create(req.body)
-        .exec( function (err, doc) {
-          console.log(doc);
-          return res.json({ message: "Success!", redirect: "/sub/" + req.body.slug });
-        });
+        Name.findOne({ name: req.user.username })
+        .exec(function (err, doc) {
+          var data = req.body;
+          data.creator = doc.id;
+          console.log("DATA!", data);
+          Sub.create(data)
+          .exec( function (err, doc) {
+            return res.json({ message: "Success!", redirect: "/sub/" + req.body.slug });
+          });
+        })
       }
     });
-
   },
   
   edit: function (req, res) {
     Sub.findOne({ name: req.params.sub })
+    .populate('creator')
     .exec( function (err, doc) {
       if(err) return next(err);
       var data = {};
       data.sub = doc;
-      return res.view('edit-sub', { user: req.user, data: data });
+      return res.json({ message: "Success!", reload: true });
     });
   },
   

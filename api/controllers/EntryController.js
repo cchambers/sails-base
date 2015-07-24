@@ -118,7 +118,9 @@ module.exports = {
         console.log("ACCESSING " + slug)
 
         Sub.findOne({ slug: slug })
+        .populate('creator')
         .exec( function (err, doc) {
+          console.log(doc);
           if (err) return next(err);
           if (doc) {
             listingData.sub = doc;

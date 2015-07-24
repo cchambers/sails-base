@@ -148,13 +148,16 @@ var client = {
     },
     
     output: function (data) {
-      console.log(data);
       if (data.message) {
         $("[class*=-thing] output").text(data.message)
       }
 
       if (data.redirect) {
         location.href = data.redirect;
+      }
+
+      if (data.reload) {
+        location.reload();
       }
     }
   },

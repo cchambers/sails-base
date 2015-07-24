@@ -11,7 +11,7 @@
     <li><a href="/new/sub">create sub</a></li>
     <li><a href="/sublist">list subs</a></li>
     <li><a href="/logout">log out</a></li>
-    <% if ( data.sub && (data.sub.creator == user.username) ) { %>
+    <% if ( data.sub && (data.sub.creator.name == user.username) ) { %>
     <li class="pink bold pad-left-light">moderator:</li>
     <li><a href="/sub/<%= data.sub.slug %>/edit">edit <%= data.sub.name %></a></li>
     <% } %>
