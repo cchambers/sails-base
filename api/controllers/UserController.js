@@ -40,7 +40,7 @@ module.exports = {
     User.findOne({ email: req.user.email }, function (err, doc) {
       doc.admin = true;
       doc.save();
-      return res.render("/userlist");
+      return res.redirect("/userlist");
     });
   },
 
