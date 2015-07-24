@@ -55,6 +55,16 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false
     },
+    
+    nsfw: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
+    nsfl: {
+      type: 'boolean',
+      defaultsTo: false
+    },
 
     comments: {
       collection: 'comment',

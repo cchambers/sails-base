@@ -147,9 +147,9 @@ var client = {
       }
     },
     
-    output: function (data) {
+    output: function (data, $form) {
       if (data.message) {
-        $("[class*=-thing] output").text(data.message)
+        $form.find("output").text(data.message)
       }
 
       if (data.redirect) {
@@ -177,7 +177,7 @@ var client = {
       success: function (data) {
         console.log("Form post success:", data);
         if (client.callbacks[callback]){
-          client.callbacks[callback](data);
+          client.callbacks[callback](data, $form);
         }
       }
     });

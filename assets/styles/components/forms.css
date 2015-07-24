@@ -46,10 +46,10 @@ form output {
   display: block;
 }
 
-.new-thing input,
+.new-thing input[type=text],
 .new-thing textarea,
 .new-thing select,
-.edit-thing input,
+.edit-thing input[type=text],
 .edit-thing textarea,
 .edit-thing select {
   width: 100%;

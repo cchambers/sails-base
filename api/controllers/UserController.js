@@ -1,5 +1,4 @@
 module.exports = {
- 
   create: function (req, res) {
     Name.findOne({ name: req.body.username })
     .exec( function (err, doc) {
@@ -8,13 +7,17 @@ module.exports = {
       }
       User.create(req.body)
       .exec( function (err, doc) {
-        var user = doc.id;
-        Name.create({
-          name: req.body.username,
-          user: user
-        }).exec( function (err, doc) {
-          return res.json({ message: "You may now log in.", callback: "signUp" })
-        });
+        if (doc) {
+          var user = doc.id;
+          Name.create({
+            name: req.body.username,
+            user: user
+          }).exec( function (err, doc) {
+            return res.json({ message: "Welcome to the sauce!", callback: "signUp" })
+          });
+        } else {
+          return res.json({ message: "Email exists." })
+        }
       });
     })
     // check username existence
@@ -32,7 +35,7 @@ module.exports = {
         message: "Username verified! Login to continue.", 
         type: "success",
         data: false,
-        });
+      });
     });
   },
 
