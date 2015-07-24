@@ -41,7 +41,7 @@ module.exports = {
                     if (err) return next(err);
 
                     getCommentAmmount(data);
-                    getEntriesComments(data);
+                    // getEntriesComments(data);
 
                     listingData.entries = data;
                     listingView();
@@ -70,20 +70,23 @@ module.exports = {
 
     single: function (req, res) {
 
-        function getChildren(comment){
+        function getChildren(comment, callback){
             Comment.findOne({id: comment.id})
                 .populate('parent')
                 .populate('children')
                 .exec(function(err, data){
 
-                    console.log(data);
 
                     _.map(data.children, function(child){
-                        return getChildren(child);
+                        getChildren(child, function(err, data){
+                            child =  JSON.parse(JSON.stringify(child.toObject()));
+                            child.children = data;
+                            console.log(child);
+                            return child;
+                        });
+                        return child;
                     });
-
-                    return data.children;
-
+                    callback(null, data);
             });
         }
         async.auto({
@@ -107,12 +110,11 @@ module.exports = {
                 .populate('parent')
                 .exec(function(err, data){
                     data = _.map(data, function(comment){
-                        // getChildren(comment);
-                        console.log(getChildren(comment));
-                        // data = getChildren(comment);
+                        getChildren(comment, function(err, data){
+                            console.log(data);
+                        });
                         return comment;
                     });
-                    // console.log(data);
                     callback(err, data);
                 });
             }],
