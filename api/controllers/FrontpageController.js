@@ -16,7 +16,9 @@ module.exports = {
   },
 
   sublist: function (req, res) {
-    Sub.find().exec( function (err, data) {
+    Sub.find()
+    .populate('creator')
+    .exec( function (err, data) {
       if (err) return next(err);
       if (!req.user) {
         return res.redirect("/");
