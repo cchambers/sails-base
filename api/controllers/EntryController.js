@@ -12,11 +12,9 @@ module.exports = {
   },
 
   create: function (req, res) {
-    console.log(req.body)
     var succeed = true;
 
     function errOut(data) {
-      console.log("WELL?", succeed);
       return res.json(data);
     }
 
@@ -48,31 +46,42 @@ module.exports = {
       errOut({ message: "Pick a sub!" });
     }
 
-    Entry.findOne({slug: entry.slug})
-    .exec( function (err, doc) {
-      if (doc) {
-        succeed = false;
-        errOut({ message: "Need a unique slug." });
-      } 
-      Sub.findOne({slug: entry.postedTo})
+    Name.findOne({ name: req.user.username })
+    .exec( function (err, name) {
+      Entry.findOne({slug: entry.slug})
       .exec( function (err, doc) {
-        if (!doc) {
+        if (doc) {
           succeed = false;
-          return res.json({ message: "That sub doesn't exist." });
-        } else {
-          entry.postedTo = doc.id;
-          if (succeed) {
-            Entry.create(entry)
-            .exec( function (err, entry) {
-              console.log("Entry created:", doc.slug + "/" + entry.slug);
-              return res.json({ message: "Success!", redirect: "/sub/" + doc.slug + "/" + entry.slug });
-            });
-          } 
-        }
+          errOut({ message: "Need a unique slug." });
+        } 
+        Sub.findOne({slug: entry.postedTo})
+        .exec( function (err, doc) {
+          if (!doc) {
+            succeed = false;
+            return res.json({ message: "That sub doesn't exist." });
+          } else {
+            entry.postedTo = doc.id;
+            entry.postedBy = name.id;
+            if (succeed) {
+              Entry.create(entry)
+              .exec( function (err, entry) {
+                console.log("Entry created:", doc.slug + "/" + entry.slug);
+                Vote.create({
+                  user: req.user.id,
+                  name: name.id,
+                  entry: entry.id,
+                  vote: true
+                }).exec( function (err, vote) {
+                  return res.json({ message: "Success!", redirect: "/sub/" + doc.slug + "/" + entry.slug });
+                })
+              });
+            } 
+          }
+        });
       });
     });
   },
-  
+
   edit: function(req, res) {
     Entry.findOne({ id: req.params.id })
     .populate('postedTo')
@@ -83,7 +92,7 @@ module.exports = {
       return res.view("edit-entry", { user: req.user, data: data });
     });
   },
-  
+
   submitEdit: function(req, res) {
     Entry.findOne(req.params.id)
     .exec( function (err, doc) {
@@ -94,7 +103,7 @@ module.exports = {
       return res.json({ message: "Success!", redirect: "/sub/" + req.params.postedTo + "/" + doc.slug });
     });
   },
-  
+
   delete: function (req, res) {
     Entry.destroy(req.params.id)
     .exec( function(err, doc) {
@@ -115,12 +124,9 @@ module.exports = {
         var userid = req.user.id || "none";
       }
       if (slug) {
-        console.log("ACCESSING " + slug)
-
         Sub.findOne({ slug: slug })
         .populate('creator')
         .exec( function (err, doc) {
-          console.log(doc);
           if (err) return next(err);
           if (doc) {
             listingData.sub = doc;
@@ -128,6 +134,7 @@ module.exports = {
             .sort({ createdAt: 'desc' })
             .populate('comments')
             .populate('postedTo')
+            .populate('postedBy')
             .populate('votes', { user: userid })
             .exec( function (err, data) {
               if (err) return next(err);
@@ -138,52 +145,40 @@ module.exports = {
             return res.redirect("/new/sub?name="+req.params.sub)
           }
         });
-        
+
       } else {
         Entry.find({})
         .populate('comments')
         .populate('postedTo')
+        .populate('postedBy')
         .populate('votes', { user: userid })
         .exec( function (err, data) {
           if (err) return next(err);
-          
+
           var i = 0;
           var j = 0;
           var iMax = 0;
-          // console.info("====Sorting====");
-          // console.info("Array Length: " + data.length);
           for (j=0; j < data.length-1; j++) {
             iMax = j;
-            // console.info("Max: " + iMax);
             for (i=j+1; i < data.length; i++) {
-              // console.info("data[" + i + "]: " + data[i].ups);
               if (data[i].ups - data[i].downs > data[iMax].ups - data[iMax].downs) {
-                // console.info("data[" + i + "] is greater than data[" + iMax + "]");
                 iMin = i;
-                // console.info("New Maximum" + iMax);
               } else {
-                // console.info("data[" + i + "] is less than data[" + iMax + "]");
               }
             }
-            // console.info(i + ":" + iMax + ":" + j);
             if(iMax != j){
-              // console.info(data[j].title + ":" + data[iMax].title);
               tmp = data[j];
               tmp2 = data[iMax];
-              // console.info("Switching '" + tmp.title + "' with '" + tmp2.title + "'");
               data[j] = tmp2;
               data[iMax] = tmp;
             }
-            // console.info(data[j].title);
           }
-          // console.info("====Done Sorting====");
-          
+
           listingData.entries = data;
           listingView();
         });
       }
     }
-
 
     getEntries();
   },
@@ -199,6 +194,7 @@ module.exports = {
         Entry.findOne({ slug: req.params.slug })
         .populate('comments')
         .populate('postedTo')
+        .populate('postedBy')
         .populate('votes', { user: userid })
         .exec(function (err, data) {
           viewData.entries = [data];
@@ -208,6 +204,7 @@ module.exports = {
         Entry.findOne({ slug: req.params.slug })
         .populate('comments')
         .populate('postedTo')
+        .populate('postedBy')
         .exec(function (err, data) {
           viewData.entries.push(data);
           getComments();

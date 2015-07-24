@@ -22,7 +22,7 @@
           <li class="vote down" data-dir="down">&darr;</li>
           
           <% } %>
-          <% if (entries[which].postedBy == user.username) { %>
+          <% if (entries[which].postedBy.name == user.username) { %>
           <li class="edit float-right">edit</li>
           <li class="delete float-right">delete</li>
           <% } %>
@@ -41,7 +41,7 @@
         <%- entry.content %>
       </section>
       <footer>
-        <cite><strong><%= entry.postedBy %></strong> &rarr; <a href="/sub/<%= entry.postedTo.slug %>"><%= entry.postedTo.name %></a>
+        <cite><strong><%= entry.postedBy.name %></strong> &rarr; <a href="/sub/<%= entry.postedTo.slug %>"><%= entry.postedTo.name %></a>
         (<a href="/sub/<%= entry.postedTo.slug %>/<%= entry.slug %>#comments"><%= entry.comments.length %>&nbsp;comments</a>)</cite>
       </footer>
     </div>
