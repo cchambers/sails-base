@@ -25,7 +25,6 @@ module.exports = {
       if (exists) { // update a vote
         // console.log("VOTE EXISTS", "going " + direction);
         if (direction == "neutral") {
-          //exists.destroy();
           Vote.destroy({ user: exists.user, entry: exists.entry })
           .exec( function (err, data) {
             voteData = data;

@@ -62,6 +62,7 @@ module.exports = {
           } else {
             entry.postedTo = doc.id;
             entry.postedBy = name.id;
+            entry.ups = 1;
             if (succeed) {
               Entry.create(entry)
               .exec( function (err, entry) {
@@ -188,7 +189,20 @@ module.exports = {
     var viewData = {
       entries: []
     };
-    getEntry();
+    if (req.params.sub) {
+      getSub();
+    } else {
+      getEntry();
+    }
+
+    function getSub() {
+      Sub.findOne({ name: req.params.sub })
+      .exec( function (err, doc) {
+        viewData.sub = doc;
+        getEntry();
+      });
+    }
+
     function getEntry() {
       if (req.user) {
         var userid = req.user.id || "none";
@@ -197,8 +211,8 @@ module.exports = {
         .populate('postedTo')
         .populate('postedBy')
         .populate('votes', { user: userid })
-        .exec(function (err, data) {
-          viewData.entries = [data];
+        .exec( function (err, doc) {
+          viewData.entries.push(doc);
           getComments();
         });
       } else {

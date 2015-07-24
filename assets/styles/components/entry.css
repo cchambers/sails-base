@@ -25,13 +25,11 @@
   line-height: 3rem;
 }
 
-
 article.active .entry header h1 {
   color: #DF3D82;
 }
 /*
-
- main article 
+main article 
 main.active article {
   opacity: .5;
 }
@@ -134,7 +132,7 @@ article header li {
   padding: 0 .75rem;
   opacity: .5;
   border-radius: .5rem;
-  border: .2rem solid #DF3D82;
+  border: 1px solid #DF3D82;
 }
 
 article header li + li {

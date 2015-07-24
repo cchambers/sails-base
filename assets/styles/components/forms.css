@@ -50,6 +50,7 @@ input[type=checkbox] + label {
   line-height: 3rem;
   padding: 0 0.75rem;
   border: 1px solid #999;
+  border-radius: .5rem;
   float: left;
   margin-right: 1.5rem;
 }
