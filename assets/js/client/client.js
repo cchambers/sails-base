@@ -148,8 +148,10 @@ var client = {
     },
     
     output: function (data, $form) {
-      if (data.message) {
-        $form.find("output").text(data.message)
+      if ($form){
+        if (data.message) {
+          $form.find("output").text(data.message)
+        }
       }
 
       if (data.redirect) {
@@ -196,7 +198,8 @@ var client = {
       data: data,
       success: function (data) {
         $("[data-name]").parent().removeClass("active");
-        $("[data-name=" + name + "]").parent().addClass("active");
+        $("[data-name='" + name + "']").parent().addClass("active");
+        $(".userinfo .bold").text(name);
         client.callbacks.output(data);
       }
     });

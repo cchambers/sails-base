@@ -3,7 +3,8 @@ module.exports = {
     User.findOne(req.user.id)
     .populate('names')
     .exec( function (err, doc) {
-      if (doc.names.length > 10) {
+      console.log("NAMES", doc)
+      if (doc.names.length >= 10) {
         return res.json({ message: "You already have 10 names." })
       } 
 
@@ -38,7 +39,7 @@ module.exports = {
         .exec( function (err, doc) {
           doc.username = name;
           doc.save();
-          return res.json({ message: "Switched.", redirect: "/me" })
+          return res.json({ message: "Switched." })
         });
       }
     });
