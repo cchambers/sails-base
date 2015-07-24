@@ -105,9 +105,10 @@ module.exports = {
   },
 
   delete: function (req, res) {
-    Entry.destroy(req.params.id)
-    .exec( function(err, doc) {
-      return res.redirect("/sub/" + doc[0].postedTo.slug);
+    Entry.destroy(req.body.id)
+    .exec( function (err, doc) {
+      if (err) return next(err);
+      return res.json({ message: 'Post deleted!', success: true });
     });
   },
 

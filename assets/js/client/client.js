@@ -75,9 +75,7 @@ var client = {
     $(".entry").on("click", "h1", function (e) {
     });
 
-    $(".entry").on("click", ".delete", function (e) {
-      client.deleteEntry( $(this).parents("article").data().id );
-    });
+    $(".entry").on("click", ".delete", client.deleteEntry);
 
     $("body").on("click", ".edit", function (e) {
       client.editEntry( $(this).parents("article").data().id );
@@ -293,7 +291,7 @@ var client = {
     console.log("Sending vote:", id, direction)
     $.ajax({
       type: 'POST',
-      url: '/vote/' + direction + "/" + id,
+      url: '/vote/' + direction + '/' + id,
       data: { doVote: true },
       success: function (data) {
         console.log(data);
@@ -302,7 +300,19 @@ var client = {
   },
 
   deleteEntry: function (id) {
-    location.href = "/delete/entry/" + id
+    var $parent = $(this).parents("article");
+    var id = $parent.data().id;
+    $.ajax({
+      type: 'POST',
+      url: '/delete/entry/' + id,
+      data: { doVote: true },
+      success: function (data) {
+        console.log(data);
+        if (data.success) {
+          $("article[data-id='" + id + "']").remove();
+        }
+      }
+    });
   }
 }
 

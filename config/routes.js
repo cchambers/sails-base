@@ -21,7 +21,7 @@ module.exports.routes = {
   'get /edit/entry/:id': 'EntryController.edit',
   'post /edit/entry/:id': 'EntryController.submitEdit',
   
-  'get /delete/entry/:id': 'EntryController.delete',
+  'post /delete/entry/:id': 'EntryController.delete',
 
   'get /op/makeadmin': 'UserController.makeadmin',
 

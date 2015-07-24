@@ -1,13 +1,12 @@
 module.exports = function(req, res, next) {
-  var postedBy = 'unidentified';
   Entry.findOne({ id: req.params.id })
-    .exec( function (err, entryData) {
-      if(err) return next(err);
-      postedBy = entryData.postedBy;
-      if(!req.user) return res.redirect('/');
-      if (req.user.username == postedBy) {
-        return next();
-      }
-      return res.redirect('/');
-    });
+  .populate('postedBy')
+  .exec( function (err, doc) {
+    if(err) return next(err);
+    if(!req.user) return res.redirect('/');
+    if (req.user.username == doc.postedBy.name) {
+      return next();
+    }
+    return res.redirect('/');
+  });
 };
