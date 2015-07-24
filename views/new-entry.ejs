@@ -31,16 +31,12 @@
           <input type="text" name="postedTo" placeholder="sub slug" value="<% if (data.prefill) { %><%= data.prefill %><% } %>">
         </div>
 
-        <div class="row pad-bottom-light">
-          <div class="col-1-4">
-            <label for="nsfw">NSFW?</label> <input type="checkbox" id="nsfw" name="nsfw">
-          </div>
-          <div class="col-1-4">
-            <label for="nsfl">Disturbing?</label> <input type="checkbox" id="nsfl" name="nsfl">
-          </div>
+        <div class="row pad-bottom-light lh30">
+          <input type="checkbox" id="nsfw" name="nsfw"><label for="nsfw">NSFW</label> 
+          <input type="checkbox" id="nsfl" name="nsfl"><label class="float-left" for="nsfl">Disturbing</label> 
           <a class="button primary submit">send it</a>
+          <output></output>
         </div>
-        <output></output>
       </div>
     </div>
   </form>

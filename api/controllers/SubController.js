@@ -18,7 +18,7 @@ module.exports = {
     .exec( function (err, data) {
       if(err) return next(err);
       if (data.length > 0) {
-        console.log(data);
+        // console.log(data);
         return res.json({ message: "Failure! Sub or slug exists." });
       } else {
         console.log("Creating sub:",req.body);
@@ -26,7 +26,7 @@ module.exports = {
         .exec(function (err, doc) {
           var data = req.body;
           data.creator = doc.id;
-          console.log("DATA!", data);
+          // console.log("DATA!", data);
           Sub.create(data)
           .exec( function (err, doc) {
             return res.json({ message: "Success!", redirect: "/sub/" + req.body.slug });
@@ -56,7 +56,7 @@ module.exports = {
       doc.save();
       data = {};
       data.sub = doc;
-      return res.view('edit-sub', { user: req.user, data: data });
+      return res.json({ message: "Updated.", reload: true });
     });
   }
 };

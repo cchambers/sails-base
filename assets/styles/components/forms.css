@@ -40,6 +40,33 @@ form output {
   display: block;
 }
 
+input[type=checkbox] {
+  display: none;
+}
+
+input[type=checkbox] + label {
+  cursor: pointer;
+  color: #999;
+  line-height: 3rem;
+  padding: 0 0.75rem;
+  border: 1px solid #999;
+  float: left;
+  margin-right: 1.5rem;
+}
+
+input[type=checkbox] + label:after {
+  content: '?';
+}
+
+input[type=checkbox]:checked + label {
+  color: #DF3D82;
+  border-color: #DF3D82;
+}
+
+input[type=checkbox]:checked + label:after {
+  content: '!';
+}
+
 
 .new-thing label {
   font-size: 1.4rem;
@@ -62,4 +89,13 @@ form output {
 
 input + br + input {
   margin-top: .75rem;
+}
+
+form output:empty {
+  display: none;
+}
+
+form output {
+  display: block;
+  padding: .5rem 0;
 }
