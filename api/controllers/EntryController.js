@@ -140,7 +140,9 @@ module.exports = {
             .populate('votes', { user: userid })
             .exec( function (err, data) {
               if (err) return next(err);
-              data.commentAmmount = data.comments.length;
+              for(var i = 0; i < data.length; i++){
+                data[i].commentAmmount = data[i].comments.length;  
+              }
               listingData.entries = data;
               listingView();
             });
