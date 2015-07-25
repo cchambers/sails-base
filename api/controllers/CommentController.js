@@ -18,22 +18,17 @@ module.exports = {
       Comment.create({
         parent: data.id,
         content: req.body.message,
-        postedBy: req.user.username
+        postedBy: req.user.id
       }).exec( function (err, comment) {
         return;
       });
     })
   },
-  
-  getChildren: function (req, res) {
-    Comment.find({ parent: req.params.id })
-    .exec( function (err, data) {
-      return res.json(data)
-    });
-  },
 
   children: function (req, res) {
     Comment.find({ parent: req.params.id })
+    .populate('children')
+    .populate('postedBy')
     .exec( function (err, data) {
       return res.json(data)
     });

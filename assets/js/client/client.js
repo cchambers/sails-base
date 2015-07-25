@@ -167,12 +167,10 @@ var client = {
     },
 
     renderChildren: function (data, $li) {
-      var entries = {
-        entries: data
-      }
-      // this is where i stopped
-      // var html = new EJS({ url: '/templates/comments.ejs' }).render(entries);
+      console.log(data);
+      var html = new EJS({ url: '/templates/comments.ejs' }).render({ entries: data });
       $li.append(html);
+      console.log(html);
     }
   },
 

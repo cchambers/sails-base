@@ -1,40 +1,18 @@
-
-<% which = 0 %>
 <ul>
-  <% for(i = 0; i < entries[which].comments.length; i++) {%>
-  <li data-id="<%= entries[which].comments[i].id %>">
+  <% for(which = 0; which < entries.length; which++) { %>
+  <li>
     <header>
-      <%= entries[which].comments[i].postedBy %>
+      <%= entries[which].postedBy.name %>
     </header>
     <section>
-      <%= entries[which].comments[i].content %>
+      <%= entries[which].content %>
     </section>
     <footer>
-      <a href="/new/comment?parent=<%= entries[which].comments[i].id%>&slug=<%= entries[which].slug%>">reply</a> 
-      <%= entries[which].comments[i].children.length %> replies
-    </footer>
-
-    <% if (entries[which].comments[i].children.length > 0) { %>
-    <ul>
-      <% for(j = 0; j < entries[which].comments[i].children.length; j++) { %>
-      <li>
-        <header>
-          <%= entries[which].comments[i].children[j].postedBy %>
-        </header>
-        <section>
-          <%= entries[which].comments[i].children[j].content %>
-        </section>
-        <footer>
-          <a href="/new/comment?parent=<%= entries[which].comments[i].children[j].id%>&slug=<%= entries[which].slug%>">reply</a>
-          <% if (entries[which].comments[i].children.length > 0) { %>
-          <a class="button primary load-replies">load <%= entries[which].comments[i].children.length %> replies</a>
-          <% } %>
-        </footer>
-      </li>
+      <a href="/new/comment?parent=<%= entries[which].id%>&slug=<%= entries[which].slug%>">reply</a>
+      <% if (entries[which].children.length > 0) { %>
+      <a class="button primary load-replies">load <%= entries[which].children.length %> replies</a>
       <% } %>
-    </ul>
-    <% } %>
-
+    </footer>
   </li>
   <% } %>
 </ul>

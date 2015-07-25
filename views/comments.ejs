@@ -39,9 +39,9 @@
           <% if (entries[which].comments[i].children.length > 0) { %>
           <ul>
           <% for(j = 0; j < entries[which].comments[i].children.length; j++) { %>
-            <li>
+            <li data-id="<%= entries[which].comments[i].children[j].id %>">
               <header>
-              <%= entries[which].comments[i].children[j].postedBy %>
+              <%= entries[which].comments[i].children[j].postedBy.name %>
               </header>
               <section>
               <%= entries[which].comments[i].children[j].content %>
