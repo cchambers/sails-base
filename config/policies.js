@@ -15,7 +15,8 @@ module.exports.policies = {
     '*': 'isAuthenticated'
   },
   'CommentController': {
-    '*': 'isAuthenticated'
+    'create': 'isAuthenticated',
+    'reply': 'isAuthenticated'
   },
   'SubController': {
     'new' : 'isAuthenticated',
