@@ -24,10 +24,9 @@
     <% if (entries[which].comments.length > 0) { %>
       <ul>
       <% for(i = 0; i < entries[which].comments.length; i++) {%>
-        <li>
+        <li data-id="<%= entries[which].comments[i].id %>">
           <header>
           <%= entries[which].comments[i].postedBy %>
-          <%= entries[which].comments[i].id %>
           </header>
           <section>
           <%= entries[which].comments[i].content %>
@@ -49,6 +48,9 @@
               </section>
               <footer>
               <a href="/new/comment?parent=<%= entries[which].comments[i].children[j].id%>&slug=<%= entries[which].slug%>">reply</a>
+              <% if (entries[which].comments[i].children.length > 0) { %>
+              <a class="button primary load-replies">load <%= entries[which].comments[i].children.length %> replies</a>
+              <% } %>
               </footer>
             </li>
             <% } %>
