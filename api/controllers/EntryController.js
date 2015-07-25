@@ -137,11 +137,6 @@ listing: function (req, res) {
           .populate('comments')
           .populate('postedTo')
           .populate('postedBy')
-          .populate({
-            name: 'comments',
-            select: 'postedBy',
-            options: { lean: true }
-          })
           .populate('votes', { user: userid })
           .exec( function (err, data) {
             if (err) return next(err);
