@@ -14,7 +14,7 @@
       <header>
         <%- include entry-controls %>
         <h1>
-          <%= entry.title %>
+          <%= entry.title %><% if (entry.nsfw) { %> [NSFW] <% } %><% if (entry.nsfl) { %> [NSFL] <% } %>
         </h1>
 
       </header>
