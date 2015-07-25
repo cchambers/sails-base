@@ -167,7 +167,11 @@ var client = {
     },
 
     renderChildren: function (data, $li) {
-      var html = new EJS({ url: '/comments.ejs' }).render(data);
+      var entries = {
+        entries: data
+      }
+      // this is where i stopped
+      // var html = new EJS({ url: '/templates/comments.ejs' }).render(entries);
       $li.append(html);
     }
   },
