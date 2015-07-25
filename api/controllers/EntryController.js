@@ -158,28 +158,33 @@ module.exports = {
         .exec( function (err, data) {
           if (err) return next(err);
 
-          var i = 0;
-          var j = 0;
-          var iMax = 0;
-          for (j=0; j < data.length-1; j++) {
-            iMax = j;
-            for (i=j+1; i < data.length; i++) {
-              if (data[i].ups - data[i].downs > data[iMax].ups - data[iMax].downs) {
-                iMin = i;
-              } else {
-              }
-            }
-            if(iMax != j){
-              tmp = data[j];
-              tmp2 = data[iMax];
-              data[j] = tmp2;
-              data[iMax] = tmp;
-            }
-          }
+          data = scoreSort(data);
 
           listingData.entries = data;
           listingView();
         });
+      }
+    }
+
+    function scoreSort(data){
+      var i = 0;
+      var j = 0;
+      var iMax = 0;
+      for (j=0; j < data.length-1; j++) {
+        iMax = j;
+        for (i=j+1; i < data.length; i++) {
+          if (data[i].ups - data[i].downs > data[iMax].ups - data[iMax].downs) {
+            iMin = i;
+          } else {
+          }
+        }
+        if(iMax != j){
+          tmp = data[j];
+          tmp2 = data[iMax];
+          data[j] = tmp2;
+          data[iMax] = tmp;
+        }
+        return data;
       }
     }
 

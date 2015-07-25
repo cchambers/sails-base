@@ -8,7 +8,8 @@ module.exports = {
       })
     }
   },
-  reply: function(req, res){
+  
+  reply: function (req, res){
     console.log("maybe?");
     console.log(req.body);
     console.log(req.params);
@@ -21,6 +22,20 @@ module.exports = {
       }).exec(function(err, comment){
         return;
       })
+    });
+  },
+
+  getChildren: function (req, res) {
+    Comment.find({ parent: req.params.id })
+    .exec( function (err, data) {
+      return res.json(data)
+    });
+  },
+
+  postChildren: function (req, res) {
+    Comment.find({ parent: req.params.id })
+    .exec( function (err, data) {
+      return res.json(data)
     });
   }
 };

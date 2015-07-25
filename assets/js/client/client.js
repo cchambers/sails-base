@@ -85,7 +85,6 @@ var client = {
       var $target = $(e.target);
       if (!$(e.target).attr("href")) {
         $(this).activate(true);
-
       }
     });
 

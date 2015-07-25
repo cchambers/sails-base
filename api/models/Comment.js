@@ -1,6 +1,5 @@
 module.exports = {
   attributes: {
-
     entry: {
       model: 'entry',
     },
