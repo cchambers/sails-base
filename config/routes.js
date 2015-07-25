@@ -23,7 +23,7 @@ module.exports.routes = {
   
   'post /delete/entry/:id': 'EntryController.delete',
 
-  'get /op/makeadmin': 'UserController.makeadmin',
+  // 'get /op/makeadmin': 'UserController.makeadmin',
 
   'get /sub/:sub': 'EntryController.listing',
   'get /sub/:sub/edit': 'SubController.edit',

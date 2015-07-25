@@ -9,7 +9,7 @@
 <div class="row entries">
   <% for (which in entries) { %>
   <% var entry = entries[which] %>
-  <article class="row <%= active %>" data-timestamp="<%= entry.createdAt %>" data-id="<%= entry.id %>">
+  <article class="row <%= active %><% if (entry.media) { %> has-media<% } %>" data-timestamp="<%= entry.createdAt %>" data-id="<%= entry.id %>">
     <div class="contain entry">
       <header>
         <%- include entry-controls %>

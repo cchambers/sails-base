@@ -86,6 +86,10 @@ article header li.active {
   font-size: 2rem;
 }
 
+article.has-media .entry header {
+  max-width: 45%;
+}
+
 
 article.active .entry header h1 {
   color: #DF3D82;
@@ -162,7 +166,6 @@ article.active header {
 article.active section {
   max-height: 500vh;
 }
-
 
 article ul, 
 article ol {
