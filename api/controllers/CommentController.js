@@ -47,7 +47,7 @@ module.exports = {
 
   children: function (req, res) {
     Comment.find({ parent: req.params.id })
-    .populate('children')
+    .populate('children', 'id')
     .populate('postedBy')
     .exec( function (err, data) {
       console.log("DATA:", data)

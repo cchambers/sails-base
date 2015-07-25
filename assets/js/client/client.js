@@ -254,6 +254,7 @@ var client = {
   },
 
   getChildren: function () {
+    var $el = $(this);
     var $parent = $(this).parents("article");
     var $li = $(this).parents("li");
     var id = $li.data().id;
@@ -263,6 +264,7 @@ var client = {
       url: '/children/' + id,
       data: { },
       success: function (data) {
+        $el.remove();
         client.callbacks.renderChildren(data, $li);
       }
     });
