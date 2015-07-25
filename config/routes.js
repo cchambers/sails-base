@@ -37,8 +37,9 @@ module.exports.routes = {
 
   'get /new/comment': 'CommentController.new',
   'post /comment/:id/reply': 'CommentController.reply',
-
   'post /new/comment': 'EntryController.addComment',
+  'get /children/:id': 'CommentController.getChildren',
+  'post /children/:id': 'CommentController.postChildren',
 
   'get /sockets/join/:room': 'SocketController.joinRoom'
 };

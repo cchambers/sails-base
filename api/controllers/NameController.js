@@ -4,6 +4,11 @@ module.exports = {
     .populate('names')
     .exec( function (err, doc) {
       console.log("NAMES", doc)
+
+      if (req.body.name == "") {
+        return res.json({ message: "Space... the final frontier." })
+      } 
+
       if (doc.names.length >= 10) {
         return res.json({ message: "You already have 10 names." })
       } 

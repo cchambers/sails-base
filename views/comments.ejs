@@ -27,18 +27,19 @@
         <li>
           <header>
           <%= entries[which].comments[i].postedBy %>
+          <%= entries[which].comments[i].id %>
           </header>
           <section>
           <%= entries[which].comments[i].content %>
           </section>
           <footer>
           <a href="/new/comment?parent=<%= entries[which].comments[i].id%>&slug=<%= entries[which].slug%>">reply</a> 
-          <%= entries[which].comments[i].children.length%> replies
+          <%= entries[which].comments[i].children.length %> replies
           </footer>
 
           <% if (entries[which].comments[i].children.length > 0) { %>
           <ul>
-          <% for(j = 0; j < entries[which].comments[i].children.length; j++) {%>
+          <% for(j = 0; j < entries[which].comments[i].children.length; j++) { %>
             <li>
               <header>
               <%= entries[which].comments[i].children[j].postedBy %>

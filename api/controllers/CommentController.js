@@ -8,6 +8,7 @@ module.exports = {
       })
     }
   },
+
   reply: function(req, res){
         Comment.findOne({id: req.params.id})
             .exec(function(err, data){
@@ -23,5 +24,19 @@ module.exports = {
                       })
                   });
         });
-    }
+    },
+
+  getChildren: function (req, res) {
+    Comment.find({ parent: req.params.id })
+    .exec( function (err, data) {
+      return res.json(data)
+    });
+  },
+
+  postChildren: function (req, res) {
+    Comment.find({ parent: req.params.id })
+    .exec( function (err, data) {
+      return res.json(data)
+    });
+  }
 };

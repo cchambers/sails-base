@@ -157,31 +157,36 @@ module.exports = {
         .populate('votes', { user: userid })
         .exec( function (err, data) {
           if (err) return next(err);
-          var i = 0;
-          var j = 0;
-          var iMax = 0;
           for(j = 0; j < data.length; j++){
             data[j].commentAmmount = data[j].comments.length;
           }
-          for (j=0; j < data.length-1; j++) {
-            iMax = j;
-            for (i=j+1; i < data.length; i++) {
-              if (data[i].ups - data[i].downs > data[iMax].ups - data[iMax].downs) {
-                iMin = i;
-              } else {
-              }
-            }
-            if(iMax != j){
-              tmp = data[j];
-              tmp2 = data[iMax];
-              data[j] = tmp2;
-              data[iMax] = tmp;
-            }
-          }
+          data = scoreSort(data);
 
           listingData.entries = data;
           listingView();
         });
+      }
+    }
+
+    function scoreSort(data){
+      var i = 0;
+      var j = 0;
+      var iMax = 0;
+      for (j=0; j < data.length-1; j++) {
+        iMax = j;
+        for (i=j+1; i < data.length; i++) {
+          if (data[i].ups - data[i].downs > data[iMax].ups - data[iMax].downs) {
+            iMin = i;
+          } else {
+          }
+        }
+        if(iMax != j){
+          tmp = data[j];
+          tmp2 = data[iMax];
+          data[j] = tmp2;
+          data[iMax] = tmp;
+        }
+        return data;
       }
     }
 
@@ -216,7 +221,7 @@ module.exports = {
         .populate('votes', { user: userid })
         .exec( function (err, doc) {
           viewData.entries.push(doc);
-          data.commentAmmount = data.comments.length;
+          doc.commentAmmount = doc.comments.length;
           getComments();
         });
       } else {
@@ -274,5 +279,4 @@ module.exports = {
       return res.redirect('/');
     }
   }
-// >>>>>>> a14457b1243535d05e3dea01140f8f7ff04502f1
 };
