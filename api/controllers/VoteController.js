@@ -9,10 +9,11 @@ module.exports = {
     checkExistence();
 
     function checkExistence() {
-      Vote.findOne({ entry: entry, user: user.id }).exec( function (err, votedata) {
+      Vote.findOne({ entry: entry, user: user.id })
+      .exec( function (err, doc) {
         if (err) return next(err);
-        if (votedata) {
-          doVote(votedata);
+        if (doc) {
+          doVote(doc);
         } else {
           doVote();
         }
@@ -20,23 +21,29 @@ module.exports = {
     }
 
     function doVote(exists) {
+      var voteData;
       if (exists) { // update a vote
         // console.log("VOTE EXISTS", "going " + direction);
         if (direction == "neutral") {
-          //exists.destroy();
-          Vote.destroy({ user: exists.user, entry: exists.entry }).exec( function (err, data) {
-            // console.log("vote destroyed", data);
-            Entry.findOne(entry).exec( function (err, doc) {
-              if (data.vote) {
+          Vote.destroy({ user: exists.user, entry: exists.entry })
+          .exec( function (err, data) {
+            voteData = data;
+            Entry.findOne(entry)
+            .exec( function (err, doc) {
+              console.log(voteData[0].vote)
+              if (voteData[0].vote) {
+                // console.log("removed upvote")
                 doc.ups--;
                 if (doc.ups < 0) doc.ups = 0;
               } else {
+                // console.log("removed downvote")
                 doc.downs--;
                 if (doc.downs < 0) doc.downs = 0;
               }
               doc.save();
+              blastVoteUpdate(entry, doc);
               // console.log("document updated for destroy");
-              return res.json({ vote: "" });
+              return res.json({ message: "Vote destroyed" });
             });
           });
         } else {
@@ -50,20 +57,29 @@ module.exports = {
                 doc.ups--;
               }
               doc.save();
-              // console.log("document updated for reversal of vote");
-              return res.json({ vote: "" });
+              blastVoteUpdate(entry, doc);
+              console.log("document updated for reversal of vote");
+              return res.json({ message: "Vote updated" });
             });
           })
           
         }
       } else { // create NEW vote
-        // console.log("VOTE DOES NOT EXIST")
+        console.log("VOTE DOES NOT EXIST")
         Vote.create({ user: user.id, entry: entry, vote: vote })
         .exec( function (err, vote) {
-          // console.log("vote created");
+          console.log("vote created");
           updateEntry();
         });
       }
+    }
+
+    function blastVoteUpdate (entry, doc) {
+      sails.sockets.blast('vote', {
+        entryid: entry,
+        ups: doc.ups,
+        downs: doc.downs
+      })
     }
 
     function updateEntry() {
@@ -74,9 +90,9 @@ module.exports = {
           doc.downs++;
         }
         doc.save();
-        // console.log("document updated");
-
-        return res.json({ vote: "vote created" });
+        console.log("document updated");
+        blastVoteUpdate(entry, doc);
+        return res.json({ message: "Vote created" });
       });
     }
   },

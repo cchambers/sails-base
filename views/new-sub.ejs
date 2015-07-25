@@ -1,5 +1,12 @@
 <div class="contain new-thing">
-  <form method="POST" data-callback="createSub" action="/sub">
+  <% if (data.name) { %>
+  <div class="notice alert">
+    <p>
+    That sub doesn't exist! Check your spelling (<%= data.name %>), or feel free to create it...
+    </p>
+  </div>
+  <% } %>
+  <form method="POST" data-callback="output" action="/new/sub">
     <div class="row">
       <div class="col-1-2">
         <div class="row pad-bottom-light">
@@ -10,18 +17,21 @@
         </div>
         <div class="row pad-bottom-light">
           <label for="name">Name it</label>
-          <input type="text" name="name" id="name">
+          <input type="text" class="generate-slug" name="name" id="name" value="<% if (data.name) { %><%=   data.name %><% } %>">
+        </div>
+        <div class="row pad-bottom-light">
+          <label for="name">Slug it ( gravy.io/sub/<span class="slug"></span> )</label>
+          <input type="text" name="slug" id="slug">
         </div>
         <div class="row pad-bottom-light">
           <label for="tagline">Tagline (optional)</label>
           <input type="text" name="tagline" id="tagline">
         </div>
         <div class="row pad-bottom-light">
-          <label for="css">Custom CSS (optional)</label>
-          <textarea name="css" id="css" wrap="hard"></textarea>
-        </div>
-        <div class="row pad-bottom-light">
+          <input type="checkbox" id="nsfw" name="nsfw"><label for="nsfw">NSFW</label> 
+          <input type="checkbox" id="nsfl" name="nsfl"><label class="float-left" for="nsfl">Disturbing content</label>
           <a class="button primary submit">make it</a>
+          <output></output>
         </div>
       </div>
     </div>

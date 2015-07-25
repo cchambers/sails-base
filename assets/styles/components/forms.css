@@ -34,9 +34,38 @@ input + input {
 }
 
 form output {
+  width: 100%;
   font-size: 1.2rem;
   font-weight: bold;
   display: block;
+}
+
+input[type=checkbox] {
+  display: none;
+}
+
+input[type=checkbox] + label {
+  cursor: pointer;
+  color: #999;
+  line-height: 3rem;
+  padding: 0 0.75rem;
+  border: 1px solid #999;
+  border-radius: .5rem;
+  float: left;
+  margin-right: 1.5rem;
+}
+
+input[type=checkbox] + label:after {
+  content: '?';
+}
+
+input[type=checkbox]:checked + label {
+  color: #DF3D82;
+  border-color: #DF3D82;
+}
+
+input[type=checkbox]:checked + label:after {
+  content: '!';
 }
 
 
@@ -45,10 +74,10 @@ form output {
   display: block;
 }
 
-.new-thing input,
+.new-thing input[type=text],
 .new-thing textarea,
 .new-thing select,
-.edit-thing input,
+.edit-thing input[type=text],
 .edit-thing textarea,
 .edit-thing select {
   width: 100%;
@@ -61,4 +90,13 @@ form output {
 
 input + br + input {
   margin-top: .75rem;
+}
+
+form output:empty {
+  display: none;
+}
+
+form output {
+  display: block;
+  padding: .5rem 0;
 }

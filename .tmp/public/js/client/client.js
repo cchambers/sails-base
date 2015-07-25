@@ -28,6 +28,9 @@ var client = {
   },
 
   setup: function () {
+    io.socket.get('/sockets/join/home');
+    client.setupSockets();
+
     client.keys = {
       nextItem: [115,108,32],
       prevItem: [119,107]
@@ -44,13 +47,21 @@ var client = {
         var $form = $(this).parents("form");
         client.submitForm($form);
       }
+
+      if ($(this).hasClass("generate-slug")) {
+        var val = $(this).val();
+        client.generateSlug(val);
+      }
     });
 
     $("form").on("keyup",".CodeMirror", function(){mirror.save();});
 
     $(".new-thing").on("keyup", "[name=markdown]", client.updatePreview);
+    $(".edit-thing").on("keyup", "[name=markdown]", client.updatePreview);
 
-    $(".new-thing").on("keyup", "[name=title]", client.generateSlug);
+    $(".new-thing").on("keyup", "[name=title]", function () {
+      client.generateSlug($(this).val())
+    });
 
     $(".entry").on("keyup", client.entryKeypressHandler);
 
@@ -59,6 +70,15 @@ var client = {
       var $parent = $(this).parents("article");
       console.log($parent)
       $parent.removeClass("active");
+    });
+
+    $(".entry").on("click", "h1", function (e) {
+    });
+
+    $(".entry").on("click", ".delete", client.deleteEntry);
+
+    $("body").on("click", ".edit", function (e) {
+      client.editEntry( $(this).parents("article").data().id );
     });
 
     $("body").on("click", "article:not(.active)", function (e) {
@@ -76,6 +96,74 @@ var client = {
       $(".panel form.active input").first().focus();
     });
     $(".panel form.active input").first().focus();
+
+    $(".switch-to").on("click", client.switchNames)
+  },
+
+  setupSockets: function () {
+    io.socket.on("message", function (data) {
+      console.log(data);
+    });
+    io.socket.on("new-user", function (data) {
+      console.log("USER:",data)
+    });
+
+    io.socket.on("vote", function (data) {
+      console.log("VOTE:",data)
+      var $parent = $("[data-id='"+data.entryid+"']");
+      var $score = $parent.find(".score");
+      var score = data.ups - data.downs;
+      console.log($parent, $score)
+      $score.find(".ups").text(data.ups);
+      $score.find(".downs").text(data.downs);
+      $score.find(".totes").text(score);
+    });
+  },
+
+  callbacks: {
+    checkLogin: function (data) {
+      console.log("Checking login..")
+      if (data.user) {
+        window.location.reload(); // success
+      } else {
+        var $output = $(".login-form output");
+        $output.text(data.message);
+      }
+    },
+
+    signUp: function (data) {
+      var $output = $(".signup-form output");
+      $output.text(data);
+      $(".login-form [name=email]").val( $(".signup-form [name=email]").val() );
+      $(".login-form [name=password]").val( $(".signup-form [name=password]").val() );
+      $(".login-form .submit").trigger("click");
+    },
+
+    createSub: function (data) {
+      if (data.name) {
+        location.href = "/sub/" + data.name
+      }
+    },
+
+    output: function (data, $form) {
+      if ($form){
+        if (data.message) {
+          $form.find("output").text(data.message)
+        }
+      }
+
+      if (data.redirect) {
+        location.href = data.redirect;
+      }
+
+      if (data.reload) {
+        location.reload();
+      }
+
+      if (data.callback && client.callbacks[data.callback]) {
+        client.callbacks[data.callback]();
+      }
+    }
   },
 
   submitForm: function ($form) {
@@ -87,51 +175,51 @@ var client = {
       url: url,
       data: data,
       success: function (data) {
-        if (client[callback]){
-          client[callback](data);
+        console.log("Form post success:", data);
+        if (client.callbacks[callback]){
+          client.callbacks[callback](data, $form);
         }
       }
     });
   },
 
-  checkLogin: function (data) {
-    console.log("Checking login..")
-    if (data.user) {
-      window.location.reload(); // success
-    } else {
-      var $output = $(".login-form output");
-      $output.text(data.message);
+  switchNames: function (e) {
+    e.preventDefault();
+    var $el = $(this);
+    var name = $el.data().name;
+    var data = {
+      name: name
     }
-  },
-
-  signUp: function (data) {
-    var $output = $(".sign-up output");
-    $output.text(data);
-    $(".login-form [name=email]").val( $(".sign-up [name=email]").val() );
-    $(".login-form [name=password]").val( $(".sign-up [name=password]").val() );
-    $(".login-form .submit").trigger("click");
-  },
-
-  createSub: function (data) {
-    if (data.name) {
-      location.href = "/sub/" + data.name
-    }
+    $.ajax({
+      type: "POST",
+      url: "/switch",
+      data: data,
+      success: function (data) {
+        $("[data-name]").parent().removeClass("active");
+        $("[data-name='" + name + "']").parent().addClass("active");
+        $(".userinfo .bold").text(name);
+        client.callbacks.output(data);
+      }
+    });
   },
 
   editSub: function (data) {
     mirror.save();
   },
 
-  newEntry: function (data) {
-    if (data.slug) {
-      location.href = "/sub/" + data.postedTo + "/" + data.slug
-    }
+  editEntry: function (id) {
+    location.href = "/edit/entry/" + id
+  },
+
+  submitEntryEdit: function(data) {
+    console.info(data);
   },
 
   generateSlug: function (data) {
-    var title = $("input[name=title]").val().trunc(64);;
+    var title = data.trunc(64);;
     var slug = title.toLowerCase().replace(/[^a-zA-Z0-9\s]/g,'').replace(/\s/g, "-");
     $("input[name=slug]").val(slug);
+    $(".slug").text(slug);
   },
 
   updatePreview: function (data) {
@@ -158,6 +246,29 @@ var client = {
     var $el = $(this);
     var $entry = $(this).parents("article");
     var id = $entry.data().id;
+    var score = {
+      ups: parseInt($entry.find(".ups").text()),
+      downs: parseInt($entry.find(".downs").text()),
+      total: parseInt($entry.find(".totes").text())
+    }
+
+    console.log(score);
+
+    if ($el.isActive() && dir == "up") {
+      score.ups--;
+    }
+    if (!$el.isActive() && dir == "up") {
+      score.ups++;
+    }
+    if ($el.isActive() && dir == "down") {
+      score.downs--;
+    }
+    if (!$el.isActive() && dir == "down") {
+      score.downs++;
+    }
+    score.total = score.ups - score.downs;
+
+    client.updateVotes($entry, score)
 
     if ($el.isActive()) {
       $el.deactivate();
@@ -170,11 +281,17 @@ var client = {
     return;
   },
 
+  updateVotes: function ($entry, score) {
+    $entry.find(".ups").text(score.ups);
+    $entry.find(".downs").text(score.downs);
+    $entry.find(".totes").text(score.total);
+  },
+
   sendVote: function (id, direction) {
     console.log("Sending vote:", id, direction)
     $.ajax({
       type: 'POST',
-      url: '/vote/' + direction + "/" + id,
+      url: '/vote/' + direction + '/' + id,
       data: { doVote: true },
       success: function (data) {
         console.log(data);
@@ -182,13 +299,59 @@ var client = {
     });
   },
 
-  newComment: function(){
-      //TODO: do this right
-      //Horrible horrible temporal thing
-      window.location.reload();
+
+    newComment: function(){
+        //TODO: do this right
+        //Horrible horrible temporal thing
+        window.location.reload();
+    },
+
+  deleteEntry: function (id) {
+    var $parent = $(this).parents("article");
+    var id = $parent.data().id;
+    $.ajax({
+      type: 'POST',
+      url: '/delete/entry/' + id,
+      data: { doVote: true },
+      success: function (data) {
+        console.log(data);
+        if (data.success) {
+          $("article[data-id='" + id + "']").remove();
+        }
+      }
+    });
   }
 }
 
-
-
 client.init();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-65514000-1', 'auto');
+ga('send', 'pageview');

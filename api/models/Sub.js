@@ -7,13 +7,19 @@ module.exports = {
       unique: true
     },
 
+    slug: {
+      type: 'string',
+      minLength: 4,
+      required: true,
+      unique: true
+    },
+
     tagline: {
       type: 'string'
     },
 
     creator: {
-      type: 'string',
-      required: true
+      model: 'name'
     },
 
     open: {
@@ -22,6 +28,11 @@ module.exports = {
     },
 
     nsfw: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
+    nsfl: {
       type: 'boolean',
       defaultsTo: false
     },
@@ -40,6 +51,11 @@ module.exports = {
     
     css: {
       type: 'string'
+    },
+
+    posts: {
+      collection: 'entry',
+      via: 'slug'
     }
   }
 };

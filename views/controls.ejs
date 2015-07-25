@@ -1,18 +1,22 @@
-<div class="panel">
+<a href="#controls" class="triple-bar">≡</a>
+
+<div class="panel" id="controls">
+<a href="#" class="close-panel-inner">&times;</a>
   <% if (typeof(user) != 'undefined') {  %>
-  <p class="px14">
-    you are posting as <span class="bold"><a href="/me"><%= user.username %></a></span>
-  </p>
+  <div class="userinfo">
+    you are posting as <a href="/me"><span class="bold"><%= user.username %></span></a>
+  </div>
   <ul>
     <li><a href="/new/entry">new entry</a></li>
     <li><a href="/new/sub">create sub</a></li>
     <li><a href="/sublist">list subs</a></li>
     <li><a href="/logout">log out</a></li>
-    <% if (data.sub && data.sub.creator == user.username) { %>
-    <li><a href="/sub/<%= data.sub.name %>/edit">edit sub</a></li>
+    <% if ( data.sub && (data.sub.creator.name == user.username) ) { %>
+    <li class="pink bold pad-left-light">moderator:</li>
+    <li><a href="/sub/<%= data.sub.slug %>/edit">edit <%= data.sub.name %></a></li>
     <% } %>
     <% if (user.admin) { %>
-    <li class="bold pad-left">admin:</li>
+    <li class="pink bold pad-left-light">admin:</li>
     <li><a href="/userlist">userlist</a></li>
     <% } %>
   </ul>
@@ -21,3 +25,5 @@
   <%- include signup-form %>
   <% } %>
 </div>
+
+<a href="#" class="close-panel"></a>

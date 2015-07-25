@@ -1,7 +1,9 @@
 module.exports.policies = {
   '*': true,
   'EntryController': {
-    'new': 'isAuthenticated'
+    'new': 'isAuthenticated',
+    'edit': ['isAuthenticated', 'isPostedBy'],
+    'delete': ['isAuthenticated', 'isPostedBy']
   },
   'FrontPageController': {
     'userlist': ['isAuthenticated', 'isAdmin']
@@ -17,6 +19,6 @@ module.exports.policies = {
   },
   'SubController': {
     'new' : 'isAuthenticated',
-    'edit': 'isOwner'
+    'edit': ['isAuthenticated','isSubOwner']
   }
 };

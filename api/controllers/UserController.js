@@ -1,18 +1,40 @@
 module.exports = {
-  make: function (req, res) {
-    User.register(new User({ email : req.body.email }), req.body.password, function(err, account) {
-      if (err) {
-        return res.render('register', { account : account, user: false });
-      } else {
-        return res.render('homepage', {user: false });
+  create: function (req, res) {
+    Name.findOne({ name: req.body.username })
+    .exec( function (err, doc) {
+      if (doc) {
+        return res.json({ message: "Username exists." })
       }
-
-      passport.authenticate('local')(req, res, function () {
-        if (user) {
-          return res.view('homepage', { user: false });
+      User.create(req.body)
+      .exec( function (err, doc) {
+        if (doc) {
+          var user = doc.id;
+          Name.create({
+            name: req.body.username,
+            user: user
+          }).exec( function (err, doc) {
+            return res.json({ message: "Welcome to the sauce!", callback: "signUp" })
+          });
         } else {
-          return res.view('homepage', { user: req.user });
+          return res.json({ message: "Email exists." })
         }
+      });
+    })
+    // check username existence
+    // check email existence
+    // create name
+    // create user
+  },
+
+  verify: function (req, res) {
+    User.findOne(req.params.id)
+    .exec( function (err, doc) {
+      doc.verified = true;
+      doc.save();
+      return res.view('message', { 
+        message: "Username verified! Login to continue.", 
+        type: "success",
+        data: false,
       });
     });
   },
@@ -26,10 +48,17 @@ module.exports = {
   },
 
   myProfile: function (req, res) {
-    User.find({ username: req.user.username }, function (err, data) {
-      if (err) return next(err);
-      return res.view('my-profile', { user: req.user, data: data });
-    });
+    if (req.user) {
+      User.findOne(req.user.id) 
+      .populate('votes') 
+      .populate('names')
+      .exec( function (err, data) {
+        if (err) return next(err);
+        return res.view('my-profile', { user: req.user, data: data });
+      });
+    } else {
+      return res.redirect("/");
+    }
   },
 
   userProfile: function (req, res) {

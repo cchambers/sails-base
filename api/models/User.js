@@ -16,7 +16,6 @@ module.exports = {
 
     username: {
       type: 'string',
-      minLength: 4,
       required: true,
       unique: true
     },
@@ -57,6 +56,7 @@ module.exports = {
       return obj;
     }
   },
+  
   beforeCreate: function(user, cb) {
     bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(user.password, salt, function(err, hash) {

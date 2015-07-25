@@ -26,8 +26,7 @@ module.exports = {
     },
 
     postedTo: {
-      type: 'string',
-      required: true
+      model: 'sub'
     },
 
     crossPostedTo: [{
@@ -44,7 +43,7 @@ module.exports = {
 
     ups: {
       type: 'integer',
-      defaultsTo: 1
+      defaultsTo: 0
     },
 
     downs: {
@@ -53,6 +52,16 @@ module.exports = {
     },
 
     special: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+    
+    nsfw: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
+    nsfl: {
       type: 'boolean',
       defaultsTo: false
     },

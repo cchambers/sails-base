@@ -1,3 +1,4 @@
+
 .notice:before {
   content: 'Notice:';
   text-transform: uppercase;
@@ -7,38 +8,53 @@
 }
 
 .notice {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 5;
+  position: relative;
   font-size: 1.4rem;
   font-family: "Consolas", monospace;
   padding: 1.5rem;
   border-style: dashed;
   border-width: 1px;
+  color: #f2f2f2;
   border-color: #121212;
   background-color: #ddd;
   border-radius: .5rem;
   text-indent: 1.5rem;
-  max-width: 50rem;
-  opacity: .9;
-  pointer-events: none;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  z-index: 100;
+}
+
+.notice.bottom {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin: 0 !important;
+  border-radius: 0;
+  border-style: solid;
+  border-width: 1px 0 0 0;
+}
+
+.notice.bottom:before {
+  display: none;
+}
+
+.notice.bottom p {
+  max-width: 100rem;
+  margin: 0 auto;
 }
 
 .notice.alert {
-  color: rgba(223, 61, 130, 1);
   border-color: rgba(223, 61, 130, 1);
-  background-color: rgba(223, 61, 130, .15);
+  background-color: rgba(223, 61, 130, 1);
 }
 
 .notice.error {
-  color: rgba(219, 14, 58, 1);
   border-color: rgba(219, 14, 58, 1);
-  background-color: rgba(219, 14, 58, .15);
+  background-color: rgba(219, 14, 58, 1);
 }
 
 .notice.success {
-  color: rgba(56, 150, 21, 1);
   border-color: rgba(56, 150, 21, 1);
-  background-color: rgba(56, 150, 21, .15);
+  background-color: rgba(56, 150, 21, 1);
 }
