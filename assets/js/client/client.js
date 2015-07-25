@@ -97,6 +97,8 @@ var client = {
     $(".panel form.active input").first().focus();
 
     $(".switch-to").on("click", client.switchNames)
+
+    $(".load-replies").on("click", client.getChildren)
   },
 
   setupSockets: function () {
@@ -162,6 +164,15 @@ var client = {
       if (data.callback && client.callbacks[data.callback]) {
         client.callbacks[data.callback]();
       }
+    },
+
+    renderChildren: function (data, $li) {
+      var entries = {
+        entries: data
+      }
+      // this is where i stopped
+      // var html = new EJS({ url: '/templates/comments.ejs' }).render(entries);
+      $li.append(html);
     }
   },
 
@@ -240,6 +251,21 @@ var client = {
 
   },
 
+  getChildren: function () {
+    var $parent = $(this).parents("article");
+    var $li = $(this).parents("li");
+    var id = $li.data().id;
+
+    $.ajax({
+      type: 'POST',
+      url: '/children/' + id,
+      data: { },
+      success: function (data) {
+        client.callbacks.renderChildren(data, $li);
+      }
+    });
+  },
+
   doVote: function () {
     var dir = $(this).data().dir;
     var $el = $(this);
@@ -250,8 +276,6 @@ var client = {
       downs: parseInt($entry.find(".downs").text()),
       total: parseInt($entry.find(".totes").text())
     }
-
-    console.log(score);
 
     if ($el.isActive() && dir == "up") {
       score.ups--;
