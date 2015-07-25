@@ -106,7 +106,6 @@ submitEdit: function(req, res) {
 },
 
 delete: function (req, res) {
-  console.log()
   Entry.destroy(req.params.id)
   .exec( function (err, doc) {
     if (err) return next(err);
@@ -157,8 +156,6 @@ listing: function (req, res) {
       .populate('postedBy')
       .populate('votes', { user: userid })
       .exec( function (err, data) {
-        console.log("YO",data);
-
         if (err) return next(err);
         for(j = 0; j < data.length; j++){
           data[j].commentAmmount = data[j].comments.length;
@@ -233,7 +230,6 @@ single: function (req, res) {
       .populate('postedTo')
       .populate('postedBy')
       .exec(function (err, data) {
-        console.log(data);
         viewData.entries.push(data);
         data.commentAmmount = data.comments.length;
         getComments();

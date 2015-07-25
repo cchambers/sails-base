@@ -1,10 +1,12 @@
 /* standard stuff */
 
-* {
+@media (max-width: 768px) {
+  * {
     -webkit-touch-callout:none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust:none;             /* prevent webkit from resizing text to fit */
     -webkit-tap-highlight-color:rgba(0,0,0,0); /* prevent tap highlight color / shadow */
     -webkit-user-select:none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+  }
 }
 
 
@@ -41,9 +43,7 @@ body:after {
 }
 
 header a,
-p a,
-li a,
-cite a { 
+.entry a { 
   color: #191919;
   border-bottom: 1px solid #DF3D82;
   border-top: 1px solid transparent;
@@ -52,9 +52,7 @@ cite a {
 }
 
 .logo a:hover,
-p a:hover,
-li a:hover,
-cite a:hover { 
+.entry a:hover { 
   color: #DF3D82;
   border-top: 1px solid #DF3D82;
 }
@@ -94,20 +92,4 @@ body > header .logo a {
     z-index: 5;
   }
 
-  article.has-media:not(.active) header {
-    max-width: 60%;
-  }
-
-  article .media {
-    max-width: 50%;
-  }
-  article:not(.active) .media:before {
-    transform: skew(-5deg);
-    width: 25rem;
-    left: -20rem;
-  }
-
-  article:not(.active) h1 {
-    max-width: 60%;
-  }
 }

@@ -4,7 +4,7 @@ article .media + header {
 
 article:not(.active) .media {
   position: absolute;
-  height: 6rem;
+  height: 8rem;
   width: 60%;
   right: 0;
   top: 0;
@@ -27,7 +27,7 @@ article:not(.active) .media:before {
   background-color: #f2f2f2;
   transform: skew(45deg);
   transition: all 250ms ease;
-  z-index: 0;
+  z-index: -1;
 }
 
 article.active .media {
@@ -48,4 +48,19 @@ article.active .media img {
   display: block;
   max-height: 60vh;
   max-width: 100%;
+}
+
+@media (max-width: 800px) {
+  article.has-media:not(.active) header {
+    max-width: 60%;
+  }
+
+  article .media {
+    max-width: 50%;
+  }
+  article:not(.active) .media:before {
+    transform: skew(-5deg);
+    width: 25rem;
+    left: -20rem;
+  }
 }

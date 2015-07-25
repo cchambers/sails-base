@@ -12,6 +12,7 @@
   line-height: 3rem;
   font-size: 1.4rem;
   padding-left: .75rem;
+  overflow: hidden;
 }
 
 .comments section {

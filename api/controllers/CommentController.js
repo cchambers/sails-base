@@ -39,7 +39,7 @@ module.exports = {
           content: req.body.message,
           postedBy: name.id
         }).exec( function (err, comment) {
-          return res.json(comment);
+          return res.json({ message: "Success!", reload: true });
         });
       })
     })
@@ -47,10 +47,9 @@ module.exports = {
 
   children: function (req, res) {
     Comment.find({ parent: req.params.id })
-    .populate('children', 'id')
+    .populate('children')
     .populate('postedBy')
     .exec( function (err, data) {
-      console.log("DATA:", data)
       return res.json(data)
     });
   }

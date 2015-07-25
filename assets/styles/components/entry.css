@@ -1,6 +1,50 @@
 .entry {
+  position: relative;
+  overflow: hidden;
+}
+
+article {
+  margin-bottom: 0.75rem;
+}
+
+article.active .control {
+  display: block;
+}
+
+article ul.control {
+  display: none;
+  padding: 0;
+  padding-top: .75rem;
+  list-style: none;
+  overflow: hidden;
+}
+
+article ul.control li {
+  display: block;
   float: left;
-  width: calc(100% - 7.5rem);
+  color: #f2f2f2;
+  font-family: monospace;
+  font-size: 1.4rem;
+  text-align: center;
+  line-height: 3rem;
+  min-width: 3rem;
+  padding: 0 .5rem;
+  color: #DF3D82;
+  opacity: .5;
+  border-radius: .5rem;
+  border: 1px solid #DF3D82;
+}
+
+article ul.control li + li {
+  margin-left: 0.75rem;
+}
+
+
+article header li:hover,
+article header li.active {
+  color: #f2f2f2;
+  background-color: #DF3D82;
+  opacity: .75;
 }
 
 .media video {
@@ -14,16 +58,34 @@
   float: left;
 }
 
-.entry header h1 {
-  float: left;
-  font-size: 2rem;
+
+.entry header {
   line-height: 3rem;
 }
 
-.entry header .score {
-  float: left;
-  line-height: 3rem;
+.entry cite {
+  line-height: 1.2rem;
 }
+
+.entry footer {
+  line-height: 2rem;
+  font-size: 1.2rem;
+}
+
+.entry .permalink {
+  float: left;
+}
+
+.entry header a,
+.entry footer a,
+.entry cite a {
+  border: none !important;
+}
+
+.entry header h1 {
+  font-size: 2rem;
+}
+
 
 article.active .entry header h1 {
   color: #DF3D82;
@@ -43,7 +105,6 @@ article {
   position: relative;
   min-height: 6rem;
   overflow: hidden;
-  padding: 0.75rem 0 1.5rem 0;
   transition: all 250ms linear;
 }
 
@@ -55,8 +116,10 @@ article {
   padding-left: 3rem;
 }
 
+
 article header,
-article footer {
+article footer,
+article cite {
   position: relative;
   cursor: pointer;
   z-index: 2;
@@ -67,8 +130,12 @@ article footer {
 article:not(.active):hover,
 article.active {
   background-color: #fff;
-  box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  box-shadow: 0 2px 2px rgba(0,0,0,.15);
   opacity: 1;
+}
+
+article.active {
+  z-index: 2;
 }
 
 article:not(.active) .nsfw {
@@ -81,18 +148,12 @@ article.active.nsfw {
   filter: blur(0px);
 }
 
-article.active {
-  box-shadow: 0 1px 2px rgba(0,0,0,.5);
-}
 
 article section {
   max-height: 0;
   overflow: hidden;
 }
 
-article p:last-child {
-  margin-bottom: 1.5rem;
-}
 
 article.active header {
   width: 100%;
@@ -111,58 +172,10 @@ article ol {
 
 article cite {
   display: block;
-  font-size: 1.4rem;
-  line-height: 1.8rem;
+  clear: both;
+  font-size: 1.2rem;
   font-style: normal;
   color: #505050;
-}
-
-article.active header ul {
-  display: block;
-}
-
-article header ul {
-  display: none;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-article header li {
-  display: block;
-  float: left;
-  color: #f2f2f2;
-  font-family: monospace;
-  font-size: 1.4rem;
-  text-align: center;
-  line-height: 3rem;
-  min-width: 3rem;
-  color: #DF3D82;
-  padding: 0 .75rem;
-  opacity: .5;
-  border-radius: .5rem;
-  border: 1px solid #DF3D82;
-}
-
-article header li + li {
-  margin-left: .75rem;
-}
-
-article header li:hover,
-article header li.active {
-  color: #f2f2f2;
-  background-color: #DF3D82;
-  opacity: .75;
-}
-
-.score .calculated { 
-  opacity: 0;
-  transition: opacity 100ms linear;
-}
-
-.score:hover .calculated {
-  opacity: 1;
 }
 
 article header .vote.up {
@@ -181,3 +194,12 @@ article footer:before {
   width: 100%;
   float: right;
 }
+
+.make-reply { 
+  display: none;
+}
+
+.logged-in .make-reply { 
+  display: initial;
+}
+

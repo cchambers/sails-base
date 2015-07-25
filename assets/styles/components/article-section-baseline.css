@@ -30,7 +30,7 @@ section p {
 section p + p {}
 
 section p:last-child {
-  margin-bottom: 0;
+  margin-bottom: .4rem;
 }
 section ul,
 section ol {

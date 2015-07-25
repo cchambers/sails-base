@@ -5,7 +5,15 @@
   list-style: none;
   text-align: right;
   font-family: "Consolas";
-  font-size: 1.2rem;
+}
+
+.score .calculated { 
+  opacity: 0;
+  transition: opacity 100ms linear;
+}
+
+.score:hover .calculated {
+  opacity: 1;
 }
 
 .score .ups,
@@ -13,6 +21,13 @@
   opacity: .5;
 }
 
-.score .ups { color: #DF3D82; }
-.score .downs { color: #121212; }
-.score .totes { color: #DF3D82; font-weight: bold; }
+.score .ups { 
+  color: #DF3D82;
+}
+.score .downs { 
+  color: #121212;
+}
+.score .totes { 
+  color: #DF3D82;
+  font-weight: bold;
+}

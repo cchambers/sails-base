@@ -98,7 +98,8 @@ var client = {
 
     $(".switch-to").on("click", client.switchNames)
 
-    $(".load-replies").on("click", client.getChildren)
+    $(".comments").on("click", ".load-replies", client.getChildren)
+    $(".comments").on("click", ".make-reply", client.replyForm)
   },
 
   setupSockets: function () {
@@ -172,7 +173,7 @@ var client = {
 
     renderChildren: function (data, $li) {
       console.log(data);
-      var html = new EJS({ url: '/templates/comments.ejs' }).render({ entries: data });
+      var html = new EJS({ url: '/templates/load-replies.ejs' }).render({ entries: data });
       $li.append(html);
       console.log(html);
     }
@@ -268,6 +269,16 @@ var client = {
         client.callbacks.renderChildren(data, $li);
       }
     });
+  },
+
+  replyForm: function (e) {
+    e.preventDefault();
+    var $parent = $(this).parents("li");
+    var id = $parent.data().id;
+    var $footer = $parent.find("footer");
+    var $form = $footer.find("form");
+    $(".comment form").addClass("off");
+    $form.removeClass("off");
   },
 
   doVote: function () {

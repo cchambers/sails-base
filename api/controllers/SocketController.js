@@ -2,6 +2,7 @@ var passport = require('passport');
 
 module.exports = {
   joinRoom: function (req, res) {
+    console.log(req);
     var room = req.params.room;
     req.socket.join(room);
     var name = req.socket.id;

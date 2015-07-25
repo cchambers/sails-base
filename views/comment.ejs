@@ -1,18 +1,24 @@
-<li>
+<li data-id="<%= entries[which].comments[i].id %>">
   <header>
-    <%= entries[which].comments[i].postedBy %>
+    <%= entries[which].comments[i].postedBy.name %>
   </header>
   <section>
     <%= entries[which].comments[i].content %>
   </section>
   <footer>
-    <a href="/new/comment?parent=<%= entries[which].comments[i].id%>&slug=<%= entries[which].slug%>">reply</a> 
-    <%= entries[which].comments[i].children.length%> replies
+    <div class="reply">
+      <a class="load-replies">load <%= entries[which].comments[i].children.length %> replies</a> or <a class="comment-reply">reply</a>  
+      <form method="POST" data-callback="newEntry" action="/reply/<%= parent.id %>/reply">
+        <div class="row pad-bottom-light">
+          <input type="text" name="slug" hidden value="<%= slug %>">
+          <input type="text" name="id" hidden value="<%= parent.id %>">
+          <label for="title">Reply to comment</label>
+          <textarea name="message"></textarea>
+          <div class="row pad-bottom-light">
+            <a class="button primary submit">send it</a>
+          </div>
+        </div>
+      </form>
+    </div>
   </footer>
-
-  <% if (comment.children.length > 0) { %>
-  <ul>
-    <%- include comment %>
-  </ul>
-  <% } %>
 </li>
