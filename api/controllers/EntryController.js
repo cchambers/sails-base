@@ -106,7 +106,8 @@ module.exports = {
   },
 
   delete: function (req, res) {
-    Entry.destroy(req.body.id)
+    console.log()
+    Entry.destroy(req.params.id)
     .exec( function (err, doc) {
       if (err) return next(err);
       return res.json({ message: 'Post deleted!', success: true });
