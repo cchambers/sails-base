@@ -1,5 +1,5 @@
 <ul>
-  <% for(which = 0; which < entries.length; which++) { %>
+  <% for (which = 0; which < entries.length; which++) { %>
   <li>
     <header>
       <%= entries[which].postedBy.name %>
@@ -10,7 +10,7 @@
     <footer>
       <a href="/new/comment?parent=<%= entries[which].id%>&slug=<%= entries[which].slug%>">reply</a>
       <% if (entries[which].children.length > 0) { %>
-      <a class="button primary load-replies">load <%= entries[which].children.length %> replies</a>
+      <a class="load-replies">load <%= entries[which].children.length %> replies</a>
       <% } %>
     </footer>
   </li>

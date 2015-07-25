@@ -80,205 +80,187 @@ module.exports = {
           }
         });
       });
-    });
-  },
+});
+},
 
-  edit: function(req, res) {
-    Entry.findOne({ id: req.params.id })
-    .populate('postedTo')
-    .exec( function(err, doc) {
-      if (err) return next(err);
-      var data = {};
-      data.entry = doc;
-      return res.view("edit-entry", { user: req.user, data: data });
-    });
-  },
+edit: function(req, res) {
+  Entry.findOne({ id: req.params.id })
+  .populate('postedTo')
+  .exec( function(err, doc) {
+    if (err) return next(err);
+    var data = {};
+    data.entry = doc;
+    return res.view("edit-entry", { user: req.user, data: data });
+  });
+},
 
-  submitEdit: function(req, res) {
-    Entry.findOne(req.params.id)
-    .exec( function (err, doc) {
-      if (err) return next(err);
-      doc.content = req.body.content;
-      doc.markdown = req.body.markdown;
-      doc.save();
-      return res.json({ message: "Success!", redirect: "/sub/" + req.params.postedTo + "/" + doc.slug });
-    });
-  },
+submitEdit: function(req, res) {
+  Entry.findOne(req.params.id)
+  .exec( function (err, doc) {
+    if (err) return next(err);
+    doc.content = req.body.content;
+    doc.markdown = req.body.markdown;
+    doc.save();
+    return res.json({ message: "Success!", redirect: "/sub/" + req.params.postedTo + "/" + doc.slug });
+  });
+},
 
-  delete: function (req, res) {
-    console.log()
-    Entry.destroy(req.params.id)
-    .exec( function (err, doc) {
-      if (err) return next(err);
-      return res.json({ message: 'Post deleted!', success: true });
-    });
-  },
+delete: function (req, res) {
+  console.log()
+  Entry.destroy(req.params.id)
+  .exec( function (err, doc) {
+    if (err) return next(err);
+    return res.json({ message: 'Post deleted!', success: true });
+  });
+},
 
-  listing: function (req, res) {
-    var listingData = {};
-    var slug = req.params.sub || false;
-        function listingView() {
-            return res.view('entry', { user: req.user, data: listingData })
-        }
+listing: function (req, res) {
+  var listingData = {};
+  var slug = req.params.sub || false;
+  function listingView() {
+    return res.view('entry', { user: req.user, data: listingData })
+  }
 
-    function getEntries() {
-      if (req.user) {
-        var userid = req.user.id || "none";
-      }
-      if (slug) {
-        Sub.findOne({ slug: slug })
-        .populate('creator')
-        .exec( function (err, doc) {
-          if (err) return next(err);
-          if (doc) {
-            listingData.sub = doc;
-            Entry.find({ postedTo: listingData.sub.id })
-            .sort({ createdAt: 'desc' })
-            .populate('comments')
-            .populate('postedTo')
-            .populate('postedBy')
-            .populate('votes', { user: userid })
-            .exec( function (err, data) {
-              if (err) return next(err);
-              for(var i = 0; i < data.length; i++){
-                data[i].commentAmmount = data[i].comments.length;  
-              }
-              listingData.entries = data;
-              listingView();
-            });
-          } else {
-            return res.redirect("/new/sub?name="+req.params.sub)
-          }
-        });
-
-      } else {
-        Entry.find({})
-        .populate('comments')
-        .populate('postedTo')
-        .populate('postedBy')
-        .populate('votes', { user: userid })
-        .exec( function (err, data) {
-          if (err) return next(err);
-          for(j = 0; j < data.length; j++){
-            data[j].commentAmmount = data[j].comments.length;
-          }
-          data = scoreSort(data);
-
-          listingData.entries = data;
-          listingView();
-        });
-      }
+  function getEntries() {
+    if (req.user) {
+      var userid = req.user.id || "none";
     }
-
-    function scoreSort(data){
-      var i = 0;
-      var j = 0;
-      var iMax = 0;
-      for (j=0; j < data.length-1; j++) {
-        iMax = j;
-        for (i=j+1; i < data.length; i++) {
-          if (data[i].ups - data[i].downs > data[iMax].ups - data[iMax].downs) {
-            iMin = i;
-          } else {
-          }
-        }
-        if(iMax != j){
-          tmp = data[j];
-          tmp2 = data[iMax];
-          data[j] = tmp2;
-          data[iMax] = tmp;
-        }
-        return data;
-      }
-    }
-
-    getEntries();
-  },
-
-  single: function (req, res) {
-    var viewData = {
-      entries: []
-    };
-    if (req.params.sub) {
-      getSub();
-    } else {
-      getEntry();
-    }
-
-    function getSub() {
-      Sub.findOne({ name: req.params.sub })
+    if (slug) {
+      Sub.findOne({ slug: slug })
+      .populate('creator')
       .exec( function (err, doc) {
-        viewData.sub = doc;
-        getEntry();
-      });
-    }
-
-    function getEntry() {
-      if (req.user) {
-        var userid = req.user.id || "none";
-        Entry.findOne({ slug: req.params.slug })
-        .populate('comments')
-        .populate('postedTo')
-        .populate('postedBy')
-        .populate('votes', { user: userid })
-        .exec( function (err, doc) {
-          viewData.entries.push(doc);
-          doc.commentAmmount = doc.comments.length;
-          getComments();
-        });
-      } else {
-        Entry.findOne({ slug: req.params.slug })
-        .populate('comments')
-        .populate('postedTo')
-        .populate('postedBy')
-        .exec(function (err, data) {
-          viewData.entries.push(data);
-          data.commentAmmount = data.comments.length;
-          getComments();
-        });
-      }
-    }
-
-    function getComments() {
-      var ids = _.pluck(viewData.entries[0].comments, 'id');
-      Comment.find({id: ids, parent: {$eq: null}})
-      .populate('children')
-      .populate('parent')
-      .exec(function (err, data) {
-        viewData.entries[0].comments = data;
-        singleView();
-      });
-    }
-
-    function singleView() {
-      return res.view('entry', { user: req.user, data: viewData });
-    }
-  },
-
-  addComment: function(req, res){
-    if ( typeof(req.user) == 'undefined' ) {
-      return res.redirect('/');
-    } else {
-      Entry.findOne({slug: req.body.slug})
-      .exec( function (err, data) {
-        Comment.create({
-          entry: data.id,
-          content: req.body.message,
-          postedBy: req.user.username
-        }).exec(function(err, comment){
-
-          if (err) return next(err);
-
-          Entry.findOne({ slug: req.body.slug })
+        if (err) return next(err);
+        if (doc) {
+          listingData.sub = doc;
+          Entry.find({ postedTo: listingData.sub.id })
+          .sort({ createdAt: 'desc' })
           .populate('comments')
-          .exec(function(err, doc) {
-            return;
-
+          .populate('postedTo')
+          .populate('postedBy')
+          .populate({
+            name: 'comments',
+            select: 'postedBy',
+            options: { lean: true }
+          })
+          .populate('votes', { user: userid })
+          .exec( function (err, data) {
+            if (err) return next(err);
+            for (var i = 0; i < data.length; i++){
+              data[i].commentAmmount = data[i].comments.length;  
+            }
+            listingData.entries = data;
+            listingView();
           });
-        });
-
+        } else {
+          return res.redirect("/new/sub?name="+req.params.sub)
+        }
       });
-      return res.redirect('/');
+    } else {
+      Entry.find({})
+      .populate('comments')
+      .populate('postedTo')
+      .populate('postedBy')
+      .populate('votes', { user: userid })
+      .exec( function (err, data) {
+        console.log("YO",data);
+
+        if (err) return next(err);
+        for(j = 0; j < data.length; j++){
+          data[j].commentAmmount = data[j].comments.length;
+        }
+        data = scoreSort(data);
+
+        listingData.entries = data;
+        listingView();
+      });
     }
   }
+
+  function scoreSort(data){
+    var i = 0;
+    var j = 0;
+    var iMax = 0;
+    for (j=0; j < data.length-1; j++) {
+      iMax = j;
+      for (i=j+1; i < data.length; i++) {
+        if (data[i].ups - data[i].downs > data[iMax].ups - data[iMax].downs) {
+          iMin = i;
+        } else {
+        }
+      }
+      if(iMax != j){
+        tmp = data[j];
+        tmp2 = data[iMax];
+        data[j] = tmp2;
+        data[iMax] = tmp;
+      }
+      return data;
+    }
+  }
+
+  getEntries();
+},
+
+single: function (req, res) {
+  var viewData = {
+    entries: []
+  };
+  if (req.params.sub) {
+    getSub();
+  } else {
+    getEntry();
+  }
+
+  function getSub() {
+    Sub.findOne({ name: req.params.sub })
+    .exec( function (err, doc) {
+      viewData.sub = doc;
+      getEntry();
+    });
+  }
+
+  function getEntry() {
+    if (req.user) {
+      var userid = req.user.id || "none";
+      Entry.findOne({ slug: req.params.slug })
+      .populate('comments')
+      .populate('postedTo')
+      .populate('postedBy')
+      .populate('votes', { user: userid })
+      .exec( function (err, doc) {
+        viewData.entries.push(doc);
+        doc.commentAmmount = doc.comments.length;
+        getComments();
+      });
+    } else {
+      Entry.findOne({ slug: req.params.slug })
+      .populate('comments')
+      .populate('postedTo')
+      .populate('postedBy')
+      .exec(function (err, data) {
+        console.log(data);
+        viewData.entries.push(data);
+        data.commentAmmount = data.comments.length;
+        getComments();
+      });
+    }
+  }
+
+  function getComments() {
+    var ids = _.pluck(viewData.entries[0].comments, 'id');
+    Comment.find({id: ids, parent: {$eq: null}})
+    .populate('children')
+    .populate('parent')
+    .populate('postedBy')
+    .exec( function (err, data) {
+      viewData.entries[0].comments = data;
+      singleView();
+    });
+  }
+
+  function singleView() {
+    return res.view('entry', { user: req.user, data: viewData });
+  }
+}
+
 };

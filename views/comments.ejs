@@ -2,7 +2,7 @@
   <% if (typeof(user) != 'undefined') {  %>
   <div class="row make-comment">
     <div class="contain new-thing">
-      <form method="POST" data-callback="newComment" action="/new/comment">
+      <form method="POST" data-callback="output" action="/new/comment">
         <div class="row pad-bottom-light">
         <input type="text" name="slug" hidden value="<%= entries[which].slug %>">
         <input type="text" name="postedTo" hidden value="<%= entries[which].postedTo %>">
@@ -26,37 +26,14 @@
       <% for(i = 0; i < entries[which].comments.length; i++) {%>
         <li data-id="<%= entries[which].comments[i].id %>">
           <header>
-          <%= entries[which].comments[i].postedBy %>
+          <%= entries[which].comments[i].postedBy.name %>
           </header>
           <section>
           <%= entries[which].comments[i].content %>
           </section>
           <footer>
-          <a href="/new/comment?parent=<%= entries[which].comments[i].id%>&slug=<%= entries[which].slug%>">reply</a> 
-          <%= entries[which].comments[i].children.length %> replies
+          <a class="load-replies">load <%= entries[which].comments[i].children.length %> replies</a>
           </footer>
-
-          <% if (entries[which].comments[i].children.length > 0) { %>
-          <ul>
-          <% for(j = 0; j < entries[which].comments[i].children.length; j++) { %>
-            <li data-id="<%= entries[which].comments[i].children[j].id %>">
-              <header>
-              <%= entries[which].comments[i].children[j].postedBy.name %>
-              </header>
-              <section>
-              <%= entries[which].comments[i].children[j].content %>
-              </section>
-              <footer>
-              <a href="/new/comment?parent=<%= entries[which].comments[i].children[j].id%>&slug=<%= entries[which].slug%>">reply</a>
-              <% if (entries[which].comments[i].children.length > 0) { %>
-              <a class="button primary load-replies">load <%= entries[which].comments[i].children.length %> replies</a>
-              <% } %>
-              </footer>
-            </li>
-            <% } %>
-          </ul>
-          <% } %>
-
         </li>
         <% } %>
       </ul>

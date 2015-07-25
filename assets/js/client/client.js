@@ -161,6 +161,10 @@ var client = {
         location.reload();
       }
 
+      if (data.target) {
+        location.hash = data.target;
+      }
+
       if (data.callback && client.callbacks[data.callback]) {
         client.callbacks[data.callback]();
       }
@@ -319,13 +323,6 @@ var client = {
       }
     });
   },
-
-
-    newComment: function(){
-        //TODO: do this right
-        //Horrible horrible temporal thing
-        window.location.reload();
-    },
 
   deleteEntry: function (id) {
     var $parent = $(this).parents("article");
