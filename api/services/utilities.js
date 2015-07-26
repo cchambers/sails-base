@@ -18,7 +18,7 @@ module.exports = {
       for (m = j = i; ++j < data.length;) {
         mScore = data[m].ups - data[m].downs;
         jScore = data[j].ups - data[j].downs;
-        if(data[m].slug == "todays-booty") console.info(data[m].createdAt);
+        // if(data[m].slug == "todays-booty") console.info(data[m].createdAt);
         if (mScore < jScore) m = j;
         if (mScore == jScore && data[m].createdAt < data[j].createdAt) m = j;
       }
