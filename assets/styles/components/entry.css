@@ -87,7 +87,11 @@ article header li.active {
 }
 
 article.has-media .entry header {
-  max-width: 45%;
+  width: 45%;
+}
+
+article.has-media .entry header {
+  width: 100%;
 }
 
 
