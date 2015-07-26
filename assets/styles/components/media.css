@@ -21,6 +21,7 @@ article:not(.active):hover .media:before {
 article:not(.active) .media.nsfw {
   max-width: 45%;
 }
+
 article:not(.active) .media.nsfw:before {
   display: none;
 }
