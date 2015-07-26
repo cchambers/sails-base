@@ -25,6 +25,7 @@ module.exports = {
       markdown: req.body.markdown || "",
       content: req.body.content || "",
       postedTo: req.body.postedTo,
+      subSlug: "",
     }
 
     if (entry.postedBy != req.user.username) {
@@ -61,6 +62,7 @@ module.exports = {
           } else {
             entry.postedTo = doc.id;
             entry.postedBy = name.id;
+            entry.subSlug = doc.slug;
             entry.ups = 1;
             if (succeed) {
               console.log(entry)
@@ -74,14 +76,14 @@ module.exports = {
     function createEntry(entry) {
       Entry.create(entry)
       .exec( function (err, entry) {
-        console.log("Entry created:", doc.slug + "/" + entry.slug);
+        console.log("Entry created:", entry.subSlug + "/" + entry.slug);
         Vote.create({
           user: req.user.id,
           name: entry.postedBy,
           entry: entry.id,
           vote: true
         }).exec( function (err, vote) {
-          return res.json({ message: "Success!", redirect: "/sub/" + doc.slug + "/" + entry.slug });
+          return res.json({ message: "Success!", redirect: "/sub/" + entry.subSlug + "/" + entry.slug });
         })
       });
     }
