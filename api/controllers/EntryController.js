@@ -215,7 +215,7 @@ single: function (req, res) {
       .populate('votes', { user: userid })
       .exec( function (err, doc) {
         viewData.entries.push(doc);
-        doc.commentAmmount = doc.comments.length;
+        // doc.commentAmmount = doc.comments.length;
         getComments();
       });
     } else {
@@ -225,7 +225,7 @@ single: function (req, res) {
       .populate('postedBy')
       .exec(function (err, data) {
         viewData.entries.push(data);
-        data.commentAmmount = data.comments.length;
+        // data.commentAmmount = data.comments.length;
         getComments();
       });
     }
