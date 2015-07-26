@@ -13,7 +13,7 @@
   <% for (which in entries) { %>
   <% var entry = entries[which] %>
   <% var date = new Date(entry.createdAt) %>
-  <article class="row <%= active %><% if (entry.media) { %> has-media<% } %>" data-timestamp="<%= date %>" data-id="<%= entry.id %>">
+  <article class="row <%= active %><% if (entry.media) { %> has-media<% } %><% if (entry.sticky) { %> sticky<% } %>" data-timestamp="<%= date %>" data-id="<%= entry.id %>">
     <div class="contain entry">
       <header>
         <%- include entry-controls %>

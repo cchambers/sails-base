@@ -51,6 +51,11 @@ module.exports = {
       defaultsTo: 0
     },
 
+    sticky: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
     special: {
       type: 'boolean',
       defaultsTo: false

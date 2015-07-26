@@ -11,6 +11,8 @@
 
   <% } %>
   <% if ( req.user.admin ) { %>
+  <li class="tag float-right<% if (entry.special) { %> active<% } %>" data-tag="special">special</li>
+  <li class="tag float-right<% if (entry.sticky) { %> active<% } %>" data-tag="sticky">sticky</li>
   <li class="tag float-right<% if (entry.nsfw) { %> active<% } %>" data-tag="nsfw">nsfw</li>
   <li class="tag float-right<% if (entry.nsfl) { %> active<% } %>" data-tag="nsfw">nsfl</li>
   <% } %>

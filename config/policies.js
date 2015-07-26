@@ -19,7 +19,6 @@ module.exports.policies = {
     'reply': 'isAuthenticated'
   },
   'SubController': {
-    'new' : 'isAuthenticated',
     'edit': ['isAuthenticated','isSubOwner']
   }
 };

@@ -1,14 +1,11 @@
 module.exports = {
   new: function (req, res) {
-    data = {};
-    if ( typeof(req.user) == 'undefined' ) {
-      return res.redirect('/');
-    } else {
-      if (req.query.prefill) {
-        data.prefill = req.query.sub;
-      }
-      return res.view('new-sub', { user: req.user, data: data });
+    var data = {};
+    console.log(res.query)
+    if (req.query.prefill) {
+      data.prefill = req.query.name;
     }
+    return res.view('new-sub', { user: req.user, data: data });
   },
 
   create: function (req, res) {
