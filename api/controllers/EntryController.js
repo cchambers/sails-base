@@ -83,6 +83,29 @@ module.exports = {
 });
 },
 
+tag: function (req, res) {
+  var tag = req.body.tag;
+  var id = req.body.id;
+  var user = req.user;
+
+  Entry.findOne(id)
+  .exec(function (err, doc) {
+    if (doc[tag]) {
+      doc[tag] = false;
+    } else {
+      doc[tag] = true;
+    }
+    doc.save();
+
+    if (user.admin) {
+      console.log("[ADMIN] " + user.username + " toggled " + tag + " tag on entry " + doc.title)
+    } else {
+      console.log("No admin")
+    }
+  });
+
+},
+
 edit: function(req, res) {
   Entry.findOne({ id: req.params.id })
   .populate('postedTo')
@@ -216,7 +239,8 @@ single: function (req, res) {
       .exec( function (err, doc) {
         viewData.entries.push(doc);
         // doc.commentAmmount = doc.comments.length;
-        getComments();
+        // getComments();
+        singleView();
       });
     } else {
       Entry.findOne({ slug: req.params.slug })
@@ -226,7 +250,8 @@ single: function (req, res) {
       .exec(function (err, data) {
         viewData.entries.push(data);
         // data.commentAmmount = data.comments.length;
-        getComments();
+        // getComments();
+        singleView();
       });
     }
   }

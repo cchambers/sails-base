@@ -89,6 +89,7 @@ var client = {
     });
 
     $("body .control").on("click", ".vote", client.doVote);
+    $(".control").on("click", ".tag", client.tagEntry);
 
     $(".panel").on("click", ".swap-panel-forms", function () {
       $(".panel form").toggleClass("active");
@@ -100,6 +101,7 @@ var client = {
 
     $(".comments").on("click", ".load-replies", client.getChildren)
     $(".comments").on("click", ".make-reply", client.replyForm)
+
   },
 
   setupSockets: function () {
@@ -192,6 +194,25 @@ var client = {
         if (client.callbacks[callback]){
           client.callbacks[callback](data, $form);
         }
+      }
+    });
+  },
+
+  tagEntry: function () {
+    var $el = $(this);
+    $el.toggleClass("active")
+    var tag = $el.data().tag;
+    var id = $el.parents("article").data().id;
+    var data = {
+      id: id,
+      tag: tag
+    }
+    $.ajax({
+      type: "POST",
+      url: "/tag/entry",
+      data: data,
+      success: function (data) {
+        console.log(data);
       }
     });
   },

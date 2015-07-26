@@ -1,11 +1,14 @@
 <% var active = "" %>
 <% var entries = data.entries %>
 
-<% if (req.params.slug) { %>
+<% function timeSince (date) {var seconds = Math.floor((new Date() - date) / 1000);var interval = Math.floor(seconds / 31536000);if (interval > 1) {return interval + " years";}interval = Math.floor(seconds / 2592000);if (interval > 1) {return interval + " months";}interval = Math.floor(seconds / 86400);if (interval > 1) {return interval + " days";}interval = Math.floor(seconds / 3600);if (interval > 1) {return interval + " hours";}interval = Math.floor(seconds / 60);if (interval > 1) {return interval + " minutes";}return Math.floor(seconds) + " seconds";} %>
 
-<% active = "active" %>
-<% which = 0 %>
+<% if (req.params.slug) { %>
+  <% active = "active" %>
+  <% which = 0 %>
 <% } %>
+
+
 <div class="row entries">
   <% for (which in entries) { %>
   <% var entry = entries[which] %>
@@ -15,7 +18,7 @@
       <header>
         <%- include entry-controls %>
         <h1>
-          <%= entry.title %><% if (entry.nsfw) { %> [NSFW] <% } %><% if (entry.nsfl) { %> [NSFL] <% } %>
+          <% if (entry.nsfw) { %> [NSFW] <% } %><% if (entry.nsfl) { %> [NSFL] <% } %> <%= entry.title %>
         </h1>
 
       </header>
@@ -24,7 +27,7 @@
         <%- entry.content %>
       </section>
       <cite>
-        <strong><%= entry.postedBy.name %></strong> &rarr; <a href="/sub/<%= entry.postedTo.slug %>"><%= entry.postedTo.name %></a> <%- include time-since %>
+        <strong><%= entry.postedBy.name %></strong> &rarr; <a href="/sub/<%= entry.postedTo.slug %>"><%= entry.postedTo.name %></a><span class="timesince"> <%= timeSince(date) %> ago</span>
       </cite>
       <footer>
         <div class="permalink">

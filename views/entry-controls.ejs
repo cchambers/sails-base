@@ -10,7 +10,11 @@
   <li class="vote down" data-dir="down">&darr;</li>
 
   <% } %>
-  <% if (entries[which].postedBy.name == user.username) { %>
+  <% if ( req.user.admin ) { %>
+  <li class="tag float-right<% if (entry.nsfw) { %> active<% } %>" data-tag="nsfw">nsfw</li>
+  <li class="tag float-right<% if (entry.nsfl) { %> active<% } %>" data-tag="nsfw">nsfl</li>
+  <% } %>
+  <% if ( (entries[which].postedBy.name == user.username) || user.admin ) { %>
   <li class="edit float-right">edit</li>
   <li class="delete float-right">delete</li>
   <% } %>
