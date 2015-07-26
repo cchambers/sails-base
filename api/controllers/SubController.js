@@ -37,7 +37,7 @@ module.exports = {
   },
   
   edit: function (req, res) {
-    Sub.findOne({ name: req.params.sub })
+    Sub.findOne({ slug: req.params.sub })
     .populate('creator')
     .exec( function (err, doc) {
       if(err) return next(err);
