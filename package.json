@@ -1,7 +1,7 @@
 {
   "name": "sauce",
   "private": true,
-  "version": "0.0.002",
+  "version": "0.0.001a",
   "description": "a better interweb",
   "keywords": [],
   "dependencies": {
