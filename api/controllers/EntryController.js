@@ -208,7 +208,7 @@ module.exports = {
     getSub();
 
     function getSub() {
-      Sub.findOne({ name: req.params.sub })
+      Sub.findOne({ slug: req.params.sub })
       .exec( function (err, doc) {
         if (doc) {
           viewData.sub = doc;
