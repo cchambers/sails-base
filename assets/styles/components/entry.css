@@ -90,7 +90,7 @@ article.has-media .entry header {
   width: 45%;
 }
 
-article.has-media .entry header {
+article.active.has-media .entry header {
   width: 100%;
 }
 
