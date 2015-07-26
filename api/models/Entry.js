@@ -71,6 +71,11 @@ module.exports = {
       via: 'entry'
     },
 
+    commentCount: {
+      type: 'integer',
+      defaultsTo: 0
+    },
+
     votes: {
       collection: 'vote',
       via: 'entry'

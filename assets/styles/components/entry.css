@@ -67,6 +67,13 @@ article header li.active {
   line-height: 1.2rem;
 }
 
+.entry .timesince {
+  display: inline-block;
+  opacity: .5;
+  font-size: 1rem;
+  padding-left: 0.75rem;
+}
+
 .entry footer {
   line-height: 2rem;
   font-size: 1.2rem;

@@ -3,6 +3,10 @@ module.exports = {
     entry: {
       model: 'entry',
     },
+    
+    root: {
+      model: 'comment'
+    },
 
     parent: {
       model: 'comment'
