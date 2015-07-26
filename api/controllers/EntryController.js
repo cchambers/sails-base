@@ -1,3 +1,5 @@
+var utilities = require('../services/utilities');
+
 module.exports = {
   new: function (req, res) {
     var data = {};
@@ -183,28 +185,11 @@ listing: function (req, res) {
         for(j = 0; j < data.length; j++){
           data[j].commentAmmount = data[j].comments.length;
         }
-        data = scoreSort(data);
-
+        data = utilities.sortByScore(data);
         listingData.entries = data;
         listingView();
       });
     }
-  }
-  function scoreSort(data) {
-    var i,m,j;
-    for (i = -1; ++i < data.length;) {
-      for (m = j = i; ++j < data.length;) {
-        mScore = data[m].ups - data[m].downs;
-        jScore = data[j].ups - data[j].downs;
-        if (mScore < jScore) m = j;
-        if (mScore == jScore && data[m].createdAt < data[j].createdAt) m = j;
-      }
-      t1 = data[m];
-      t2 = data[i];
-      data[m] = t2;
-      data[i] = t1;
-    }
-    return data;
   }
 
   getEntries();
