@@ -20,10 +20,6 @@ module.exports = {
         }
       });
     })
-    // check username existence
-    // check email existence
-    // create name
-    // create user
   },
 
   verify: function (req, res) {
@@ -48,17 +44,13 @@ module.exports = {
   },
 
   myProfile: function (req, res) {
-    if (req.user) {
-      User.findOne(req.user.id) 
-      .populate('votes') 
-      .populate('names')
-      .exec( function (err, data) {
-        if (err) return next(err);
-        return res.view('my-profile', { user: req.user, data: data });
-      });
-    } else {
-      return res.redirect("/");
-    }
+    User.findOne(req.user.id) 
+    .populate('votes') 
+    .populate('names')
+    .exec( function (err, data) {
+      if (err) return next(err);
+      return res.view('my-profile', { user: req.user, data: data });
+    });
   },
 
   userProfile: function (req, res) {

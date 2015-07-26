@@ -1,8 +1,7 @@
 module.exports = {
   new: function (req, res) {
     var data = {};
-    console.log(res.query)
-    if (req.query.prefill) {
+    if (req.query.name) {
       data.prefill = req.query.name;
     }
     return res.view('new-sub', { user: req.user, data: data });
