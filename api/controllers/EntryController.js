@@ -242,7 +242,7 @@ module.exports = {
             data.commentAmmount = data.comments.length;
             //getComments();
           } else {
-            console.log("500 ERROR: NON ENTRY -> ", req.params.slug,)
+            console.log("500 ERROR: NON ENTRY -> ", req.params.slug)
           }
           singleView();
         });
