@@ -65,7 +65,6 @@ module.exports = {
             entry.subSlug = doc.slug;
             entry.ups = 1;
             if (succeed) {
-              console.log(entry)
               createEntry(entry);
             }
           }

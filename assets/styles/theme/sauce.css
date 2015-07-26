@@ -52,6 +52,21 @@ body:after {
   transition: all 300ms ease-in;
 }
 
+
+strong {
+  color: #DF3D82;
+}
+
+body > header {
+  height: 6rem;
+  transition: all 250ms ease;
+}
+
+body > header .logo a {
+  color: #DF3D82;
+  line-height: 6rem;
+}
+
 header a,
 .entry a { 
   color: #191919;
@@ -67,22 +82,6 @@ header a,
   border-top: 1px solid #DF3D82;
 }
 
-strong {
-  color: #DF3D82;
-}
-
-body > header {
-  height: 6rem;
-  transition: all 250ms ease;
-}
-
-body > header .logo {
-  line-height: 6rem;
-}
-
-body > header .logo a {
-  color: #DF3D82;
-}
 
 @media (max-width: 800px) {
   .palette {
