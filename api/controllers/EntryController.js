@@ -238,9 +238,11 @@ module.exports = {
         .populate('postedBy')
         .exec(function (err, data) {
           viewData.entries.push(data);
-          if (data.comments) {
+          if (data) {
             data.commentAmmount = data.comments.length;
             //getComments();
+          } else {
+            console.log("500 ERROR: NON ENTRY -> ", req.params.slug,)
           }
           singleView();
         });
