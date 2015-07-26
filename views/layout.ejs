@@ -43,7 +43,7 @@
       </div>
       <div class="state">
         <% if (data && data.sub) { %>
-        <a href="<%=  data.sub.slug %>"><%=  data.sub.name %></a>
+        <a href="/sub/<%= data.sub.slug %>"><%= data.sub.name %></a>
         <%  } else { %>
         alpha
         <%  }  %>
