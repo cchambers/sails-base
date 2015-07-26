@@ -1,8 +1,10 @@
 <div class="contain new-thing">
-  <% if (data.name) { %>
+<% console.log(data) %>
+<% if (req.user) { %>
+  <% if (data.prefill) { %>
   <div class="notice alert">
     <p>
-    That sub doesn't exist! Check your spelling (<%= data.name %>), or feel free to create it...
+    That sub doesn't exist! Check your spelling (<%= data.prefill %>), or feel free to create it...
     </p>
   </div>
   <% } %>
@@ -17,7 +19,7 @@
         </div>
         <div class="row pad-bottom-light">
           <label for="name">Name it</label>
-          <input type="text" class="generate-slug" name="name" id="name" value="<% if (data.name) { %><%=   data.name %><% } %>">
+          <input type="text" class="generate-slug" name="name" id="name" value="<% if (data.prefill) { %><%= data.prefill %><% } %>">
         </div>
         <div class="row pad-bottom-light">
           <label for="name">Slug it ( gravy.io/sub/<span class="slug"></span> )</label>
@@ -36,4 +38,11 @@
       </div>
     </div>
   </form>
+  <% } else { %>
+  <div class="notice alert">
+      <p>
+      That sub doesn't exist, but you are free to create it after you log in.
+      </p>
+    </div>
+  <% } %>
 </div>

@@ -3,8 +3,6 @@ module.exports = {
     User.findOne(req.user.id)
     .populate('names')
     .exec( function (err, doc) {
-      console.log("NAMES", doc)
-
       if (req.body.name == "") {
         return res.json({ message: "Space... the final frontier." })
       } 
@@ -24,13 +22,10 @@ module.exports = {
         }
         Name.create(data, function (err, doc) {
           console.log(doc);
-          return res.json({ message: "Name created.", redirect: "/me" })
+          return res.json({ message: "Name created.", reload: true })
         });
       });
-
     });
-    // check username existence
-    // create name
   },
 
   switchTo: function (req, res) {
@@ -48,10 +43,6 @@ module.exports = {
         });
       }
     });
-
-    // find username... 
-    // make sure it belongs to the current user...
-    // update username
   }
 };
 

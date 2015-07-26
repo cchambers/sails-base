@@ -28,7 +28,8 @@ var client = {
   },
 
   setup: function () {
-    io.socket.get('/sockets/join/home');
+    var channel = client.slug(location.pathname);
+    io.socket.get('/sockets/join/' + channel);
     client.setupSockets();
 
     client.keys = {
@@ -247,6 +248,10 @@ var client = {
 
   submitEntryEdit: function(data) {
     console.info(data);
+  },
+
+  slug: function (text) {
+    return text.toLowerCase().replace(/[^a-zA-Z0-9\s]/g,'').replace(/\s/g, "-");
   },
 
   generateSlug: function (data) {
