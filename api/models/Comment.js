@@ -41,6 +41,11 @@ module.exports = {
       defaultsTo: 0
     },
 
+    tags: {
+      collection: 'tag',
+      via: 'name'
+    },
+
     special: {
       type: 'boolean',
       defaultsTo: false

@@ -4,21 +4,22 @@
 <% function timeSince (date) {var seconds = Math.floor((new Date() - date) / 1000);var interval = Math.floor(seconds / 31536000);if (interval > 1) {return interval + " years";}interval = Math.floor(seconds / 2592000);if (interval > 1) {return interval + " months";}interval = Math.floor(seconds / 86400);if (interval > 1) {return interval + " days";}interval = Math.floor(seconds / 3600);if (interval > 1) {return interval + " hours";}interval = Math.floor(seconds / 60);if (interval > 1) {return interval + " minutes";}return Math.floor(seconds) + " seconds";} %>
 
 <% if (req.params.slug) { %>
-  <% active = "active" %>
-  <% which = 0 %>
+<% active = "active" %>
+<% which = 0 %>
 <% } %>
 
 
 <div class="row entries">
   <% for (which in entries) { %>
   <% var entry = entries[which] %>
+  <% if (entry) { %>
   <% var date = new Date(entry.createdAt) %>
   <article class="row <%= active %><% if (entry.media) { %> has-media<% } %><% if (entry.sticky) { %> sticky<% } %>" data-timestamp="<%= date %>" data-id="<%= entry.id %>">
     <div class="contain entry">
       <header>
         <%- include entry-controls %>
         <h1>
-          <% if (entry.nsfw) { %> [NSFW] <% } %><% if (entry.nsfl) { %> [NSFL] <% } %> <%= entry.title %>
+          <%= entry.title %>
         </h1>
 
       </header>
@@ -32,13 +33,17 @@
       <footer>
         <div class="permalink">
           (<a href="/sub/<%= entry.postedTo.slug %>/<%= entry.slug %>#comments"><%= entry.commentAmmount %>&nbsp;comments</a>)
+
         </div>
         <div class="score">
           <span class="totes"><%= entry.getScore() %></span>
           <span class="calculated"> &rarr; (<span class="ups"><%= entry.ups %></span> - <span class="downs"><%= entry.downs %></span>)</span>
         </div>
       </footer>
-
+      <ul class="tags">
+        <% if (entry.nsfw) { %><li>NSFW</li> <% } %>
+        <% if (entry.nsfl) { %><li>NSFL</li><% } %>
+      </ul>
     </div>
   </article>
 
@@ -46,6 +51,8 @@
 
   <% if (req.params.slug) { %>
   <%- include comments %>
+  <% } %>
+
   <% } %>
 
 

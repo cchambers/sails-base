@@ -5,13 +5,17 @@ module.exports = {
       type: 'string',
       required: true
     },
+
     coinedBy: {
       model: 'name'
     },
+
     timesUsed: {
       type: 'integer',
       defaultsTo: 1
-    }
+    },
+
+   
   }
 };
 

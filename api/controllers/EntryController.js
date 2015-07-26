@@ -186,13 +186,15 @@ module.exports = {
         .populate('postedBy')
         .populate('votes', { user: userid })
         .exec( function (err, data) {
-          if (err) return next(err);
-          for(j = 0; j < data.length; j++){
-            data[j].commentAmmount = data[j].comments.length;
+          if (data) {
+            if (err) return next(err);
+            for(j = 0; j < data.length; j++){
+              data[j].commentAmmount = data[j].comments.length;
+            }
+            data = utilities.sortByScore(data);
+            listingData.entries = data;
+            listingView();
           }
-          data = utilities.sortByScore(data);
-          listingData.entries = data;
-          listingView();
         });
       }
     }
@@ -203,17 +205,18 @@ module.exports = {
     var viewData = {
       entries: []
     };
-    if (req.params.sub) {
-      getSub();
-    } else {
-      getEntry();
-    }
+
+    getSub();
 
     function getSub() {
       Sub.findOne({ name: req.params.sub })
       .exec( function (err, doc) {
-        viewData.sub = doc;
-        getEntry();
+        if (doc) {
+          viewData.sub = doc;
+          getEntry();
+        } else {
+          return res.json({ message: "Sub doesn't exist" });
+        }
       });
     }
 
@@ -241,10 +244,11 @@ module.exports = {
           if (data) {
             data.commentAmmount = data.comments.length;
             //getComments();
+            singleView();
           } else {
-            console.log("500 ERROR: NON ENTRY -> ", req.params.slug)
+            console.log("500 ERROR: NON ENTRY -> ", req.params.sub + " / " + req.params.slug)
+            return res.redirect("/");
           }
-          singleView();
         });
       }
     }

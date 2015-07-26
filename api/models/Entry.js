@@ -51,12 +51,17 @@ module.exports = {
       defaultsTo: 0
     },
 
-    sticky: {
-      type: 'boolean',
-      defaultsTo: false
+    tags: {
+      collection: 'tag',
+      via: 'name'
     },
 
     special: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+    
+    sticky: {
       type: 'boolean',
       defaultsTo: false
     },
