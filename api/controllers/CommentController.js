@@ -16,6 +16,9 @@ module.exports = {
     .exec( function (err, name) {
       Entry.findOne({slug: req.body.slug})
       .exec( function (err, entry) {
+        if (!entry.commentCount) {
+          entry.commentCount = 0;
+        }
         entry.commentCount = entry.commentCount + 1;
         entry.save();
         Comment.create({
@@ -36,6 +39,9 @@ module.exports = {
     .exec( function (err, name) {
       Entry.findOne({slug: req.body.slug})
       .exec( function (err, entry) {
+        if (!entry.commentCount) {
+          entry.commentCount = 0;
+        }
         entry.commentCount = entry.commentCount + 1;
         entry.save();
         Comment.findOne({ id: req.params.id })
