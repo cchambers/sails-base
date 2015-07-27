@@ -145,6 +145,7 @@ module.exports = {
   listing: function (req, res) {
     var listingData = {};
     var slug = req.params.sub || false;
+    
     function listingView() {
       return res.view('entry', { user: req.user, data: listingData })
     }
@@ -190,7 +191,7 @@ module.exports = {
             for(j = 0; j < data.length; j++){
               data[j].commentAmmount = data[j].comments.length;
             }
-            data = utilities.sortByScore(data);
+            data = utilities.sortByPop(data);
             listingData.entries = data;
             listingView();
           }

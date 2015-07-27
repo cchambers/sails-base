@@ -1,15 +1,32 @@
 module.exports = {
   isToday: function (date) {
-    var date = new Date();
+    var now = new Date();
     var dateSplit = date.toString().split(" ");
-    if(dateSplit[3] == date.getFullYear()) {
-      if(this.getMonthInt(dateSplit[1]) == date.getMonth()) {
-        if(dateSplit[2] == date.getDate()) {
+    if(dateSplit[3] == now.getFullYear()) {
+      if(this.getMonthInt(dateSplit[1]) == now.getMonth()) {
+        if(dateSplit[2] == now.getDate()) {
           return true;
         }
       }
     }
     return false;
+  },
+  
+  timeSince: function (date) {
+    var seconds = Math.floor((new Date() - date) / 1000);
+    var interval = Math.floor(seconds / 3600);
+    return interval;
+  },
+  
+  popularity: function (date, score) {
+    return (score/this.timeSince(date)).toFixed(2);
+  },
+  
+  addPopScore: function (data) {
+    for (i = 0; i < data.length; i++) {
+      data[i].pop = this.popularity(new Date(data[i].createdAt),(data[i].ups - data[i].downs));
+    }
+    return data;
   },
   
   sortByScore: function (data) {
@@ -18,10 +35,28 @@ module.exports = {
       for (m = j = i; ++j < data.length;) {
         mScore = data[m].ups - data[m].downs;
         jScore = data[j].ups - data[j].downs;
-        // if(data[m].slug == "todays-booty") console.info(data[m].createdAt);
         if (mScore < jScore) m = j;
         if (mScore == jScore && data[m].createdAt < data[j].createdAt) m = j;
       }
+      t1 = data[m];
+      t2 = data[i];
+      data[m] = t2;
+      data[i] = t1;
+    }
+    return data;
+  },
+  
+  sortByPop: function (data) {
+    var i,m,j;
+    data = this.addPopScore(data);
+    for (i = -1; ++i < data.length;) {
+      for (m = j = i; ++j < data.length;) {
+        mScore = data[m].pop;
+        jScore = data[j].pop;
+        if (mScore < jScore) m = j;
+        if (mScore == jScore) m = j;
+      }
+      console.log(data[m].pop);
       t1 = data[m];
       t2 = data[i];
       data[m] = t2;
