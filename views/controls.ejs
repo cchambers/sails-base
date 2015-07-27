@@ -7,7 +7,7 @@
     you are posting as <a href="/me"><span class="bold"><%= user.username %></span></a>
   </div>
   <ul>
-    <li><a href="/new/entry">new entry</a></li>
+    <li><a href="/new/entry<% if (data.sub) { %>/<%= data.sub.slug %><% } %>">new entry</a></li>
     <li><a href="/new/sub">create sub</a></li>
     <li><a href="/sublist">list subs</a></li>
     <li><a href="/logout">log out</a></li>

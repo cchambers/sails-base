@@ -5,7 +5,9 @@
         <div class="row pad-bottom-light">
           <label for="postedBy">Use</label>
           <select name="postedBy" id="posted-by">
-            <option selected value="<%= user.username %>"><%= user.username %></option>
+            <% for (var x = 0; x < data.names.length; x++) { %>
+            <option <% if (user.username == data.names[x].name ) { %>selected<% } %> value="<%= data.names[x].name %>"><%= data.names[x].name %></option>
+            <%  } %>
           </select>
         </div>
         <div class="row pad-bottom-light">
@@ -15,7 +17,7 @@
         </div>
 
         <div class="row pad-bottom-light">
-          <label for="media">Media (optional)</label>
+          <label for="media">Link (optional)</label>
           <input type="text" name="media">
         </div>
 

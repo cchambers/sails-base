@@ -20,8 +20,14 @@
   border-radius: 0.5rem;
   opacity: .75;
   cursor: pointer;
+  transiton: all 100ms linear;
 }
 
 .entry ul.tags li:hover {
   background-color: #DF3D82;
+}
+
+article.active .entry ul.tags {
+  bottom: auto;
+  top: 4.5rem;
 }
