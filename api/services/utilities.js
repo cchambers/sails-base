@@ -56,7 +56,6 @@ module.exports = {
         if (mScore < jScore) m = j;
         if (mScore == jScore) m = j;
       }
-      console.log(data[m].pop);
       t1 = data[m];
       t2 = data[i];
       data[m] = t2;
