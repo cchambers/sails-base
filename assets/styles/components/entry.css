@@ -154,15 +154,14 @@ article.active {
 }
 
 article:not(.active) .nsfw {
-  -webkit-filter: blur(15px);
-  filter: blur(15px);
+  -webkit-filter: blur(50px);
+  filter: blur(50px);
 }
 
 article.active.nsfw {
   -webkit-filter: blur(0px);
   filter: blur(0px);
 }
-
 
 article section {
   max-height: 0;
