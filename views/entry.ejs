@@ -43,6 +43,7 @@
       <ul class="tags">
         <% if (entry.nsfw) { %><li>NSFW</li> <% } %>
         <% if (entry.nsfl) { %><li>NSFL</li><% } %>
+        <% if (entry.media) { if (entry.media.indexOf('.gif') > 0){ %><li>GIF</li><% } } %>
       </ul>
     </div>
   </article>

@@ -14,6 +14,10 @@ article:not(.active) .media {
   background-position: left center
 }
 
+article:not(.active) .media.gif {
+  background-image: none !important;
+}
+
 article:not(.active):hover .media:before {
   background-color: #fff
 }
