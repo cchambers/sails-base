@@ -1,7 +1,7 @@
 <article class="row active user-profile">
   <div class="contain">
     <h1 class="pad-lips">
-      <%= data.email %>
+    <%= data.email %>
     </h1>
     <div class="row new-thing">
       <% for (var x = 0; x < data.names.length ; x ++) { %>
@@ -11,19 +11,25 @@
       <% } %>
       <form method="POST" data-callback="output" action="/new/name">
         <div class="row pad-bottom-light">
-         <input type="text" name="name">
-       </div>
+          <input type="text" name="name">
+        </div>
+        <div class="row pad-bottom-light">
+          <a class="button primary submit">add it</a>
+          <output></output>
+        </div>
+      </form>
+    </div>
 
-       <div class="row pad-bottom-light">
-        <a class="button primary submit">add it</a>
-        <output></output>
-      </div>
-
-    </form>
+    <p>
+    
+    </p>
+    <hr>
+    <h1 class="pad-lips">
+    Settings
+    </h1>
+    <div class="row pad-bottom-light lh30">
+      <input type="checkbox" id="hide-nsfw" name="nsfw"><label for="hide-nsfw">Hide all NSFW</label> 
+      <input type="checkbox" id="hide-nsfl" name="nsfl"><label class="float-left" for="hide-nsfl">Hide all NSFL</label>
+    </div>
   </div>
-
-  <p>
-
-  </p>
-</div>
-</a
+</article>

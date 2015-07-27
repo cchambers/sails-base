@@ -22,5 +22,10 @@ module.exports = {
       sails.sockets.broadcast(room, 'new-user', { name: name })
       console.log(".io - " + name + " joined room " + room);
     }
+  },
+  
+  userToggleSetting: function (req, res) {
+    console.log(req.body.setting);
+    console.log(req.params.user);
   }
 };

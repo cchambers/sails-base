@@ -44,6 +44,7 @@ module.exports.routes = {
   'post /children/:id': 'CommentController.children',
 
   'get /sockets/join/:room': 'SocketController.joinRoom',
+  'post /sockets/:user/toggle': 'SocketController.userToggleSetting'
 
   // 'get /mail/send/:to': 'MailController.send'
 };
