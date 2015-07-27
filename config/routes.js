@@ -16,6 +16,7 @@ module.exports.routes = {
   'get /new/sub': 'SubController.new',
   'post /new/sub': 'SubController.create',
   'get /new/entry': 'EntryController.new',
+  'get /new/entry/:sub': 'EntryController.new',
   'post /new/entry': 'EntryController.create',
   
   'get /edit/entry/:id': 'EntryController.edit',
@@ -42,5 +43,7 @@ module.exports.routes = {
   'get /children/:id': 'CommentController.children',
   'post /children/:id': 'CommentController.children',
 
-  'get /sockets/join/:room': 'SocketController.joinRoom'
+  'get /sockets/join/:room': 'SocketController.joinRoom',
+
+  // 'get /mail/send/:to': 'MailController.send'
 };

@@ -3,11 +3,14 @@ var utilities = require('../services/utilities');
 module.exports = {
   new: function (req, res) {
     var data = {};
-
-    if (req.query.sub) {
-      data.prefill = req.query.sub;
+    if (req.params.sub) {
+      data.prefill = req.params.sub
     }
-    return res.view("new-entry", { user: req.user, data: data });
+    Name.find({ user: req.user.id })
+    .exec( function (err, names) {
+      if (names) data.names = names;
+      return res.view("new-entry", { user: req.user, data: data });
+    });
   },
 
   create: function (req, res) {
@@ -28,11 +31,6 @@ module.exports = {
       subSlug: "",
     }
 
-    if (entry.postedBy != req.user.username) {
-      succeed = false;
-      errOut({ message: "Something's not right here." });
-    }
-
     if (entry.title == "") {
       succeed = false;
       errOut({ message: "Need a title." });
@@ -46,8 +44,13 @@ module.exports = {
       errOut({ message: "Pick a sub!" });
     }
 
-    Name.findOne({ name: req.user.username })
+    Name.findOne({ name: entry.postedBy })
     .exec( function (err, name) {
+      // if name belongs to user
+      if (name.user != req.user.id) {
+        return res.json({ message: "Nice try, bub." });
+      }
+
       Entry.findOne({slug: entry.slug})
       .exec( function (err, doc) {
         if (doc) {
