@@ -1,12 +1,10 @@
 module.exports = function(req, res, next) {
   Entry.findOne({ id: req.params.id })
-  .populate('postedBy')
   .exec( function (err, doc) {
     if(err) return next(err);
-    if(!req.user) return res.redirect('/');
-    if (req.user.username == doc.postedBy.name) {
+    if ( (req.user.id == doc.postedBy) || req.user.admin) {
       return next();
     }
-    return res.redirect('/');
+    return res.json({ message: "Failure" });
   });
 };
