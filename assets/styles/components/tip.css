@@ -1,0 +1,37 @@
+
+[data-tip] {
+  display: inline-block;
+  position: relative;
+  color: #DF3D82;
+  cursor: help;
+  border-bottom: 1px dashed #DF3D82;
+}
+
+[data-tip]:hover:before {
+  pointer-events: initial;
+  opacity: 1;
+  bottom: 99%;
+}
+
+[data-tip]:before {
+  content: attr(data-tip);
+  opacity: 0;
+  display: block;
+  position: absolute;
+  background: #121212;
+  width: 200px;
+  color: #f2f2f2;
+  opacity: 0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  font-family: monospace;
+  left: 50%;
+  bottom: 50%;
+  -ms-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  transform: translateX(-50%);
+  pointer-events: none;
+  transition: all 100ms ease-in;
+}
