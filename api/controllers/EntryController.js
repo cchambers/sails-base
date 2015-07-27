@@ -28,7 +28,7 @@ module.exports = {
       markdown: req.body.markdown || "",
       content: req.body.content || "",
       postedTo: req.body.postedTo,
-      subSlug: "",
+      subSlug: ""
     }
 
     if (entry.title == "") {
@@ -126,7 +126,7 @@ module.exports = {
     });
   },
 
-  submitEdit: function(req, res) {
+  submitEdit: function (req, res) {
     Entry.findOne(req.params.id)
     .exec( function (err, doc) {
       if (err) return next(err);
@@ -234,8 +234,7 @@ module.exports = {
         .exec( function (err, doc) {
           viewData.entries.push(doc);
           doc.commentAmmount = doc.comments.length;
-          //getComments();
-          singleView();
+          getComments();
         });
       } else {
         Entry.findOne({ slug: req.params.slug })
@@ -246,8 +245,7 @@ module.exports = {
           viewData.entries.push(data);
           if (data) {
             data.commentAmmount = data.comments.length;
-            //getComments();
-            singleView();
+            getComments();
           } else {
             console.log("500 ERROR: NON ENTRY -> ", req.params.sub + " / " + req.params.slug)
             return res.redirect("/");

@@ -15,9 +15,11 @@ module.exports = {
     Name.findOne({ name: req.user.username })
     .exec( function (err, name) {
       Entry.findOne({slug: req.body.slug})
-      .exec( function (err, data) {
+      .exec( function (err, entry) {
+        entry.commentCount = entry.commentCount + 1;
+        entry.save();
         Comment.create({
-          entry: data.id,
+          entry: entry.id,
           content: req.body.message,
           postedBy: name.id
         }).exec( function (err, comment) {
@@ -32,15 +34,21 @@ module.exports = {
   reply: function (req, res) {
     Name.findOne({ name: req.user.username })
     .exec( function (err, name) {
-      Comment.findOne({ id: req.params.id })
-      .exec( function (err, data) {
-        Comment.create({
-          parent: data.id,
-          content: req.body.message,
-          postedBy: name.id
-        }).exec( function (err, comment) {
-          return res.json({ message: "Success!", reload: true });
-        });
+      Entry.findOne({slug: req.body.slug})
+      .exec( function (err, entry) {
+        entry.commentCount = entry.commentCount + 1;
+        entry.save();
+        Comment.findOne({ id: req.params.id })
+        .exec( function (err, comment) {
+          Comment.create({
+            parent: comment.id,
+            entry: entry.id,
+            content: req.body.message,
+            postedBy: name.id
+          }).exec( function (err, comment) {
+            return res.json({ message: "Success!", reload: true });
+          });
+        })
       })
     })
   },

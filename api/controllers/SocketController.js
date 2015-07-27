@@ -5,6 +5,7 @@ module.exports = {
     var room = req.params.room;
     req.socket.join(room);
     var name = req.session.id;
+    //console.log(req.session)
     if (req.session.passport.user) {
       userid = req.session.passport.user;
       User.findOne(userid)
@@ -20,7 +21,6 @@ module.exports = {
     function welcome() {
       sails.sockets.broadcast(room, 'new-user', { name: name })
       console.log(".io - " + name + " joined room " + room);
-      return res.json({ message: 'Success!' });
     }
   }
 };
