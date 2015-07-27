@@ -19,7 +19,8 @@ module.exports = {
   },
   
   popularity: function (date, score) {
-    return (score/this.timeSince(date)).toFixed(2);
+    var s  = (score/(this.timeSince(date)+1)).toFixed(2);
+    return s;
   },
   
   addPopScore: function (data) {
@@ -61,6 +62,7 @@ module.exports = {
       data[m] = t2;
       data[i] = t1;
     }
+    for (i = 0; i < data.length; i++){ data[i].pop = null; };
     return data;
   },
   
