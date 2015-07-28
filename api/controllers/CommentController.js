@@ -1,62 +1,53 @@
 module.exports = {
-  new: function (req, res) {
-    if ( typeof(req.user) == 'undefined' ) {
-      return res.redirect('/');
-    } else {
-      Comment.findOne({id: req.query.parent})
-      .populate('postedBy')
-      .exec( function (err,data) {
-        return res.view('new-comment', { user: req.user, data: false, parent: data, slug: req.query.slug});
-      })
-    }
-  },
-
   create: function (req, res) {
+    console.log(req.body)
+    var commentData = {
+      entry: "",
+      parent: null,
+      content: req.body.message,
+      postedBy: ""
+    }
+
     Name.findOne({ name: req.user.username })
     .exec( function (err, name) {
-      Entry.findOne({slug: req.body.slug})
+      if (err) return next(err);
+      commentData.postedBy = name.id;
+
+      Entry.findOne(req.body.entryid)
       .exec( function (err, entry) {
+        if (err) return next(err);
+        commentData.entry = entry.id;
+
         if (!entry.commentCount) {
           entry.commentCount = 0;
         }
         entry.commentCount = entry.commentCount + 1;
         entry.save();
-        Comment.create({
-          entry: entry.id,
-          content: req.body.message,
-          postedBy: name.id
-        }).exec( function (err, comment) {
-          if (err) return next(err);
-          return res.json({ message: "Success!", reload: true });
-        });
+        if (req.body.parent) {
+          replyToParent();
+        } else {
+          createComment();
+        }
       });
     })
-    
-  },
 
-  reply: function (req, res) {
-    Name.findOne({ name: req.user.username })
-    .exec( function (err, name) {
-      Entry.findOne({slug: req.body.slug})
-      .exec( function (err, entry) {
-        if (!entry.commentCount) {
-          entry.commentCount = 0;
-        }
-        entry.commentCount = entry.commentCount + 1;
-        entry.save();
-        Comment.findOne({ id: req.params.id })
-        .exec( function (err, comment) {
-          Comment.create({
-            parent: comment.id,
-            entry: entry.id,
-            content: req.body.message,
-            postedBy: name.id
-          }).exec( function (err, comment) {
-            return res.json({ message: "Success!", reload: true });
-          });
-        })
+    function createComment() {
+      Comment.create(commentData)
+      .exec( function (err, comment) {
+        if (err) return next(err);
+        console.log("Comment:", comment);
+        return res.json({ message: "Success!", reload: true });
+      });
+    }
+
+    function replyToParent() {
+      Comment.findOne(req.body.parent)
+      .exec( function (err, comment) {
+        if (err) return next(err);
+        commentData.parent = comment.id;
+        createComment();
       })
-    })
+    }
   },
 
   children: function (req, res) {

@@ -38,14 +38,14 @@ var client = {
     }
 
     /* make some way to only bind on the pages that need it */
-    $("form").on("click", ".submit", function () {
-      var $form = $(this).parents("form");
+    $("body").on("click", "form .submit", function () {
+      var $form = $(this).parents("form").first();
       client.submitForm($form);
     });
 
     $("form").on("keyup", "input", function (e){
       if (e.which == 13) {
-        var $form = $(this).parents("form");
+        var $form = $(this).parents("form").first();
         client.submitForm($form);
       }
 
@@ -299,10 +299,16 @@ var client = {
 
   replyForm: function (e) {
     e.preventDefault();
-    var $parent = $(this).parents("li");
+    var $parent = $(this).parents("li").first();
     var id = $parent.data().id;
     var $footer = $parent.find("footer");
     var $form = $footer.find("form");
+    var $article = $("<input />", {
+      "hidden": true,
+      "value": $("article.active").data().id,
+      "name": "entryid"
+    });
+    $form.append($article);
     $(".comment form").addClass("off");
     $form.removeClass("off");
   },

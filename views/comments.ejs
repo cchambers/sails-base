@@ -3,8 +3,7 @@
   <div class="contain new-thing">
     <form method="POST" data-callback="output" action="/new/comment">
       <div class="row pad-bottom-light">
-        <input type="text" name="slug" hidden value="<%= entries[which].slug %>">
-        <input type="text" name="postedTo" hidden value="<%= entries[which].postedTo %>">
+        <input type="text" name="entryid" hidden value="<%= entries[which].id %>">
         <label for="title">Add a new comment</label>
         <textarea name="message"></textarea>
         <div class="row pad-bottom-light">
@@ -21,7 +20,7 @@
     <% if (entries[which].comments.length > 0) { %>
     <ul>
       <% for(i = 0; i < entries[which].comments.length; i++) {%>
-      <li data-id="<%= entries[which].comments[i].id %>">
+      <li data-id="<%= entries[which].comments[i].id %>" id="<%= entries[which].comments[i].id %>">
         <header>
           <%= entries[which].comments[i].postedBy.name %>
         </header>
@@ -30,10 +29,10 @@
         </section>
         <footer class="new-thing">
           <a href="#" class="make-reply">reply</a>
-          <a href="#" class="load-replies">load <%= entries[which].comments[i].children.length %> comments</a>
-          <form class="off" method="POST" data-callback="output" action="/reply/<%= entries[which].comments[i].id %>">
+          <a href="#<%= entries[which].comments[i].id %>" class="load-replies">load <%= entries[which].comments[i].children.length %> comments</a>
+          <form class="off" method="POST" data-callback="output" action="/new/comment">
             <div class="row pad-bottom-light">
-            <input type="text" name="slug" hidden value="<%= entries[which].slug %>">
+              <input name="parent" hidden value="<%= entries[which].comments[i].id %>">
               <textarea name="message" placeholder="reply..."></textarea>
             </div>
             <div class="row pad-bottom-light">
@@ -46,7 +45,7 @@
       <% } %>
     </ul>
     <% } else { %>
-      No comments yet!
+    No comments yet!
     <% } %>
   </div>
 </div>
