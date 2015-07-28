@@ -120,6 +120,7 @@ module.exports = {
     .populate('postedTo')
     .exec( function(err, doc) {
       if (err) return next(err);
+      console.log(doc)
       var data = {};
       data.entry = doc;
       return res.view("edit-entry", { user: req.user, data: data });
@@ -128,12 +129,13 @@ module.exports = {
 
   submitEdit: function (req, res) {
     Entry.findOne(req.params.id)
+    .populate('postedTo')
     .exec( function (err, doc) {
       if (err) return next(err);
       doc.content = req.body.content;
       doc.markdown = req.body.markdown;
       doc.save();
-      return res.json({ message: "Success!", redirect: "/sub/" + req.params.postedTo + "/" + doc.slug });
+      return res.json({ message: "Success!", redirect: "/sub/" + doc.postedTo.slug + "/" + doc.slug });
     });
   },
 
@@ -141,7 +143,7 @@ module.exports = {
     Entry.destroy(req.params.id)
     .exec( function (err, doc) {
       if (err) return next(err);
-      return res.json({ message: 'Post deleted!', success: true });
+      return res.json({ message: "Post deleted!", success: true });
     });
   },
 
