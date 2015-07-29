@@ -1,4 +1,5 @@
 var passport = require('passport');
+var utilities = require('../services/utilities');
 
 module.exports = {
   joinRoom: function (req, res) {
@@ -25,7 +26,26 @@ module.exports = {
   },
   
   userToggleSetting: function (req, res) {
-    console.log(req.body.setting);
-    console.log(req.params.user);
+    var name = req.session.passport.user;
+    utilities.updateUser(name);
+    User.findOne({ id: name })
+    .exec( function (err, doc) {
+      var username = doc.username;
+      
+      if(req.body.setting == 'nsfw') {
+        if(doc.hidensfw)
+          doc.hidensfw = false;
+        else
+          doc.hidensfw = true;
+      }
+      if(req.body.setting == 'nsfl') {
+        if(doc.hidensfl)
+          doc.hidensfl = false;
+        else
+          doc.hidensfl = true;
+      }
+      doc.save();
+      return res.json({ message: "Success!", redirect: "/me" });
+    });
   }
 };

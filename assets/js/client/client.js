@@ -103,7 +103,7 @@ var client = {
     $(".comments").on("click", ".load-replies", client.getChildren)
     $(".comments").on("click", ".make-reply", client.replyForm)
     
-    $("body").on("click", "#hide-nsfw", function(e) {for(a in e.target) console.log(a); client.userToggleSetting("hide-nsfw", false)});
+    $("body .settings").on("click", "#hide-nsfw", function() { client.userToggleSetting("nsfw", true); });
 
   },
 
@@ -381,15 +381,14 @@ var client = {
     });
   },
   
-  userToggleSetting: function (user, toggle, set) {  
-//    $.ajax({
-//      type: 'POST',
-//      url: '/sockets/' + user + '/toggle/' + toggle,
-//      data: { setting: toggle, value: set },
-//      success: function (data) {
-//        console.log("WORKED");
-//      }
-//    });
+  userToggleSetting: function (toggle, set) { 
+    $.ajax({
+      type: 'POST',
+      url: '/sockets/settings/toggle/',
+      data: { setting: toggle, value: set },
+      success: function (data) {
+      }
+    });
   }
 }
 
