@@ -194,6 +194,19 @@ module.exports = {
             for(j = 0; j < data.length; j++){
               data[j].commentAmmount = data[j].comments.length;
             }
+            var userData = utilities.getUserData(userid);
+            console.log(userData);
+            if(userData) {
+              console.info("user");
+              if(userData.hidensfw) {
+                conosle.info("hide nsfw");
+                for(d in data) {
+                  if(d.nsfw) {
+                    d = undefined;
+                  }
+                }
+              }
+            }
             data = utilities.sortByPop(data);
             listingData.entries = data;
             listingView();

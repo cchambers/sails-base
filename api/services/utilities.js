@@ -123,6 +123,18 @@ module.exports = {
         doc.save();
       }
     });
+  },
+  
+  getUserData: function (user) {
+    User.findOne({ id: user })
+    .exec( function (err, doc) {
+      if(err) next(err);
+      if(doc) {
+        user = doc;
+      }
+    });
+    
+    return user;
   }
   
 }
