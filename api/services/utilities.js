@@ -125,16 +125,12 @@ module.exports = {
     });
   },
   
-  getUserData: function (user) {
+  getUserData: function (user, callback) {
     User.findOne({ id: user })
     .exec( function (err, doc) {
       if(err) next(err);
-      if(doc) {
-        user = doc;
-      }
+      if(doc) callback(null, doc);
     });
-    
-    return user;
   }
   
 }
