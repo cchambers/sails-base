@@ -67,21 +67,6 @@ body > header .logo a {
   line-height: 6rem;
 }
 
-header a,
-.entry a { 
-  color: #191919;
-  border-bottom: 1px solid #DF3D82;
-  border-top: 1px solid transparent;
-  text-decoration: none;
-  transition: all 100ms linear;
-}
-
-.logo a:hover,
-.entry a:hover { 
-  color: #DF3D82;
-  border-top: 1px solid #DF3D82;
-}
-
 
 @media (max-width: 800px) {
   .palette {

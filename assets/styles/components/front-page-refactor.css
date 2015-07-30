@@ -80,10 +80,18 @@ ul.text-entries li {
   line-height: 3.5rem;
   padding: 0 1.5rem;
   list-style: none;
-  border-bottom: 1px solid #ddd;
+}
+
+ul.text-entries li a {
+  display: block;
+  width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+ul.text-entries li + li {
+  margin-top: -1px;
 }
 
 .flex.images,

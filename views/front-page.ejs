@@ -1,7 +1,7 @@
 <div class="contain">
   <div class="row">
     <div class="col-2-3">
-    <a href="/sub/<%= data.images[0].postedTo.slug %>/<%= data.images[0].slug %>">
+      <a href="/sub/<%= data.images[0].postedTo.slug %>/<%= data.images[0].slug %>">
         <div class="media primary" style="background-image:url(<%= data.images[0].media %>)" title="<%= data.images[0].title %>">
         </div>
       </a>
@@ -9,10 +9,15 @@
     <div class="col-1-3">
       <ul class="text-entries">
        <% for (var x = 0; x < data.text.length; x++) { %>
-       <li><%= data.text[x].title %></li>
+       
+       <li>
+         <a href="/sub/<%= data.text[x].postedTo.slug %>/<%= data.text[x].slug %>"><%= data.text[x].title %></a>
+       </li>
        <% } %>
        <% for (var x = 0; x < data.links.length; x++) { %>
-       <li><%= data.links[x].title %></li>
+       <li>
+         <a href="/sub/<%= data.links[x].postedTo.slug %>/<%= data.links[x].slug %>"><%= data.links[x].title %></a>
+       </li>
        <% } %>
      </ul>
    </div>

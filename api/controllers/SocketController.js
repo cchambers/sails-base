@@ -11,7 +11,7 @@ module.exports = {
       User.findOne(userid)
       .exec( function (err, doc) {
         doc.online = true;
-        doc.save;
+        doc.save();
         // this is the channel that gets notifications
         req.socket.join(userid); 
         sails.sockets.broadcast("admin", "user-online", { id: userid })
