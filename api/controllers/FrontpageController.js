@@ -31,7 +31,7 @@ module.exports = {
             viewdata.links.push(data[x]);
           }
         } else {
-          viewdata.text.push(data[x]);
+          viewdata.links.push(data[x]);
         }
       }
       viewdata.images = utilities.sortByPop(viewdata.images);

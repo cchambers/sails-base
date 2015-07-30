@@ -1,8 +1,10 @@
 <div class="contain">
   <div class="row">
     <div class="col-2-3">
-      <div class="media primary" style="background-image:url(<%= data.images[0].media %>)" title="<%= data.images[0].title %>">
-      </div>
+    <a href="/sub/<%= data.images[0].postedTo.slug %>/<%= data.images[0].slug %>">
+        <div class="media primary" style="background-image:url(<%= data.images[0].media %>)" title="<%= data.images[0].title %>">
+        </div>
+      </a>
     </div>
     <div class="col-1-3">
       <ul class="text-entries">
@@ -19,7 +21,7 @@
   <div class="col-1-2 images flex">
     <% for (var x = 1; x < 9; x++) { %>
     <div class="media image flex-item" style="background-image:url(<%= data.images[x].media %>)"> 
-    <a><%= data.images[x].title %></a>
+      <a href="/sub/<%= data.images[x].postedTo.slug %>/<%= data.images[x].slug %>"><%= data.images[x].title %></a>
     </div>
     <% } %>
   </div>
