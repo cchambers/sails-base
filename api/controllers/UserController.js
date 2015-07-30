@@ -59,6 +59,13 @@ module.exports = {
     .then( function (data) {
       return res.view('user-profile', { user: req.user, data: data });
     });
+  },
+  
+  list: function (req, res) {
+    User.find().exec( function (err, data) {
+      if (err) return next(err);
+      return res.view('userlist', { user: req.user, data: data })
+    });
   }
-};
+}
 

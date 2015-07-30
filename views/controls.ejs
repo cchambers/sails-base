@@ -2,20 +2,20 @@
 
 <div class="panel" id="controls">
 <a href="#" class="close-panel-inner">&times;</a>
-  <% if (typeof(user) != 'undefined') {  %>
+  <% if (req.user) {  %>
   <div class="userinfo">
-    you are posting as <a href="/me"><span class="bold"><%= user.username %></span></a>
+    you are posting as <a href="/me"><span class="bold"><%= req.user.username %></span></a>
   </div>
   <ul>
     <li><a href="/new/entry<% if (data.sub) { %>/<%= data.sub.slug %><% } %>">new entry</a></li>
     <li><a href="/new/sub">create sub</a></li>
     <li><a href="/sublist">list subs</a></li>
     <li><a href="/logout">log out</a></li>
-    <% if ( data.sub && (data.sub.creator.name == user.username) ) { %>
+    <% if ( data.sub && (data.sub.creator.name == req.user.username) ) { %>
     <li class="pink bold pad-left-light">moderator:</li>
     <li><a href="/sub/<%= data.sub.slug %>/edit">edit <%= data.sub.name %></a></li>
     <% } %>
-    <% if (user.admin) { %>
+    <% if (req.user.admin) { %>
     <li class="pink bold pad-left-light">admin:</li>
     <li><a href="/userlist">userlist</a></li>
     <% } %>

@@ -1,0 +1,167 @@
+.media {
+  position: relative;
+  background-size: cover;
+  background-position: center center
+}
+
+.media.primary[title]:before {
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  font-size: 3.5rem;
+  width: 100%;
+  content: attr(title);
+  background: rgba(0, 0, 0, .5);
+  padding: 1.5rem;
+  color: #f2f2f2;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+}
+.media.image {
+  width: calc(20% - .5rem);
+}
+
+.media.image[title]:before {
+  font-size: 1.4rem;
+}
+
+.media.primary {
+  min-height: 36rem;
+  margin-right: 0.75rem
+}
+
+.media.secondary {
+  min-height: 12.5rem;
+}
+
+.media:hover {
+  cursor: pointer;
+}
+
+.media:hover .controls {
+  opacity: 1;
+}
+
+.media .controls {
+  position: absolute;
+  top: 0;
+  left;
+  0;
+  color: #f2f2f2;
+  background: rgba(0, 0, 0, .75);
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  transition: all 200ms ease-in;
+}
+
+.controls div {
+  position: relative;
+  float: left;
+  text-align: center;
+  width: 50%;
+  height: 50%;
+}
+
+.controls div span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.controls div:hover {
+  background-color: rgba(255, 255, 255, .15)
+}
+
+ul.text-entries {
+  padding-left: 0;
+}
+
+ul.text-entries li {
+  line-height: 3.5rem;
+  padding: 0 1.5rem;
+  list-style: none;
+  border-bottom: 1px solid #ddd;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.flex.images,
+.flex.videos {
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  justify-content: flex-start;
+  -ms-flex-pack: justify;
+}
+
+.row-media .videos {
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+  -ms-flex-wrap: wrap 
+}
+
+.images .media,
+.videos .media {
+  position: relative;
+  width: calc(25% - 0.75rem);
+  margin-right: .75rem;
+  height: 10rem;
+  margin-bottom: 0.75rem;
+  background-image: no-repeat;
+  background-position: top center;
+  overflow: hidden;
+}
+
+.media:hover a {
+  opacity: 1;
+}
+
+.media a {
+  display: block;
+  text-decoration: none;
+  background: rgba(0,0,0,.5);
+  opacity: 0;
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+  padding: 0.75rem;
+  border-top: none;
+  line-height: 1.8rem;
+  font-size: 1.4rem;
+  font-weight: 400;
+  position: absolute;
+  color: #f2f2f2;
+  text-align: left;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, .9);
+  transition: opacity 250ms ease-in;
+  text-overflow: ellipsis;
+}
+
+@media (max-width:800px) {
+  .text-entries,
+  .link-entries {
+    display: none
+  }
+  .media.image {
+    margin-right: 0 !important;
+    margin-bottom: .75rem;
+    min-height: 30rem !important;
+  }
+  .media .controls {
+    background: #252525;
+    top: initial;
+    bottom: -10rem;
+    opacity: 1;
+    height: 10rem;
+  }
+
+  .videos .media {
+    height: 10rem;
+    width: calc(50% - 0.5rem);
+    margin-bottom: 0.75rem;
+  }
+}
