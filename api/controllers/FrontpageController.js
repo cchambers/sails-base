@@ -38,7 +38,6 @@ module.exports = {
       viewdata.images = utilities.sortByPop(viewdata.images);
       viewdata.videos = utilities.sortByPop(viewdata.videos);
       viewdata.text = utilities.sortByPop(viewdata.text);
-      viewdata.text.length = 10;
       getEntries();
     });
 
