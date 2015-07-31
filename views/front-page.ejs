@@ -1,0 +1,107 @@
+<div class="features">
+  <div class="contain">
+    <div class="row">
+      <div class="col-2-3">
+        <a href="#<%= data.images[0].id %>">
+          <div class="media primary" style="background-image:url(<%= data.images[0].media %>)" title="<%= data.images[0].title %>">
+          </div>
+        </a>
+      </div>
+      <div class="col-1-3">
+        <ul class="text-entries">
+        <% for (var x = 0; x < 10; x++) { %>
+        <li>
+        <a href="#<%= data.text[x].id %>"><%= data.text[x].title %></a>
+        </li>
+        <% } %>
+        </ul>
+      </div>
+    </div>
+    <div class="row tertiary-media">
+      <div class="col-1-2 images flex">
+        <% for (var x = 1; x < 9; x++) { %>
+        <div class="media image flex-item" style="background-image:url(<%= data.images[x].media %>)"> 
+          <a href="#<%= data.images[x].id %>"><%= data.images[x].title %></a>
+        </div>
+        <% } %>
+      </div>
+
+      <div class="col-1-2">
+        <div class="videos flex">
+          <%
+          for (var x = 0; x < 8; x++) { 
+            var media = data.videos[x].media;
+            if(media.indexOf('youtu') > 0) {
+              var which = "" 
+              if (media.indexOf('watch?v') > 0) { 
+                which = media.split("=")[1] 
+              } else if (media.indexOf('youtu.be') > 0) { 
+                which = media.split("/").pop() 
+              } else if (media.indexOf('embed') > 0) { 
+                which = media.split("/").pop().split("?")[0] 
+              } 
+              if (which.indexOf('?') > 0) {
+                which = which.split('?')[0]
+              } 
+
+
+              if (which != "") { %> 
+              <div class="media flex-item" style="background-image:url(http://img.youtube.com/vi/<%= which %>/0.jpg)">
+                <a href="#<%= data.videos[x].id %>"><%= data.videos[x].title %></a>
+              </div>
+              <% }
+            } 
+          } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row entries">
+    <% function timeSince (date) {var seconds = Math.floor((new Date() - date) / 1000);var interval = Math.floor(seconds / 31536000);if (interval > 1) {return interval + " years";}interval = Math.floor(seconds / 2592000);if (interval > 1) {return interval + " months";}interval = Math.floor(seconds / 86400);if (interval > 1) {return interval + " days";}interval = Math.floor(seconds / 3600);if (interval > 1) {return interval + " hours";}interval = Math.floor(seconds / 60);if (interval > 1) {return interval + " minutes";}return Math.floor(seconds) + " seconds";} %>
+    <% var active = "" %>
+    <% var entries = data.entries %>
+    <% for (which in entries) { %>
+    <% var entry = entries[which] %>
+    <% if (entry) { %>
+    <% var date = new Date(entry.createdAt) %>
+    <article class="row <%= active %><% if (entry.media) { %>has-media<% } %><% if (entry.sticky) { %> sticky<% } %>" data-timestamp="<%= date %>" data-id="<%= entry.id %>" id="<%= entry.id %>">
+      <div class="contain entry">
+        <header>
+          <%- include entry-controls %>
+          <h1>
+            <%= entry.title %>
+          </h1>
+
+        </header>
+        <section>
+          <%- include media-handler %>
+          <%- entry.content %>
+        </section>
+        <cite>
+          <strong><%= entry.postedBy.name %></strong> &rarr; <a href="/sub/<%= entry.postedTo.slug %>"><%= entry.postedTo.name %></a><span class="timesince"> <%= timeSince(date) %> ago</span>
+        </cite>
+        <footer>
+          <div class="permalink">
+            (<a href="/sub/<%= entry.postedTo.slug %>/<%= entry.slug %>#comments"><%= entry.commentCount %>&nbsp;comments</a>)
+
+          </div>
+          <div class="score">
+            <span class="totes"><%= entry.getScore() %></span>
+            <span class="calculated"> &rarr; (<span class="ups"><%= entry.ups %></span> - <span class="downs"><%= entry.downs %></span>)</span>
+          </div>
+        </footer>
+        <ul class="tags">
+          <% if (entry.nsfw) { %><li>NSFW</li> <% } %>
+          <% if (entry.nsfl) { %><li>NSFL</li><% } %>
+          <% if (entry.media) { if (entry.media.indexOf('.gif') > 0){ %><li>GIF</li><% } } %>
+        </ul>
+      </div>
+    </article>
+
+
+
+    <% } %>
+
+
+    <% } %>
+  </div>

@@ -174,9 +174,6 @@ module.exports = {
             .populate('votes', { user: userid })
             .exec( function (err, data) {
               if (err) return next(err);
-              for (var i = 0; i < data.length; i++){
-                data[i].commentAmmount = data[i].comments.length;  
-              }
               listingData.entries = data;
               listingView();
             });
@@ -193,9 +190,6 @@ module.exports = {
         .exec( function (err, data) {
           if (data) {
             if (err) return next(err);
-            for(j = 0; j < data.length; j++){
-              data[j].commentAmmount = data[j].comments.length;
-            }
             data = utilities.sortByPop(data);
             listingData.entries = data;
             listingView();

@@ -54,6 +54,15 @@ module.exports = {
       data.sub = doc;
       return res.json({ message: "Updated.", reload: true });
     });
+  },
+
+  list: function (req, res) {
+    Sub.find()
+    .populate('creator')
+    .exec( function (err, data) {
+      if (err) return next(err);
+      return res.view('sublist', { user: req.user, data: data })
+    });
   }
 };
 

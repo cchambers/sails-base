@@ -1,8 +1,8 @@
 module.exports.routes = {
-  '/': 'EntryController.listing',
-
-  'get /userlist': 'FrontpageController.userlist',
-  'get /sublist': 'FrontpageController.sublist',
+  '/': 'FrontpageController.index',
+  'get /all': 'EntryController.listing',
+  'get /userlist': 'UserController.list',
+  'get /sublist': 'SubController.list',
 
   'get /me': 'UserController.myProfile',
 
