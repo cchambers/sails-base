@@ -25,7 +25,6 @@
 
 .media.primary {
   min-height: 36rem;
-  margin-right: 0.75rem
 }
 
 .media.secondary {
@@ -94,12 +93,16 @@ ul.text-entries li + li {
   margin-top: -1px;
 }
 
+.flex.images {
+  padding-right: 0.75rem;
+}
+
 .flex.images,
 .flex.videos {
   margin-top: 0.75rem;
   flex-wrap: wrap;
   -ms-flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: flex-around;
   -ms-flex-pack: justify;
 }
 
@@ -113,7 +116,6 @@ ul.text-entries li + li {
 .videos .media {
   position: relative;
   width: calc(25% - 0.75rem);
-  margin-right: .75rem;
   height: 10rem;
   margin-bottom: 0.75rem;
   background-image: no-repeat;
@@ -154,6 +156,7 @@ ul.text-entries li + li {
   .flex .media.image,
   .flex .media.video {
     min-height: 20rem !important;
+    width: calc(50% - .75rem);
   }
   .media .controls {
     background: #252525;

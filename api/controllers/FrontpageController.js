@@ -12,7 +12,8 @@ module.exports = {
       images: [],
       text: [],
       links: [],
-      videos: []
+      videos: [],
+      entries: []
     }
 
     Entry.find({ nsfw: { $ne: true } })
@@ -28,18 +29,37 @@ module.exports = {
           } else if ( data[x].media.indexOf('youtube') > 0 || data[x].media.indexOf('youtu.be') > 0 || data[x].media.indexOf('liveleak') > 0) {
             viewdata.videos.push(data[x]);
           } else {
-            viewdata.links.push(data[x]);
+            viewdata.text.push(data[x]);
           }
         } else {
-          viewdata.links.push(data[x]);
+          viewdata.text.push(data[x]);
         }
       }
       viewdata.images = utilities.sortByPop(viewdata.images);
-      viewdata.text = utilities.sortByPop(viewdata.text);
       viewdata.videos = utilities.sortByPop(viewdata.videos);
-      viewdata.links = utilities.sortByPop(viewdata.links);
-      loadView();
+      viewdata.text = utilities.sortByPop(viewdata.text);
+      viewdata.text.length = 10;
+      getEntries();
     });
+
+    function getEntries() {
+      if (req.user) {
+        var userid = req.user.id || "none";
+      }
+      Entry.find({})
+      .populate('comments')
+      .populate('postedTo')
+      .populate('postedBy')
+      .populate('votes', { user: userid })
+      .exec( function (err, data) {
+        if (data) {
+          if (err) return next(err);
+          data = utilities.sortByPop(data);
+          viewdata.entries = data;
+          loadView()
+        }
+      });
+    }
 
     function loadView() {
       return res.view('front-page', { user: req.user, data: viewdata  })

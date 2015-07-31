@@ -55,6 +55,20 @@ var client = {
       }
     });
 
+    $(".features").on("click.scrollTo", "a", function (e) {
+      var $article = $($(this).attr("href"));
+      $("article").removeClass("active");
+      console.log($article)
+      $article.addClass("active");
+
+      var t = $(this).attr("href");
+      if ($(t).length > 0) {
+        var target = $(t).offset().top;
+        if (target < 0) { target = 1; }
+        $("html, body").animate({ scrollTop: target+"px" }, 250);
+      }
+    });
+
     $("form").on("keyup",".CodeMirror", function(){mirror.save();});
 
     $(".new-thing").on("keyup", "[name=markdown]", client.updatePreview);
