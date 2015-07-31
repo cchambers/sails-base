@@ -36,6 +36,28 @@ var client = {
       nextItem: [115,108,32],
       prevItem: [119,107]
     }
+    
+    
+    
+    $('.mention').mentionsInput({
+      onDataRequest:function (mode, query, callback) {
+        var subList = [];
+
+        $.ajax({
+          type: 'GET',
+          url: '/sub',
+          data: { },
+          async: false,
+          success: function (data) {
+            subList = data;
+          }
+        });
+
+        subList = _.filter(subList, function (item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
+
+        callback.call(this, subList);
+      }
+    });
 
     /* make some way to only bind on the pages that need it */
     $("body").on("click", "form .submit", function () {
@@ -116,27 +138,7 @@ var client = {
 
     $(".comments").on("click", ".load-replies", client.getChildren)
     $(".comments").on("click", ".make-reply", client.replyForm)
-        
-    
-    var subList = [];
-    $.ajax({
-      type: 'GET',
-      url: '/sub',
-      data: { },
-      async: false,
-      success: function (data) {
-        subList = data;
-      }
-    });
-    
-    $('.mention').mentionsInput({
-      onDataRequest:function (mode, query, callback) {
 
-        subList = _.filter(subList, function(item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
-
-        callback.call(this, subList);
-      }
-    });
 
   },
 
