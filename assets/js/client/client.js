@@ -102,9 +102,26 @@ var client = {
 
     $(".comments").on("click", ".load-replies", client.getChildren)
     $(".comments").on("click", ".make-reply", client.replyForm)
+        
     
-    $("body").on("click", ".mention", function() {
-      
+    var subList = [];
+    $.ajax({
+      type: 'GET',
+      url: '/sub',
+      data: { },
+      async: false,
+      success: function (data) {
+        subList = data;
+      }
+    });
+    
+    $('.mention').mentionsInput({
+      onDataRequest:function (mode, query, callback) {
+
+        subList = _.filter(subList, function(item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
+
+        callback.call(this, subList);
+      }
     });
 
   },
@@ -387,25 +404,10 @@ var client = {
         }
       }
     });
-  }
+  },
+  
+  
 }
-
-$('.mention').mentionsInput({
-  onDataRequest:function (mode, query, callback) {
-    var data = [
-      { id:1, name:'Kenneth Auchenberg', 'avatar':'http://cdn0.4dots.com/i/customavatars/avatar7112_1.gif', 'type':'contact' },
-      { id:2, name:'Jon Froda', 'avatar':'http://cdn0.4dots.com/i/customavatars/avatar7112_1.gif', 'type':'contact' },
-      { id:3, name:'Anders Pollas', 'avatar':'http://cdn0.4dots.com/i/customavatars/avatar7112_1.gif', 'type':'contact' },
-      { id:4, name:'Kasper Hulthin', 'avatar':'http://cdn0.4dots.com/i/customavatars/avatar7112_1.gif', 'type':'contact' },
-      { id:5, name:'Andreas Haugstrup', 'avatar':'http://cdn0.4dots.com/i/customavatars/avatar7112_1.gif', 'type':'contact' },
-      { id:6, name:'Pete Lacey', 'avatar':'http://cdn0.4dots.com/i/customavatars/avatar7112_1.gif', 'type':'contact' }
-    ];
-
-    data = _.filter(data, function(item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
-
-    callback.call(this, data);
-  }
-});
 
 client.init();
 
