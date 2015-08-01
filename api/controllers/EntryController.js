@@ -103,6 +103,28 @@ module.exports = {
     }
   },
 
+  singleJSON: function (req, res) {
+    var userid = (req.user) ? req.user.id : "none";
+    var id = req.params.id;
+    Entry.findOne(id)
+    .populate('comments')
+    .populate('postedTo')
+    .populate('postedBy')
+    .populate('votes', { user: userid })
+    .exec( function (err, doc) {
+      if (err) next(err);
+
+      var ids = _.pluck(doc.comments, 'id');
+      Comment.find({id: ids, parent: {$eq: null}})
+      .populate('children')
+      .populate('parent')
+      .populate('postedBy')
+      .exec( function (err, data) {
+        return res.json({ entry: doc, comments: data});
+      });
+    });
+  },
+
   tag: function (req, res) {
     var tag = req.body.tag;
     var id = req.body.id;

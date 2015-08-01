@@ -1,5 +1,5 @@
 article .media + header {
-  max-width: 50%;
+  /*max-width: 50%;*/
 }
 
 article:not(.active) .media {
@@ -11,7 +11,8 @@ article:not(.active) .media {
   z-index: 1;
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: left center
+  background-position: left center;
+  display: none;
 }
 
 article:not(.active) .media.gif {
@@ -20,10 +21,6 @@ article:not(.active) .media.gif {
 
 article:not(.active):hover .media:before {
   background-color: #fff
-}
-
-article:not(.active) .media.nsfw {
-  max-width: 45%;
 }
 
 
@@ -60,16 +57,5 @@ article.active .media.youtube iframe {
 }
 
 @media (max-width: 800px) {
-  article.has-media:not(.active) header {
-    max-width: 60%;
-  }
 
-  article .media {
-    max-width: 50%;
-  }
-  article:not(.active) .media:before {
-    transform: skew(-5deg);
-    width: 25rem;
-    left: -20rem;
-  }
 }

@@ -5,6 +5,7 @@
 
 article {
   margin-bottom: 0.75rem;
+  padding: 0 0.75rem;
 }
 
 article.active .control {
@@ -91,10 +92,11 @@ article header li.active {
 
 .entry header h1 {
   font-size: 2rem;
+  line-height: 2rem;
 }
 
 article.has-media .entry header {
-  width: 45%;
+  /*width: 45%;*/
 }
 
 article.active.has-media .entry header {

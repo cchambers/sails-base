@@ -131,7 +131,7 @@
           doc.online = false;
           doc.save();
           sails.sockets.broadcast("admin", "user-offline", { id: doc.id, "username": doc.username })
-          console.log(".io - " +doc.username + " has logged disconnected.")
+          console.log(".io - " +doc.username + " has disconnected. [not accurate]")
           return cb();
         } else {
           return cb();

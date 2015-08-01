@@ -14,8 +14,8 @@ body {
   font-family: "Roboto";
   font-size: 1.8rem;
   color: #505050;
-  overflow-y: scroll;
-  padding-bottom: 9rem;
+  overflow: hidden;
+  padding: 6rem 0 0 0;
 }
 
 body:after {
@@ -52,7 +52,6 @@ body:after {
   transition: all 300ms ease-in;
 }
 
-
 strong {
   color: #DF3D82;
 }
@@ -60,6 +59,16 @@ strong {
 body > header {
   height: 6rem;
   transition: all 250ms ease;
+  position: fixed;
+  top: 0; left: 0;
+  padding: 0 0.75rem;
+  width: 100%;
+  background-color: #222;
+  color: #ddd;
+  z-index: 5;
+}
+body > header a {
+  color: #f2f2f2;
 }
 
 body > header .logo a {
@@ -67,23 +76,11 @@ body > header .logo a {
   line-height: 6rem;
 }
 
-
 @media (max-width: 800px) {
   .palette {
     display: none;
   }
 
-  body {
-    padding-top: 9rem;
-  }
-
-  body > header {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    background-color: #222;
-    color: #ddd;
-    z-index: 5;
-  }
+ 
 
 }

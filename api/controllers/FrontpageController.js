@@ -42,10 +42,15 @@ module.exports = {
     });
 
     function getEntries() {
+      var loggedin = (req.user == undefined) ? false : true;
+
+      var query = { nsfw: { $ne: true } };
       if (req.user) {
+        // if user doesn't mind NSFW stuff...
+        query = {};
         var userid = req.user.id || "none";
       }
-      Entry.find({})
+      Entry.find(query)
       .populate('comments')
       .populate('postedTo')
       .populate('postedBy')

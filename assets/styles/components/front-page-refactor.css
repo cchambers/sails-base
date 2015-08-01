@@ -1,3 +1,17 @@
+.scroll-y {
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+
+.entries > .row{
+  margin-top: 1.5rem;
+}
+
+.height-set {
+  height: calc(100% - 7.5rem);
+}
+
 .media {
   position: relative;
   background-size: cover;

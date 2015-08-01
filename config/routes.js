@@ -18,6 +18,8 @@ module.exports.routes = {
   'get /new/entry': 'EntryController.new',
   'get /new/entry/:sub': 'EntryController.new',
   'post /new/entry': 'EntryController.create',
+  'post /get/entry/:id': 'EntryController.singleJSON',
+  'get /get/entry/:id': 'EntryController.singleJSON',
   
   'get /edit/entry/:id': 'EntryController.edit',
   'post /edit/entry/:id': 'EntryController.submitEdit',

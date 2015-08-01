@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html class="<% if (req.user) { %>logged-in<%  }  %>">
 <head>
-  <title>the sauce
+  <title>the sauce ♨ 
     <% if (data && data.sub) { %>
-    (<%=  data.sub.name %>)
+    <%=  data.sub.name %>
     <%  }  %>
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -40,21 +40,19 @@
 
 <body>
   <header>
-    <div class="contain">
-      <div class="logo">
-        <a href="/">♨ The Sauce</a>
-      </div>
-      <div class="state">
-        <% if (data && data.sub) { %>
-        <a href="/sub/<%= data.sub.slug %>"><%= data.sub.name %></a>
-        <%  } else { %>
-        alpha
-        <%  }  %>
-      </div>
-      <%- include controls %>
+    <div class="logo">
+      <a href="/">the sauce</a>
     </div>
+    <div class="state">
+      <% if (data && data.sub) { %>
+      <a href="/sub/<%= data.sub.slug %>"><%= data.sub.name %></a>
+      <%  } else { %>
+      alpha
+      <%  }  %>
+    </div>
+    <%- include controls %>
   </header>
-  <main>
+  <main class="height-set">
     <%- body %>
   </main>
   <footer></footer>

@@ -57,15 +57,13 @@ var client = {
 
     $(".features").on("click.scrollTo", "a", function (e) {
       var $article = $($(this).attr("href"));
-      $("article").removeClass("active");
-      console.log($article)
-      $article.addClass("active");
+      $article.trigger("click");
 
       var t = $(this).attr("href");
       if ($(t).length > 0) {
-        var target = $(t).offset().top;
+        var target = $(t).offset().top - 120;
         if (target < 0) { target = 1; }
-        $("html, body").animate({ scrollTop: target+"px" }, 250);
+        $(".entries").animate({ scrollTop: target+"px" }, 250);
       }
     });
 
@@ -103,8 +101,8 @@ var client = {
       }
     });
 
-    $("body .control").on("click", ".vote", client.doVote);
-    $(".control").on("click", ".tag", client.tagEntry);
+    $("body").on("click", ".vote", client.doVote);
+    $("body").on("click", ".tag", client.tagEntry);
 
     $(".panel").on("click", ".swap-panel-forms", function () {
       $(".panel form").toggleClass("active");
@@ -114,17 +112,36 @@ var client = {
 
     $(".switch-to").on("click", client.switchNames)
 
-    $(".comments").on("click", ".load-replies", client.getChildren)
-    $(".comments").on("click", ".make-reply", client.replyForm)
+    $("body").on("click", ".load-replies", client.getChildren)
+    $("body").on("click", ".make-reply", client.replyForm)
 
+    $(".entries").on("click", ".entry", function () {
+      var id = $(this).data().id;
+      var url = '/get/entry/' + id;
+      $.ajax({
+        type: "POST",
+        url: url,
+        success: function (data) {
+          var user = false;
+          if ($("html").hasClass("logged-in")) {
+            user = true;
+          }
+          var html = new EJS({ url: '/templates/entry-article.ejs' }).render({ entry: data.entry, comments: data.comments, user: user });
+          $(".feature").html(html);
+        }
+      });
+    })
   },
 
   setupSockets: function () {
     io.socket.on("message", function (data) {
       console.log(data);
     });
-    io.socket.on("new-user", function (data) {
-      console.log("USER:",data)
+
+
+
+    io.socket.on("listing-data", function (data) {
+      console.log("Listing Data:",data)
     });
 
     io.socket.on("vote", function (data) {
