@@ -388,7 +388,6 @@ var client = {
   },
 
   sendVote: function (id, direction) {
-    console.log("Sending vote:", id, direction)
     $.ajax({
       type: 'POST',
       url: '/vote/' + direction + '/' + id,

@@ -104,7 +104,8 @@ module.exports = {
   },
 
   singleJSON: function (req, res) {
-    var userid = (req.user) ? req.user.id : "none";
+    var userid = (req.session.passport.user) ? req.session.passport.user : "none";
+    console.log(userid);
     var id = req.params.id;
     Entry.findOne(id)
     .populate('comments')

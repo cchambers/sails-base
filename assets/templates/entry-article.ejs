@@ -5,6 +5,7 @@
       <ul class="control">
         <% if (entry.votes[0]) { %>
         <% var up = (entry.votes[0].vote) %>
+        <% console.log(entry.votes) %>
         <li class="vote up <% if (up) { %> <%= 'active' %> <% } %>" data-dir="up">&darr;</li>
         <li class="vote down <% if (!up) { %> <%= 'active' %> <% } %>" data-dir="down">&darr;</li>
         <% } else { %>
