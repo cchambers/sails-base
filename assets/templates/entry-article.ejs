@@ -1,6 +1,6 @@
 <article class="row active <% if (entry.media) { %> has-media<% } %>" data-id="<%= entry.id %>">
   <div class="entry">
-    <header class="pad-lips-light">
+    <header class="pad-top-light">
       <% if (user) { %>
       <ul class="control">
         <% if (entry.votes[0]) { %>
@@ -14,6 +14,9 @@
         <% } %>
       </ul>
       <% } %>
+      <h1>
+        <%= entry.title %>
+      </h1>
     </header>
     <section>
       <% if (entry.media) { %>
@@ -61,7 +64,7 @@
         <%  } %> 
 
         <% } %> 
-        <%- entry.content %>
+        <%= entry.content %>
       </section>
       <cite>
         <strong><%= entry.postedBy.name %></strong> &rarr; <a href="/sub/<%= entry.postedTo.slug %>"><%= entry.postedTo.name %></a>

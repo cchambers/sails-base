@@ -127,8 +127,8 @@ var client = {
     if ($("html").hasClass("logged-in")) {
       user = true;
     }
-
-    var html = new EJS({ url: '/templates/entry-article.ejs' }).render({ entry: data.entry, comments: data.comments, user: user });
+    var data = { entry: data.entry, comments: data.comments, user: user };
+    var html = new EJS({ url: '/templates/entry-article.ejs' }).render(data);
     $(".feature").animate({ scrollTop: "0px" }, 250).html(html);
   },
 

@@ -113,16 +113,25 @@ module.exports = {
     .populate('votes', { user: userid })
     .exec( function (err, doc) {
       if (err) next(err);
-
-      var ids = _.pluck(doc.comments, 'id');
-      Comment.find({id: ids, parent: {$eq: null}})
-      .populate('children')
-      .populate('parent')
-      .populate('postedBy')
-      .exec( function (err, data) {
-        return res.json({ entry: doc, comments: data});
-      });
+      if (doc.comments) {
+        var ids = _.pluck(doc.comments, 'id');
+        Comment.find({id: ids, parent: {$eq: null}})
+        .populate('children')
+        .populate('parent')
+        .populate('postedBy')
+        .exec( function (err, data) {
+          data = { entry: doc, comments: data };
+          sendData(data);
+        });
+      } else {
+        data = { entry: doc, comments: false };
+        sendData(data);
+      }
     });
+
+    function sendData(data) {
+      return res.json(data);
+    }
   },
 
   tag: function (req, res) {
