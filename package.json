@@ -3,7 +3,10 @@
   "private": true,
   "version": "0.0.001b",
   "description": "a better interweb",
-  "keywords": [],
+  "keywords": [], 
+  "engines": {
+    "node": "0.12.7"
+  },
   "dependencies": {
     "bcrypt": "~0.8.0",
     "ejs": "~0.8.4",
