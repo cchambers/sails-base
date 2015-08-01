@@ -55,11 +55,12 @@ var client = {
       }
     });
 
-    $(".features").on("click.scrollTo", "a", function (e) {
+    $(".features").on("click", "a", function (e) {
       var $article = $($(this).attr("href"));
       $article.trigger("click");
 
       var t = $(this).attr("href");
+      e.preventDefault();
       if ($(t).length > 0) {
         var target = $(t).offset().top - 120;
         if (target < 0) { target = 1; }
@@ -81,14 +82,10 @@ var client = {
     $(".entry").on("click", ".close", function (e) {
       e.stopPropagation();
       var $parent = $(this).parents("article");
-      console.log($parent)
       $parent.removeClass("active");
     });
 
-    $(".entry").on("click", "h1", function (e) {
-    });
-
-    $(".entry").on("click", ".delete", client.deleteEntry);
+    $("body").on("click", ".delete", client.deleteEntry);
 
     $("body").on("click", ".edit", function (e) {
       client.editEntry( $(this).parents("article").data().id );
@@ -118,19 +115,20 @@ var client = {
     $(".entries").on("click", ".entry", function () {
       var id = $(this).data().id;
       var url = '/get/entry/' + id;
-      $.ajax({
-        type: "POST",
-        url: url,
-        success: function (data) {
-          var user = false;
-          if ($("html").hasClass("logged-in")) {
-            user = true;
-          }
-          var html = new EJS({ url: '/templates/entry-article.ejs' }).render({ entry: data.entry, comments: data.comments, user: user });
-          $(".feature").html(html);
-        }
+      io.socket.post(url, function (data) {
+        console.log(data);
+        client.loadEntry(data);
       });
     })
+  },
+
+  loadEntry: function (data) {
+    var user = false;
+    if ($("html").hasClass("logged-in")) {
+      user = true;
+    }
+    var html = new EJS({ url: '/templates/entry-article.ejs' }).render({ entry: data.entry, comments: data.comments, user: user });
+    $(".feature").html(html);
   },
 
   setupSockets: function () {

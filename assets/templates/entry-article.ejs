@@ -3,7 +3,6 @@
     <header class="pad-lips-light">
     <% if (user) { %>
     <ul class="control">
-      <li class="close" title="close">-</li>
       <% if (entry.votes[0]) { %>
       <% var up = (entry.votes[0].vote) %>
       <li class="vote up <% if (up) { %> <%= 'active' %> <% } %>" data-dir="up">&darr;</li>
@@ -62,9 +61,6 @@
         <%  } %> 
 
         <% } %> 
-
-
-
         <%- entry.content %>
       </section>
       <cite>
@@ -72,8 +68,7 @@
       </cite>
       <footer>
         <div class="permalink">
-          <a href="/sub/<%= entry.postedTo.slug %>/<%= entry.slug %>#comments"><%= entry.commentCount %>&nbsp;comments...</a>
-
+          <a href="/sub/<%= entry.postedTo.slug %>/<%= entry.slug %>">permalink</a>
         </div>
         <div class="score">
           <span class="totes"><%= entry.ups - entry.downs %></span>
