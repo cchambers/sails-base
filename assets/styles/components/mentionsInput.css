@@ -8,7 +8,6 @@
   width: 100%;
   display: block;
   height: 18px;
-  padding: 9px;
   border: 1px solid #dcdcdc;
   border-radius:3px;
   overflow: hidden;
@@ -17,10 +16,24 @@
   outline: 0;
   resize: none;
 
+/*
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
+*/
 }
+
+/*
+.mentions-input-box {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.mentions-input-box textarea {
+    font-family: 'pt sans', arial, helvetica, sans-serif;
+    font-size: 14px;
+}
+*/
 
 .mentions-input-box .mentions-autocomplete-list {
   display: none;
@@ -36,9 +49,11 @@
   border-top-right-radius:0;
   border-top-left-radius:0;
 
+/*
   -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.148438);
      -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.148438);
           box-shadow: 0 2px 5px rgba(0, 0, 0, 0.148438);
+*/
 }
 
 .mentions-input-box .mentions-autocomplete-list ul {
@@ -48,12 +63,12 @@
 
 .mentions-input-box .mentions-autocomplete-list li {
   background-color: #fff;
-  padding: 0 5px;
+/*  padding: 0 5px;*/
   margin: 0;
   width: auto;
   border-bottom: 1px solid #eee;
-  height: 26px;
-  line-height: 26px;
+  height: 40px;
+  line-height: 40px;
   overflow: hidden;
   cursor: pointer;
   list-style: none;

@@ -37,8 +37,6 @@ var client = {
       prevItem: [119,107]
     }
     
-    
-    
     $('.mention').mentionsInput({
       onDataRequest:function (mode, query, callback) {
         var subList = [];
@@ -56,6 +54,17 @@ var client = {
         subList = _.filter(subList, function (item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
 
         callback.call(this, subList);
+      }
+    });
+    
+    var subList = [];
+    
+    $("body").on("keyup", ".mention", function (e) {
+      if(e.keyCode == 13){
+        $('textarea.mention').mentionsInput('getMentions', function(data) {
+          $('[name=postedTo]').empty();
+          $('[name=postedTo]').append(JSON.stringify(data));
+        });
       }
     });
 

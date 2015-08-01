@@ -19,8 +19,8 @@
         onDataRequest : $.noop, //Function where we can search the data
         minChars      : 2, //Minimum chars to fire the event
         allowRepeat   : false, //Allow repeat mentions
-        showAvatars   : true, //Show the avatars
-        elastic       : true, //Grow the textarea automatically
+        showAvatars   : false, //Show the avatars
+        elastic       : false, //Grow the textarea automatically
         defaultValue  : '',
         onCaret       : false,
         classes       : {
@@ -33,7 +33,7 @@
             autocompleteListItemAvatar : _.template('<img src="<%= avatar %>" />'),
             autocompleteListItemIcon   : _.template('<div class="icon <%= icon %>"></div>'),
             mentionsOverlay            : _.template('<div class="mentions"><div></div></div>'),
-            mentionItemSyntax          : _.template('@[<%= value %>](<%= type %>:<%= id %>)'),
+            mentionItemSyntax          : _.template('@[<%= value %>](<%= id %>)'),
             mentionItemHighlight       : _.template('<strong><span><%= value %></span></strong>')
         }
     };

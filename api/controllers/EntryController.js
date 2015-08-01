@@ -30,6 +30,10 @@ module.exports = {
     else
       req.body.nsfl = false;
     
+    var parsed = JSON.parse(req.body.postedTo);
+    
+    req.body.postedTo = parsed[0].id;
+    
     var entry = {
       postedBy: req.body.postedBy,
       title: req.body.title,
@@ -69,7 +73,7 @@ module.exports = {
           succeed = false;
           errOut({ message: "Need a unique slug." });
         }
-        Sub.findOne({slug: entry.postedTo})
+        Sub.findOne({id: entry.postedTo})
         .exec( function (err, doc) {
           if (!doc) {
             succeed = false;

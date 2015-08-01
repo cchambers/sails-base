@@ -88,6 +88,10 @@ input[type=checkbox]:checked + label:after {
   min-height: 15rem;
 }
 
+textarea.mention{
+  min-height: 3rem;
+}
+
 input + br + input {
   margin-top: .75rem;
 }
