@@ -12,9 +12,10 @@ var transporter = nodemailer.createTransport({
 
 module.exports = {
   send: function(req, res) {
+    var to = req.params.to;
     var mailOptions = {
         from: '♨ The Sauce<gravyisthesauce@gmail.com>', // sender address
-        to: 'cchambers@gmail.com, kootg04@gmail.com, adefreitas12@gmail.com', // list of receivers
+        to: to, // list of receivers
         subject: 'Welcome to the sauce!', // Subject line
         text: 'Blah blah blah!', // plaintext body
         html: '<b>Hello world</b>' // html body
