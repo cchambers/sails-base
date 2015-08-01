@@ -42,5 +42,5 @@ module.exports.routes = {
 
   'get /sockets/join/:room': 'SocketController.joinRoom',
 
-  // 'get /mail/send/:to': 'MailController.send'
+  'get /mail/send/': 'MailController.send'
 };

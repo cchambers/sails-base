@@ -6,10 +6,9 @@ module.exports.policies = {
     'delete': ['isAuthenticated', 'isPostedBy']
   },
   'FrontPageController': {
-    'userlist': ['isAuthenticated', 'isAdmin'],
-    'sublist': 'isAuthenticated'
   },
   'UserController': {
+    'list': ['isAuthenticated', 'isAdmin'],
     'myProfile': 'isAuthenticated'
   },
   'CommentController': {
@@ -17,6 +16,7 @@ module.exports.policies = {
     'reply': 'isAuthenticated'
   },
   'SubController': {
+    'list': 'isAuthenticated',
     'edit': ['isAuthenticated','isSubOwner']
   },
   'VoteController': {

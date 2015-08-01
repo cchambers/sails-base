@@ -10,7 +10,7 @@
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.sockets.html
  */
 
-module.exports.sockets = {
+ module.exports.sockets = {
 
 
   /***************************************************************************
@@ -107,9 +107,10 @@ module.exports.sockets = {
   *                                                                          *
   ***************************************************************************/
   // beforeConnect: function(handshake, cb) {
-  //   // `true` allows the connection
+  //   console.log(".io - socket connecting")
+
   //   return cb(null, true);
-  //
+
   //   // (`false` would reject the connection)
   // },
 
@@ -122,10 +123,22 @@ module.exports.sockets = {
   * disconnects                                                              *
   *                                                                          *
   ***************************************************************************/
-  // afterDisconnect: function(session, socket, cb) {
-  //   // By default: do nothing.
-  //   return cb();
-  // },
+  afterDisconnect: function(session, socket, cb) {
+    if (session.passport) {
+      User.findOne(session.passport.user)
+      .exec( function (err, doc) {
+        if (doc) {
+          doc.online = false;
+          doc.save();
+          sails.sockets.broadcast("admin", "user-offline", { id: doc.id, "username": doc.username })
+          console.log(".io - " +doc.username + " has logged disconnected.")
+          return cb();
+        } else {
+          return cb();
+        }
+      })
+    }
+  },
 
   /***************************************************************************
   *                                                                          *
