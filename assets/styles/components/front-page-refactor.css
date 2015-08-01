@@ -1,6 +1,5 @@
 .scroll-y {
   height: calc( 100vh - 6rem );
-  margin-top: 6rem;
   overflow-y: scroll;
 }
 .scroll-y::-webkit-scrollbar { display: none; }
@@ -13,8 +12,10 @@
   padding-top: 6rem;
 }
 
-.height-set {
-  height: 100vh;
+.height-set {  
+  height: calc(100vh - 6rem);
+  position: absolute;
+  top: 6rem;
 }
 
 .media {
