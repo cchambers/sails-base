@@ -19,7 +19,17 @@ module.exports = {
     function errOut(data) {
       return res.json(data);
     }
-
+    
+    if(req.body.nsfw == 'on')
+      req.body.nsfw = true;
+    else
+      req.body.nsfw = false;
+    
+    if(req.body.nsfl == 'on')
+      req.body.nsfl = true;
+    else
+      req.body.nsfl = false;
+    
     var entry = {
       postedBy: req.body.postedBy,
       title: req.body.title,
@@ -28,7 +38,9 @@ module.exports = {
       markdown: req.body.markdown || "",
       content: req.body.content || "",
       postedTo: req.body.postedTo,
-      subSlug: ""
+      subSlug: "",
+      nsfw: req.body.nsfw,
+      nsfl: req.body.nsfl
     }
 
     if (entry.title == "") {
