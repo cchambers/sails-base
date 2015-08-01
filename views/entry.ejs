@@ -9,7 +9,7 @@
 <% } %>
 
 
-<div class="row entries">
+<div class="row entries<% if (entries.length == 1) { %> single<% } %>">
   <% for (which in entries) { %>
   <% var entry = entries[which] %>
   <% if (entry) { %>
