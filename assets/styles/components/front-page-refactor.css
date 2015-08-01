@@ -1,15 +1,16 @@
 .scroll-y {
-  height: 100vh;
-  max-height: 100vh;
+  height: calc( 100vh - 6rem );
+  margin-top: 6rem;
   overflow-y: scroll;
 }
+.scroll-y::-webkit-scrollbar { display: none; }
 
 .entries > .row{
   margin-top: 1.5rem;
 }
 
 .height-set {
-  height: calc(100% - 7.5rem);
+  height: 100%;
 }
 
 .media {
