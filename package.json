@@ -1,8 +1,8 @@
 {
   "name": "sauce",
   "private": true,
-  "version": "0.0.001b",
-  "description": "a better interweb",
+  "version": "0.0.1c",
+  "description": "a thought aggregator",
   "keywords": [], 
   "engines": {
     "node": "0.12.7"
