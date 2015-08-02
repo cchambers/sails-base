@@ -114,7 +114,7 @@ module.exports = {
     .populate('votes', { user: userid })
     .exec( function (err, doc) {
       if (err) next(err);
-      if (doc.comments) {
+      if (doc) {
         var ids = _.pluck(doc.comments, 'id');
         Comment.find({id: ids, parent: {$eq: null}})
         .populate('children')
