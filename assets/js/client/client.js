@@ -129,9 +129,11 @@ var client = {
       });
     })
     window.onpopstate = function(event) {
+      console.log(event)
       if (event.state == null) {
-        console.log("Home");
-        window.location.reload(true);
+        if (window.location.hash == "") {
+          window.location.reload(true);
+        }
       } else {
         client.loadEntry(event.state, true);
       }
