@@ -151,14 +151,13 @@ var client = {
     var data = { entry: data.entry, comments: data.comments, user: user };
     var html = new EJS({ url: '/templates/entry-article.ejs' }).render(data);
     $(".feature").animate({ scrollTop: "0px" }, 250).html(html);
+    $(".feature .load-replies").trigger("click");
   },
 
   setupSockets: function () {
     io.socket.on("message", function (data) {
       console.log(data);
     });
-
-
 
     io.socket.on("listing-data", function (data) {
       console.log("Listing Data:",data)
@@ -226,10 +225,8 @@ var client = {
     },
 
     renderChildren: function (data, $li) {
-      console.log(data);
       var html = new EJS({ url: '/templates/load-replies.ejs' }).render({ entries: data });
       $li.append(html);
-      console.log(html);
     }
   },
 
@@ -333,8 +330,8 @@ var client = {
 
   getChildren: function () {
     var $el = $(this);
-    var $parent = $(this).parents("article");
-    var $li = $(this).parents("li");
+    var $parent = $el.parents("article");
+    var $li = $el.parents("li");
     var id = $li.data().id;
 
     $.ajax({
