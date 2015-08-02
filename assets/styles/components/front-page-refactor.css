@@ -8,10 +8,6 @@
   margin-top: 1.5rem;
 }
 
-.height-set > .entries:not(.scroll-y) {
-  padding-top: 6rem;
-}
-
 .height-set {  
   height: calc(100vh - 6rem);
   position: absolute;
