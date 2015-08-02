@@ -57,6 +57,7 @@ article header li.active {
 .entry section,
 .entry footer {
   float: left;
+  width: 100%;
 }
 
 
@@ -216,5 +217,22 @@ article footer:before {
 
 .logged-in .make-reply { 
   display: initial;
+}
+
+@media (max-width: 800px) {
+  .feature {
+    display: none;
+    position: fixed;
+    top: 6rem;
+    left: 0;
+    height: 100%;
+    z-index: 10;
+    width: 100%;
+    background-color: #f2f2f2;
+  }
+
+  .feature.active {
+    display: block;
+  }
 }
 

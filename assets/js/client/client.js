@@ -79,7 +79,12 @@ var client = {
 
     $(".entry").on("keyup", client.entryKeypressHandler);
 
-    $(".entry").on("click", ".close", function (e) {
+    $("body").on("click", ".close-feature", function (e) {
+      e.stopPropagation();
+      $(".feature").removeClass("active");
+    });
+
+    $("body").on("click", ".close", function (e) {
       e.stopPropagation();
       var $parent = $(this).parents("article");
       $parent.removeClass("active");
@@ -96,6 +101,7 @@ var client = {
       if (!$(e.target).attr("href")) {
         $(this).activate(true);
       }
+
     });
 
     $("body").on("click", ".vote", client.doVote);
@@ -118,6 +124,7 @@ var client = {
       io.socket.post(url, function (data) {
         console.log(data);
         client.loadEntry(data);
+        $(".feature").addClass("active");
       });
     })
   },
