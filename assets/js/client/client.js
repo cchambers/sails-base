@@ -125,14 +125,26 @@ var client = {
         console.log(data);
         client.loadEntry(data);
         $(".feature").addClass("active");
+
       });
     })
+    window.onpopstate = function(event) {
+      if (event.state == null) {
+        console.log("Home");
+        window.location.reload(true);
+      } else {
+        client.loadEntry(event.state, true);
+      }
+    };
   },
 
-  loadEntry: function (data) {
+  loadEntry: function (data, popState) {
     var user = false;
     if ($("html").hasClass("logged-in")) {
       user = true;
+    }    
+    if (!popState) {
+      history.pushState(data, data.entry.title, "/sub/" + data.entry.postedTo.slug + "/" + data.entry.slug);
     }
     var data = { entry: data.entry, comments: data.comments, user: user };
     var html = new EJS({ url: '/templates/entry-article.ejs' }).render(data);

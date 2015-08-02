@@ -52,8 +52,8 @@ article .media.youtube iframe {
 
 article .media.youtube {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 */
-  padding-top: 25px;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
   width: 100%;
 }
 article .media.youtube object,
