@@ -16,6 +16,7 @@
   height: calc(100vh - 6rem);
   position: absolute;
   top: 6rem;
+  overflow-y: scroll;
 }
 
 .media {
