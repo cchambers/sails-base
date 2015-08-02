@@ -36,11 +36,11 @@
   margin: 0.75rem 0.75rem 0.75rem 0;
   padding-left: 1px;
   background-color: transparent;
-  border: 1px solid rgba(0,0,0,.25);
+  border: 1px solid rgba(0,0,0,.05);
 }
 
 .comments ul li > ul:nth-child(even) li{
-  background-color: rgba(0,0,0,.25);
+  background-color: rgba(0,0,0,.05);
 }
 
 .comments ul li > ul:nth-child(odd) li{
