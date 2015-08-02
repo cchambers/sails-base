@@ -1,9 +1,9 @@
 <article class="row active <% if (entry.media) { %> has-media<% } %>" data-id="<%= entry.id %>">
   <div class="entry">
     <header class="pad-top-light">
-      <% if (user) { %>
       <ul class="control">
         <li class="close-feature">hide</li>
+        <% if (user) { %>
         <% if (entry.votes[0]) { %>
         <% var up = (entry.votes[0].vote) %>
         <% console.log(entry.votes) %>
@@ -14,8 +14,9 @@
         <li class="vote down" data-dir="down">&darr;</li>
 
         <% } %>
+        <% } %>
       </ul>
-      <% } %>
+      
       <h1>
         <%= entry.title %>
       </h1>
