@@ -1,3 +1,5 @@
+var utilities = require('../services/utilities');
+
 module.exports = {
   create: function (req, res) {
     Name.findOne({ name: req.body.username })
@@ -13,6 +15,7 @@ module.exports = {
             name: req.body.username,
             user: user
           }).exec( function (err, doc) {
+            utilities.sendMail(req.body.email, "Welcome to the sauce!", utilities.mail.welcome(req.body.username, user));
             return res.json({ message: "Welcome to the sauce!", callback: "signUp" })
           });
         } else {
