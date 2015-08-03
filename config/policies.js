@@ -8,10 +8,10 @@ module.exports.policies = {
   'FrontPageController': {
   },
   'AdminController': {
-    *: 'isAdmin'
+    '*': 'isAdmin'
   },
   'BotController': {
-    *: 'isAdmin'
+    '*': 'isAdmin'
   },
   'UserController': {
     'list': ['isAuthenticated', 'isAdmin'],
