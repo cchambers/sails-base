@@ -2,7 +2,7 @@ module.exports = {
   attributes: {
     name: {
       type: 'string',
-      minLength: 4,
+      minLength: 1,
       required: true,
       unique: true
     },

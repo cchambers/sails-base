@@ -7,6 +7,12 @@ module.exports.policies = {
   },
   'FrontPageController': {
   },
+  'AdminController': {
+    *: 'isAdmin'
+  },
+  'BotController': {
+    *: 'isAdmin'
+  },
   'UserController': {
     'list': ['isAuthenticated', 'isAdmin'],
     'myProfile': 'isAuthenticated'

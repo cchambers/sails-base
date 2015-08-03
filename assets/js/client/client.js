@@ -104,6 +104,24 @@ var client = {
 
     });
 
+    $("body").on("click", ".botted-list .approve", function () {
+      var id = $(this).parents("li").data().id;
+      var $el = $("[data-id='"+id+"']");
+      var url = "/bot/approve/" + id;
+      io.socket.post(url, function (data) {
+        $el.remove();
+      });
+    });
+
+    $("body").on("click", ".botted-list .ignore", function () {
+      var id = $(this).parents("li").first().data().id;
+      var $el = $("[data-id='"+id+"']");
+      var url = "/bot/ignore/" + id;
+      io.socket.post(url, function (data) {
+        $el.remove();
+      });
+    });
+
     $("body").on("click", ".vote", client.doVote);
     $("body").on("click", ".tag", client.tagEntry);
 
@@ -122,10 +140,8 @@ var client = {
       var id = $(this).data().id;
       var url = '/get/entry/' + id;
       io.socket.post(url, function (data) {
-        console.log(data);
         client.loadEntry(data);
         $(".feature").addClass("active");
-
       });
     })
     window.onpopstate = function(event) {

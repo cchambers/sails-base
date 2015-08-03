@@ -44,5 +44,14 @@ module.exports.routes = {
 
   'get /sockets/join/:room': 'SocketController.joinRoom',
 
-  'get /mail/send/:to': 'MailController.send'
+  'get /mail/send/:to': 'MailController.send',
+  
+  'get /bot/get/': 'BotController.get',
+  'post /bot/approve/:id': 'BotController.approve',
+  'post /bot/ignore/:id': 'BotController.ignore',
+
+  'get /admin': 'AdminController.index',
+  'get /admin/botted': 'AdminController.listBotted'
+
+
 };
