@@ -31,7 +31,7 @@ module.exports = {
       doc.verified = true;
       doc.save();
       return res.view('message', { 
-        message: "Username verified! Login to continue.", 
+        message: "Account verified! Please log in to continue.", 
         type: "success",
         data: false,
       });
@@ -65,7 +65,9 @@ module.exports = {
   },
   
   list: function (req, res) {
-    User.find().exec( function (err, data) {
+    User.find()
+    .sort('online desc')
+    .exec( function (err, data) {
       if (err) return next(err);
       return res.view('userlist', { user: req.user, data: data })
     });

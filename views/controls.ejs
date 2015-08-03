@@ -16,8 +16,7 @@
     <li><a href="/sub/<%= data.sub.slug %>/edit">edit <%= data.sub.name %></a></li>
     <% } %>
     <% if (req.user.admin) { %>
-    <li class="pink bold pad-left-light">admin:</li>
-    <li><a href="/userlist">userlist</a></li>
+    <%- include admin-controls %>
     <% } %>
   </ul>
   <% } else { %>

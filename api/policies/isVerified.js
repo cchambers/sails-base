@@ -1,6 +1,6 @@
 module.exports = function(req, res, next) {
   if (req.user){
-    if (req.user.admin) {
+    if (req.user.verified) {
       return next();
     }
   }
