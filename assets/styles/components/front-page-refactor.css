@@ -5,10 +5,25 @@
 .scroll-y::-webkit-scrollbar { display: none; }
 
 
+.front-page .control {
+  position: absolute;
+  right: .75rem;
+  bottom: -3.25rem;
+  z-index: 3;
+}
+
 .feature {
   background: #e8e8e8;
 }
 
+.feature .entry h1 {
+  line-height: 3rem;
+}
+
+.features {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
 
 .front-page .entry h1 {
   font-size: 1.4rem;
@@ -39,6 +54,11 @@
   background-position: center center !important
 }
 
+.features a:hover {
+  color: #fff;
+  text-shadow: 2px 2px 2px rgba(0,0,0,.5);
+}
+
 .media.primary[title]:before {
   display: block;
   position: absolute;
@@ -51,7 +71,7 @@
   padding: 1.5rem;
   color: #f2f2f2;
   font-weight: bold;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, .85);
 }
 
 .flex .media.image[title]:before {
@@ -112,7 +132,7 @@ ul.text-entries {
 
 ul.text-entries li {
   line-height: 3.5rem;
-  padding: 0 1.5rem;
+  padding-left: 0.75rem;
   list-style: none;
 }
 

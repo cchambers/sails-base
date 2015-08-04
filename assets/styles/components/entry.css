@@ -19,6 +19,22 @@ article ul.control {
   overflow: hidden;
 }
 
+.feature article ul.control {
+  display: none;
+  padding-bottom: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0;
+  list-style: none;
+  overflow: hidden;
+  float: left;
+}
+
+@media (max-width: 800px) {
+  .feature article ul.control {
+    display: block;
+  }
+}
+
 article ul.control li {
   display: block;
   float: left;
@@ -139,7 +155,6 @@ article footer,
 article cite {
   position: relative;
   cursor: pointer;
-  z-index: 2;
   width: 100%;
 }
 
@@ -225,7 +240,7 @@ article footer:before {
     top: 6rem;
     left: 0;
     height: 100%;
-    z-index: 10;
+    z-index: 3;
     width: 100%;
     background-color: #f2f2f2;
   }

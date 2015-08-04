@@ -1,24 +1,22 @@
 <article class="row active <% if (entry.media) { %> has-media<% } %>" data-id="<%= entry.id %>">
   <div class="entry">
     <header>
-      <ul class="control">
+      
+      <h1>
+      <ul class="control touch">
         <!-- <li class="close-feature">hide</li> -->
         <% if (user) { %>
         <% if (entry.votes[0]) { %>
         <% var up = (entry.votes[0].vote) %>
-        <% console.log(entry.votes) %>
         <li class="vote up <% if (up) { %> <%= 'active' %> <% } %>" data-dir="up">&darr;</li>
         <li class="vote down <% if (!up) { %> <%= 'active' %> <% } %>" data-dir="down">&darr;</li>
         <% } else { %>
         <li class="vote up" data-dir="up">&darr;</li>
         <li class="vote down" data-dir="down">&darr;</li>
-
         <% } %>
         <% } %>
       </ul>
-
-      <h1>
-        <%= entry.title %>
+  <%= entry.title %>
       </h1>
     </header>
     <section>
