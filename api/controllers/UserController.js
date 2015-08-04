@@ -25,6 +25,14 @@ module.exports = {
     })
   },
 
+  getVerified: function (req, res) {
+    return res.view('message', { 
+      message: "Click here to resend your verification email.", 
+      type: "alert",
+      data: false,
+    });
+  },
+
   verify: function (req, res) {
     User.findOne(req.params.id)
     .exec( function (err, doc) {

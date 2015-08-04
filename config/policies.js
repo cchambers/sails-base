@@ -10,9 +10,6 @@ module.exports.policies = {
   'AdminController': {
     '*': 'isAdmin'
   },
-  'BotController': {
-    '*': 'isAdmin'
-  },
   'UserController': {
     'list': ['isAuthenticated', 'isAdmin'],
     'myProfile': 'isAuthenticated'

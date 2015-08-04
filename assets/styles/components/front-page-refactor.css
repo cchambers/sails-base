@@ -4,8 +4,22 @@
 }
 .scroll-y::-webkit-scrollbar { display: none; }
 
-.entries > .row{
-  margin-top: 1.5rem;
+
+.feature {
+  background: #e8e8e8;
+}
+
+.front-page .entry h1 {
+  font-size: 1.4rem;
+}
+.front-page .entry cite {
+  font-size: 1rem;
+}
+.front-page .entry {
+  background: #e8e8e8;
+}
+.front-page .entry.active {
+  background: #fff;
 }
 
 .height-set {  

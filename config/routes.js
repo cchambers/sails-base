@@ -35,6 +35,7 @@ module.exports.routes = {
 
   'get /verify/:id': 'UserController.verify',
   'get /user/:user': 'UserController.userProfile',
+  'get /get-verified': 'UserController.getVerified',
 
   'post /vote/:direction/:entry': 'VoteController.vote',
 

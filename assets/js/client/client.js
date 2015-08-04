@@ -114,7 +114,7 @@ var client = {
     });
 
     $("body").on("click", ".botted-list .ignore", function () {
-      var id = $(this).parents("li").first().data().id;
+      var id = $(this).parents("li").data().id;
       var $el = $("[data-id='"+id+"']");
       var url = "/bot/ignore/" + id;
       io.socket.post(url, function (data) {
