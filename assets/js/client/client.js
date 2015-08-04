@@ -377,7 +377,8 @@ var client = {
     $form.removeClass("off");
   },
 
-  doVote: function () {
+  doVote: function (e) {
+    e.stopPropagation();
     var dir = $(this).data().dir;
     var $el = $(this);
     var $entry = $(this).parents("article");
