@@ -9,6 +9,7 @@
   background: #e8e8e8;
 }
 
+
 .front-page .entry h1 {
   font-size: 1.4rem;
 }
@@ -17,8 +18,11 @@
 }
 .front-page .entry {
   background: #e8e8e8;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
 }
 .front-page .entry.active {
+  border-right: 1px solid #fff;
   background: #fff;
 }
 
