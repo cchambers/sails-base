@@ -121,7 +121,7 @@ var app = {
 
           $.ajax({
             type: 'GET',
-            url: '/sub',
+            url: '/subs',
             data: { },
             async: false,
             success: function (data) {
