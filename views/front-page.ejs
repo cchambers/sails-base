@@ -74,13 +74,13 @@
       </div>
     </div>
     <div class="row tertiary-media videos flex">
-      <% for (var x = 1; x < 9; x++) { %>
+      <% for (var x = 1; x < 5; x++) { %>
       <div class="media image flex-item" style="background-image:url(<%= data.images[x].media %>)"> 
         <a href="#<%= data.images[x].id %>"><%= data.images[x].title %></a>
       </div>
       <% } %>
       <%
-      for (var x = 0; x < 8; x++) { 
+      for (var x = 0; x < 4; x++) { 
         var media = data.videos[x].media;
         if(media.indexOf('youtu') > 0) {
           var which = "" 
