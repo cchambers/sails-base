@@ -75,6 +75,14 @@ article header li.active {
   width: 100%;
 }
 
+.entry .edit-entry {
+  font-size: 1.2rem;
+  display: none;
+}
+
+article.active .entry .edit-entry {
+  display: block;
+}
 
 .entry header {
   line-height: 3rem;

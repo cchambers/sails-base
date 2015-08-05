@@ -54,7 +54,7 @@
   background-position: center center !important
 }
 
-.features a:hover {
+.features .media a:hover {
   color: #fff;
   text-shadow: 2px 2px 2px rgba(0,0,0,.5);
 }
@@ -132,7 +132,6 @@ ul.text-entries {
 
 ul.text-entries li {
   line-height: 3.5rem;
-  padding-left: 0.75rem;
   list-style: none;
 }
 
@@ -142,6 +141,12 @@ ul.text-entries li a {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  padding-left: 0.75rem;
+}
+
+ul.text-entries li a:hover {
+  color: #121212;
+  background: #fff;
 }
 
 ul.text-entries li + li {

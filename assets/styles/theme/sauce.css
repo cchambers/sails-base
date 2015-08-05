@@ -80,6 +80,10 @@ body > header .logo a {
   line-height: 6rem;
 }
 
+.row.flex::after {
+  display: none;
+}
+
 @media (max-width: 800px) {
   .palette {
     display: none;
