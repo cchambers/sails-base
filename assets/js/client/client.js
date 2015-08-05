@@ -135,15 +135,11 @@ var app = {
         }
       });
 
-      var subList = [];
-
       $("body").on("keyup", ".mention", function (e) {
-        if(e.keyCode == 13){
-          $('textarea.mention').mentionsInput('getMentions', function(data) {
-            $('[name=postedTo]').empty();
-            $('[name=postedTo]').append(JSON.stringify(data));
-          });
-        }
+        $('textarea.mention').mentionsInput('getMentions', function(data) {
+          $('[name=postedTo]').empty();
+          $('[name=postedTo]').append(JSON.stringify(data));
+        });
       });
 
       $(".features").on("click", "a", app.frontPage.scrollToEntry);
