@@ -31,6 +31,26 @@ module.exports = {
       }
     });
   },
+
+  subsJSON: function (req, res) {
+    Sub.find()
+    .exec( function (err, data) {
+      filterData(data)
+    });
+
+    function filterData(data) {
+      var returnData = [];
+      for (doc in data) {
+        var sub = {
+          "id": data[doc].id,
+          "name": data[doc].name,
+          "slug": data[doc].slug
+        }
+        returnData.push(sub);
+      }
+      return res.json(returnData);
+    }
+  },
   
   edit: function (req, res) {
     Sub.findOne({ slug: req.params.sub })

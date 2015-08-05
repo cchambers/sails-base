@@ -52,7 +52,9 @@ module.exports.routes = {
   'post /bot/ignore/:id': 'BotController.ignore',
 
   'get /admin': 'AdminController.index',
-  'get /admin/botted': 'AdminController.listBotted'
+  'get /admin/botted': 'AdminController.listBotted',
+
+  'get /subs': 'SubController.subsJSON'
 
 
 };
