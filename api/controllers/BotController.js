@@ -4,6 +4,7 @@ module.exports = {
   get: function (req, res) {
     request('http://www.reddit.com/r/all.json', function (error, response, body) {
       if (!error && response.statusCode == 200) {
+        filterData(body);
         return res.json({ message: "Success. We created new entries for review." });
       } else {
         return res.json({ message: "Error." }) 
@@ -11,7 +12,7 @@ module.exports = {
     });
 
 
-    function filterData(data, callback) {
+    function filterData(data) {
       var json = JSON.parse(data);
       var entries = json.data.children;
       console.log("[BOT] Filtering " + entries.length + " entries...")
@@ -28,7 +29,6 @@ module.exports = {
           });
         }
       }
-      callback();
     }
   },
 

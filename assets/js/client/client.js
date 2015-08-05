@@ -353,6 +353,7 @@ var app = {
 
   init: function () {
     app.site.setup();
+    app.admin.setup();
   },
 
   frontPage: {
