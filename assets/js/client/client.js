@@ -109,7 +109,7 @@ var app = {
 
           if ($(this).hasClass("generate-slug")) {
             var val = $(this).val();
-            app.site.generateSlug(val);
+            app.generateSlug(val);
           }
         });
       }
@@ -121,7 +121,7 @@ var app = {
 
           $.ajax({
             type: 'GET',
-            url: '/sub',
+            url: '/subs',
             data: { },
             async: false,
             success: function (data) {
