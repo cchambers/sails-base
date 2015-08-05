@@ -58,6 +58,10 @@
     <%- body %>
   </main>
   <footer></footer>
+  
+  <% if (data.pageJSON) { %>
+  <script>var data = <%- JSON.stringify(data.pageJSON) %>;</script>
+  <% } %>
   <!--TEMPLATES-->
   
   <!--TEMPLATES END-->

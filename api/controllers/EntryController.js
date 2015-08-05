@@ -2,14 +2,28 @@ var utilities = require('../services/utilities');
 
 module.exports = {
   new: function (req, res) {
-    var data = {};
+    var viewData = {};
     if (req.params.sub) {
-      data.prefill = req.params.sub
+      viewData.prefill = req.params.sub
     }
     Name.find({ user: req.user.id })
     .exec( function (err, names) {
-      if (names) data.names = names;
-      return res.view("new-entry", { user: req.user, data: data });
+      if (names) viewData.names = names;
+      // cater this to the user later
+      Sub.find()
+      .exec( function (err, data) {
+        var returnData = [];
+        for (doc in data) {
+          var sub = {
+            "id": data[doc].id,
+            "name": data[doc].name,
+            "slug": data[doc].slug
+          }
+          returnData.push(sub);
+        }
+        viewData.pageJSON = returnData;
+        return res.view("new-entry", { user: req.user, data: viewData });
+      });
     });
   },
 
@@ -30,11 +44,11 @@ module.exports = {
 //    else
 //      req.body.nsfl = false;
 //    
-    var parsed = JSON.parse(req.body.postedTo);
-    
-    req.body.postedTo = parsed[0].id;
-    
-    console.log(req.body.postedTo);
+var parsed = JSON.parse(req.body.postedTo);
+
+req.body.postedTo = parsed[0].id;
+
+console.log(req.body.postedTo);
 //    
 //    var entry = {
 //      postedBy: req.body.postedBy,
@@ -108,10 +122,10 @@ module.exports = {
 ////        })
 //      });
 //    }
-  },
+},
 
-  singleJSON: function (req, res) {
-    var userid = (req.session.passport.user) ? req.session.passport.user : "none";
+singleJSON: function (req, res) {
+  var userid = (req.session.passport.user) ? req.session.passport.user : "none";
     // console.log(userid);
     var id = req.params.id;
     Entry.findOne(id)
