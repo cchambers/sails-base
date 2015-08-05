@@ -14,100 +14,97 @@ module.exports = {
   },
 
   create: function (req, res) {
-//    var succeed = true;
-//
-//    function errOut(data) {
-//      return res.json(data);
-//    }
-//    
-//    if(req.body.nsfw == 'on')
-//      req.body.nsfw = true;
-//    else
-//      req.body.nsfw = false;
-//    
-//    if(req.body.nsfl == 'on')
-//      req.body.nsfl = true;
-//    else
-//      req.body.nsfl = false;
-//    
+    var succeed = true;
+
+    function errOut(data) {
+      return res.json(data);
+    }
+    
+    if(req.body.nsfw == 'on')
+      req.body.nsfw = true;
+    else
+      req.body.nsfw = false;
+    
+    if(req.body.nsfl == 'on')
+      req.body.nsfl = true;
+    else
+      req.body.nsfl = false;
+    
     var parsed = JSON.parse(req.body.postedTo);
     
     req.body.postedTo = parsed[0].id;
     
-    console.log(req.body.postedTo);
-//    
-//    var entry = {
-//      postedBy: req.body.postedBy,
-//      title: req.body.title,
-//      slug: req.body.slug,
-//      media: req.body.media || "",
-//      markdown: req.body.markdown || "",
-//      content: req.body.content || "",
-//      postedTo: req.body.postedTo,
-//      subSlug: "",
-//      nsfw: req.body.nsfw,
-//      nsfl: req.body.nsfl
-//    }
-//
-//    if (entry.title == "") {
-//      succeed = false;
-//      errOut({ message: "Need a title." });
-//    }
-////    if (entry.slug == "") {
-////      succeed = false;
-////      errOut({ message: "Bad slug." });
-////    }
-//    if (entry.postedTo == "") {
-//      succeed = false;
-//      errOut({ message: "Pick a sub!" });
-//    }
-//
-//    Name.findOne({ name: entry.postedBy })
-//    .exec( function (err, name) {
-//      // if name belongs to user
-//      if (name.user != req.user.id) {
-//        return res.json({ message: "Nice try, bub." });
-//      }
-//
-//      Entry.findOne({ slug: entry.slug })
-//      .exec( function (err, doc) {
-//        if (doc) {
-//          succeed = false;
-//          errOut({ message: "Need a unique slug." });
-//        }
-//        Sub.findOne({ id: entry.postedTo })
-//        .exec( function (err, doc) {
-//          if (!doc) {
-//            succeed = false;
-//            return res.json({ message: "That sub doesn't exist." });
-//          } else {
-//            entry.postedTo = doc.id;
-//            entry.postedBy = name.id;
-//            entry.subSlug = doc.slug;
-//            entry.ups = 1;
-//            if (succeed) {
-//              createEntry(entry);
-//            }
-//          }
-//        });
-//      });
-//    });
-//
-//    function createEntry(entry) {
-//      Entry.create(entry)
-//      .exec( function (err, entry) {
-//        for(e in entry) console.log(e);
-////        console.log("Entry created:", entry.subSlug + "/" + entry.slug);
-////        Vote.create({
-////          user: req.user.id,
-////          name: entry.postedBy,
-////          entry: entry.id,
-////          vote: true
-////        }).exec( function (err, vote) {
-////          return res.json({ message: "Success!", redirect: "/sub/" + entry.subSlug + "/" + entry.slug });
-////        })
-//      });
-//    }
+    var entry = {
+      postedBy: req.body.postedBy,
+      title: req.body.title,
+      slug: req.body.slug,
+      media: req.body.media || "",
+      markdown: req.body.markdown || "",
+      content: req.body.content || "",
+      postedTo: req.body.postedTo,
+      subSlug: "",
+      nsfw: req.body.nsfw,
+      nsfl: req.body.nsfl
+    }
+
+    if (entry.title == "") {
+      succeed = false;
+      errOut({ message: "Need a title." });
+    }
+    if (entry.slug == "") {
+      succeed = false;
+      errOut({ message: "Bad slug." });
+    }
+    if (entry.postedTo == "") {
+      succeed = false;
+      errOut({ message: "Pick a sub!" });
+    }
+
+    Name.findOne({ name: entry.postedBy })
+    .exec( function (err, name) {
+      // if name belongs to user
+      if (name.user != req.user.id) {
+        return res.json({ message: "Nice try, bub." });
+      }
+
+      Entry.findOne({ slug: entry.slug })
+      .exec( function (err, doc) {
+        if (doc) {
+          succeed = false;
+          errOut({ message: "Need a unique slug." });
+        }
+        Sub.findOne({ id: entry.postedTo })
+        .exec( function (err, doc) {
+          if (!doc) {
+            succeed = false;
+            return res.json({ message: "That sub doesn't exist." });
+          } else {
+            entry.postedTo = doc.id;
+            entry.postedBy = name.id;
+            entry.subSlug = doc.slug;
+            entry.ups = 1;
+            if (succeed) {
+              createEntry(entry);
+            }
+          }
+        });
+      });
+    });
+
+    function createEntry(entry) {
+      Entry.create(entry)
+      .exec( function (err, entry) {
+        console.log("Entry created:", entry.subSlug + "/" + entry.slug);
+        Vote.create({
+          user: req.user.id,
+          name: entry.postedBy,
+          entry: entry.id,
+          vote: true
+        }).exec( function (err, vote) {
+          return res.json({ message: "Success!", redirect: "/sub/" + entry.subSlug + "/" + entry.slug });
+        })
+      });
+    }
   },
 
   singleJSON: function (req, res) {

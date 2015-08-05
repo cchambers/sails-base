@@ -109,7 +109,7 @@ var app = {
 
           if ($(this).hasClass("generate-slug")) {
             var val = $(this).val();
-            app.site.generateSlug(val);
+            app.generateSlug(val);
           }
         });
       }
