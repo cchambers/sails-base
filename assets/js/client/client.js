@@ -115,6 +115,36 @@ var app = {
       }
       // OKAY, THEN!
 
+      $('.mention').mentionsInput({
+        onDataRequest:function (mode, query, callback) {
+          var subList = [];
+
+          $.ajax({
+            type: 'GET',
+            url: '/sub',
+            data: { },
+            async: false,
+            success: function (data) {
+              subList = data;
+            }
+          });
+
+          subList = _.filter(subList, function (item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
+
+          callback.call(this, subList);
+        }
+      });
+
+      var subList = [];
+
+      $("body").on("keyup", ".mention", function (e) {
+        if(e.keyCode == 13){
+          $('textarea.mention').mentionsInput('getMentions', function(data) {
+            $('[name=postedTo]').empty();
+            $('[name=postedTo]').append(JSON.stringify(data));
+          });
+        }
+      });
 
       $(".features").on("click", "a", app.frontPage.scrollToEntry);
 
