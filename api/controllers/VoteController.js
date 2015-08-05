@@ -22,8 +22,13 @@ module.exports = {
 
     function doVote(exists) {
       var voteData;
+      console.log(exists);
       if (exists) { // update a vote
-        // console.log("VOTE EXISTS", "going " + direction);
+        var same = (direction == "up");
+        if (same == exists.vote) {
+          return res.json({ message: "Vote cheat detected." });
+        }
+        console.log("VOTE EXISTS", "going " + direction);
         if (direction == "neutral") {
           Vote.destroy({ user: exists.user, entry: exists.entry })
           .exec( function (err, data) {

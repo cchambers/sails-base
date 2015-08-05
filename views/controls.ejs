@@ -1,7 +1,7 @@
 <a href="#controls" class="triple-bar">≡</a>
 
 <div class="panel" id="controls">
-<a href="#" class="close-panel-inner">&times;</a>
+<a href="#back" class="close-panel-inner">&times;</a>
   <% if (req.user) {  %>
   <div class="userinfo">
     you are posting as <a href="/me"><span class="bold"><%= req.user.username %></span></a>
@@ -16,8 +16,7 @@
     <li><a href="/sub/<%= data.sub.slug %>/edit">edit <%= data.sub.name %></a></li>
     <% } %>
     <% if (req.user.admin) { %>
-    <li class="pink bold pad-left-light">admin:</li>
-    <li><a href="/userlist">userlist</a></li>
+    <%- include admin-controls %>
     <% } %>
   </ul>
   <% } else { %>

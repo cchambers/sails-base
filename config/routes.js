@@ -18,6 +18,8 @@ module.exports.routes = {
   'get /new/entry': 'EntryController.new',
   'get /new/entry/:sub': 'EntryController.new',
   'post /new/entry': 'EntryController.create',
+  'post /get/entry/:id': 'EntryController.singleJSON',
+  'get /get/entry/:id': 'EntryController.singleJSON',
   
   'get /edit/entry/:id': 'EntryController.edit',
   'post /edit/entry/:id': 'EntryController.submitEdit',
@@ -33,6 +35,7 @@ module.exports.routes = {
 
   'get /verify/:id': 'UserController.verify',
   'get /user/:user': 'UserController.userProfile',
+  'get /get-verified': 'UserController.getVerified',
 
   'post /vote/:direction/:entry': 'VoteController.vote',
 
@@ -42,5 +45,14 @@ module.exports.routes = {
 
   'get /sockets/join/:room': 'SocketController.joinRoom',
 
-  'get /mail/send/:to': 'MailController.send'
+  'get /mail/send/:to': 'MailController.send',
+  
+  'get /bot/get/': 'BotController.get',
+  'post /bot/approve/:id': 'BotController.approve',
+  'post /bot/ignore/:id': 'BotController.ignore',
+
+  'get /admin': 'AdminController.index',
+  'get /admin/botted': 'AdminController.listBotted'
+
+
 };

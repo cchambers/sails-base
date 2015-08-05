@@ -107,6 +107,38 @@ module.exports = {
     }
   },
 
+  singleJSON: function (req, res) {
+    var userid = (req.session.passport.user) ? req.session.passport.user : "none";
+    // console.log(userid);
+    var id = req.params.id;
+    Entry.findOne(id)
+    .populate('comments')
+    .populate('postedTo')
+    .populate('postedBy')
+    .populate('votes', { user: userid })
+    .exec( function (err, doc) {
+      if (err) next(err);
+      if (doc) {
+        var ids = _.pluck(doc.comments, 'id');
+        Comment.find({id: ids, parent: {$eq: null}})
+        .populate('children')
+        .populate('parent')
+        .populate('postedBy')
+        .exec( function (err, data) {
+          data = { entry: doc, comments: data };
+          sendData(data);
+        });
+      } else {
+        data = { entry: doc, comments: false };
+        sendData(data);
+      }
+    });
+
+    function sendData(data) {
+      return res.json(data);
+    }
+  },
+
   tag: function (req, res) {
     var tag = req.body.tag;
     var id = req.body.id;

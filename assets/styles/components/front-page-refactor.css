@@ -1,7 +1,62 @@
+.scroll-y {
+  height: calc( 100vh - 6rem );
+  overflow-y: scroll;
+}
+.scroll-y::-webkit-scrollbar { display: none; }
+
+
+.front-page .control {
+  position: absolute;
+  right: .75rem;
+  bottom: -3.25rem;
+  z-index: 3;
+}
+
+.feature {
+  background: #e8e8e8;
+}
+
+.feature .entry h1 {
+  line-height: 3rem;
+}
+
+.features {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.front-page .entry h1 {
+  font-size: 1.4rem;
+}
+.front-page .entry cite {
+  font-size: 1rem;
+}
+.front-page .entry {
+  background: #e8e8e8;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+.front-page .entry.active {
+  border-right: 1px solid #fff;
+  background: #fff;
+}
+
+.height-set {  
+  height: calc(100vh - 6rem);
+  position: absolute;
+  top: 6rem;
+  overflow-y: scroll;
+}
+
 .media {
   position: relative;
   background-size: cover;
   background-position: center center !important
+}
+
+.features .media a:hover {
+  color: #fff;
+  text-shadow: 2px 2px 2px rgba(0,0,0,.5);
 }
 
 .media.primary[title]:before {
@@ -16,7 +71,7 @@
   padding: 1.5rem;
   color: #f2f2f2;
   font-weight: bold;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, .85);
 }
 
 .flex .media.image[title]:before {
@@ -77,7 +132,6 @@ ul.text-entries {
 
 ul.text-entries li {
   line-height: 3.5rem;
-  padding: 0 1.5rem;
   list-style: none;
 }
 
@@ -87,6 +141,12 @@ ul.text-entries li a {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  padding-left: 0.75rem;
+}
+
+ul.text-entries li a:hover {
+  color: #121212;
+  background: #fff;
 }
 
 ul.text-entries li + li {
