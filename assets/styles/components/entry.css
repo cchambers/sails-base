@@ -162,7 +162,6 @@ article header,
 article footer,
 article cite {
   position: relative;
-  cursor: pointer;
   width: 100%;
 }
 

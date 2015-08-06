@@ -4,26 +4,38 @@
       <%= data.email %>
     </h1>
     <div class="row new-thing">
-      <% for (var x = 0; x < data.names.length ; x ++) { %>
+      <% for (var x = 0; x < data.names.length; x ++) { %>
       <div class="row pad-bottom-light<% if (data.names[x].name == data.username) { %> active<% } %>">
-      <a href="#" class="button primary switch-to" data-name="<%= data.names[x].name %>">switch to</a> <%= data.names[x].name %>
+        <a href="#" class="button primary switch-to" data-name="<%= data.names[x].name %>">switch to</a> <%= data.names[x].name %>
       </div>
       <% } %>
+
+      <% if (data.names.length == 10) { %>
+        <div class="row">
+          <p>
+            You already have 10 usernames.
+          </p>
+        </div>
+      <% } else { %>
       <form method="POST" data-callback="output" action="/new/name">
-        <div class="row pad-bottom-light">
-         <input type="text" name="name">
-       </div>
+        <div class="row">
+          <div class="col-1-3">
+            <div class="row pad-bottom-light">
+            <label for="">Add another name: (you can have up to 10 at a time)</label>
+              <input type="text" name="name" maxlength="32">
+            </div>
+            <div class="row pad-bottom-light">
+              <a class="button primary submit">add name</a>
+              <output></output>
+            </div>
+          </div>
+        </div>
+      </form>
+      <% } %>
+    </div>
 
-       <div class="row pad-bottom-light">
-        <a class="button primary submit">add it</a>
-        <output></output>
-      </div>
+    <p>
 
-    </form>
+    </p>
   </div>
-
-  <p>
-
-  </p>
-</div>
-</a
+  </a
