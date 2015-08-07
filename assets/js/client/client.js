@@ -117,29 +117,50 @@ var app = {
 
       $('.mention').mentionsInput({
         onDataRequest:function (mode, query, callback) {
-          var subList = [];
+        var subList = [];
 
-          $.ajax({
-            type: 'GET',
-            url: '/subs',
-            data: { },
-            async: false,
-            success: function (data) {
-              subList = data;
-            }
-          });
+          if(subList.length == 0) {
+            $.ajax({
+              type: 'GET',
+              url: '/subs',
+              data: { },
+              async: false,
+              success: function (data) {
+                subList = data;
+              }
+            });
+          }
 
-          subList = _.filter(subList, function (item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
+          var list = _.filter(subList, function (item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
 
-          callback.call(this, subList);
+          callback.call(this, list);
         }
       });
 
       $("body").on("keyup", ".mention", function (e) {
-        $('textarea.mention').mentionsInput('getMentions', function(data) {
-          $('[name=postedTo]').empty();
-          $('[name=postedTo]').append(JSON.stringify(data));
-        });
+        if(e.which == 13) {
+          $('textarea.mention').mentionsInput('val', function(data) {
+            /**
+              For use on cross posting only!
+              var split = data.split("@");
+              for (i=1; i < split.length; i++) {
+                var name = split[i].match(/\[(.*)\]/);
+                var id = split[i].match(/\((.*)\)/);
+                $('.postedTo').append('<strong>' + name[1] + ', </strong>');
+                //this actually needs to be fixed. Want an array of ids
+                $('#postedTo').append('{'+id[1]+"}");
+              }
+            **/
+            var name = data.match(/\[(.*)\]/);
+            var id = data.match(/\((.*)\)/);
+            $('.postedTo').empty();
+            $('#postedTo').empty();
+            $('.postedTo').append('<strong>' + name[1] + '</strong>');
+            $('#postedTo').append('{"id": "'+id[1]+'"}');
+            $('textarea.mention').mentionsInput('reset');
+          });
+          
+        }
       });
 
       $(".features").on("click", "a", app.frontPage.scrollToEntry);

@@ -241,6 +241,11 @@ article footer:before {
   display: initial;
 }
 
+.postedTo {
+  padding-top: 1rem;
+  padding-left: .3rem;
+}
+
 @media (max-width: 800px) {
   .feature {
     display: none;

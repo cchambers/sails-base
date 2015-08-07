@@ -31,8 +31,10 @@ module.exports = {
       req.body.nsfl = false;
     
     var parsed = JSON.parse(req.body.postedTo);
+    //Used when cross posting is implemented!
+//    req.body.postedTo = parsed[0].id;'
     
-    req.body.postedTo = parsed[0].id;
+    req.body.postedTo = parsed.id;
     
     var entry = {
       postedBy: req.body.postedBy,
