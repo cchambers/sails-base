@@ -10,7 +10,7 @@
     <% var date = new Date(entry.createdAt) %>
     <article class="row entry <%= active %><% if (entry.media) { %>has-media<% } %><% if (entry.sticky) { %> sticky<% } %>" data-timestamp="<%= date %>" data-id="<%= entry.id %>" id="<%= entry.id %>">
       <header>
-        <ul class="control desktop">
+        <ul class="control">
           <% if (user) { %>
           <% if (entry.votes[0]) { %>
           <% var up = (entry.votes[0].vote) %>

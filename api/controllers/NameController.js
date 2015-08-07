@@ -4,7 +4,7 @@ module.exports = {
     .populate('names')
     .exec( function (err, doc) {
       if (req.body.name == "") {
-        return res.json({ message: "Space... the final frontier." })
+        return res.json({ message: "Well you'll need to put something at least." })
       } 
 
       if (doc.names.length >= 10) {

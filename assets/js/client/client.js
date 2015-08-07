@@ -414,10 +414,9 @@ var app = {
     },
 
     keypressHandler: function (e) {
-      console.log(e);
-      var key = e.which;
+    var key = e.which;
 
-      if ( $('input:focus').length == 0) {
+      if ( ($('input:focus').length == 0) && ($('textarea:focus').length == 0)) {
         if (app.keys.nextItem.indexOf(key) >= 0) {
           app.frontPage.nextItem();
         }
