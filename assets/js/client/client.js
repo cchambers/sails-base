@@ -131,6 +131,9 @@ var app = {
       $("body").on("click", ".load-replies", app.getChildComments);
       $("body").on("click", ".switch-to", app.user.switchNames);
       $("body").on("click", ".close", app.entry.close);
+      
+      $("body").on("click", "#hide-nsfw", function() { app.userToggleSetting("nsfw", true); });
+      $("body").on("click", "#hide-nsfl", function() { app.userToggleSetting("nsfl", true); });
 
       $("body").on("click", "article:not(.active)", function (e) {
         $(this).activate(true);

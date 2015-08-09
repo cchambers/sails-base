@@ -51,20 +51,22 @@ module.exports = {
     User.findOne({ id: name })
     .exec( function (err, doc) {
       var username = doc.username;
-      
       if(req.body.setting == 'nsfw') {
         if(doc.hidensfw)
           doc.hidensfw = false;
         else
           doc.hidensfw = true;
+        
+        doc.save();
       }
       if(req.body.setting == 'nsfl') {
         if(doc.hidensfl)
           doc.hidensfl = false;
         else
           doc.hidensfl = true;
+        
+        doc.save();
       }
-      doc.save();
       return res.json({ message: "Success!", redirect: "/me" });
     });
   }
