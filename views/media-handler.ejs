@@ -1,6 +1,7 @@
 <% if (entry.media) { %>
-<% if ( entry.media.indexOf('.jpg') > 0 || entry.media.indexOf('.jpeg') > 0 || entry.media.indexOf('.gif') > 0 ) { %>
-<a target="_new" href="<%= entry.media %>"><div class="media image" <% if(entry.nsfw == false){ %>style="background-image:url(<%= entry.media %>)"<% } %>><img src="<%= entry.media %>"></div></a>
+<% if ( entry.media.indexOf('.jpg') > 0 || entry.media.indexOf('.jpeg') > 0 || entry.media.indexOf('.gif') > 0  || entry.media.indexOf('.png') > 0 ) { %>
+
+<a target="_new" href="<%= entry.media %>"><div class="media image<% if(entry.nsfw) {%> nsfw<%}%><% if (entry.media.indexOf('.gif') > 0){ %> gif<% } %>" style="background-image:url(<%= entry.media %>)"><img src="<%= entry.media %>"></div></a>
 <% } else if (entry.media.indexOf('gfycat') > 0) { %>
 <% var url = "" %>
 <div class="media gfycat" style="height: 40rem">

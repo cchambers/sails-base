@@ -40,6 +40,11 @@ module.exports = {
       defaultsTo: false
     },
 
+    alpha: {
+      type: 'boolean',
+      defaultsTo: true
+    },
+
     votes: {
       collection: 'vote',
       via: 'user'

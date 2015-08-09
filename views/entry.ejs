@@ -9,7 +9,7 @@
 <% } %>
 
 
-<div class="row entries">
+<div class="row entries<% if (entries.length == 1) { %> single<% } %>">
   <% for (which in entries) { %>
   <% var entry = entries[which] %>
   <% if (entry) { %>
@@ -20,6 +20,11 @@
         <%- include entry-controls %>
         <h1>
           <%= entry.title %>
+          <% if (user) { %>
+          <% if ( (entries[which].postedBy.name == user.username) || user.admin ) { %>
+          <span class="edit-entry">(<a href="/edit/entry/<%= entry.id %>">edit this entry</a>)</span>
+          <% } %>
+          <% } %>
         </h1>
 
       </header>
@@ -43,6 +48,7 @@
       <ul class="tags">
         <% if (entry.nsfw) { %><li>NSFW</li> <% } %>
         <% if (entry.nsfl) { %><li>NSFL</li><% } %>
+        <% if (entry.media) { if (entry.media.indexOf('.gif') > 0){ %><li>GIF</li><% } } %>
       </ul>
     </div>
   </article>

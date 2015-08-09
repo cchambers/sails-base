@@ -1,3 +1,5 @@
+var utilities = require('../services/utilities');
+
 module.exports = {
   create: function (req, res) {
     Name.findOne({ name: req.body.username })
@@ -13,6 +15,7 @@ module.exports = {
             name: req.body.username,
             user: user
           }).exec( function (err, doc) {
+            utilities.sendMail(req.body.email, "Welcome to the sauce!", utilities.mail.welcome(req.body.username, user));
             return res.json({ message: "Welcome to the sauce!", callback: "signUp" })
           });
         } else {
@@ -22,13 +25,21 @@ module.exports = {
     })
   },
 
+  getVerified: function (req, res) {
+    return res.view('message', { 
+      message: "Click here to resend your verification email.", 
+      type: "alert",
+      data: false,
+    });
+  },
+
   verify: function (req, res) {
     User.findOne(req.params.id)
     .exec( function (err, doc) {
       doc.verified = true;
       doc.save();
       return res.view('message', { 
-        message: "Username verified! Login to continue.", 
+        message: "Account verified! Please log in to continue.", 
         type: "success",
         data: false,
       });
@@ -59,6 +70,15 @@ module.exports = {
     .then( function (data) {
       return res.view('user-profile', { user: req.user, data: data });
     });
+  },
+  
+  list: function (req, res) {
+    User.find()
+    .sort('online desc')
+    .exec( function (err, data) {
+      if (err) return next(err);
+      return res.view('userlist', { user: req.user, data: data })
+    });
   }
-};
+}
 

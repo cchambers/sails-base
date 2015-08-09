@@ -1,16 +1,9 @@
-// var sendmail = MailerService.create('sendmail', {
-//   from: 'vanessa@gravy.io',
-//   subject: 'Hi!',
-//   text: 'Welcome to the sauce!'
-// });
+var utilities = require('../services/utilities');
 
-// module.exports = {
-//   send: function(req, res) {
-//     sendmail
-//     .send({
-//       to: req.param('to')
-//     })
-//     .then(res.ok)
-//     .catch(res.serverError);
-//   }
-// };
+module.exports = {
+  send: function(req, res) {
+    var to = req.params.to;
+    var success = utilities.sendMail(to);
+    return res.json (success);
+  }
+};

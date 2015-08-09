@@ -22,15 +22,20 @@ module.exports = {
 
     function doVote(exists) {
       var voteData;
+      console.log(exists);
       if (exists) { // update a vote
-        // console.log("VOTE EXISTS", "going " + direction);
+        var same = (direction == "up");
+        if (same == exists.vote) {
+          return res.json({ message: "Vote cheat detected." });
+        }
+        console.log("VOTE EXISTS", "going " + direction);
         if (direction == "neutral") {
           Vote.destroy({ user: exists.user, entry: exists.entry })
           .exec( function (err, data) {
             voteData = data;
             Entry.findOne(entry)
             .exec( function (err, doc) {
-              console.log(voteData[0].vote)
+              // console.log(voteData[0].vote)
               if (voteData[0].vote) {
                 // console.log("removed upvote")
                 doc.ups--;
@@ -58,17 +63,17 @@ module.exports = {
               }
               doc.save();
               blastVoteUpdate(entry, doc);
-              console.log("document updated for reversal of vote");
+              // console.log("document updated for reversal of vote");
               return res.json({ message: "Vote updated" });
             });
           })
           
         }
       } else { // create NEW vote
-        console.log("VOTE DOES NOT EXIST")
+        // console.log("VOTE DOES NOT EXIST")
         Vote.create({ user: user.id, entry: entry, vote: vote })
         .exec( function (err, vote) {
-          console.log("vote created");
+          // console.log("vote created");
           updateEntry();
         });
       }

@@ -1,8 +1,8 @@
 module.exports.routes = {
-  '/': 'EntryController.listing',
-
-  'get /userlist': 'FrontpageController.userlist',
-  'get /sublist': 'FrontpageController.sublist',
+  '/': 'FrontpageController.index',
+  'get /all': 'EntryController.listing',
+  'get /userlist': 'UserController.list',
+  'get /sublist': 'SubController.list',
 
   'get /me': 'UserController.myProfile',
 
@@ -18,6 +18,8 @@ module.exports.routes = {
   'get /new/entry': 'EntryController.new',
   'get /new/entry/:sub': 'EntryController.new',
   'post /new/entry': 'EntryController.create',
+  'post /get/entry/:id': 'EntryController.singleJSON',
+  'get /get/entry/:id': 'EntryController.singleJSON',
   
   'get /edit/entry/:id': 'EntryController.edit',
   'post /edit/entry/:id': 'EntryController.submitEdit',
@@ -33,12 +35,10 @@ module.exports.routes = {
 
   'get /verify/:id': 'UserController.verify',
   'get /user/:user': 'UserController.userProfile',
+  'get /get-verified': 'UserController.getVerified',
 
   'post /vote/:direction/:entry': 'VoteController.vote',
 
-  'get /new/comment': 'CommentController.new',
-  'post /comment/:id/reply': 'CommentController.reply',
-  'post /reply/:id': 'CommentController.reply',
   'post /new/comment': 'CommentController.create',
   'get /children/:id': 'CommentController.children',
   'post /children/:id': 'CommentController.children',
@@ -46,5 +46,14 @@ module.exports.routes = {
   'get /sockets/join/:room': 'SocketController.joinRoom',
   'post /sockets/settings/toggle': 'SocketController.userToggleSetting'
 
-  // 'get /mail/send/:to': 'MailController.send'
+  'get /mail/send/:to': 'MailController.send',
+  
+  'get /bot/get/': 'BotController.get',
+  'post /bot/approve/:id': 'BotController.approve',
+  'post /bot/ignore/:id': 'BotController.ignore',
+
+  'get /admin': 'AdminController.index',
+  'get /admin/botted': 'AdminController.listBotted'
+
+
 };

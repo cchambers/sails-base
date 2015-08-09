@@ -1,7 +1,7 @@
 module.exports = {
   attributes: {
     entry: {
-      model: 'entry',
+      model: 'entry'
     },
     
     root: {

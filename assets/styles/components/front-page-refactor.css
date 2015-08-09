@@ -1,0 +1,228 @@
+.scroll-y {
+  height: calc( 100vh - 6rem );
+  overflow-y: scroll;
+}
+.scroll-y::-webkit-scrollbar { display: none; }
+
+
+.front-page .control {
+  position: absolute;
+  right: .75rem;
+  bottom: -3.25rem;
+  z-index: 3;
+}
+
+.feature {
+  background: #e8e8e8;
+}
+
+.feature .entry h1 {
+  line-height: 3rem;
+}
+
+.features {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.front-page .entry h1 {
+  font-size: 1.4rem;
+}
+.front-page .entry cite {
+  font-size: 1rem;
+}
+.front-page .entry {
+  background: #e8e8e8;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+.front-page .entry.active {
+  border-right: 1px solid #fff;
+  background: #fff;
+}
+
+.height-set {  
+  height: calc(100vh - 6rem);
+  position: absolute;
+  top: 6rem;
+  overflow-y: scroll;
+}
+
+.media {
+  position: relative;
+  background-size: cover;
+  background-position: center center !important
+}
+
+.features .media a:hover {
+  color: #fff;
+  text-shadow: 2px 2px 2px rgba(0,0,0,.5);
+}
+
+.media.primary[title]:before {
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  font-size: 3.5rem;
+  width: 100%;
+  content: attr(title);
+  background: rgba(0, 0, 0, .5);
+  padding: 1.5rem;
+  color: #f2f2f2;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, .85);
+}
+
+.flex .media.image[title]:before {
+  font-size: 1.4rem;
+}
+
+.media.primary {
+  min-height: 36rem;
+}
+
+.media.secondary {
+  min-height: 12.5rem;
+}
+
+.media:hover {
+  cursor: pointer;
+}
+
+.media:hover .controls {
+  opacity: 1;
+}
+
+.media .controls {
+  position: absolute;
+  top: 0;
+  left;
+  0;
+  color: #f2f2f2;
+  background: rgba(0, 0, 0, .75);
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  transition: all 200ms ease-in;
+}
+
+.controls div {
+  position: relative;
+  float: left;
+  text-align: center;
+  width: 50%;
+  height: 50%;
+}
+
+.controls div span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.controls div:hover {
+  background-color: rgba(255, 255, 255, .15)
+}
+
+ul.text-entries {
+  padding-left: 0;
+}
+
+ul.text-entries li {
+  line-height: 3.5rem;
+  list-style: none;
+}
+
+ul.text-entries li a {
+  display: block;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding-left: 0.75rem;
+}
+
+ul.text-entries li a:hover {
+  color: #121212;
+  background: #fff;
+}
+
+ul.text-entries li + li {
+  margin-top: -1px;
+}
+
+.flex.images {
+  padding-right: 0.75rem;
+}
+
+.flex.images,
+.flex.videos {
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  justify-content: flex-around;
+  -ms-flex-pack: justify;
+}
+
+.row-media .videos {
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+  -ms-flex-wrap: wrap 
+}
+
+.images .media,
+.videos .media {
+  position: relative;
+  width: calc(25% - 0.75rem);
+  height: 10rem;
+  margin-bottom: 0.75rem;
+  background-image: no-repeat;
+  background-position: top center;
+  overflow: hidden;
+}
+
+.media:hover a {
+  opacity: 1;
+}
+
+.media a {
+  display: block;
+  text-decoration: none;
+  background: rgba(0,0,0,.5);
+  opacity: 0;
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+  padding: 0.75rem;
+  border-top: none;
+  line-height: 1.8rem;
+  font-size: 1.4rem;
+  font-weight: 400;
+  position: absolute;
+  color: #f2f2f2;
+  text-align: left;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, .9);
+  transition: opacity 250ms ease-in;
+  text-overflow: ellipsis;
+}
+
+@media (max-width:800px) {
+  .text-entries,
+  .link-entries {
+    display: none
+  }
+  .flex .media.image,
+  .flex .media.video {
+    min-height: 20rem !important;
+    width: calc(50% - .75rem);
+  }
+  .media .controls {
+    background: #252525;
+    top: initial;
+    bottom: -10rem;
+    opacity: 1;
+    height: 10rem;
+  }
+}

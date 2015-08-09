@@ -1,21 +1,24 @@
-<article class="active row">
+<article class="active row userlist">
   <div class="contain">
     <header>
       <h1>User list</h1>
     </header>
     <div class="row">
-      <div class="online col-1-8"><h4>Online?</h4></div>
-      <div class="admin col-1-8"><h4>Admin?</h4></div>
       <div class="username col-1-6"><h4>Username</h4></div>
       <div class="email col-1-5"><h4>Email</h4></div>
     </div>
     <% for (account in data) { %>
-    <div class="row">
-      <div class="online col-1-8"><%= data[account].online %></div>
-      <div class="admin col-1-8"><%= data[account].admin %></div>
-      <div class="username col-1-6"><%= data[account].username %></div>
+    <a href="/user/<%= data[account].username %>">
+      <div class="row user
+      <% if (data[account].admin) { %>admin<% } %>
+      <% if (data[account].online) { %>online<% } %>">
+      <div class="username col-1-6">
+
+        <%= data[account].username %>
+      </div>
       <div class="email col-1-5"><%= data[account].email %></div>
     </div>
-    <% } %>
-  </div>
+  </a>
+  <% } %>
+</div>
 </article>

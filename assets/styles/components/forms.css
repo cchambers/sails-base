@@ -69,6 +69,10 @@ input[type=checkbox]:checked + label:after {
 }
 
 
+.new-thing {
+  padding-top: 1.5rem;
+}
+
 .new-thing label {
   font-size: 1.4rem;
   display: block;

@@ -19,7 +19,17 @@ module.exports = {
     function errOut(data) {
       return res.json(data);
     }
-
+    
+    if(req.body.nsfw == 'on')
+      req.body.nsfw = true;
+    else
+      req.body.nsfw = false;
+    
+    if(req.body.nsfl == 'on')
+      req.body.nsfl = true;
+    else
+      req.body.nsfl = false;
+    
     var entry = {
       postedBy: req.body.postedBy,
       title: req.body.title,
@@ -28,7 +38,9 @@ module.exports = {
       markdown: req.body.markdown || "",
       content: req.body.content || "",
       postedTo: req.body.postedTo,
-      subSlug: ""
+      subSlug: "",
+      nsfw: req.body.nsfw,
+      nsfl: req.body.nsfl
     }
 
     if (entry.title == "") {
@@ -91,6 +103,38 @@ module.exports = {
     }
   },
 
+  singleJSON: function (req, res) {
+    var userid = (req.session.passport.user) ? req.session.passport.user : "none";
+    // console.log(userid);
+    var id = req.params.id;
+    Entry.findOne(id)
+    .populate('comments')
+    .populate('postedTo')
+    .populate('postedBy')
+    .populate('votes', { user: userid })
+    .exec( function (err, doc) {
+      if (err) next(err);
+      if (doc) {
+        var ids = _.pluck(doc.comments, 'id');
+        Comment.find({id: ids, parent: {$eq: null}})
+        .populate('children')
+        .populate('parent')
+        .populate('postedBy')
+        .exec( function (err, data) {
+          data = { entry: doc, comments: data };
+          sendData(data);
+        });
+      } else {
+        data = { entry: doc, comments: false };
+        sendData(data);
+      }
+    });
+
+    function sendData(data) {
+      return res.json(data);
+    }
+  },
+
   tag: function (req, res) {
     var tag = req.body.tag;
     var id = req.body.id;
@@ -120,6 +164,7 @@ module.exports = {
     .populate('postedTo')
     .exec( function(err, doc) {
       if (err) return next(err);
+      console.log(doc)
       var data = {};
       data.entry = doc;
       return res.view("edit-entry", { user: req.user, data: data });
@@ -128,12 +173,13 @@ module.exports = {
 
   submitEdit: function (req, res) {
     Entry.findOne(req.params.id)
+    .populate('postedTo')
     .exec( function (err, doc) {
       if (err) return next(err);
       doc.content = req.body.content;
       doc.markdown = req.body.markdown;
       doc.save();
-      return res.json({ message: "Success!", redirect: "/sub/" + req.params.postedTo + "/" + doc.slug });
+      return res.json({ message: "Success!", redirect: "/sub/" + doc.postedTo.slug + "/" + doc.slug });
     });
   },
 
@@ -141,7 +187,7 @@ module.exports = {
     Entry.destroy(req.params.id)
     .exec( function (err, doc) {
       if (err) return next(err);
-      return res.json({ message: 'Post deleted!', success: true });
+      return res.json({ message: "Post deleted!", success: true });
     });
   },
 
@@ -172,9 +218,6 @@ module.exports = {
             .populate('votes', { user: userid })
             .exec( function (err, data) {
               if (err) return next(err);
-              for (var i = 0; i < data.length; i++){
-                data[i].commentAmmount = data[i].comments.length;  
-              }
               listingData.entries = data;
               listingView();
             });

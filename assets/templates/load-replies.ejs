@@ -1,6 +1,6 @@
 <ul>
   <% for (var which = 0; which < entries.length; which++) { %>
-  <li data-id="<%= entries[which].id %>">
+  <li data-id="<%= entries[which].id %>" id="<%= entries[which].id %>">
     <header>
       <%= entries[which].postedBy.name %>
     </header>
@@ -10,9 +10,10 @@
     <footer class="new-thing">
       <a href="#" class="make-reply">reply</a>
       <% if (entries[which].children.length > 0) { %>
-      <a href="#" class="load-replies">load <%= entries[which].children.length %> replies</a>
+      <a href="#<%= entries[which].id %>" class="load-replies">load <%= entries[which].children.length %> replies</a>
       <% } %>
-      <form class="off" method="POST" data-callback="output" action="/reply/<%= entries[which].id %>">
+      <form class="off" method="POST" data-callback="output" action="/new/comment">
+      <input name="parent" hidden value="<%= entries[which].id %>">
         <div class="row pad-bottom-light">
           <textarea name="message" placeholder="reply..."></textarea>
         </div>

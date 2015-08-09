@@ -1,42 +1,28 @@
 article .media + header {
-  max-width: 50%;
+  /*max-width: 50%;*/
 }
 
 article:not(.active) .media {
   position: absolute;
   height: 8rem;
-  width: 60%;
+  width: 50%;
   right: 0;
   top: 0;
   z-index: 1;
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: left center
+  background-position: left center;
+  display: none;
+}
+
+article:not(.active) .media.gif {
+  background-image: none !important;
 }
 
 article:not(.active):hover .media:before {
   background-color: #fff
 }
 
-article:not(.active) .media.nsfw {
-  max-width: 45%;
-}
-
-article:not(.active) .media.nsfw:before {
-  display: none;
-}
-
-article:not(.active) .media:before {
-  content: '';
-  position: absolute;
-  height: 8rem;
-  width: 500rem;
-  left: -490rem;
-  background-color: #f2f2f2;
-  transform: skew(45deg);
-  transition: all 250ms ease;
-  z-index: -1;
-}
 
 article.active .media {
   display: inline-block;
@@ -60,6 +46,21 @@ article.active .media img {
 
 article .media.youtube iframe {
   display: none;
+  height: 40rem;
+  width: 100%;
+}
+
+article .media.youtube {
+  position: relative;
+  width: 100%;
+}
+article .media.youtube object,
+article .media.youtube embed,  {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 article.active .media.youtube {
@@ -71,16 +72,5 @@ article.active .media.youtube iframe {
 }
 
 @media (max-width: 800px) {
-  article.has-media:not(.active) header {
-    max-width: 60%;
-  }
 
-  article .media {
-    max-width: 50%;
-  }
-  article:not(.active) .media:before {
-    transform: skew(-5deg);
-    width: 25rem;
-    left: -20rem;
-  }
 }
