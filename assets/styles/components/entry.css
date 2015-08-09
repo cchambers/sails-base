@@ -178,8 +178,10 @@ article.active {
 }
 
 article:not(.active) .nsfw {
+/*
   -webkit-filter: blur(50px);
   filter: blur(50px);
+*/
 }
 
 article.active.nsfw {
