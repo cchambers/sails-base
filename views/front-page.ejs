@@ -9,6 +9,10 @@
     <% for (which in entries) { %>
     <% var entry = entries[which] %>
     <% if (entry) { %>
+    <% if (entry.nsfw == true && user.hidensfw == true) { %>
+    <% } else { %>
+    <% if (entry.nsfl == true && user.hidensfl == true) { %>
+    <% } else { %>
     <% var date = new Date(entry.createdAt) %>
     <article class="row entry <%= active %><% if (entry.media) { %>has-media<% } %><% if (entry.sticky) { %> sticky<% } %>" data-timestamp="<%= date %>" data-id="<%= entry.id %>" id="<%= entry.id %>">
       <header>
@@ -50,12 +54,9 @@
         <% if (entry.media) { if (entry.media.indexOf('.gif') > 0){ %><li>GIF</li><% } } %>
       </ul>
     </article>
-
-
-
     <% } %>
-
-
+    <% } %>
+    <% } %>
     <% } %>
   </div>
 

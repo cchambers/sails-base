@@ -148,6 +148,29 @@ module.exports = {
       break;
     }
     return monthInt;
-
+  },
+  
+  updateUser: function (user) {
+    User.findOne({ id: user })
+    .exec( function (err, doc) {
+      if(err) next(err);
+      
+      if(doc.hidensfw == undefined) {
+        doc.hidensfw = true;
+        doc.save();
+      }
+      if(doc.hidensfl == undefined) {
+        doc.hidensfl = true;
+        doc.save();
+      }
+    });
+  },
+  
+  getUserData: function (user, callback) {
+    User.findOne({ id: user })
+    .exec( function (err, doc) {
+      if(err) next(err);
+      if(doc) callback(null, doc);
+    });
   }
 }

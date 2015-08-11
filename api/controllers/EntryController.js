@@ -264,6 +264,29 @@ module.exports = {
         .exec( function (err, data) {
           if (data) {
             if (err) return next(err);
+            for(j = 0; j < data.length; j++){
+              data[j].commentAmmount = data[j].comments.length;
+            }
+            var userData = undefined;
+            utilities.getUserData(userid, function (err, ud) {
+              if(err) mext(err)
+              if(ud) userData = ud;
+//              console.info(ud);
+            });
+            console.log(userData);
+            if(userData) {
+              console.info("Got the user!");
+              console.info(userData);
+              if(userData.hidensfw == true) {
+                conosle.info("Must hide NSFW stuff!");
+                for(d in data) {
+                  if(d.nsfw) {
+                    console.info(d);
+                    d = undefined;
+                  }
+                }
+              }
+            }
             data = utilities.sortByPop(data);
             listingData.entries = data;
             listingView();

@@ -158,6 +158,9 @@ var app = {
       $("body").on("click", ".back", function () {
         history.back()
       });
+      
+      $("body").on("click", "#hide-nsfw", function() { app.userToggleSetting("nsfw", true); });
+      $("body").on("click", "#hide-nsfl", function() { app.userToggleSetting("nsfl", true); });
 
       $("body").on("click", "article:not(.active)", function (e) {
         $(this).activate(true);
@@ -518,14 +521,22 @@ var app = {
         app.callbacks.renderChildren(data, $li);
       }
     });
+  },
+  
+  userToggleSetting: function (toggle, set) { 
+    $.ajax({
+      type: 'POST',
+      url: '/sockets/settings/toggle/',
+      data: { setting: toggle, value: set },
+      success: function (data) {
+      }
+    });
   }
 }
 
 
 
 app.init();
-
-
 
 
 
