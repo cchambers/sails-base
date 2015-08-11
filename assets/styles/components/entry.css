@@ -19,24 +19,10 @@ article ul.control {
   overflow: hidden;
 }
 
-.feature article ul.control {
-  display: none;
-  padding-bottom: 0.75rem;
-  padding-right: 0.75rem;
-  padding-top: 0;
-  list-style: none;
-  overflow: hidden;
-  float: left;
-}
-
-@media (max-width: 800px) {
-  .feature article ul.control {
-    display: block;
-  }
-}
 
 article ul.control li {
   display: block;
+  cursor: pointer;
   float: left;
   color: #f2f2f2;
   font-family: monospace;
@@ -215,10 +201,6 @@ article cite {
   color: #505050;
 }
 
-article header .vote.up {
-  transform: rotate(180deg);
-}
-
 article header li.active {
   opacity: 1;
 }
@@ -240,20 +222,4 @@ article footer:before {
   display: initial;
 }
 
-@media (max-width: 800px) {
-  .feature {
-    display: none;
-    position: fixed;
-    top: 6rem;
-    left: 0;
-    height: 100%;
-    z-index: 3;
-    width: 100%;
-    background-color: #f2f2f2;
-  }
-
-  .feature.active {
-    display: block;
-  }
-}
 

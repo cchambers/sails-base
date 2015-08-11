@@ -3,8 +3,10 @@
     <header>
       
       <h1>
-      <ul class="control touch">
+      <ul class="control">
         <!-- <li class="close-feature">hide</li> -->
+        <li class="back">&larr;</li>
+        <li class="close" title="close">x</li>
         <% if (user) { %>
         <% if (entry.votes[0]) { %>
         <% var up = (entry.votes[0].vote) %>
@@ -85,7 +87,7 @@
   <div class="pad-sides-mini">
 
     <% if (user) {  %>
-    <div class="row make-comment" id="make-comment">
+    <div class="off row make-comment" id="make-comment">
       <div class="new-thing">
         <form method="POST" data-callback="output" action="/new/comment">
           <div class="row pad-bottom-light">

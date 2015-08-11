@@ -48,7 +48,9 @@ module.exports = {
           slug: doc.title.toLowerCase().replace(/[^a-zA-Z0-9\s]/g,'').replace(/\s/g, "-"),
           media: doc.media || "",
           postedTo: sub.id,
-          nsfw: doc.nsfw
+          subs: [sub.id],
+          nsfw: doc.nsfw,
+          ups: Math.floor(Math.random() * 6) + 2
         }
 
         Entry.create(entry)

@@ -13,6 +13,28 @@ module.exports = {
     });
   },
 
+  updateAll: function (req, res) {
+    Entry.find()
+    .exec( function (err, data) {
+      for (var x = 0; x < data.length; x++) {
+        Entry.findOne(data[x].id)
+        .populate('subs')
+        .exec( function (err, doc) {
+          doc.subs.add(doc.postedTo);
+          doc.save( function(error) {
+            if(error) {
+              console.log(error);
+              return res.json({ message: "Nope." });
+            } else {
+              console.log(doc);
+            }
+          });
+        });
+      }
+      return res.json({ message: "Maybe?" });
+    });
+  },
+
   create: function (req, res) {
     var succeed = true;
 
@@ -75,7 +97,7 @@ module.exports = {
             succeed = false;
             return res.json({ message: "That sub doesn't exist." });
           } else {
-            entry.postedTo = doc.id;
+            entry.subs.add(doc.id);
             entry.postedBy = name.id;
             entry.subSlug = doc.slug;
             entry.ups = 1;
@@ -111,6 +133,7 @@ module.exports = {
     .populate('comments')
     .populate('postedTo')
     .populate('postedBy')
+    .populate('subs')
     .populate('votes', { user: userid })
     .exec( function (err, doc) {
       if (err) next(err);
@@ -164,7 +187,6 @@ module.exports = {
     .populate('postedTo')
     .exec( function(err, doc) {
       if (err) return next(err);
-      console.log(doc)
       var data = {};
       data.entry = doc;
       return res.view("edit-entry", { user: req.user, data: data });
@@ -189,6 +211,14 @@ module.exports = {
       if (err) return next(err);
       return res.json({ message: "Post deleted!", success: true });
     });
+  },
+
+  list: function (req, res) {
+    Entry.find()
+    .populate('subs')
+    .exec(function (err, data) {
+      return res.json(data);
+    })
   },
 
   listing: function (req, res) {

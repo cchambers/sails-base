@@ -23,6 +23,30 @@
 /*\
 \*/
 
+String.prototype.trunc = function(n,useWordBoundary){
+  var toLong = this.length>n,
+  s_ = toLong ? this.substr(0,n-1) : this;
+  s_ = useWordBoundary && toLong ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
+  return toLong ? s_ : s_;
+};
+
+(function($){
+  $.fn.isActive = function () {
+    return $(this).hasClass("active");
+  };
+
+  $.fn.activate = function (doSiblings, toggle) {
+    if (doSiblings) $(this).siblings().deactivate();
+    if (toggle) return $(this).toggleClass("active");
+    return $(this).addClass("active");
+  };
+
+  $.fn.deactivate = function () {
+    return $(this).removeClass("active");
+  };
+})(jQuery);
+
+
 var app = {
   callbacks: {
     checkLogin: function (data) {
@@ -131,23 +155,27 @@ var app = {
       $("body").on("click", ".load-replies", app.getChildComments);
       $("body").on("click", ".switch-to", app.user.switchNames);
       $("body").on("click", ".close", app.entry.close);
+      $("body").on("click", ".back", function () {
+        history.back()
+      });
 
       $("body").on("click", "article:not(.active)", function (e) {
         $(this).activate(true);
       });
 
-      $(".panel").on("click", ".swap-panel-forms", app.header.togglePanelForms);
-
-      // This focuses on the active email field at init
+      // This focuses on the active email field at init.
       $(".panel form.active input").first().focus();
+      // This is the toggle for the sign up/log in forms.
+      $(".panel").on("click", ".swap-panel-forms", app.header.togglePanelForms);
 
       // This handles "back" functionality on the front-page. 
       // When you hit back, it looks to a stored data var to load whatever was there.
       window.onpopstate = function(event) {
-        console.log(event)
+        // console.log(event);
         if (event.state == null) {
           if (window.location.hash == "") {
-            window.location.reload(true); // this needs to actually load feature data and not refresh
+            $(".active").removeClass("active");
+            history.pushState(null, "/");
           }
         } else {
           app.frontPage.loadEntry(event.state, true);
@@ -248,6 +276,7 @@ var app = {
         }
       });
     },
+
     vote: function (e) {
       e.stopPropagation();
       var dir = $(this).data().dir;
@@ -292,11 +321,13 @@ var app = {
       });
       return;
     },
+
     close: function (e) {
-      e.stopPropagation();
-      var $parent = $(this).parents("article");
-      $parent.removeClass("active");
+      $(".loaded-view").removeClass("active");
+      $(".front-page article.active").removeClass("active");
+      history.pushState(null, "/");
     },
+
     deleteEntry: function (id) {
       var $parent = $(this).parents("article");
       var id = $parent.data().id;
@@ -312,6 +343,7 @@ var app = {
         }
       });
     },
+
     replyForm: function (e) {
       e.preventDefault();
       var $parent = $(this).parents("li").first();
@@ -367,7 +399,7 @@ var app = {
     },
 
     keypressHandler: function (e) {
-    var key = e.which;
+      var key = e.which;
 
       if ( ($('input:focus').length == 0) && ($('textarea:focus').length == 0)) {
         if (app.keys.nextItem.indexOf(key) >= 0) {
@@ -416,11 +448,14 @@ var app = {
       if (!popState) {
         history.pushState(data, data.entry.title, "/sub/" + data.entry.postedTo.slug + "/" + data.entry.slug);
         ga('send', 'pageview');
+      } else {
+        $(".front-page .active").removeClass("active");
+        $(".front-page [data-id='"+data.entry.id+"']").addClass("active");
       }
       var data = { entry: data.entry, comments: data.comments, user: user };
       var html = new EJS({ url: '/templates/entry-article.ejs' }).render(data);
-      $(".feature").animate({ scrollTop: "0px" }, 250).html(html);
-      $(".feature .load-replies").trigger("click");
+      $(".loaded-view").animate({ scrollTop: "0px" }, 250).html(html).addClass("active");
+      //$(".loaded-view .load-replies").trigger("click");
     },
 
     scrollToEntry: function (e) {
@@ -463,8 +498,6 @@ var app = {
     $("textarea[name=content]").val(html);
     $(".preview").html(html);
   },
-
-
 
   keypressHandler: function (e) {
 
@@ -513,28 +546,7 @@ app.init();
 
 
 
-String.prototype.trunc = function(n,useWordBoundary){
-  var toLong = this.length>n,
-  s_ = toLong ? this.substr(0,n-1) : this;
-  s_ = useWordBoundary && toLong ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
-  return toLong ? s_ : s_;
-};
 
-(function($){
-  $.fn.isActive = function () {
-    return $(this).hasClass("active");
-  };
-
-  $.fn.activate = function (doSiblings, toggle) {
-    if (doSiblings) $(this).siblings().deactivate();
-    if (toggle) return $(this).toggleClass("active");
-    return $(this).addClass("active");
-  };
-
-  $.fn.deactivate = function () {
-    return $(this).removeClass("active");
-  };
-})(jQuery);
 
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

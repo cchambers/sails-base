@@ -13,6 +13,9 @@ module.exports.routes = {
   'post /new/name': 'NameController.create',
   'post /switch': 'NameController.switchTo',
 
+  'get /derk': 'EntryController.updateAll',
+  'get /girt': 'EntryController.list',
+
   'get /new/sub': 'SubController.new',
   'post /new/sub': 'SubController.create',
   'get /new/entry': 'EntryController.new',

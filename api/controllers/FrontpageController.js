@@ -20,6 +20,7 @@ module.exports = {
     .populate('comments')
     .populate('postedTo')
     .populate('postedBy')
+    .populate('subs')
     //.populate('votes', { user: req.user.id })
     .exec( function (err, data) {
       for (var x = 0; x < data.length; x++) {
@@ -35,9 +36,9 @@ module.exports = {
           viewdata.text.push(data[x]);
         }
       }
-      viewdata.images = utilities.sortByPop(viewdata.images);
-      viewdata.videos = utilities.sortByPop(viewdata.videos);
-      viewdata.text = utilities.sortByPop(viewdata.text);
+      viewdata.images = utilities.sortByPopularity(viewdata.images);
+      viewdata.videos = utilities.sortByPopularity(viewdata.videos);
+      viewdata.text = utilities.sortByPopularity(viewdata.text);
       getEntries();
     });
 
@@ -54,11 +55,12 @@ module.exports = {
       .populate('comments')
       .populate('postedTo')
       .populate('postedBy')
+      .populate('subs')
       .populate('votes', { user: userid })
       .exec( function (err, data) {
         if (data) {
           if (err) return next(err);
-          data = utilities.sortByPop(data);
+          data = utilities.sortByPopularity(data);
           viewdata.entries = data;
           loadView()
         }
