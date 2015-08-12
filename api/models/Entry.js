@@ -29,9 +29,11 @@ module.exports = {
       model: 'sub'
     },
 
-    crossPostedTo: [{
-      type: 'string'
-    }],
+    subs: {
+      collection: 'sub',
+      via: 'entries',
+      dominant: true
+    },
 
     postedBy: {
       model: 'name',
@@ -53,7 +55,8 @@ module.exports = {
 
     tags: {
       collection: 'tag',
-      via: 'name'
+      via: 'name',
+      dominant: true
     },
 
     special: {

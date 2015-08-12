@@ -1,0 +1,54 @@
+/* TEAM */
+
+                            
+Your title: Douglas DeVicariis
+
+                            
+Site: doug@devicariis.org, kootg04@gmail.com
+
+                            
+Twitter: koo_04
+
+                            
+Location: California, United States
+	
+=========================================================================
+                            
+Your title: Chris Chambers
+
+                            
+Site: <ADD YOUR EMAILS>
+
+                            
+Twitter: <ADD YOUR TWITTER (If you want. Remove this if not.)>
+
+                            
+Location: <ADD YOUR GENERAL LOCATION (If you want. Remove this if not.)>
+	
+=========================================================================
+                            
+Your title: Andrés De Freitas
+
+                            
+Site: <ADD YOUR EMAILS>
+
+                            
+Twitter: <ADD YOUR TWITTER (If you want. Remove this if not.)>
+
+                            
+Location: <ADD YOUR GENERAL LOCATION (If you want. Remove this if not.)>
+
+                            
+/* SITE */
+
+                            
+Last update: Probably today (IN ALPHA)
+
+                            
+Standards: HTML5, CSS3
+
+                            
+Components: jQuery, MentionsInput, SailsJS, CodeMirror
+
+                            
+Software: ??

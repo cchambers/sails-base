@@ -33,7 +33,7 @@
             autocompleteListItemAvatar : _.template('<img src="<%= avatar %>" />'),
             autocompleteListItemIcon   : _.template('<div class="icon <%= icon %>"></div>'),
             mentionsOverlay            : _.template('<div class="mentions"><div></div></div>'),
-            mentionItemSyntax          : _.template('@[<%= value %>](<%= id %>)'),
+            mentionItemSyntax          : _.template('@[<%= value %>](<%= slug %>)'),
             mentionItemHighlight       : _.template('<strong><span><%= value %></span></strong>')
         }
     };

@@ -29,13 +29,10 @@
         </div>
 
         <div class="row pad-bottom-light">
-<!--          <label for="mentions">Sub you want to post to (req)</label>-->
-          <label for="mentions">You can post to one sub and cross post (optional) in up to two more</label>
-          <textarea id="mentions" class="mention" type="text" placeholder="@sub" value="<% if (data.prefill) { %><%= data.prefill %><% } %>"></textarea>
-          <div class="postedTo"></div>
-          <textarea id="postedTo" name="postedTo" style="display:none;"></textarea>
+          <label for="postedTo">You can post to one sub and cross post (optional) in up to two more</label>
+          <input type="text" name="postedTo" placeholder="sub slug" value="<% if (data.prefill) { %><%= data.prefill %><% } else { %>all-gravy<% } %>">
         </div>
-        
+
         <div class="row pad-bottom-light lh30">
           <input type="checkbox" id="nsfw" name="nsfw"><label for="nsfw">NSFW</label> 
           <input type="checkbox" id="nsfl" name="nsfl"><label class="float-left" for="nsfl">Disturbing</label> 
@@ -46,4 +43,3 @@
     </div>
   </form>
 </div>
-
