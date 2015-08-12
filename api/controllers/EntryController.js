@@ -201,6 +201,8 @@ module.exports = {
   edit: function(req, res) {
     Entry.findOne({ id: req.params.id })
     .populate('postedTo')
+    .populate('postedBy')
+    .populate('subs')
     .exec( function(err, doc) {
       if (err) return next(err);
       var data = {};
@@ -212,12 +214,13 @@ module.exports = {
   submitEdit: function (req, res) {
     Entry.findOne(req.params.id)
     .populate('postedTo')
+    .populate('subs')
     .exec( function (err, doc) {
       if (err) return next(err);
       doc.content = req.body.content;
       doc.markdown = req.body.markdown;
       doc.save();
-      return res.json({ message: "Success!", redirect: "/sub/" + doc.postedTo.slug + "/" + doc.slug });
+      return res.json({ message: "Success!", redirect: "/sub/" + doc.subs[0].slug + "/" + doc.slug });
     });
   },
 
@@ -338,6 +341,7 @@ single: function (req, res) {
       Entry.findOne({ slug: req.params.slug })
       .populate('comments')
       .populate('postedTo')
+      .populate('subs')
       .populate('postedBy')
       .populate('votes', { user: userid })
       .exec( function (err, doc) {
@@ -349,6 +353,7 @@ single: function (req, res) {
       Entry.findOne({ slug: req.params.slug })
       .populate('comments')
       .populate('postedTo')
+      .populate('subs')
       .populate('postedBy')
       .exec(function (err, data) {
         viewData.entries.push(data);
