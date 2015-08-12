@@ -162,26 +162,17 @@ var app = {
       $("body").on("keyup", ".mention", function (e) {
         if(e.which == 13) {
           $('textarea.mention').mentionsInput('val', function(data) {
-            /**
-              For use on cross posting only!
-              var split = data.split("@");
-              for (i=1; i < split.length; i++) {
-                var name = split[i].match(/\[(.*)\]/);
-                var id = split[i].match(/\((.*)\)/);
-                $('.postedTo').append('<strong>' + name[1] + ', </strong>');
-                //this actually needs to be fixed. Want an array of ids
-                $('#postedTo').append('{'+id[1]+"}");
-              }
-            **/
-            var name = data.match(/\[(.*)\]/);
-            var id = data.match(/\((.*)\)/);
-            $('.postedTo').empty();
-            $('#postedTo').empty();
-            $('.postedTo').append('<strong>' + name[1] + '</strong>');
-            $('#postedTo').append('{"id": "'+id[1]+'"}');
+            var split = data.split("@");
+            var subs = [];
+            for (i=1; i < split.length; i++) {
+              var name = split[i].match(/\[(.*)\]/);
+              var idSplit = split[i].match(/\((.*)\)/);
+              var id = idSplit[1];
+              $('.postedTo').append('<strong>' + name[1] + ', </strong>');
+              $('#postedTo').append(id.replace('"','')+' ');
+            }
             $('textarea.mention').mentionsInput('reset');
           });
-          
         }
       });
 

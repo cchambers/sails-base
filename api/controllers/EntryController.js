@@ -37,7 +37,8 @@ module.exports = {
 
   create: function (req, res) {
     var succeed = true;
-    var postedTo = req.body.postedTo.split(" ");
+    var postedTo = req.body.postedTo.trim();
+    postedTo = postedTo.split(" ");
     console.log("subs:",postedTo);
     function errOut(data) {
       return res.json(data);
@@ -53,11 +54,11 @@ module.exports = {
     else
       req.body.nsfl = false;
     
-    var parsed = JSON.parse(req.body.postedTo);
+//    var parsed = JSON.parse(req.body.postedTo);
     //Used when cross posting is implemented!
 //    req.body.postedTo = parsed[0].id;'
     
-    req.body.postedTo = parsed.id;
+//    req.body.postedTo = parsed.id;
     
     var entry = {
       postedBy: req.body.postedBy,
@@ -123,9 +124,12 @@ module.exports = {
           entry.subs.push(doc.id);
           which++;
           if (postedTo[which] != undefined) {
+            console.log("Made it: 1");
             getSubs(which);
           } else {
+            console.log("Good? " + succeed);
             if (succeed) {
+              console.log("Made it: 2");
               createEntry(entry);
             }
           }
@@ -134,6 +138,7 @@ module.exports = {
     }
 
     function createEntry(entry) {
+      console.log("Made it: 3");
       Entry.create(entry)
       .populate('subs')
       .exec( function (err, doc) {
