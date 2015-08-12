@@ -7,13 +7,13 @@
     you are posting as <a href="/me"><span class="bold"><%= req.user.username %></span></a>
   </div>
   <ul>
-    <li><a href="/new/entry<% if (data.sub) { %>/<%= data.sub.slug %><% } %>">new entry</a></li>
-    <li><a href="/new/sub">create sub</a></li>
-    <li><a href="/sublist">list subs</a></li>
-    <li><a href="/logout">log out</a></li>
+    <li><a class="trigger-new-entry" href="/new/entry<% if (data.sub) { %>/<%= data.sub.slug %><% } %>">new entry</a></li>
+    <li><a class="trigger-new-sub" href="/new/sub">create sub</a></li>
+    <li><a class="trigger-list-subs" href="/sublist">list subs</a></li>
+    <li><a class="trigger-log-out" href="/logout">log out</a></li>
     <% if ( data.sub && (data.sub.creator.name == req.user.username) ) { %>
     <li class="pink bold pad-left-light">moderator:</li>
-    <li><a href="/sub/<%= data.sub.slug %>/edit">edit <%= data.sub.name %></a></li>
+    <li><a class="trigger-edit-sub" href="/sub/<%= data.sub.slug %>/edit">edit <%= data.sub.name %></a></li>
     <% } %>
     <% if (req.user.admin) { %>
     <%- include admin-controls %>

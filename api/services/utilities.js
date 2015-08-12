@@ -48,21 +48,27 @@ module.exports = {
     }
   },
 
-  timeSince: function (date) {
+  hoursSince: function (date) {
     var seconds = Math.floor((new Date() - date) / 1000);
-    var interval = Math.floor(seconds / 3600);
-    return interval;
-  },
-
-  popularity: function (date, score) {
-    var s  = (score/(this.timeSince(date)+1)).toFixed(2);
-    return s;
-  },
-
-  addPopScore: function (data) {
-    for (i = 0; i < data.length; i++) {
-      data[i].pop = this.popularity(new Date(data[i].createdAt),(data[i].ups - data[i].downs));
+    var interval = Math.floor(seconds / 31536000);
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) {
+      return interval;
     }
+    interval = Math.floor(seconds / 60);
+    if (interval > 1) {
+      return 1;
+    }
+    return 1;
+  },
+
+  sortByPopularity: function (data) {
+    for (var x = 0; x < data.length; x++) {
+      data[x].popularity = (data[x].ups - data[x].downs) / this.hoursSince(data[x].createdAt);
+    }
+    data.sort(function(a, b) {
+      return a.popularity == b.popularity ? 0 : (b.popularity > a.popularity ? 1 : -1);
+    });
     return data;
   },
 
@@ -85,7 +91,6 @@ module.exports = {
 
   sortByPop: function (data) {
     var i,m,j;
-    data = this.addPopScore(data);
     for (i = -1; ++i < data.length;) {
       for (m = j = i; ++j < data.length;) {
         mScore = data[m].pop;
@@ -143,6 +148,29 @@ module.exports = {
       break;
     }
     return monthInt;
-
+  },
+  
+  updateUser: function (user) {
+    User.findOne({ id: user })
+    .exec( function (err, doc) {
+      if(err) next(err);
+      
+      if(doc.hidensfw == undefined) {
+        doc.hidensfw = true;
+        doc.save();
+      }
+      if(doc.hidensfl == undefined) {
+        doc.hidensfl = true;
+        doc.save();
+      }
+    });
+  },
+  
+  getUserData: function (user, callback) {
+    User.findOne({ id: user })
+    .exec( function (err, doc) {
+      if(err) next(err);
+      if(doc) callback(null, doc);
+    });
   }
 }

@@ -53,9 +53,9 @@ module.exports = {
       type: 'string'
     },
 
-    posts: {
+    entries: {
       collection: 'entry',
-      via: 'slug'
+      via: 'subs'
     }
   }
 };

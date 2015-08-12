@@ -1,3 +1,4 @@
+<div class="loaded-view scroll-y push-1-3 col-2-3"></div>
 
 <div class="col-1-3 scroll-y entries front-page">
   <div class="row">
@@ -7,10 +8,14 @@
     <% for (which in entries) { %>
     <% var entry = entries[which] %>
     <% if (entry) { %>
+    <% if (entry.nsfw == true && user.hidensfw == true) { %>
+    <% } else { %>
+    <% if (entry.nsfl == true && user.hidensfl == true) { %>
+    <% } else { %>
     <% var date = new Date(entry.createdAt) %>
     <article class="row entry <%= active %><% if (entry.media) { %>has-media<% } %><% if (entry.sticky) { %> sticky<% } %>" data-timestamp="<%= date %>" data-id="<%= entry.id %>" id="<%= entry.id %>">
       <header>
-        <ul class="control">
+        <ul class="control desktop">
           <% if (user) { %>
           <% if (entry.votes[0]) { %>
           <% var up = (entry.votes[0].vote) %>
@@ -25,11 +30,16 @@
         </h1>
       </header>
       <cite>
-        <strong><%= entry.postedBy.name %></strong> &rarr; <a href="/sub/<%= entry.postedTo.slug %>"><%= entry.postedTo.name %></a><span class="timesince"> <%= timeSince(date) %> ago</span>
+        <strong><%= entry.postedBy.name %></strong> &rarr;
+        <% for (var x = 0; x < entry.subs.length; x++) { %>
+        <% if (x > 0) { %> / <% } %>
+        <a href="/sub/<%= entry.subs[x].slug %>"><%= entry.subs[x].name %></a>
+        <% } %>
+        <span class="timesince"><%= timeSince(date) %> ago</span>
       </cite>
       <footer>
         <div class="permalink">
-          <a href="/sub/<%= entry.postedTo.slug %>/<%= entry.slug %>#comments"><%= entry.commentCount %>&nbsp;comments</a>
+          <a href="/sub/<%= entry.subs[0].slug %>/<%= entry.slug %>#comments"><%= entry.commentCount %>&nbsp;comments</a>
 
         </div>
         <div class="score">
@@ -43,17 +53,15 @@
         <% if (entry.media) { if (entry.media.indexOf('.gif') > 0){ %><li>GIF</li><% } } %>
       </ul>
     </article>
-
-
-
     <% } %>
-
-
+    <% } %>
+    <% } %>
     <% } %>
   </div>
 
 </div>
 
+<% if (data.images.length > 6 && data.videos.length > 5 && data.text.length > 10) { %>
 <div class="col-2-3 scroll-y feature">
   <div class="features">
     <div class="row">
@@ -75,13 +83,15 @@
     </div>
     <div class="row tertiary-media videos flex">
       <% for (var x = 1; x < 5; x++) { %>
+      <% if (data.images[x]) { %>
       <div class="media image flex-item" style="background-image:url(<%= data.images[x].media %>)"> 
         <a href="#<%= data.images[x].id %>"><%= data.images[x].title %></a>
       </div>
       <% } %>
+      <% } %>
       <%
       for (var x = 0; x < 4; x++) { 
-        var media = data.videos[x].media;
+        var media = data.videos[x].media
         if(media.indexOf('youtu') > 0) {
           var which = "" 
           if (media.indexOf('watch?v') > 0) { 
@@ -101,18 +111,10 @@
             <a href="#<%= data.videos[x].id %>"><%= data.videos[x].title %></a>
           </div>
           <% }
-        } 
+        }
       } %>
+
     </div>
   </div>
 </div>
-
-
-
-
-<!--   <div class="overlay">
-    <div class="contain pad-sides">
-      
-    </div>
-  </div> -->
-
+<% } %>

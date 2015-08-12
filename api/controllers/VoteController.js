@@ -22,7 +22,7 @@ module.exports = {
 
     function doVote(exists) {
       var voteData;
-      console.log(exists);
+      console.log("Exists?", exists);
       if (exists) { // update a vote
         var same = (direction == "up");
         if (same == exists.vote) {
@@ -35,19 +35,19 @@ module.exports = {
             voteData = data;
             Entry.findOne(entry)
             .exec( function (err, doc) {
-              // console.log(voteData[0].vote)
+              console.log(voteData[0].vote)
               if (voteData[0].vote) {
-                // console.log("removed upvote")
+                console.log("removed upvote")
                 doc.ups--;
                 if (doc.ups < 0) doc.ups = 0;
               } else {
-                // console.log("removed downvote")
+                console.log("removed downvote")
                 doc.downs--;
                 if (doc.downs < 0) doc.downs = 0;
               }
               doc.save();
               blastVoteUpdate(entry, doc);
-              // console.log("document updated for destroy");
+              console.log("document updated for destroy");
               return res.json({ message: "Vote destroyed" });
             });
           });
@@ -57,23 +57,25 @@ module.exports = {
               if (vote) {
                 doc.ups++;
                 doc.downs--;
+                if (doc.downs < 0) doc.downs = 0;
               } else {
                 doc.downs++;
                 doc.ups--;
+                if (doc.ups < 0) doc.ups = 0;
               }
               doc.save();
               blastVoteUpdate(entry, doc);
-              // console.log("document updated for reversal of vote");
+              console.log("document updated for reversal of vote");
               return res.json({ message: "Vote updated" });
             });
           })
           
         }
-      } else { // create NEW vote
-        // console.log("VOTE DOES NOT EXIST")
+      } else { 
+        console.log("VOTE DOES NOT EXIST, creating...")
         Vote.create({ user: user.id, entry: entry, vote: vote })
         .exec( function (err, vote) {
-          // console.log("vote created");
+          console.log("vote created");
           updateEntry();
         });
       }

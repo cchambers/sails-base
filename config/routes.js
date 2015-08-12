@@ -13,6 +13,9 @@ module.exports.routes = {
   'post /new/name': 'NameController.create',
   'post /switch': 'NameController.switchTo',
 
+  'get /derk': 'EntryController.updateAll',
+  'get /girt': 'EntryController.list',
+
   'get /new/sub': 'SubController.new',
   'post /new/sub': 'SubController.create',
   'get /new/entry': 'EntryController.new',
@@ -28,7 +31,7 @@ module.exports.routes = {
 
   // 'get /op/makeadmin': 'UserController.makeadmin',
 
-  'get /sub/:sub': 'EntryController.listing',
+  'get /sub/:sub': 'FrontpageController.sub',
   'get /sub/:sub/edit': 'SubController.edit',
   'post /sub/:sub/edit': 'SubController.submitEdit',
   'get /sub/:sub/:slug': 'EntryController.single',
@@ -44,6 +47,7 @@ module.exports.routes = {
   'post /children/:id': 'CommentController.children',
 
   'get /sockets/join/:room': 'SocketController.joinRoom',
+  'post /sockets/settings/toggle': 'SocketController.userToggleSetting',
 
   'get /mail/send/:to': 'MailController.send',
   

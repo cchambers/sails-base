@@ -14,29 +14,15 @@ article.active .control {
 article ul.control {
   display: none;
   padding: 0;
-  padding-top: .75rem;
+  padding-top: 0.75rem;
+  padding-left: 1px;
   list-style: none;
   overflow: hidden;
-}
-
-.feature article ul.control {
-  display: none;
-  padding-bottom: 0.75rem;
-  padding-right: 0.75rem;
-  padding-top: 0;
-  list-style: none;
-  overflow: hidden;
-  float: left;
-}
-
-@media (max-width: 800px) {
-  .feature article ul.control {
-    display: block;
-  }
 }
 
 article ul.control li {
   display: block;
+  cursor: pointer;
   float: left;
   color: #f2f2f2;
   font-family: monospace;
@@ -178,8 +164,10 @@ article.active {
 }
 
 article:not(.active) .nsfw {
+/*
   -webkit-filter: blur(50px);
   filter: blur(50px);
+*/
 }
 
 article.active.nsfw {
@@ -215,10 +203,6 @@ article cite {
   color: #505050;
 }
 
-article header .vote.up {
-  transform: rotate(180deg);
-}
-
 article header li.active {
   opacity: 1;
 }
@@ -240,6 +224,7 @@ article footer:before {
   display: initial;
 }
 
+/*
 .postedTo {
   padding-top: 1rem;
   padding-left: .3rem;
@@ -261,4 +246,5 @@ article footer:before {
     display: block;
   }
 }
+*/
 
