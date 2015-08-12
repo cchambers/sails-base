@@ -14,11 +14,11 @@ article.active .control {
 article ul.control {
   display: none;
   padding: 0;
-  padding-top: .75rem;
+  padding-top: 0.75rem;
+  padding-left: 1px;
   list-style: none;
   overflow: hidden;
 }
-
 
 article ul.control li {
   display: block;

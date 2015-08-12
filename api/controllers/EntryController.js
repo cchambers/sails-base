@@ -60,6 +60,7 @@ module.exports = {
       markdown: req.body.markdown || "",
       content: req.body.content || "",
       postedTo: req.body.postedTo,
+      subs: [],
       subSlug: "",
       nsfw: req.body.nsfw,
       nsfl: req.body.nsfl
@@ -97,7 +98,8 @@ module.exports = {
             succeed = false;
             return res.json({ message: "That sub doesn't exist." });
           } else {
-            entry.subs.add(doc.id);
+            entry.subs.push(doc.id);
+            entry.subs.push("55b6baf7f62b98f214da1b8e");
             entry.postedBy = name.id;
             entry.subSlug = doc.slug;
             entry.ups = 1;
@@ -111,15 +113,16 @@ module.exports = {
 
     function createEntry(entry) {
       Entry.create(entry)
-      .exec( function (err, entry) {
-        console.log("Entry created:", entry.subSlug + "/" + entry.slug);
+      .exec( function (err, doc) {
+      if (err) next(err);
+        console.log("Entry created:", entry.subs[0].slug + "/" + entry.slug);
         Vote.create({
           user: req.user.id,
           name: entry.postedBy,
           entry: entry.id,
           vote: true
         }).exec( function (err, vote) {
-          return res.json({ message: "Success!", redirect: "/sub/" + entry.subSlug + "/" + entry.slug });
+          return res.json({ message: "Success!", redirect: "/sub/" + entry.subs[0].slug + "/" + entry.slug });
         })
       });
     }

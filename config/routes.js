@@ -31,7 +31,7 @@ module.exports.routes = {
 
   // 'get /op/makeadmin': 'UserController.makeadmin',
 
-  'get /sub/:sub': 'EntryController.listing',
+  'get /sub/:sub': 'FrontpageController.sub',
   'get /sub/:sub/edit': 'SubController.edit',
   'post /sub/:sub/edit': 'SubController.submitEdit',
   'get /sub/:sub/:slug': 'EntryController.single',

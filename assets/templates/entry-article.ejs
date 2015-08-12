@@ -1,10 +1,9 @@
+<% var date = new Date(entry.createdAt) %>
+
 <article class="row active <% if (entry.media) { %> has-media<% } %>" data-id="<%= entry.id %>">
   <div class="entry">
     <header>
-      
-      <h1>
       <ul class="control">
-        <!-- <li class="close-feature">hide</li> -->
         <li class="back">&larr;</li>
         <li class="close" title="close">x</li>
         <% if (user) { %>
@@ -18,7 +17,8 @@
         <% } %>
         <% } %>
       </ul>
-  <%= entry.title %>
+      <h1>
+        <%= entry.title %>
       </h1>
     </header>
     <section>
@@ -70,11 +70,16 @@
         <%= entry.content %>
       </section>
       <cite>
-        <strong><%= entry.postedBy.name %></strong> &rarr; <a href="/sub/<%= entry.postedTo.slug %>"><%= entry.postedTo.name %></a>
+        <strong><%= entry.postedBy.name %></strong> &rarr;
+        <% for (var x = 0; x < entry.subs.length; x++) { %>
+        <% if (x > 0) { %> / <% } %>
+        <a href="/sub/<%= entry.subs[x].slug %>"><%= entry.subs[x].name %></a>
+        <% } %>
+        <span class="timesince"><%= timeSince(date) %> ago</span>
       </cite>
       <footer>
         <div class="permalink">
-          <a href="/sub/<%= entry.postedTo.slug %>/<%= entry.slug %>">permalink</a>
+        <a href="/sub/<%= entry.subs[0].slug %>/<%= entry.slug %>">permalink</a>
         </div>
         <div class="score">
           <span class="totes"><%= entry.ups - entry.downs %></span>
