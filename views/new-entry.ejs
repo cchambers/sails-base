@@ -32,8 +32,8 @@
 <!--          <label for="mentions">Sub you want to post to (req)</label>-->
           <label for="mentions">You can post to one sub and cross post (optional) in up to two more</label>
           <textarea id="mentions" class="mention" type="text" placeholder="@sub" value="<% if (data.prefill) { %><%= data.prefill %><% } %>"></textarea>
-          <div class="postedTo"></div>
-          <textarea id="postedTo" name="postedTo" style="display:none;"></textarea>
+          <div class="subs"></div>
+          <textarea name="postedTo"></textarea>
         </div>
         
         <div class="row pad-bottom-light lh30">

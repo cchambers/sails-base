@@ -112,10 +112,10 @@
   right: 0;
   top: 1px;
   bottom: 0;
-  padding: 9px;
-  color: #fff;
+  line-height: 3rem;
+  padding-left: 0.5rem;
+  color: #fff !important;
   overflow: hidden;
-
   white-space: pre-wrap;
   word-wrap: break-word;
 }

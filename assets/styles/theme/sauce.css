@@ -56,7 +56,7 @@ body:after {
   transition: all 300ms ease-in;
 }
 
-strong {
+article strong {
   color: #DF3D82;
 }
 

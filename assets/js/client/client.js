@@ -98,7 +98,7 @@ var app = {
     },
 
     renderChildren: function (data, $li) {
-      var html = new EJS({ url: '/templates/load-replies.ejs' }).render({ entries: data });
+      var html = new EJS({ url: "/templates/load-replies.ejs" }).render({ entries: data });
       $li.append(html);
     }
   },
@@ -106,7 +106,7 @@ var app = {
   site: { // sitewide functionality
     setup: function () {
       var channel = app.utility.slug(location.pathname);
-      io.socket.get('/sockets/join/' + channel);
+      io.socket.get("/sockets/join/" + channel);
       app.site.setupSockets();
 
       app.keys = {
@@ -137,14 +137,13 @@ var app = {
       }
       // OKAY, THEN!
 
-      $('.mention').mentionsInput({
-        onDataRequest:function (mode, query, callback) {
-        var subList = [];
-
+      $(".mention").mentionsInput({
+        onDataRequest: function (mode, query, callback) {
+          var subList = [];
           if(subList.length == 0) {
             $.ajax({
-              type: 'GET',
-              url: '/subs',
+              type: "GET",
+              url: "/subs",
               data: { },
               async: false,
               success: function (data) {
@@ -152,28 +151,21 @@ var app = {
               }
             });
           }
-
           var list = _.filter(subList, function (item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
-
           callback.call(this, list);
-        }
+        },
+        triggerChar: "/"
       });
 
-      $("body").on("keyup", ".mention", function (e) {
-        if(e.which == 13) {
-          $('textarea.mention').mentionsInput('val', function(data) {
-            var split = data.split("@");
-            var subs = [];
-            for (i=1; i < split.length; i++) {
-              var name = split[i].match(/\[(.*)\]/);
-              var idSplit = split[i].match(/\((.*)\)/);
-              var id = idSplit[1];
-              $('.postedTo').append('<strong>' + name[1] + ', </strong>');
-              $('#postedTo').append(id.replace('"','')+' ');
-            }
-            $('textarea.mention').mentionsInput('reset');
-          });
-        }
+      $("body").on("blur", ".mention", function (e) {
+
+      });
+
+      $("body").on("blur", ".mention", function (e) {
+        $("textarea.mention").mentionsInput("getMentions", function(data) {
+          var mentionsData = JSON.stringify(data);
+          $("textarea[name='postedTo']").val(mentionsData);
+        });
       });
 
       $(".features").on("click", "a", app.frontPage.scrollToEntry);
