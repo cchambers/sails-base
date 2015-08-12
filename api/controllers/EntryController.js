@@ -50,7 +50,7 @@ module.exports = {
   },
 
   create: function (req, res) {
-<<<<<<< HEAD
+    <<<<<<< HEAD
 //    var succeed = true;
 //
 //    function errOut(data) {
@@ -113,58 +113,58 @@ console.log(req.body.postedTo);
 //          errOut({ message: "Need a unique slug." });
 //        }
 =======
-    var succeed = true;
-    var postedTo = req.body.postedTo.trim();
-    postedTo = postedTo.split(" ");
-    console.log("subs:",postedTo);
-    function errOut(data) {
-      return res.json(data);
-    }
-    
-    if(req.body.nsfw == 'on')
-      req.body.nsfw = true;
-    else
-      req.body.nsfw = false;
-    
-    if(req.body.nsfl == 'on')
-      req.body.nsfl = true;
-    else
-      req.body.nsfl = false;
-    
+var succeed = true;
+var postedTo = req.body.postedTo.trim();
+postedTo = postedTo.split(" ");
+console.log("subs:",postedTo);
+function errOut(data) {
+  return res.json(data);
+}
+
+if(req.body.nsfw == 'on')
+  req.body.nsfw = true;
+else
+  req.body.nsfw = false;
+
+if(req.body.nsfl == 'on')
+  req.body.nsfl = true;
+else
+  req.body.nsfl = false;
+
 //    var parsed = JSON.parse(req.body.postedTo);
     //Used when cross posting is implemented!
 //    req.body.postedTo = parsed[0].id;'
-    
+
 //    req.body.postedTo = parsed.id;
-    
-    var entry = {
-      postedBy: req.body.postedBy,
-      title: req.body.title,
-      slug: req.body.slug,
-      media: req.body.media || "",
-      markdown: req.body.markdown || "",
-      content: req.body.content || "",
-      subs: [],
-      subSlug: "",
-      nsfw: req.body.nsfw,
-      nsfl: req.body.nsfl
-    }
 
-    if (entry.title == "") {
-      succeed = false;
-      errOut({ message: "Need a title." });
-    }
-    if (entry.slug == "") {
-      succeed = false;
-      errOut({ message: "Bad slug." });
-    }
-    if (postedTo.length == 0) {
-      succeed = false;
-      errOut({ message: "Pick a sub!" });
-    }
+var entry = {
+  postedBy: req.body.postedBy,
+  title: req.body.title,
+  slug: req.body.slug,
+  media: req.body.media || "",
+  markdown: req.body.markdown || "",
+  content: req.body.content || "",
+  subs: [],
+  subSlug: "",
+  nsfw: req.body.nsfw,
+  nsfl: req.body.nsfl
+}
 
-    Name.findOne({ name: entry.postedBy })
-    .exec( function (err, name) {
+if (entry.title == "") {
+  succeed = false;
+  errOut({ message: "Need a title." });
+}
+if (entry.slug == "") {
+  succeed = false;
+  errOut({ message: "Bad slug." });
+}
+if (postedTo.length == 0) {
+  succeed = false;
+  errOut({ message: "Pick a sub!" });
+}
+
+Name.findOne({ name: entry.postedBy })
+.exec( function (err, name) {
       // if name belongs to user
       if (name.user != req.user.id) {
         return res.json({ message: "Nice try, bub." });
@@ -183,50 +183,49 @@ console.log(req.body.postedTo);
     });
 
 
-    function getSubs(which) {
-      var slug = postedTo[which];
-      console.log("getting " + slug);
-      Sub.findOne({ slug: slug })
-      .exec( function (err, doc) {
-        if (!doc) {
-          succeed = false;
-          return res.json({ message: "That sub ("+slug+") doesn't exist." });
-        } else {
-          entry.subs.push(doc.id);
-          which++;
-          if (postedTo[which] != undefined) {
-            console.log("Made it: 1");
-            getSubs(which);
-          } else {
-            console.log("Good? " + succeed);
-            if (succeed) {
-              console.log("Made it: 2");
-              createEntry(entry);
-            }
-          }
+function getSubs(which) {
+  var slug = postedTo[which];
+  console.log("getting " + slug);
+  Sub.findOne({ slug: slug })
+  .exec( function (err, doc) {
+    if (!doc) {
+      succeed = false;
+      return res.json({ message: "That sub ("+slug+") doesn't exist." });
+    } else {
+      entry.subs.push(doc.id);
+      which++;
+      if (postedTo[which] != undefined) {
+        console.log("Made it: 1");
+        getSubs(which);
+      } else {
+        console.log("Good? " + succeed);
+        if (succeed) {
+          console.log("Made it: 2");
+          createEntry(entry);
         }
-      });
+      }
     }
+  });
+}
 
-    function createEntry(entry) {
-      console.log("Made it: 3");
-      Entry.create(entry)
-      .populate('subs')
-      .exec( function (err, doc) {
-        if (err) next(err);
-        console.log("Entry created:", postedTo[0] + "/" + doc.slug);
-        Vote.create({
-          user: req.user.id,
-          name: doc.postedBy,
-          entry: doc.id,
-          vote: true
-        }).exec( function (err, vote) {
-          return res.json({ message: "Success!", redirect: "/sub/" + postedTo[0] + "/" + doc.slug });
-        })
-      });
-    }
-  },
->>>>>>> 64e1eaec7e3b714fe2f40aa94e9086586aa47c86
+function createEntry(entry) {
+  console.log("Made it: 3");
+  Entry.create(entry)
+  .populate('subs')
+  .exec( function (err, doc) {
+    if (err) next(err);
+    console.log("Entry created:", postedTo[0] + "/" + doc.slug);
+    Vote.create({
+      user: req.user.id,
+      name: doc.postedBy,
+      entry: doc.id,
+      vote: true
+    }).exec( function (err, vote) {
+      return res.json({ message: "Success!", redirect: "/sub/" + postedTo[0] + "/" + doc.slug });
+    })
+  });
+}
+},
 
 singleJSON: function (req, res) {
   var userid = (req.session.passport.user) ? req.session.passport.user : "none";
