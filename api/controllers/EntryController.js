@@ -37,7 +37,8 @@ module.exports = {
 
   create: function (req, res) {
     var succeed = true;
-
+    var postedTo = req.body.postedTo.split(" ");
+    console.log("subs:",postedTo);
     function errOut(data) {
       return res.json(data);
     }
@@ -59,7 +60,6 @@ module.exports = {
       media: req.body.media || "",
       markdown: req.body.markdown || "",
       content: req.body.content || "",
-      postedTo: req.body.postedTo,
       subs: [],
       subSlug: "",
       nsfw: req.body.nsfw,
@@ -74,7 +74,7 @@ module.exports = {
       succeed = false;
       errOut({ message: "Bad slug." });
     }
-    if (entry.postedTo == "") {
+    if (postedTo.length == 0) {
       succeed = false;
       errOut({ message: "Pick a sub!" });
     }
@@ -92,37 +92,50 @@ module.exports = {
           succeed = false;
           errOut({ message: "Need a unique slug." });
         }
-        Sub.findOne({slug: entry.postedTo})
-        .exec( function (err, doc) {
-          if (!doc) {
-            succeed = false;
-            return res.json({ message: "That sub doesn't exist." });
+
+        entry.postedBy = name.id;
+        entry.ups = 1;
+
+        getSubs(0);
+      });
+    });
+
+
+    function getSubs(which) {
+      var slug = postedTo[which];
+      console.log("getting " + slug);
+      Sub.findOne({ slug: slug })
+      .exec( function (err, doc) {
+        if (!doc) {
+          succeed = false;
+          return res.json({ message: "That sub ("+slug+") doesn't exist." });
+        } else {
+          entry.subs.push(doc.id);
+          which++;
+          if (postedTo[which] != undefined) {
+            getSubs(which);
           } else {
-            entry.subs.push(doc.id);
-            entry.subs.push("55b6baf7f62b98f214da1b8e");
-            entry.postedBy = name.id;
-            entry.subSlug = doc.slug;
-            entry.ups = 1;
             if (succeed) {
               createEntry(entry);
             }
           }
-        });
+        }
       });
-    });
+    }
 
     function createEntry(entry) {
       Entry.create(entry)
+      .populate('subs')
       .exec( function (err, doc) {
-      if (err) next(err);
-        console.log("Entry created:", entry.subs[0].slug + "/" + entry.slug);
+        if (err) next(err);
+        console.log("Entry created:", postedTo[0] + "/" + doc.slug);
         Vote.create({
           user: req.user.id,
-          name: entry.postedBy,
-          entry: entry.id,
+          name: doc.postedBy,
+          entry: doc.id,
           vote: true
         }).exec( function (err, vote) {
-          return res.json({ message: "Success!", redirect: "/sub/" + entry.subs[0].slug + "/" + entry.slug });
+          return res.json({ message: "Success!", redirect: "/sub/" + postedTo[0] + "/" + doc.slug });
         })
       });
     }
@@ -273,9 +286,9 @@ module.exports = {
             var userData = undefined;
             utilities.getUserData(userid, function (err, ud) {
               if(err) mext(err)
-              if(ud) userData = ud;
+                if(ud) userData = ud;
 //              console.info(ud);
-            });
+});
             console.log(userData);
             if(userData) {
               console.info("Got the user!");
@@ -295,76 +308,76 @@ module.exports = {
             listingView();
           }
         });
+}
+}
+getEntries();
+},
+
+single: function (req, res) {
+  var viewData = {
+    entries: []
+  };
+
+  getSub();
+
+  function getSub() {
+    Sub.findOne({ slug: req.params.sub })
+    .exec( function (err, doc) {
+      if (doc) {
+        viewData.sub = doc;
+        getEntry();
+      } else {
+        return res.json({ message: "Sub doesn't exist" });
       }
-    }
-    getEntries();
-  },
+    });
+  }
 
-  single: function (req, res) {
-    var viewData = {
-      entries: []
-    };
-
-    getSub();
-
-    function getSub() {
-      Sub.findOne({ slug: req.params.sub })
+  function getEntry() {
+    if (req.user) {
+      var userid = req.user.id || "none";
+      Entry.findOne({ slug: req.params.slug })
+      .populate('comments')
+      .populate('postedTo')
+      .populate('postedBy')
+      .populate('votes', { user: userid })
       .exec( function (err, doc) {
-        if (doc) {
-          viewData.sub = doc;
-          getEntry();
+        viewData.entries.push(doc);
+        doc.commentAmmount = doc.comments.length;
+        getComments();
+      });
+    } else {
+      Entry.findOne({ slug: req.params.slug })
+      .populate('comments')
+      .populate('postedTo')
+      .populate('postedBy')
+      .exec(function (err, data) {
+        viewData.entries.push(data);
+        if (data) {
+          data.commentAmmount = data.comments.length;
+          getComments();
         } else {
-          return res.json({ message: "Sub doesn't exist" });
+          console.log("500 ERROR: NON ENTRY -> ", req.params.sub + " / " + req.params.slug)
+          return res.redirect("/");
         }
       });
     }
-
-    function getEntry() {
-      if (req.user) {
-        var userid = req.user.id || "none";
-        Entry.findOne({ slug: req.params.slug })
-        .populate('comments')
-        .populate('postedTo')
-        .populate('postedBy')
-        .populate('votes', { user: userid })
-        .exec( function (err, doc) {
-          viewData.entries.push(doc);
-          doc.commentAmmount = doc.comments.length;
-          getComments();
-        });
-      } else {
-        Entry.findOne({ slug: req.params.slug })
-        .populate('comments')
-        .populate('postedTo')
-        .populate('postedBy')
-        .exec(function (err, data) {
-          viewData.entries.push(data);
-          if (data) {
-            data.commentAmmount = data.comments.length;
-            getComments();
-          } else {
-            console.log("500 ERROR: NON ENTRY -> ", req.params.sub + " / " + req.params.slug)
-            return res.redirect("/");
-          }
-        });
-      }
-    }
-
-    function getComments() {
-      var ids = _.pluck(viewData.entries[0].comments, 'id');
-      Comment.find({id: ids, parent: {$eq: null}})
-      .populate('children')
-      .populate('parent')
-      .populate('postedBy')
-      .exec( function (err, data) {
-        viewData.entries[0].comments = data;
-        singleView();
-      });
-    }
-
-    function singleView() {
-      return res.view('entry', { user: req.user, data: viewData });
-    }
   }
+
+  function getComments() {
+    var ids = _.pluck(viewData.entries[0].comments, 'id');
+    Comment.find({id: ids, parent: {$eq: null}})
+    .populate('children')
+    .populate('parent')
+    .populate('postedBy')
+    .exec( function (err, data) {
+      viewData.entries[0].comments = data;
+      singleView();
+    });
+  }
+
+  function singleView() {
+    return res.view('entry', { user: req.user, data: viewData });
+  }
+}
 
 };
