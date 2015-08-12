@@ -18,7 +18,6 @@ module.exports = {
       console.log("[BOT] Filtering " + entries.length + " entries...")
       for (entry in entries) {
         var data = {
-          postedBy: '55be24b83b118ad47c1bd24a',
           postedTo: entries[entry].data.subreddit,
           title: entries[entry].data.title,
           media: entries[entry].data.url,
@@ -34,32 +33,48 @@ module.exports = {
 
   approve: function (req, res) {
     console.log("APPROVING...")
-    Botted.findOne(req.params.id)
-    .exec( function (err, doc) {
-      doc.reviewed = true;
-      doc.save();
+    var whichName;
 
-      var sub = doc.postedTo
-      Sub.findOne({ name: sub })
-      .exec( function (err, sub) {
-        var entry = {
-          postedBy: doc.postedBy,
-          title: doc.title,
-          slug: doc.title.toLowerCase().replace(/[^a-zA-Z0-9\s]/g,'').replace(/\s/g, "-"),
-          media: doc.media || "",
-          postedTo: sub.id,
-          subs: [sub.id],
-          nsfw: doc.nsfw,
-          ups: Math.floor(Math.random() * 6) + 2
-        }
+    Name.find({ user: '55c1900e895c065c2e006061' })
+    .exec( function (err, data) {
+      var rand = Math.floor(Math.random()*(data.length-0+1)+0);
+      whichName = data[rand].id;
+      andGo();
+    });
 
-        Entry.create(entry)
-        .exec( function (err, doc) {
-          if (err) return res.json(err)
-          return res.json({ message: "Success!" })
+    function andGo() {
+      Botted.findOne(req.params.id)
+      .exec( function (err, doc) {
+        doc.reviewed = true;
+        doc.save();
+        var subslug = doc.postedTo;
+        Sub.findOne({ name: subslug })
+        .exec( function (err, sub) {
+          if (sub == undefined) {
+            var sub = {
+              id: '55c2af394d9e89df572ba5ba'
+            }
+          }
+          var entry = {
+            postedBy: whichName,
+            title: doc.title,
+            slug: doc.title.toLowerCase().replace(/[^a-zA-Z0-9\s]/g,'').replace(/\s/g, "-"),
+            media: doc.media || "",
+            postedTo: sub.id,
+            subs: [sub.id],
+            nsfw: doc.nsfw,
+            ups: Math.floor(Math.random() * 6) + 2
+          }
+
+          Entry.create(entry)
+          .exec( function (err, doc) {
+            if (err) return res.json(err)
+              return res.json({ message: "Success!" })
+          });
         });
       });
-    });
+    }
+    
   },
 
   ignore: function (req, res) {
