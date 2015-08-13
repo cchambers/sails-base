@@ -37,7 +37,7 @@ module.exports = {
 
     Name.find({ user: '55c1900e895c065c2e006061' })
     .exec( function (err, data) {
-      var rand = Math.floor(Math.random()*(data.length-0+1)+0);
+      var rand = Math.floor(Math.random()*(data.length-0)+0);
       whichName = data[rand].id;
       andGo();
     });
@@ -63,7 +63,8 @@ module.exports = {
             postedTo: sub.id,
             subs: [sub.id],
             nsfw: doc.nsfw,
-            ups: Math.floor(Math.random() * 6) + 2
+            ups: Math.floor(Math.random() * 12) + 4,
+            downs: Math.floor(Math.random() * 6) + 2
           }
 
           Entry.create(entry)

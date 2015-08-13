@@ -117,4 +117,12 @@
     </div>
   </div>
 </div>
-<% } %>
+<% } else { %>
+  uh, not enough shit, dude:
+  <ul>
+    <li>images: <%= data.images.length %> </li>
+    <li>videos: <%= data.videos.length %> </li>
+    <li>text: <%= data.text.length %> </li>
+  </ul>
+<% } %> 
+
