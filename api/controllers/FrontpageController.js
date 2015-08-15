@@ -142,13 +142,18 @@ module.exports = {
           .populate('subs')
           .populate('votes', { user: userid })
           .exec( function (err, single) {
-            viewdata.single = single;
-            Comment.find({ entry: single.id })
-            .populate('postedBy')
-            .exec( function (err, comments) {
-              viewdata.single.comments = comments;
+            if (single) {
+              console.log(single.id);
+              viewdata.single = single;
+              Comment.find({ entry: single.id })
+              .populate('postedBy')
+              .exec( function (err, comments) {
+                viewdata.single.comments = comments;
+                loadView();
+              });
+            } else {
               loadView();
-            });
+            }
           })
         });
       } else {
@@ -156,7 +161,7 @@ module.exports = {
       }
     });
 
-    function loadView() {
+function loadView() {
       //return res.json({ user: req.user, data: viewdata  })
       return res.view('front-page', { user: req.user, data: viewdata  })
     }

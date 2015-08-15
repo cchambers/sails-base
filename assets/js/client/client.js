@@ -313,7 +313,7 @@ var app = {
       e.stopPropagation();
       var dir = $(this).data().dir;
       var $el = $(this);
-      var $entry = $(".entries article.active");
+      var $entry = $(".loaded-view article");
       var id = $entry.data().id;
       var score = {
         ups: parseInt($entry.find(".ups").text()),
@@ -428,6 +428,10 @@ var app = {
       });
       $("body").off("keyup.main")
       $("body").on("keyup", app.frontPage.keypressHandler);
+      var $target = $(".front-page article.active");
+      if ($target.length > 0) {
+        app.frontPage.singleScroller($target);
+      }
     },
 
     keypressHandler: function (e) {
@@ -499,6 +503,14 @@ var app = {
       var t = $(this).attr("href");
       if ($(t).length > 0) {
         var target = $(t).offset().top - 120;
+        if (target < 0) { target = 1; }
+        $(".entries").animate({ scrollTop: target+"px" }, 250);
+      }
+    },
+
+    singleScroller: function ($el) {
+      if ($el.length > 0) {
+        var target = $el.offset().top - 120;
         if (target < 0) { target = 1; }
         $(".entries").animate({ scrollTop: target+"px" }, 250);
       }

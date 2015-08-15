@@ -15,9 +15,11 @@
       <% 
       function timeSince (date) {var seconds = Math.floor((new Date() - date) / 1000);var interval = Math.floor(seconds / 31536000);if (interval > 1) {return interval + " years";}interval = Math.floor(seconds / 2592000);if (interval > 1) {return interval + " months";}interval = Math.floor(seconds / 86400);if (interval > 1) {return interval + " days";}interval = Math.floor(seconds / 3600);if (interval > 1) {return interval + " hours";}interval = Math.floor(seconds / 60);if (interval > 1) {return interval + " minutes";}return Math.floor(seconds) + " seconds";}
 
-      var active = "" 
+      var active = "";
       var entries = data.entries; 
       for (which in entries) { 
+
+
        var entry = entries[which]; 
        if (entry) { 
          if (entry.nsfw == true && user.hidensfw == true) { 
@@ -25,8 +27,13 @@
            if (entry.nsfl == true && user.hidensfl == true) { 
            } else { 
              var date = new Date(entry.createdAt);
+             if (data.single && entry.id == data.single.id) {
+               active = " active";
+             } else {
+               active = "";
+             }
              %>
-             <article class="row entry <%= active %><% if (entry.oembed && entry.ombed != "") { %>has-media<% } %><% if (entry.sticky) { %> sticky<% } %>" data-timestamp="<%= date %>" data-id="<%= entry.id %>" id="<%= entry.id %>">
+             <article class="row entry<%= active %><% if (entry.oembed && entry.ombed != "") { %> has-media<% } %><% if (entry.sticky) { %> sticky<% } %>" data-timestamp="<%= date %>" data-id="<%= entry.id %>" id="<%= entry.id %>">
               <header>
                 <h1>
                   <%= entry.title %>
@@ -35,7 +42,7 @@
               <% if (entry.oembed && entry.ombed != "") { 
                 var oembed = JSON.parse(entry.oembed);
                 var thumb = oembed.thumbnail_url;
-                if (thumb != "") {
+                if (thumb != "" && thumb != undefined) {
                   %>
                   <div class="thumb" style="">
                     <div class="nail" style="background-image:url(<%= thumb %>)"></div>
