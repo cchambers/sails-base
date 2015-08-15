@@ -66,13 +66,34 @@ module.exports = {
             ups: Math.floor(Math.random() * 12) + 4,
             downs: Math.floor(Math.random() * 6) + 2
           }
-
-          Entry.create(entry)
-          .exec( function (err, doc) {
-            if (err) return res.json(err)
-              return res.json({ message: "Success!" })
-          });
+          if (entry.media != "") {
+            var uri = decodeURI(entry.media);
+            var api = "http://api.embed.ly/1/oembed?url="+uri+"&key=8f0ccd90b8974261a8d908e5f409f7cb";
+            getMediaEmbed(api, entry);
+          } else {
+            createEntry(entry);
+          }
         });
+      });
+    }
+
+    function getMediaEmbed(api, entry) {
+      request(api, function (error, response, body) {
+        console.log(api);
+        if (!error && response.statusCode == 200) {
+          entry.oembed = body;
+          createEntry(entry);
+        } else {
+          return res.json({ message: "Error." }) 
+        }
+      });
+    }
+
+    function createEntry(entry) {
+      Entry.create(entry)
+      .exec( function (err, doc) {
+        if (err) return res.json(err)
+          return res.json({ message: "Success!" })
       });
     }
     

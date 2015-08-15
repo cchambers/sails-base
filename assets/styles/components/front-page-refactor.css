@@ -31,31 +31,24 @@
 
 .entries .thumb {
   position: absolute;
-  height: 15rem;
-  width: 15rem;
-  right: -3rem;
-  top: -3rem;
-  opacity: .25;
+  height: 5rem;
+  width: 5rem;
+  top: 0.75rem;
+  right: 0.75rem;
   overflow: hidden;
-  transform: rotate(30deg);
   transition: all 100ms ease;
 }
-
-.entries article.active .thumb {
-  opacity: .15;
-  transform: translateX(50%) rotate(30deg);
-}
-
 
 .entries .thumb .nail {
   position: absolute;
   top: 50%; left: 50%;
-  height: 150%;
-  width: 150%;
-  transform: translateX(-50%) translateY(-50%) rotate(-30deg);
+  height: 100%;
+  width: 100%;
+  transform: translateX(-50%) translateY(-50%);
   background-position: top center;
-  background-size: 100% auto;
+  background-size: cover;
   background-repeat: no-repeat;
+  border-radius: .5rem;
 }
 
 .height-set {  
@@ -296,7 +289,12 @@ ul.text-entries li + li {
 
 .entries article {
   padding: 0.75rem;
+  position: relative;
   overflow: hidden;
+}
+
+.entries article.has-media {
+  padding-right: 6.75rem;
 }
 
 .loaded-view h1 {
