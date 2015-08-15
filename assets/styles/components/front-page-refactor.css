@@ -29,6 +29,35 @@
   border-bottom: 1px solid #ddd;
 }
 
+.entries .thumb {
+  position: absolute;
+  height: 15rem;
+  width: 15rem;
+  right: -3rem;
+  top: -3rem;
+  opacity: .25;
+  overflow: hidden;
+  transform: rotate(30deg);
+  transition: all 100ms ease;
+}
+
+.entries article.active .thumb {
+  opacity: .15;
+  transform: translateX(50%) rotate(30deg);
+}
+
+
+.entries .thumb .nail {
+  position: absolute;
+  top: 50%; left: 50%;
+  height: 150%;
+  width: 150%;
+  transform: translateX(-50%) translateY(-50%) rotate(-30deg);
+  background-position: top center;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+}
+
 .height-set {  
   height: calc(100vh - 6rem);
   position: absolute;
@@ -220,6 +249,7 @@ ul.text-entries li + li {
   width: 4.5rem;
   float: left;
   height: calc(100vh - 6rem);
+  list-style: none;
 }
 
 .single .data {

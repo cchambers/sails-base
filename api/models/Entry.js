@@ -17,6 +17,10 @@ module.exports = {
       minLength: 2
     },
 
+    omedia: {
+      type: 'json'
+    },
+
     content: {
       type: 'string'
     },

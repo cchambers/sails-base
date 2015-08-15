@@ -104,11 +104,12 @@ module.exports = {
     });
 
     function loadView() {
+      //return res.json({ user: req.user, data: viewdata  })
       return res.view('front-page', { user: req.user, data: viewdata  })
     }
   },
 
-  subEntry: function (req, res) {
+  single: function (req, res) {
     var viewdata = {
       images: [],
       text: [],
@@ -136,14 +137,18 @@ module.exports = {
           if (err) return next(err);
           viewdata.entries = data;
           Entry.findOne({ slug: req.params.slug })
-          .populate('comments')
           .populate('postedTo')
           .populate('postedBy')
           .populate('subs')
           .populate('votes', { user: userid })
           .exec( function (err, single) {
             viewdata.single = single;
-            loadView();
+            Comment.find({ entry: single.id })
+            .populate('postedBy')
+            .exec( function (err, comments) {
+              viewdata.single.comments = comments;
+              loadView();
+            });
           })
         });
       } else {
@@ -152,6 +157,7 @@ module.exports = {
     });
 
     function loadView() {
+      //return res.json({ user: req.user, data: viewdata  })
       return res.view('front-page', { user: req.user, data: viewdata  })
     }
   }

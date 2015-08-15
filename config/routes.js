@@ -34,7 +34,7 @@ module.exports.routes = {
   'get /sub/:sub': 'FrontpageController.sub',
   'get /sub/:sub/edit': 'SubController.edit',
   'post /sub/:sub/edit': 'SubController.submitEdit',
-  'get /sub/:sub/:slug': 'FrontpageController.subEntry',
+  'get /sub/:sub/:slug': 'FrontpageController.single',
 
   'get /verify/:id': 'UserController.verify',
   'get /user/:user': 'UserController.userProfile',

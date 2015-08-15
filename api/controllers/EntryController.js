@@ -1,4 +1,5 @@
 var utilities = require('../services/utilities');
+var request = require('request');
 
 module.exports = {
   new: function (req, res) {
@@ -57,6 +58,8 @@ module.exports = {
       return res.json(data);
     }
 
+    // 8f0ccd90b8974261a8d908e5f409f7cb
+
     var entry = {
       postedBy: req.body.postedBy,
       title: req.body.title,
@@ -83,30 +86,52 @@ module.exports = {
       errOut({ message: "Pick a sub!" });
     }
 
-    Name.findOne({ name: entry.postedBy })
-    .exec( function (err, name) {
-      // if name belongs to user
-      if (name.user != req.user.id) {
-        return res.json({ message: "Nice try, bub." });
-      }
+    if (entry.media != "") {
+      var uri = decodeURI(entry.media);
+      var api = "http://api.embed.ly/1/oembed?url="+uri+"&key=8f0ccd90b8974261a8d908e5f409f7cb";
+      getMediaEmbed(api);
+    } else {
+      begin();
+    }
 
-      Entry.findOne({ slug: entry.slug })
-      .exec( function (err, doc) {
-        if (doc) {
-          succeed = false;
-          errOut({ message: "Need a unique slug." });
+    function getMediaEmbed(api) {
+      console.log(api)
+      request(api, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          console.log(body);
+          entry.oembed = body;
+          begin();
+        } else {
+          return res.json({ message: "Error." }) 
         }
-        entry.postedBy = name.id;
-        entry.ups = 1;
-        for (var x = 0; x < mentionsData.length; x++) {
-          entry.subs.push(mentionsData[x].id);
-        }
-        createEntry(entry);
       });
-    });
+    }
+
+    function begin() {
+      Name.findOne({ name: entry.postedBy })
+      .exec( function (err, name) {
+        // if name belongs to user
+        if (name.user != req.user.id) {
+          return res.json({ message: "Nice try, bub." });
+        }
+
+        Entry.findOne({ slug: entry.slug })
+        .exec( function (err, doc) {
+          if (doc) {
+            succeed = false;
+            errOut({ message: "Need a unique slug." });
+          }
+          entry.postedBy = name.id;
+          entry.ups = 1;
+          for (var x = 0; x < mentionsData.length; x++) {
+            entry.subs.push(mentionsData[x].id);
+          }
+          createEntry(entry);
+        });
+      });
+    }
 
     function createEntry(entry) {
-      console.log("Made it: 3");
       Entry.create(entry)
       .populate('subs')
       .exec( function (err, doc) {

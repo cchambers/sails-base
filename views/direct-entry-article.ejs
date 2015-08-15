@@ -115,23 +115,23 @@
           <%  var comments = entry.comments;
           if (comments.length > 0) { %>
           <ul>
-            <% for (comment in comments) {%>
-            <li data-id="<%= comments[comment].id %>" id="<%= comments[comment].id %>">
+            <% for (var x = 0; x < comments.length; x++) { %>
+            <li data-id="<%= comments[x].id %>" id="<%= comments[x].id %>">
               <header>
-                <%= comments[comment].postedBy.name %>
+              <%= comments[x].postedBy.name %>
               </header>
               <section>
-                <%= comments[comment].content %>
+              <%= comments[x].content %>
               </section>
               <footer class="new-thing">
                 <a href="#" class="make-reply">reply</a>
-                <% if (comments[comment].children.length > 0) { %>
-                <a href="#<%= comments[comment].id %>" class="load-replies">load <%= comments[comment].children.length %> comments</a>
+                <% if (comments[x].children.length > 0) { %>
+                <a href="#<%= comments[x].id %>" class="load-replies">load <%= comments[x].children.length %> comments</a>
                 <% } %>
 
                 <form class="off" method="POST" data-callback="output" action="/new/comment">
                   <div class="row pad-bottom-light">
-                    <input name="parent" hidden value="<%= comments[comment].id %>">
+                  <input name="parent" hidden value="<%= comments[x].id %>">
                     <textarea name="message" placeholder="reply..."></textarea>
                   </div>
                   <div class="row pad-bottom-light">
