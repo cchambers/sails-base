@@ -2,7 +2,8 @@
 <div class="single">
   <ul class="control scroll-y">
     <li class="back"><i class="icon-arrow_back"></i></li>
-    <li class="close" title="close"><i class="icon-view_headline touch"></i><i class="icon-view_module desktop"></i></li>
+    <li class="close touch" title="close"><i class="icon-view_headline"></i></li>
+    <li class="close desktop" title="close"></i><i class="icon-view_module"></i></li>
     <% if (user) { %>
     <% if (entry.votes[0]) { %>
     <% var up = (entry.votes[0].vote) %>
@@ -11,6 +12,15 @@
     <% } else { %>
     <li class="vote up" data-dir="up"><i class="icon-thumb_up"></i></li>
     <li class="vote down" data-dir="down"><i class="icon-thumb_down"></i></li>
+    <% } %>
+    <% if (user.admin) { %>
+    <li class="tag<% if (entry.special) { %> active<% } %>" data-tag="special"><i class="icon-new_releases"></i></li>
+    <li class="tag<% if (entry.sticky) { %> active<% } %>" data-tag="sticky"><i class="icon-adjust"></i></li>
+    <li class="tag<% if (entry.nsfw) { %> active<% } %>" data-tag="nsfw"><i class="icon-remove_red_eye"></i></li>
+    <li class="tag<% if (entry.nsfl) { %> active<% } %>" data-tag="nsfl"><i class="icon-flight_land"></i></li>
+    <% } %>
+    <% if ( (entry.postedBy.name == user.username) || user.admin ) { %>
+    <li class="delete"><i class="icon-indeterminate_check_box"></i></li>
     <% } %>
     <% } %>
   </ul>
@@ -118,10 +128,10 @@
             <% for (var x = 0; x < comments.length; x++) { %>
             <li data-id="<%= comments[x].id %>" id="<%= comments[x].id %>">
               <header>
-              <%= comments[x].postedBy.name %>
+                <%= comments[x].postedBy.name %>
               </header>
               <section>
-              <%= comments[x].content %>
+                <%= comments[x].content %>
               </section>
               <footer class="new-thing">
                 <a href="#" class="make-reply">reply</a>
@@ -131,7 +141,7 @@
 
                 <form class="off" method="POST" data-callback="output" action="/new/comment">
                   <div class="row pad-bottom-light">
-                  <input name="parent" hidden value="<%= comments[x].id %>">
+                    <input name="parent" hidden value="<%= comments[x].id %>">
                     <textarea name="message" placeholder="reply..."></textarea>
                   </div>
                   <div class="row pad-bottom-light">

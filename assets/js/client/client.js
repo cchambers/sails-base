@@ -481,8 +481,13 @@ var app = {
     loadEntry: function (data, popState) {
       var user = false;
       if ($("html").hasClass("logged-in")) {
-        user = true;
-      }    
+        user = {
+          admin: false
+        };
+      }   
+      if ($("html").hasClass("admin")) {
+        user.admin = true;
+      }     
       if (!popState) {
         history.pushState(data, data.entry.title, "/sub/" + data.entry.subs[0].slug + "/" + data.entry.slug);
         ga('send', 'pageview');

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="<% if (req.user) { %>logged-in<%  }  %>">
+<html class="<% if (req.user) { %>logged-in<% if (req.user.admin) { %> admin<%} }  %>">
 <head>
   <title>the sauce ♨ 
     <% if (data && data.sub) { %>
