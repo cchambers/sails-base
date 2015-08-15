@@ -1,0 +1,152 @@
+<% var date = new Date(entry.createdAt) %>
+<div class="single">
+  <ul class="control scroll-y">
+    <li class="back"><i class="icon-arrow_back"></i></li>
+    <li class="close" title="close"><i class="icon-view_headline touch"></i><i class="icon-view_module desktop"></i></li>
+    <% if (user) { %>
+    <% if (entry.votes[0]) { %>
+    <% var up = (entry.votes[0].vote) %>
+    <li class="vote up <% if (up) { %> <%= 'active' %> <% } %>" data-dir="up"><i class="icon-thumb_up"></i></li>
+    <li class="vote down <% if (!up) { %> <%= 'active' %> <% } %>" data-dir="down"><i class="icon-thumb_down"></i></li>
+    <% } else { %>
+    <li class="vote up" data-dir="up"><i class="icon-thumb_up"></i></li>
+    <li class="vote down" data-dir="down"><i class="icon-thumb_down"></i></li>
+    <% } %>
+    <% } %>
+  </ul>
+  <div class="data scroll-y">
+    <article class="<% if (entry.media) { %> has-media<% } %>" data-id="<%= entry.id %>">
+      <div class="entry">
+        <header>
+          <h1>
+            <%= entry.title %>
+          </h1>
+        </header>
+        <section>
+          <% if (entry.media) { %>
+          <% if ( entry.media.indexOf('.jpg') > 0 || entry.media.indexOf('.jpeg') > 0 || entry.media.indexOf('.gif') > 0  || entry.media.indexOf('.png') > 0 ) { %>
+
+          <a target="_new" href="<%= entry.media %>"><div class="media image<% if(entry.nsfw) {%> nsfw<%}%><% if (entry.media.indexOf('.gif') > 0){ %> gif<% } %>" style="background-image:url(<%= entry.media %>)"><img src="<%= entry.media %>"></div></a>
+          <% } else if (entry.media.indexOf('gfycat') > 0) { %>
+          <% var url = "" %>
+          <div class="media gfycat" style="height: 40rem">
+            <video id="sampleMovie" loop autoplay src="http://zippy.gfycat.com/OrdinarySlipperyGalapagossealion.webm" controls></video>
+          </div>
+
+          <% } else if ( entry.media.indexOf('youtube') > 0 || entry.media.indexOf('youtu.be') > 0 ) { %>
+
+          <% var which = "" %>
+          <% if (entry.media.indexOf('watch?v') > 0) { %>
+          <% which = entry.media.split("=")[1] %>
+          <% } %>
+
+          <% if (entry.media.indexOf('youtu.be') > 0) { %>
+          <% which = entry.media.split("/").pop() %>
+          <% } %> 
+
+          <% if (entry.media.indexOf('embed') > 0) { %>
+          <% which = entry.media.split("/").pop().split("?")[0] %>
+          <% } %> 
+          <div class="media youtube" style="background-image:url(http://img.youtube.com/vi/<%= which %>/0.jpg)">
+            <iframe src="https://www.youtube.com/embed/<%= which %>" frameborder="0" allowfullscreen></iframe>
+          </div>
+          <% } else { 
+            var split = entry.media.split("/");
+            var hostname = "";
+            var link = ""
+            if (split[1] == "") {
+              hostname = split[2];
+              link = entry.media;
+            } else {
+              hostname = split[0]
+              link = "http://" + entry.media;
+            } %>
+            <p>
+              via <a href="<%= link %>" target="_new"><%= hostname %></a>
+            </p>
+            <% } %> 
+
+            <% } %> 
+            <% if (entry.content) { %>
+            <%= entry.content %>
+            <% } %>
+          </section>
+          <cite>
+            <strong><%= entry.postedBy.name %></strong> &rarr;
+            <% for (var x = 0; x < entry.subs.length; x++) { %>
+            <% if (x > 0) { %> / <% } %>
+            <a href="/sub/<%= entry.subs[x].slug %>"><%= entry.subs[x].name %></a>
+            <% } %>
+            <span class="timesince"><%= timeSince(date) %> ago</span>
+          </cite>
+          <footer>
+            <div class="permalink">
+              <a href="/sub/<%= entry.subs[0].slug %>/<%= entry.slug %>">permalink</a>
+            </div>
+            <div class="score">
+              <span class="totes"><%= entry.ups - entry.downs %></span>
+              <span class="calculated"> &rarr; (<span class="ups"><%= entry.ups %></span> - <span class="downs"><%= entry.downs %></span>)</span>
+            </div>
+          </footer>
+        </div>
+      </article>
+
+      <div class="pad-sides-mini">
+        <% if (user) {  %>
+        <div class="row make-comment" id="make-comment">
+          <div class="new-thing">
+            <form method="POST" data-callback="output" action="/new/comment">
+              <div class="row pad-bottom-light">
+                <input type="text" name="entryid" hidden value="<%= entry.id %>">
+                <label for="title">Add a new comment</label>
+                <textarea name="message"></textarea>
+                <div class="row pad-bottom-light">
+                  <a class="button primary submit">send it</a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <% } %>
+
+
+
+        <div class="row comments" id="comments">
+          <%  var comments = entry.comments;
+          if (comments.length > 0) { %>
+          <ul>
+            <% for (comment in comments) {%>
+            <li data-id="<%= comments[comment].id %>" id="<%= comments[comment].id %>">
+              <header>
+                <%= comments[comment].postedBy.name %>
+              </header>
+              <section>
+                <%= comments[comment].content %>
+              </section>
+              <footer class="new-thing">
+                <a href="#" class="make-reply">reply</a>
+                <% if (comments[comment].children.length > 0) { %>
+                <a href="#<%= comments[comment].id %>" class="load-replies">load <%= comments[comment].children.length %> comments</a>
+                <% } %>
+
+                <form class="off" method="POST" data-callback="output" action="/new/comment">
+                  <div class="row pad-bottom-light">
+                    <input name="parent" hidden value="<%= comments[comment].id %>">
+                    <textarea name="message" placeholder="reply..."></textarea>
+                  </div>
+                  <div class="row pad-bottom-light">
+                    <a class="button primary submit">send it</a>
+                    <output></output>
+                  </div>
+                </form>
+              </footer>
+            </li>
+            <% } %>
+          </ul>
+          <% } else { %>
+          No comments yet!
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -194,6 +194,7 @@ ul.text-entries li + li {
 .loaded-view {
   display: none;
   position: fixed;
+  height: calc( 100vh - 6rem );
   top: 6rem;
   left: 0;
   z-index: 3;
@@ -261,16 +262,6 @@ ul.text-entries li + li {
 
 .entries article {
   padding: 0.75rem;
-}
-
-.loaded-view article {
-  padding-left: 0;
-}
-
-@media (max-width: 800px) {
-  .loaded-view article {
-    padding-left: 0.75rem;
-  }
 }
 
 .loaded-view h1 {

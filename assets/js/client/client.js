@@ -183,7 +183,7 @@ var app = {
       $("body").on("click", ".switch-to", app.user.switchNames);
       $("body").on("click", ".close", app.entry.close);
       $("body").on("click", ".back", function () {
-        history.back()
+        history.back();
       });
       
       $("body").on("click", "#hide-nsfw", function() { app.userToggleSetting("nsfw", true); });
@@ -204,7 +204,8 @@ var app = {
         // console.log(event);
         if (event.state == null) {
           if (window.location.hash == "") {
-            $(".active").removeClass("active");
+            $(".loaded-view.active").removeClass("active");
+            $(".front-page.active").removeClass("active");
             history.pushState(null, "/");
           }
         } else {
@@ -468,7 +469,7 @@ var app = {
       console.log(id);
       var url = "/get/entry/" + id;
       io.socket.post(url, function (data) {
-        console.log(data);
+        // console.log(data);
         app.frontPage.loadEntry(data);
       });
     },

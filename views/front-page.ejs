@@ -1,4 +1,13 @@
-<div class="loaded-view"></div>
+
+<div class="loaded-view<% if (data.single) { %> active<% } %>">
+<% if (data.single) { 
+  entry = data.single;
+  %>
+<%- include direct-entry-article %>
+<% } %>
+
+
+</div>
 
 <div class="front-page scroll-y entries">
   <div class="row">
@@ -110,12 +119,9 @@
     </div>
   </div>
 </div>
-<% } else { %>
-there ain't shit, dude:
-<ul>
-  <li>images: <%= data.images.length %> </li>
-  <li>videos: <%= data.videos.length %> </li>
-  <li>text: <%= data.text.length %> </li>
-</ul>
+<% } else { %> 
+  <div class="pad-light">
+    Not enough data to feature.
+  </div class="pad-light">
 <% } %> 
 
