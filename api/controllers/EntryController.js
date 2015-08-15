@@ -51,7 +51,6 @@ module.exports = {
 
   create: function (req, res) {
     var mentionsData = JSON.parse(req.body.postedTo);
-    console.log(mentionsData);
 
     var succeed = true;
     function errOut(data) {

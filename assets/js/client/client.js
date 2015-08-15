@@ -117,24 +117,23 @@ var app = {
       // WHICH SCRIPTS DO WE NEED AT THIS MOMENT?
       app.frontPage.setup();
 
-      if ( $("form").length > 0 ) {
-        $("body").on("click", "form .submit", function () {
+      $("body").on("click", ".submit", function () {
+        var $form = $(this).parents("form").first();
+        app.site.submitForm($form);
+        console.log("OKAY?");
+      });
+
+      $("form").on("keyup", "input", function (e){
+        if (e.which == 13) {
           var $form = $(this).parents("form").first();
           app.site.submitForm($form);
-        });
+        }
 
-        $("form").on("keyup", "input", function (e){
-          if (e.which == 13) {
-            var $form = $(this).parents("form").first();
-            app.site.submitForm($form);
-          }
-
-          if ($(this).hasClass("generate-slug")) {
-            var val = $(this).val();
-            app.generateSlug(val);
-          }
-        });
-      }
+        if ($(this).hasClass("generate-slug")) {
+          var val = $(this).val();
+          app.generateSlug(val);
+        }
+      });
       // OKAY, THEN!
 
       $(".mention").mentionsInput({
@@ -216,19 +215,19 @@ var app = {
 
     setupSockets: function () {
       io.socket.on("message", function (data) {
-        console.log(data);
+        // console.log(data);
       });
 
       io.socket.on("listing-data", function (data) {
-        console.log("Listing Data:",data)
+        // console.log("Listing Data:",data)
       });
 
       io.socket.on("vote", function (data) {
-        console.log("VOTE:",data)
+        // console.log("VOTE:",data)
         var $parent = $("[data-id='"+data.entryid+"']");
         var $score = $parent.find(".score");
         var score = data.ups - data.downs;
-        console.log($parent, $score)
+        // console.log($parent, $score)
         $score.find(".ups").text(data.ups);
         $score.find(".downs").text(data.downs);
         $score.find(".totes").text(score);
@@ -236,6 +235,7 @@ var app = {
     },
 
     submitForm: function ($form) {
+      console.log("SUBMITTING FORM");
       var callback = $form.data().callback;
       var url = $form.attr("action");
       var data = $form.serialize();
@@ -312,7 +312,7 @@ var app = {
       e.stopPropagation();
       var dir = $(this).data().dir;
       var $el = $(this);
-      var $entry = $(this).parents("article");
+      var $entry = $(".entries article.active");
       var id = $entry.data().id;
       var score = {
         ups: parseInt($entry.find(".ups").text()),
@@ -334,7 +334,7 @@ var app = {
       }
       score.total = score.ups - score.downs;
 
-      app.site.updateVotes($entry, score)
+      app.site.updateVotes($entry, score);
 
       if ($el.isActive()) {
         $el.deactivate();

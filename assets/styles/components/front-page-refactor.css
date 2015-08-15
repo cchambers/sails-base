@@ -5,17 +5,6 @@
 .scroll-y::-webkit-scrollbar { display: none; }
 
 
-.front-page .control {
-  position: absolute;
-  right: .75rem;
-  bottom: -3.25rem;
-  z-index: 3;
-}
-
-.front-page article:not(.active) {
-  cursor: pointer;
-}
-
 .feature {
   background: #e8e8e8;
 }
@@ -29,20 +18,15 @@
   padding-right: 0.75rem;
 }
 
-.front-page .entry h1 {
+.entries .entry h1 {
   font-size: 1.4rem;
 }
-.front-page .entry cite {
+.entries .entry cite {
   font-size: 1rem;
 }
-.front-page .entry {
+.entries .entry {
   background: #e8e8e8;
   border-bottom: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-}
-.front-page .entry.active {
-  border-right: 1px solid #fff;
-  background: #fff;
 }
 
 .height-set {  
@@ -55,7 +39,7 @@
 .media {
   position: relative;
   background-size: cover;
-  background-position: center center !important
+  background-position: top center !important
 }
 
 .features .media a:hover {
@@ -89,43 +73,6 @@
 .media.secondary {
   min-height: 12.5rem;
 }
-
-.media:hover {
-  cursor: pointer;
-}
-
-.media:hover .controls {
-  opacity: 1;
-}
-
-.media .controls {
-  position: absolute;
-  top: 0;
-  left;
-  0;
-  color: #f2f2f2;
-  background: rgba(0, 0, 0, .75);
-  opacity: 0;
-  height: 100%;
-  width: 100%;
-  transition: all 200ms ease-in;
-}
-
-.controls div {
-  position: relative;
-  float: left;
-  text-align: center;
-  width: 50%;
-  height: 50%;
-}
-
-.controls div span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-}
-
 .controls div:hover {
   background-color: rgba(255, 255, 255, .15)
 }
@@ -260,5 +207,106 @@ ul.text-entries li + li {
 @media (max-width: 800px) {
   .loaded-view article ul.control {
     display: block;
+  }
+}
+
+.single ul.control {
+  position: fixed;
+  width: 4.5rem;
+  float: left;
+  height: calc(100vh - 6rem);
+}
+
+.single .data {
+  width: calc(100% - 4.5rem);
+  float: left;
+  margin-left: 4.5rem;
+}
+
+
+.single ul.control li {
+  line-height: 4.5rem;
+  height: 4.5rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.single ul.control li:hover {
+  color: #DF3D82;
+}
+
+.single ul.control li.active {
+  background-color: #DF3D82;
+  color: #fff;
+}
+
+.entries,
+.loaded-view,
+.feature {
+  float: left;
+}
+
+.entries {
+  width: 32rem;
+}
+
+.loaded-view {
+  width: calc(100% - 32rem);
+  margin-left: 32rem;
+}
+
+.feature {
+  width: calc(100% - 32rem);
+}
+
+.entries article {
+  padding: 0.75rem;
+}
+
+.loaded-view article {
+  padding-left: 0;
+}
+
+@media (max-width: 800px) {
+  .loaded-view article {
+    padding-left: 0.75rem;
+  }
+}
+
+.loaded-view h1 {
+  color: #DF3D82;
+}
+
+.entries article:not(.active) {
+  background-color: #e8e8e8;
+  border-right: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.entries article.active {
+  background-color: #f2f2f2;
+  border-right: 1px solid #f2f2f2;
+  opacity: 1;
+}
+
+
+@media (max-width: 800px) {
+  .single .data {
+    width: calc(100% - 4.5rem);
+    float: left;
+    margin-right: 4.5rem;
+    margin-left: auto;
+  }
+
+  .single ul.control {
+    position: fixed;
+    right: 0;
+    top: 6rem;
+  }
+
+  .entries,
+  .loaded-view {
+    width: 100%;
+    margin: 0;
   }
 }

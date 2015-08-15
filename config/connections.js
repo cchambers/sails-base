@@ -1,5 +1,5 @@
 module.exports.connections = {
-  localDiskDb: {
+  local: {
     adapter: 'sails-disk'
   },
 

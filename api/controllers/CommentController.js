@@ -35,8 +35,7 @@ module.exports = {
       Comment.create(commentData)
       .exec( function (err, comment) {
         if (err) return next(err);
-        console.log("Comment:", comment);
-        return res.json({ message: "Success!", reload: true });
+        return res.json({ message: "Success!", comment: comment });
       });
     }
 
