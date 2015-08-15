@@ -296,6 +296,7 @@ ul.text-entries li + li {
 
 .entries article {
   padding: 0.75rem;
+  overflow: hidden;
 }
 
 .loaded-view h1 {
