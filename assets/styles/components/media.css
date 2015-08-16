@@ -6,7 +6,6 @@ article .media + header {
 article .media {
   display: inline-block;
   float: left;
-  margin-bottom: 1.5rem;
   max-height: 100%;
   max-width: 100%;
 }

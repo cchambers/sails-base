@@ -235,11 +235,14 @@ ul.text-entries li + li {
   display: block;
 }
 
-@media (max-width: 800px) {
-  .loaded-view article ul.control {
-    display: block;
-  }
+.loaded-view iframe.content {
+  height: 60vh;
+  width: 100%;
+  border: 0;
+  box-shadow: 2px 2px 5px rgba(0,0,0,.5);
+  max-width: 60rem;
 }
+
 
 .single ul.control {
   position: fixed;
@@ -280,6 +283,7 @@ ul.text-entries li + li {
 
 .entries {
   width: 32rem;
+  background-color: #e8e8e8
 }
 
 .loaded-view {
@@ -330,6 +334,8 @@ ul.text-entries li + li {
     position: fixed;
     right: 0;
     top: 6rem;
+    background-color: #e8e8e8;
+    border-left: 1px solid #ddd;
   }
 
   .entries,

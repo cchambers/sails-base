@@ -37,11 +37,24 @@
           <% 
           if (entry.oembed) { 
             var oembed = JSON.parse(entry.oembed); 
-            console.log(oembed);
             if (oembed.html) { %>
             <%= oembed.html %>
             <% } else { %>
-            <a target="_new" href="<%= oembed.url %>"><div class="media image"><img src="<%= oembed.url %>" alt="<%= oembed.title %>"></div></a>
+            <% if ( oembed.url.indexOf(".jpg") || oembed.url.indexOf(".jpeg") || oembed.url.indexOf(".png") ) { %>
+            <div class="media">
+              <img src="<%= oembed.url %>" alt="<%= oembed.title %>">
+            </div>
+            <div class="row">
+              <p class="px12">
+                via: <a href="<%= oembed.url %>"><%= oembed.url %></a> 
+              </p>
+            </div>
+            <% } else { %>
+            <iframe class="content" src="<%= oembed.url %>" alt="<%= oembed.title %>"></iframe>
+            <p class="px12 pad-bottom">
+            via: <a href="<%= oembed.url %>" target="_new"><%= oembed.url %></a> 
+            </p>
+            <% } %>
             <% }
           } else { 
             var split = entry.media.split("/");
@@ -134,7 +147,9 @@
             <% } %>
           </ul>
           <% } else { %>
-          No comments yet!
+          <p class="pad-bottom-hard">
+            No comments yet!
+          </p>
           <% } %>
         </div>
       </div>
