@@ -40,7 +40,7 @@
             if (oembed.html) { %>
             <%= oembed.html %>
             <% } else { %>
-            <% if ( oembed.url.indexOf(".jpg") || oembed.url.indexOf(".jpeg") || oembed.url.indexOf(".png") ) { %>
+            <% if ( oembed.url.indexOf(".jpg") > 0 || oembed.url.indexOf(".jpeg") > 0 || oembed.url.indexOf(".png") > 0 ) { %>
             <div class="media">
               <img src="<%= oembed.url %>" alt="<%= oembed.title %>">
             </div>
