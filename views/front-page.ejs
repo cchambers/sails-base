@@ -33,7 +33,7 @@
                active = "";
              }
              %>
-             <article class="row entry<%= active %><% if (entry.oembed && entry.ombed != "") { %> has-media<% } %><% if (entry.sticky) { %> sticky<% } %>" data-timestamp="<%= date %>" data-id="<%= entry.id %>" id="<%= entry.id %>">
+             <article class="row entry<%= active %><% if (entry.oembed && entry.ombed != "") { %> has-media<% } %><% if (entry.sticky) { %> sticky<% } %><% if (entry.nsfw) { %> nsfw<% } %>" data-timestamp="<%= date %>" data-id="<%= entry.id %>" id="<%= entry.id %>">
               <header>
                 <h1>
                   <%= entry.title %>

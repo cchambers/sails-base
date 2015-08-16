@@ -29,6 +29,10 @@
   border-bottom: 1px solid #ddd;
 }
 
+.entries article.nsfw .thumb {
+  display: none;
+}
+
 .entries .thumb {
   position: absolute;
   height: 5rem;
