@@ -470,7 +470,6 @@ var app = {
     },
 
     getEntry: function (id) {
-      console.log(id);
       var url = "/get/entry/" + id;
       io.socket.post(url, function (data) {
         // console.log(data);

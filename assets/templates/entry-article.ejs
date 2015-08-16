@@ -1,66 +1,50 @@
 <% var date = new Date(entry.createdAt) %>
 <div class="single">
   <ul class="control scroll-y">
-      <li class="back"><i class="icon-arrow_back"></i></li>
-      <li class="close touch" title="close"><i class="icon-view_headline"></i></li>
-      <li class="close desktop" title="close"></i><i class="icon-view_module"></i></li>
-      <% if (user) { %>
-      <% if (entry.votes[0]) { %>
-      <% var up = (entry.votes[0].vote) %>
-      <li class="vote up <% if (up) { %> <%= 'active' %> <% } %>" title="vote up" data-dir="up"><i class="icon-thumb_up"></i></li>
-      <li class="vote down <% if (!up) { %> <%= 'active' %> <% } %>" title="vote down" data-dir="down"><i class="icon-thumb_down"></i></li>
-      <% } else { %>
-      <li class="vote up" title="vote up" data-dir="up"><i class="icon-thumb_up"></i></li>
-      <li class="vote down" title="vote down" data-dir="down"><i class="icon-thumb_down"></i></li>
-      <% } %>
-      <% if (user.admin) { %>
-      <li class="tag<% if (entry.special) { %> active<% } %>" title="make special" data-tag="special"><i class="icon-new_releases"></i></li>
-      <li class="tag<% if (entry.sticky) { %> active<% } %>" title="make sticky" data-tag="sticky"><i class="icon-adjust"></i></li>
-      <li class="tag<% if (entry.nsfw) { %> active<% } %>" title="mark nsfw" data-tag="nsfw"><i class="icon-remove_red_eye"></i></li>
-      <li class="tag<% if (entry.nsfl) { %> active<% } %>" title="mark disturbing" data-tag="nsfl"><i class="icon-flight_land"></i></li>
-      <% } %>
-      <% if ( (entry.postedBy.name == user.username) || user.admin ) { %>
-      <li class="delete" title="delete"><i class="icon-indeterminate_check_box"></i></li>
-      <% } %>
-      <% } %>
-    </ul>
+    <li class="back"><i class="icon-arrow_back"></i></li>
+    <li class="close touch" title="close"><i class="icon-view_headline"></i></li>
+    <li class="close desktop" title="close"></i><i class="icon-view_module"></i></li>
+    <% if (user) { %>
+    <% if (entry.votes[0]) { %>
+    <% var up = (entry.votes[0].vote) %>
+    <li class="vote up <% if (up) { %> <%= 'active' %> <% } %>" title="vote up" data-dir="up"><i class="icon-thumb_up"></i></li>
+    <li class="vote down <% if (!up) { %> <%= 'active' %> <% } %>" title="vote down" data-dir="down"><i class="icon-thumb_down"></i></li>
+    <% } else { %>
+    <li class="vote up" title="vote up" data-dir="up"><i class="icon-thumb_up"></i></li>
+    <li class="vote down" title="vote down" data-dir="down"><i class="icon-thumb_down"></i></li>
+    <% } %>
+    <% if (user.admin) { %>
+    <li class="tag<% if (entry.special) { %> active<% } %>" title="make special" data-tag="special"><i class="icon-new_releases"></i></li>
+    <li class="tag<% if (entry.sticky) { %> active<% } %>" title="make sticky" data-tag="sticky"><i class="icon-adjust"></i></li>
+    <li class="tag<% if (entry.nsfw) { %> active<% } %>" title="mark nsfw" data-tag="nsfw"><i class="icon-remove_red_eye"></i></li>
+    <li class="tag<% if (entry.nsfl) { %> active<% } %>" title="mark disturbing" data-tag="nsfl"><i class="icon-flight_land"></i></li>
+    <% } %>
+    <% if ( (entry.postedBy.name == user.username) || user.admin ) { %>
+    <li class="delete" title="delete"><i class="icon-indeterminate_check_box"></i></li>
+    <% } %>
+    <% } %>
+  </ul>
   <div class="data scroll-y">
     <article class="<% if (entry.media) { %> has-media<% } %>" data-id="<%= entry.id %>">
       <div class="entry">
         <header>
           <h1>
             <%= entry.title %>
+            <% console.log(entry.title) %>
           </h1>
         </header>
         <section>
           <% if (entry.media) { %>
-          <% if ( entry.media.indexOf('.jpg') > 0 || entry.media.indexOf('.jpeg') > 0 || entry.media.indexOf('.gif') > 0  || entry.media.indexOf('.png') > 0 ) { %>
-
-          <a target="_new" href="<%= entry.media %>"><div class="media image<% if(entry.nsfw) {%> nsfw<%}%><% if (entry.media.indexOf('.gif') > 0){ %> gif<% } %>" style="background-image:url(<%= entry.media %>)"><img src="<%= entry.media %>"></div></a>
-          <% } else if (entry.media.indexOf('gfycat') > 0) { %>
-          <% var url = "" %>
-          <div class="media gfycat" style="height: 40rem">
-            <video id="sampleMovie" loop autoplay src="http://zippy.gfycat.com/OrdinarySlipperyGalapagossealion.webm" controls></video>
-          </div>
-
-          <% } else if ( entry.media.indexOf('youtube') > 0 || entry.media.indexOf('youtu.be') > 0 ) { %>
-
-          <% var which = "" %>
-          <% if (entry.media.indexOf('watch?v') > 0) { %>
-          <% which = entry.media.split("=")[1] %>
-          <% } %>
-
-          <% if (entry.media.indexOf('youtu.be') > 0) { %>
-          <% which = entry.media.split("/").pop() %>
-          <% } %> 
-
-          <% if (entry.media.indexOf('embed') > 0) { %>
-          <% which = entry.media.split("/").pop().split("?")[0] %>
-          <% } %> 
-          <div class="media youtube" style="background-image:url(http://img.youtube.com/vi/<%= which %>/0.jpg)">
-            <iframe src="https://www.youtube.com/embed/<%= which %>" frameborder="0" allowfullscreen></iframe>
-          </div>
-          <% } else { 
+          <% 
+          if (entry.oembed) { 
+            var oembed = JSON.parse(entry.oembed); 
+            console.log(oembed);
+            if (oembed.html) { %>
+            <%= oembed.html %>
+            <% } else { %>
+            <a target="_new" href="<%= oembed.url %>"><div class="media image"><img src="<%= oembed.url %>" alt="<%= oembed.title %>"></div></a>
+            <% }
+          } else { 
             var split = entry.media.split("/");
             var hostname = "";
             var link = ""

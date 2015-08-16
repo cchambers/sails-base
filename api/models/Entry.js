@@ -36,7 +36,8 @@ module.exports = {
     subs: {
       collection: 'sub',
       via: 'entries',
-      dominant: true
+      dominant: true,
+      required: true
     },
 
     postedBy: {
