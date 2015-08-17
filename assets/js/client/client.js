@@ -461,9 +461,10 @@ var app = {
     loadMoreEntries: function () {
       var query = app.frontPage.depth * 50;
       if (app.frontPage.sub != "all") {
-        var sub = location.pathname.split("/")[2];
+        var sub = app.frontPage.sub;
         query = sub + " / " + app.frontPage.depth * 50;
       }
+      console.log(app.frontPage.sub);
       $.ajax({
         type: 'POST',
         url: '/api/entries/' + query,
