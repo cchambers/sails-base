@@ -89,7 +89,7 @@ module.exports = {
       Sub.findOne({ slug: sub })
       .exec( function (err, subdoc) {
         if (err) return next(err);
-        if (subdoc.id) {
+        if (subdoc) {
           sub = subdoc.id;
         }
         getEntries();
