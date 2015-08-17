@@ -602,7 +602,7 @@ var app = {
   getChildComments: function () {
     var $el = $(this);
     var $parent = $el.parents("article");
-    var $li = $el.parents("li");
+    var $li = $el.parents("li").first();
     var id = $li.data().id;
 
     $.ajax({
