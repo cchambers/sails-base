@@ -147,7 +147,7 @@ module.exports = {
         .populate('votes', { user: userid })
         .exec( function (err, data) {
           if (err) return next(err);
-          viewdata.entries = data;
+          viewdata.entries = utilities.sortByPopularity(data);
           loadView();
         });
       } else {
