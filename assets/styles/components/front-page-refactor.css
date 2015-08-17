@@ -241,6 +241,7 @@ ul.text-entries li + li {
 .loaded-view iframe.content {
   height: 60vh;
   width: calc( 100% - 6rem );
+  max-width: 768px;
   border: 0;
   box-shadow: 2px 2px 5px rgba(0,0,0,.5);
 }

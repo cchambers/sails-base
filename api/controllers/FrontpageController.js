@@ -40,7 +40,7 @@ module.exports = {
       }
       viewdata.images = utilities.sortByPopularity(viewdata.images);
       viewdata.videos = utilities.sortByPopularity(viewdata.videos);
-      viewdata.text = utilities.sortByPopularity(viewdata.text);
+      viewdata.text = data;
       getEntries();
     });
 
@@ -89,7 +89,9 @@ module.exports = {
       Sub.findOne({ slug: sub })
       .exec( function (err, subdoc) {
         if (err) return next(err);
-        sub = subdoc.id;
+        if (subdoc.id) {
+          sub = subdoc.id;
+        }
         getEntries();
       })
     }
