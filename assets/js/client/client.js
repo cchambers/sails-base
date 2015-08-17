@@ -120,7 +120,6 @@ var app = {
       $("body").on("click", ".submit", function () {
         var $form = $(this).parents("form").first();
         app.site.submitForm($form);
-        console.log("OKAY?");
       });
 
       $("form").on("keyup", "input", function (e){
@@ -240,7 +239,6 @@ var app = {
     },
 
     submitForm: function ($form) {
-      console.log("SUBMITTING FORM");
       var callback = $form.data().callback;
       var url = $form.attr("action");
       var data = $form.serialize();
@@ -249,7 +247,6 @@ var app = {
         url: url,
         data: data,
         success: function (data) {
-          console.log("Form post success:", data);
           if (app.callbacks[callback]){
             app.callbacks[callback](data, $form);
           }
@@ -372,7 +369,6 @@ var app = {
         url: '/delete/entry/' + id,
         data: { doVote: true },
         success: function (data) {
-          console.log(data);
           if (data.success) {
             $("article[data-id='" + id + "']").remove();
             app.frontPage.closeLoaded();
@@ -426,6 +422,9 @@ var app = {
   },
 
   frontPage: {
+    depth: 0,
+    height: window.innerHeight,
+    width: window.innerWidth,
     setup: function () {
       $(".front-page").on("click", "article:not(.active)", function () {
         var id = $(this).data().id;
@@ -440,6 +439,41 @@ var app = {
       if ( $("iframe.embedly-embed").length > 0 ) {
         $("iframe.embedly-embed").attr("height", "").attr("width", "");
       }
+
+      // scroll watch
+      // make sure the last element in the .entries.front-page list is 
+      // never less than view height from the bottom
+
+      var scrollBounce = null;
+      $(".front-page").on("scroll", function (e) {
+        if (scrollBounce) clearTimeout(scrollBounce);
+        scrollBounce = setTimeout( function () {
+          if ($(".front-page article").last().offset().top < app.frontPage.height*2) {
+            app.frontPage.depth++;
+            app.frontPage.loadMoreEntries();
+          } 
+        }, 100);
+      })
+    },
+
+    loadMoreEntries: function () {
+      var query = app.frontPage.depth * 50;
+      // on a sub? 
+      // sub + '/' + depth * 50;
+
+      if (location.pathname.split("/")[2]) {
+        var sub = location.pathname.split("/")[2];
+        query = sub + " / " + app.frontPage.depth * 50;
+      }
+      $.ajax({
+        type: 'POST',
+        url: '/api/entries/' + query,
+        data: { },
+        success: function (data) {
+          var html = new EJS({ url: '/templates/front-page-entries.ejs' }).render(data);
+          $(".front-page").append(html);
+        }
+      });
     },
 
     keypressHandler: function (e) {

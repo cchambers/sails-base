@@ -16,7 +16,8 @@ module.exports = {
       entries: []
     }
 
-    Entry.find({ nsfw: { $ne: true } })
+    Entry.find({ where: { nsfw: false }, limit: 50, skip: 0, sort: 'createdAt DESC' })
+    .limit(100)
     .populate('comments')
     .populate('postedTo')
     .populate('postedBy')
@@ -27,17 +28,13 @@ module.exports = {
           if ( data[x].media.indexOf('.jpg') > 0 || data[x].media.indexOf('.jpeg') > 0 || data[x].media.indexOf('.gif') > 0 || data[x].media.indexOf('.png') > 0 ) {
             if (data[x].media.indexOf('.gifv') < 0) {
               viewdata.images.push(data[x]);
-              // console.log("[imgs] ", data[x].media)
             }
           } else if ( data[x].media.indexOf('youtu') > 0 || data[x].media.indexOf('liveleak') > 0 ) {
-            // console.log("[vids] ", data[x].media)
             viewdata.videos.push(data[x]);
           } else {
-            // console.log("[text] ", data[x].media)
             viewdata.text.push(data[x]);
           }
         } else {
-          // console.log("[text] ")
           viewdata.text.push(data[x]);
         }
       }
@@ -47,69 +44,115 @@ module.exports = {
       getEntries();
     });
 
-function getEntries() {
-  var loggedin = (req.user == undefined) ? false : true;
-
-  var query = { nsfw: { $ne: true } };
-  if (req.user) {
-    query = {};
-    var userid = req.user.id || "none";
-  }
-  Entry.find(query)
-  .populate('comments')
-  .populate('postedTo')
-  .populate('postedBy')
-  .populate('subs')
-  .populate('votes', { user: userid })
-  .exec( function (err, data) {
-    if (data) {
-      if (err) return next(err);
-      data = utilities.sortByPopularity(data);
-      viewdata.entries = data;
-      loadView()
-    }
-  });
-}
-
-function loadView() {
-  return res.view('front-page', { user: req.user, data: viewdata  })
-}
-},
-
-sub: function (req, res) {
-  var viewdata = {
-    images: [],
-    text: [],
-    links: [],
-    videos: [],
-    entries: []
-  }
-  var userid = (req.user) ? req.user.id : "none";
-  var slug = req.params.sub;
-  Sub.findOne({ slug: slug })
-  .populate('creator')
-  .exec( function (err, doc) {
-    if (err) return next(err);
-    if (doc) {
-      viewdata.sub = doc;
-      Entry.find({ subs: doc.id })
-      .sort({ createdAt: 'desc' })
+    function getEntries() {
+      var loggedin = (req.user == undefined) ? false : true;
+      
+      var query = { where: { nsfw: false }, limit: 50, skip: 0, sort: 'createdAt DESC' };
+      if (req.user) {
+        query = { limit: 50, skip: 0, sort: 'createdAt DESC' };
+        var userid = req.user.id || "none";
+      }
+      Entry.find(query)
       .populate('comments')
       .populate('postedTo')
       .populate('postedBy')
       .populate('subs')
       .populate('votes', { user: userid })
       .exec( function (err, data) {
-        if (err) return next(err);
-        viewdata.entries = data;
-        loadView();
+        if (data) {
+          if (err) return next(err);
+          data = utilities.sortByPopularity(data);
+          viewdata.entries = data;
+          loadView()
+        }
       });
-    } else {
-      return res.redirect("/new/sub?name="+req.params.sub)
     }
-  });
 
-  function loadView() {
+    function loadView() {
+      return res.view('front-page', { user: req.user, data: viewdata  })
+    }
+  },
+
+  entriesFrom: function (req, res) {
+    var sub = req.params.slug || null;
+    var viewdata = {
+      entries: []
+    }
+    var from = req.params.from || 0;
+    if (req.params.slug) {
+      getSub();
+    } else {
+      getEntries();
+    }
+
+    function getSub() {
+      Sub.findOne({ slug: sub })
+      .exec( function (err, subdoc) {
+        sub = subdoc.id;
+        getEntries();
+      })
+    }
+
+    function getEntries() {
+      var loggedin = (req.user == undefined) ? false : true;
+      var limit = 50;
+      var query = (sub) ? { where: { subs: sub }, limit: limit, skip: from, sort: 'createdAt DESC'  } : { limit: limit, skip: from, sort: 'createdAt DESC'  }; 
+      Entry.find(query)
+      .populate('comments')
+      .populate('postedTo')
+      .populate('postedBy')
+      .populate('subs')
+      .populate('votes')
+      .exec( function (err, data) {
+        if (data) {
+          if (err) return next(err);
+          data = utilities.sortByPopularity(data);
+          viewdata.entries = data;
+          return res.json(viewdata);
+        }
+      });
+    }
+
+  },
+
+  test: function () {
+    return res.json({ message: "What in the fuck" })
+  },
+
+  sub: function (req, res) {
+    var viewdata = {
+      images: [],
+      text: [],
+      links: [],
+      videos: [],
+      entries: []
+    }
+    var userid = (req.user) ? req.user.id : "none";
+    var slug = req.params.sub;
+    Sub.findOne({ slug: slug })
+    .populate('creator')
+    .exec( function (err, doc) {
+      if (err) return next(err);
+      if (doc) {
+        viewdata.sub = doc;
+        Entry.find({ subs: doc.id })
+        .sort({ createdAt: 'desc' })
+        .populate('comments')
+        .populate('postedTo')
+        .populate('postedBy')
+        .populate('subs')
+        .populate('votes', { user: userid })
+        .exec( function (err, data) {
+          if (err) return next(err);
+          viewdata.entries = data;
+          loadView();
+        });
+      } else {
+        return res.redirect("/new/sub?name="+req.params.sub)
+      }
+    });
+
+    function loadView() {
       //return res.json({ user: req.user, data: viewdata  })
       return res.view('front-page', { user: req.user, data: viewdata  })
     }
@@ -149,7 +192,6 @@ sub: function (req, res) {
           .populate('votes', { user: userid })
           .exec( function (err, single) {
             if (single) {
-              console.log(single.id);
               viewdata.single = single;
               Comment.find({ entry: single.id })
               .populate('postedBy')

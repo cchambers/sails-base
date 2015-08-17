@@ -4,6 +4,7 @@ module.exports.routes = {
   'get /userlist': 'UserController.list',
   'get /sublist': 'SubController.list',
 
+
   'get /me': 'UserController.myProfile',
 
   'post /login': 'AuthController.login',
@@ -13,9 +14,6 @@ module.exports.routes = {
   'post /new/name': 'NameController.create',
   'post /switch': 'NameController.switchTo',
 
-  'get /derk': 'EntryController.updateAll',
-  'get /girt': 'EntryController.list',
-
   'get /new/sub': 'SubController.new',
   'post /new/sub': 'SubController.create',
   'get /new/entry': 'EntryController.new',
@@ -23,6 +21,9 @@ module.exports.routes = {
   'post /new/entry': 'EntryController.create',
   'post /get/entry/:id': 'EntryController.singleJSON',
   'get /get/entry/:id': 'EntryController.singleJSON',
+  
+  'post /api/entries/:from': 'FrontpageController.entriesFrom', 
+  'post /api/entries/:slug/:from': 'FrontpageController.entriesFrom', 
   
   'get /edit/entry/:id': 'EntryController.edit',
   'post /edit/entry/:id': 'EntryController.submitEdit',
