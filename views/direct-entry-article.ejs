@@ -133,7 +133,7 @@
               <footer class="new-thing">
                 <a href="#" class="make-reply">reply</a>
                 <% if (comments[x].children.length > 0) { %>
-                <a href="#<%= comments[x].id %>" class="load-replies">load <%= comments[x].children.length %> comments</a>
+                <a href="#<%= comments[x].id %>" class="load-replies">load <%= comments[x].children.length %> replies</a>
                 <% } %>
 
                 <form class="off" method="POST" data-callback="output" action="/new/comment">
