@@ -178,10 +178,14 @@ var app = {
       $("body").on("click", ".vote", app.entry.vote);
       $("body").on("click", ".tag", app.entry.tag);
       $("body").on("click", ".make-reply", app.entry.replyForm);
-      $("body").on("click", ".delete", app.entry.deleteEntry);
       $("body").on("click", ".load-replies", app.getChildComments);
       $("body").on("click", ".switch-to", app.user.switchNames);
       $("body").on("click", ".close", app.entry.close);
+
+      $("body").on("click", ".delete", function () {
+        prompt("Are you sure you want to delete this?", app.entry.deleteEntry)
+      });
+
       $("body").on("click", ".back", function () {
         history.back();
       });
@@ -361,7 +365,7 @@ var app = {
     },
 
     deleteEntry: function (id) {
-      var $parent = $(this).parents("article");
+      var $parent = $(".entries article.active");
       var id = $parent.data().id;
       $.ajax({
         type: 'POST',
@@ -371,6 +375,7 @@ var app = {
           console.log(data);
           if (data.success) {
             $("article[data-id='" + id + "']").remove();
+            app.frontPage.closeLoaded();
           }
         }
       });
@@ -431,6 +436,9 @@ var app = {
       var $target = $(".front-page article.active");
       if ($target.length > 0) {
         app.frontPage.singleScroller($target);
+      }
+      if ( $("iframe.embedly-embed").length > 0 ) {
+        $("iframe.embedly-embed").attr("height", "").attr("width", "");
       }
     },
 
@@ -498,6 +506,9 @@ var app = {
       var html = new EJS({ url: '/templates/entry-article.ejs' }).render(data);
       $(".loaded-view").animate({ scrollTop: "0px" }, 250).html(html).addClass("active");
       //$(".loaded-view .load-replies").trigger("click");
+      if ( $("iframe.embedly-embed").length > 0 ) {
+        $("iframe.embedly-embed").attr("height", "").attr("width", "");
+      }
     },
 
     scrollToEntry: function (e) {
@@ -518,6 +529,10 @@ var app = {
         if (target < 0) { target = 1; }
         $(".entries").animate({ scrollTop: target+"px" }, 250);
       }
+    },
+
+    closeLoaded: function () {
+      $(".loaded-view").removeClass("active").html();
     }
   },
 

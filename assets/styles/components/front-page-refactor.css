@@ -105,6 +105,7 @@
 
 ul.text-entries {
   padding-left: 0;
+  margin-top: 0.25rem;
 }
 
 ul.text-entries li {
@@ -118,7 +119,9 @@ ul.text-entries li a {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  line-height: 3rem;
   padding-left: 0.75rem;
+  border-color: #ddd;
 }
 
 ul.text-entries li a:hover {
@@ -237,31 +240,35 @@ ul.text-entries li + li {
 
 .loaded-view iframe.content {
   height: 60vh;
-  width: 100%;
+  width: calc( 100% - 6rem );
   border: 0;
   box-shadow: 2px 2px 5px rgba(0,0,0,.5);
-  max-width: 60rem;
 }
 
 
 .single ul.control {
   position: fixed;
-  width: 4.5rem;
+  width: 6rem;
   float: left;
   height: calc(100vh - 6rem);
   list-style: none;
 }
 
 .single .data {
-  width: calc(100% - 4.5rem);
+  width: calc(100% - 6rem);
   float: left;
-  margin-left: 4.5rem;
+  margin-left: 6rem;
+}
+
+.embedly-embed {
+  height: auto;
+  width: 100%;
 }
 
 
 .single ul.control li {
-  line-height: 4.5rem;
-  height: 4.5rem;
+  line-height: 6rem;
+  height: 6rem;
   text-align: center;
   cursor: pointer;
 }
@@ -324,7 +331,7 @@ ul.text-entries li + li {
 
 @media (max-width: 800px) {
   .single .data {
-    width: calc(100% - 4.5rem);
+    width: calc(100% - 6rem);
     float: left;
     margin-right: 4.5rem;
     margin-left: auto;

@@ -11,12 +11,8 @@ article .media {
 }
 
 article .media img {
-  display: none;
-}
-
-article .media img {
   display: block;
-  max-height: 60vh;
+  max-height: 100%;
   max-width: 100%;
 }
 
