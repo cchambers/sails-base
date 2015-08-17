@@ -79,7 +79,7 @@ module.exports = {
       entries: []
     }
     var from = req.params.from || 0;
-    if (req.params.slug) {
+    if (sub) {
       getSub();
     } else {
       getEntries();
@@ -88,6 +88,7 @@ module.exports = {
     function getSub() {
       Sub.findOne({ slug: sub })
       .exec( function (err, subdoc) {
+        if (err) return next(err);
         sub = subdoc.id;
         getEntries();
       })
