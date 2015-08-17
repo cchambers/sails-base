@@ -261,7 +261,7 @@ ul.text-entries li + li {
 }
 
 .embedly-embed {
-  height: auto;
+  height: 60vh;
   width: 100%;
 }
 
