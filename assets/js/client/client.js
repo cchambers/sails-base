@@ -182,7 +182,10 @@ var app = {
       $("body").on("click", ".close", app.entry.close);
 
       $("body").on("click", ".delete", function () {
-        prompt("Are you sure you want to delete this?", app.entry.deleteEntry)
+        var sure = confirm("Are you sure you want to delete this?");
+        if (sure) {
+          app.entry.deleteEntry();
+        }
       });
 
       $("body").on("click", ".back", function () {
