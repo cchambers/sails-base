@@ -8,6 +8,11 @@ module.exports = {
       postedBy: ""
     }
 
+    var viewdata = {
+      name: req.user.username,
+      content: req.body.message
+    }
+
     Name.findOne({ name: req.user.username })
     .exec( function (err, name) {
       if (err) return next(err);
@@ -34,8 +39,8 @@ module.exports = {
     function createComment() {
       Comment.create(commentData)
       .exec( function (err, comment) {
-        if (err) return next(err);
-        return res.json({ message: "Success!", comment: comment });
+        if (err) return res.json({ message: "ERROR!", data: err });;
+        return res.json({ message: "Success!", data: viewdata });
       });
     }
 

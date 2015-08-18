@@ -1,7 +1,7 @@
 <% if (typeof(user) != 'undefined') {  %>
 <div class="row make-comment" id="make-comment">
   <div class="contain new-thing">
-    <form method="POST" data-callback="output" action="/new/comment">
+    <form method="POST" data-callback="makeComment" action="/new/comment">
       <div class="row pad-bottom-light">
         <input type="text" name="entryid" hidden value="<%= entries[which].id %>">
         <label for="title">Add a new comment</label>
@@ -30,7 +30,7 @@
         <footer class="new-thing">
           <a href="#" class="make-reply">reply</a>
           <a href="#<%= entries[which].comments[i].id %>" class="load-replies">load <%= entries[which].comments[i].children.length %> comments</a>
-          <form class="off" method="POST" data-callback="output" action="/new/comment">
+          <form class="off" method="POST" data-callback="makeReply" action="/new/comment">
             <div class="row pad-bottom-light">
               <input name="parent" hidden value="<%= entries[which].comments[i].id %>">
               <textarea name="message" placeholder="reply..."></textarea>

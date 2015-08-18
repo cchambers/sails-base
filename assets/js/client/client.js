@@ -73,6 +73,20 @@ var app = {
       }
     },
 
+    makeComment: function (data) {
+      var $comments = $(".comments ul");
+      var html = new EJS({ url: "/templates/comment-success.ejs" }).render(data);
+      $comments.prepend(html);
+      $(".make-comment").remove();
+    },
+
+    makeReply: function (data, $form) {
+      var $comments = $form.parents("footer").next();
+      var html = new EJS({ url: "/templates/comment-success.ejs" }).render(data);
+      $comments.prepend(html);
+      $form.remove();
+    },
+
     output: function (data, $form) {
       if ($form){
         if (data.message) {

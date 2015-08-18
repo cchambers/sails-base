@@ -52,7 +52,7 @@
             <% } else { %>
             <iframe class="content" src="<%= oembed.url %>" alt="<%= oembed.title %>"></iframe>
             <p class="px12 pad-bottom">
-            via: <a href="<%= oembed.url %>" target="_new"><%= oembed.url %></a> 
+              via: <a href="<%= oembed.url %>" target="_new"><%= oembed.url %></a> 
             </p>
             <% } %>
             <% }
@@ -99,7 +99,7 @@
         <% if (user) {  %>
         <div class="row make-comment" id="make-comment">
           <div class="new-thing">
-            <form method="POST" data-callback="output" action="/new/comment">
+            <form method="POST" data-callback="makeComment" action="/new/comment">
               <div class="row pad-bottom-light">
                 <input type="text" name="entryid" hidden value="<%= entry.id %>">
                 <label for="title">Add a new comment</label>
@@ -116,8 +116,8 @@
 
 
         <div class="row comments" id="comments">
-          <% if (comments.length > 0) { %>
-          <ul>
+          <ul><% if (comments.length > 0) { %>
+
             <% for (comment in comments) {%>
             <li data-id="<%= comments[comment].id %>" id="<%= comments[comment].id %>">
               <header>
@@ -132,7 +132,7 @@
                 <a href="#<%= comments[comment].id %>" class="load-replies">load <%= comments[comment].children.length %> replies</a>
                 <% } %>
 
-                <form class="off" method="POST" data-callback="output" action="/new/comment">
+                <form class="off" method="POST" data-callback="makeReply" action="/new/comment">
                   <div class="row pad-bottom-light">
                     <input name="parent" hidden value="<%= comments[comment].id %>">
                     <textarea name="message" placeholder="reply..."></textarea>
@@ -145,12 +145,8 @@
               </footer>
             </li>
             <% } %>
-          </ul>
-          <% } else { %>
-          <p class="pad-bottom-hard">
-            No comments yet!
-          </p>
-          <% } %>
+            <% } else { %>
+            <% } %></ul>
         </div>
       </div>
     </div>

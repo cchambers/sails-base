@@ -12,7 +12,7 @@
       <% if (entries[which].children.length > 0) { %>
       <a href="#<%= entries[which].id %>" class="load-replies">load <%= entries[which].children.length %> replies</a>
       <% } %>
-      <form class="off" method="POST" data-callback="output" action="/new/comment">
+      <form class="off" method="POST" data-callback="makeReply" action="/new/comment">
       <input name="parent" hidden value="<%= entries[which].id %>">
         <div class="row pad-bottom-light">
           <textarea name="message" placeholder="reply..."></textarea>
@@ -23,6 +23,7 @@
         </div>
       </form>
     </footer>
+    <ul></ul>
   </li>
   <% } %>
 </ul>
