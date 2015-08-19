@@ -58,7 +58,8 @@ module.exports = {
       return res.json(data);
     }
 
-    // 8f0ccd90b8974261a8d908e5f409f7cb
+    // TODO: Check updatedAt date of user's last post (if any)
+    // and make sure it's at least 2 minutes ago
 
     var entry = {
       postedBy: req.body.postedBy,

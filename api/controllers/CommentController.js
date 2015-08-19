@@ -8,6 +8,10 @@ module.exports = {
       postedBy: ""
     }
 
+    
+    // TODO: Check updatedAt date of user's last post (if any)
+    // and make sure it's at least 2 minutes ago
+
     var viewdata = {
       name: req.user.username,
       content: req.body.message
