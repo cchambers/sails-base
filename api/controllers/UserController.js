@@ -54,6 +54,20 @@ module.exports = {
     });
   },
 
+  offline: function (req, res) {
+    User.find()
+    .exec( function (err, data) {
+      for (var x = 0; x < data.length; x++) {
+        User.findOne(data[x].id)
+        .exec( function (err, doc) {
+          doc.online = false;
+          doc.save();
+        });
+      }
+      return res.json({ message: "Success?" })
+    });
+  },
+
   myProfile: function (req, res) {
     User.findOne(req.user.id) 
     .populate('votes') 

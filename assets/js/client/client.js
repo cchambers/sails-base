@@ -235,6 +235,14 @@ var app = {
     },
 
     setupSockets: function () {
+      io.socket.on("connect", function(){
+        io.socket.get("/messages");
+      });
+
+      io.socket.on("disconnect", function(){
+        console.log("Lost connection to server");
+      });
+
       io.socket.on("message", function (data) {
         // console.log(data);
       });

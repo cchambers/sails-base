@@ -4,6 +4,8 @@ module.exports.routes = {
   'get /userlist': 'UserController.list',
   'get /sublist': 'SubController.list',
 
+  'get /offline': 'UserController.offline',
+
 
   'get /me': 'UserController.myProfile',
 

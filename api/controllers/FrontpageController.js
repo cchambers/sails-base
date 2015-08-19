@@ -16,7 +16,13 @@ module.exports = {
       entries: []
     }
 
-    Entry.find({ where: { nsfw: false }, limit: 50, skip: 0, sort: 'createdAt DESC' })
+    var query = { where: { nsfw: false }, limit: 50, skip: 0, sort: 'createdAt DESC' };
+
+    if (req.user) { // TODO: address user settings here:
+      query = { where: { nsfw: false }, limit: 50, skip: 0, sort: 'createdAt DESC' }
+    }
+
+    Entry.find(query)
     .limit(100)
     .populate('comments')
     .populate('postedTo')
