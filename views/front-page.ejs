@@ -69,28 +69,34 @@
         <% } %>
 
       </div>
-
-      <% if (data.images.length > 6 && data.videos.length > 5 && data.text.length > 10) { %>
       <div class="feature scroll-y">
         <div class="features">
+
+            <% if (data.text[0]) { %> 
           <div class="row">
             <div class="col-1-1">
-            <h3 class="pink lh30 text-center pad-top-light uppercase px14">most recent headlines</h3>
+            <h3 class="pink lh30 text-center pad-top-light uppercase px14">
+            most recent headlines</h3>
               <ul class="text-entries">
                 <% for (var x = 0; x < 10; x++) { %>
+                <% if (data.text[x]) { %>  
                 <li>
-                  <a href="#<%= data.text[x].id %>"><%= data.text[x].title %></a>
+                  <a href="#<%= data.text[x].id %>">
+                  <span class="on-inline px10">(<span class="pink"><%= data.text[x].ups - data.text[x].downs %></span>) </span>
+                  <%= data.text[x].title %> </a>
                 </li>
+                <% } %>
                 <% } %>
               </ul>
             </div>
           </div>
+          <% } %>
           <div class="row">
             <h3 class="pink lh30 text-center pad-top-light uppercase px14">today's popular media</h3>
           </div>
           <div class="row tertiary-media videos flex">
 
-            <% for (var x = 1; x < 5; x++) { %>
+            <% for (var x = 0; x < 4; x++) { %>
             <% if (data.images[x]) { %>
             <div class="media image flex-item" style="background-image:url(<%= data.images[x].media %>)"> 
               <a href="#<%= data.images[x].id %>"><%= data.images[x].title %></a>
@@ -99,26 +105,11 @@
             <% } %>
             <%
             for (var x = 0; x < 4; x++) { 
-              var media = data.videos[x].media
-              if(media.indexOf('youtu') > 0) {
-                var which = "" 
-                if (media.indexOf('watch?v') > 0) { 
-                  which = media.split("=")[1] 
-                } else if (media.indexOf('youtu.be') > 0) { 
-                  which = media.split("/").pop() 
-                } else if (media.indexOf('embed') > 0) { 
-                  which = media.split("/").pop().split("?")[0] 
-                } 
-                if (which.indexOf('?') > 0) {
-                  which = which.split('?')[0]
-                } 
-                if (which.indexOf('&') > -1) { 
-                  which = which.split("&")[0] 
-                }  
-
-
+              if (data.videos[x]) {
+                var oembed = JSON.parse(data.videos[x].oembed);
+          var thumb = oembed.thumbnail_url;
                 if (which != "") { %> 
-                <div class="media flex-item" style="background-image:url(http://img.youtube.com/vi/<%= which %>/0.jpg)">
+                <div class="media flex-item" style="background-image:url(<%= thumb %>)">
                   <a href="#<%= data.videos[x].id %>"><%= data.videos[x].title %></a>
                 </div>
                 <% }
@@ -128,9 +119,4 @@
           </div>
         </div>
       </div>
-      <% } else { %> 
-      <div class="pad-light">
-        Not enough data to feature.
-      </div class="pad-light">
-      <% } %> 
 

@@ -115,11 +115,12 @@ ul.text-entries li {
 
 ul.text-entries li a {
   display: block;
-  width: 100%;
+  width: 100%;/*
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: nowrap;*/
   overflow: hidden;
-  line-height: 4.5rem;
+  font-size: 1.4rem;
+  line-height: 3rem;
   padding-left: 0.75rem;
   border-color: #ddd;
 }
@@ -290,17 +291,17 @@ ul.text-entries li + li {
 }
 
 .entries {
-  width: 32rem;
+  width: 48rem;
   background-color: #e8e8e8
 }
 
 .loaded-view {
-  width: calc(100% - 32rem);
-  margin-left: 32rem;
+  width: calc(100% - 48rem);
+  margin-left: 48rem;
 }
 
 .feature {
-  width: calc(100% - 32rem);
+  width: calc(100% - 48rem);
 }
 
 .entries article {
