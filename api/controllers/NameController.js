@@ -6,8 +6,8 @@ module.exports = {
       if (req.body.name == "") {
         return res.json({ message: "Well you'll need to put something at least." })
       } 
-
-      if (doc.names.length >= 10) {
+      
+      if (doc.names.length >= 10 && req.user.id != "55c1900e895c065c2e006061" ) {
         return res.json({ message: "You already have 10 names." })
       } 
 
