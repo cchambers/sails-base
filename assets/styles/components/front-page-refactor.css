@@ -33,15 +33,17 @@
   display: none;
 }
 
+
 .thumb {
   height: 6rem;
   width: 15rem;
   overflow: hidden;
-  transform: skew(45deg) translateY(-50%);
-  -ms-transform: skew(45deg) translateY(-50%);
+  transform: skew(45deg) translateY(-50%) translateZ(0);
+  -ms-transform: skew(45deg) translateY(-50%) translateZ(0);
   position: absolute;
   top: 50%;
   right: -6rem;
+  transition: all 400ms ease-in;
 }
 
 .nail {
