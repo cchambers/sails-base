@@ -7,7 +7,7 @@ new CronJob('* 15 * * * *', function () {
 }, null, true, 'America/Los_Angeles');
 
 
-new CronJob('1 * * * * *', function () {
+new CronJob('7 * * * * *', function () {
   fetches++;
   sails.controllers.bot.postRandom();
 }, null, true, 'America/Los_Angeles');
