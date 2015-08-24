@@ -40,11 +40,13 @@ module.exports = {
           var rand = Math.floor(Math.random()*(data.length-0)+0);
           var which = data[rand];
           console.log(which)
-          var succeed = verify(which);
-          if (succeed) {
-            approve(data[rand]);
-          } else {
-            ignore(data[rand]);
+          if (which) { 
+            var succeed = verify(which);
+            if (succeed) {
+              approve(data[rand]);
+            } else {
+              ignore(data[rand]);
+            }
           }
         } else {
           console.log("[BOT] Nothing to post.")
