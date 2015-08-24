@@ -22,8 +22,10 @@ module.exports = {
           }
         }
         console.log({ message: "Success. We created new entries on fetch " + fetches });
+        return;
       } else {
-        console.log({ message: "Error." }) 
+        console.log({ message: "Error." });
+        return;
       }
     });
 
