@@ -61,7 +61,10 @@ module.exports.routes = {
   'get /admin': 'AdminController.index',
   'get /admin/botted': 'AdminController.listBotted',
 
-  'get /subs': 'SubController.subsJSON'
+  'get /subs': 'SubController.subsJSON',
 
+  'get /404': 'ErrorController.fourOhFour',
+  'get /403': 'ErrorController.fourOhThree',
+  'get /500': 'ErrorController.fiveOhOh'
 
 };
