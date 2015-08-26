@@ -1,26 +1,8 @@
-<%
-
-if (data == undefined) {
-  data = {
-    sub: {
-      name: "Error",
-      slug: "",
-      creator: {
-        name: "No one"
-      }
-    }
-  }
-}
-
-console.log("Data:", data);
-
-
-%>
 <!DOCTYPE html>
 <html class="<% if (req.user) { %>logged-in<% if (req.user.admin) { %> admin<%} }  %>">
 <head>
   <title>the sauce ♨ 
-    <% if (data && data.sub.name) { %>
+    <% if (data && data.sub) { %>
     <%=  data.sub.name %>
     <%  }  %>
   </title>
@@ -56,7 +38,7 @@ console.log("Data:", data);
   <link rel="stylesheet" href="/styles/theme/refactor.css">
   <link rel="stylesheet" href="/styles/theme/sauce.css">
   <!--STYLES END-->
-  <% if(data.sub) { %>
+  <% if(data && data.sub) { %>
   <style> <%= data.sub.css %> </style>
   <% } %>
 </head>
@@ -67,7 +49,7 @@ console.log("Data:", data);
       <a href="/">the sauce</a>
     </div>
     <div class="state">
-      <% if (data && data.sub.name) { %>
+      <% if (data && data.sub) { %>
       <a href="/sub/<%= data.sub.slug %>"><%= data.sub.name %></a>
       <%  } else { %>
       alpha
