@@ -1,3 +1,18 @@
+<%
+
+if (data == undefined) {
+  data = {
+    sub: {
+      name: "Error",
+      slug: "",
+      creator: {
+        name: "No one"
+      }
+    }
+  }
+}
+
+%>
 <!DOCTYPE html>
 <html class="<% if (req.user) { %>logged-in<% if (req.user.admin) { %> admin<%} }  %>">
 <head>
