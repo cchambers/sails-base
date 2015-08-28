@@ -291,17 +291,17 @@ ul.text-entries li + li {
 }
 
 .entries {
-  width: 48rem;
+  width: 40rem;
   background-color: #e8e8e8
 }
 
 .loaded-view {
-  width: calc(100% - 48rem);
-  margin-left: 48rem;
+  width: calc(100% - 40rem);
+  margin-left: 40rem;
 }
 
 .feature {
-  width: calc(100% - 48rem);
+  width: calc(100% - 40rem);
 }
 
 .entries article {
