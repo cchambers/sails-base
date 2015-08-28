@@ -19,166 +19,162 @@
         4::::::::4   00:::::::::00           4::::::::4
         4444444444     000000000             4444444444
 
--->
-<html>
-<head>
-  <title>404 (Page Not Found)</title>
-  <style>
+      -->
+      <html>
+      <head>
+        <title>404 (Page Not Found)</title>
+        <style>
 
-    .message {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      text-align: center;
-      width: 100%;
-      transform: translateX(-50%) translateY(-50%);
-      color: #f2f2f2;
-      text-shadow: 2px 2px 5px rgba(0,0,0,.5);
-      pointer-events: none;
-    }
+          .px200 {
+            font-size: 20rem;
+          }
 
-    a {
-      color: #DF3D82;
-      border: 1px solid transparent;
-      border-bottom: 1px solid #DF3D82;
-      text-decoration: none;
-    }
+          .message {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            text-align: center;
+            width: 100%;
+            transform: translateX(-50%) translateY(-50%);
+            color: #f2f2f2;
+            text-shadow: 2px 2px 5px rgba(0,0,0,.15);
+            pointer-events: none;
+            font-weight: bold;
+          }
 
-    a:hover {
-      border-top: 1px solid #DF3D82;
-      background-color: rgba(255,255,255,.25);
-    }
-  </style>
-  <script src="https://rawgithub.com/soulwire/sketch.js/v1.0/js/sketch.min.js"></script>
-</head>
-<body>
-  <div id="container"></div>
-  <div class="message">
-    <div class="px100 bold">
-      404
-    </div>
-    <div class="px20 uppercase pull-top-light ">
-      page not found
-    </div>
-  </div>
-  
-  <script type="text/javascript">
-    function Particle(x, y, radius) {
-      this.init(x, y, radius);
-    }
+          a {
+            color: #DF3D82;
+            border: 1px solid transparent;
+            border-bottom: 1px solid #DF3D82;
+            text-decoration: none;
+          }
 
-    Particle.prototype = {
+          a:hover {
+            border-top: 1px solid #DF3D82;
+          }
+        </style>
+        <script src="https://rawgithub.com/soulwire/sketch.js/v1.0/js/sketch.min.js"></script>
+      </head>
+      <body>
+        <div id="container"></div>
+        <div class="message">
+          <div class="px200 bold">
+            404
+          </div>
+          <div class="px36 uppercase pull-top">
+            page not found
+          </div>
+        </div>
 
-      init: function (x, y, radius) {
-        this.alive = true;
-        this.radius = radius || 10;
-        this.wander = 0.15;
-        this.theta = random(TWO_PI);
-        this.drag = 0.99;
-        this.color = '#f2f2f2';
+        <script type="text/javascript">
+          function Particle(x, y, radius) {
+            this.init(x, y, radius);
+          }
 
-        this.x = x || 0.0;
-        this.y = y || 0.0;
+          Particle.prototype = {
 
-        this.vx = 0.0;
-        this.vy = 0.0;
-      },
+            init: function (x, y, radius) {
+              this.alive = true;
+              this.radius = radius || 10;
+              this.wander = 0.15;
+              this.theta = random(TWO_PI);
+              this.drag = 0.99;
+              this.color = '#f2f2f2';
 
-      move: function () {
+              this.x = x || 0.0;
+              this.y = y || 0.0;
 
-        this.x += this.vx;
-        this.y += this.vy;
+              this.vx = 0.0;
+              this.vy = 0.0;
+            },
 
-        this.vx *= this.drag;
-        this.vy *= this.drag;
+            move: function () {
 
-        this.theta += random(-0.5, 0.5) * this.wander;
-        this.vx += sin(this.theta) * 0.1;
-        this.vy += cos(this.theta) * 0.1;
+              this.x += this.vx;
+              this.y += this.vy;
 
-        this.radius *= 0.96;
-        this.alive = this.radius > 0.1;
-      },
+              this.vx *= this.drag;
+              this.vy *= this.drag;
 
-      draw: function (ctx) {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, TWO_PI);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-      }
-    };
+              this.theta += random(-0.5, 0.5) * this.wander;
+              this.vx += sin(this.theta) * 0.1;
+              this.vy += cos(this.theta) * 0.1;
 
-// ----------------------------------------
-// Example
-// ----------------------------------------
+              this.radius *= 0.96;
+              this.alive = this.radius > 0.1;
+            },
 
-var MAX_PARTICLES = 100;
-var COLOURS = ['#69D2E7', '#DF3D82'];
+            draw: function (ctx) {
+              ctx.beginPath();
+              ctx.arc(this.x, this.y, this.radius, 0, TWO_PI);
+              ctx.fillStyle = this.color;
+              ctx.fill();
+            }
+          };
 
-var particles = [];
-var pool = [];
+          var maxParticles = 150;
+          var colors = ['#69D2E7', '#DF3D82'];
+          var particles = [];
+          var pool = [];
 
-var demo = Sketch.create({
-  container: document.getElementById('container')
-});
+          var errorPage = Sketch.create({
+            container: document.getElementById('container')
+          });
 
-demo.setup = function () {
+          errorPage.setup = function () {
+            var i, x, y;
+            for (i = 0; i < 60; i++) {
+              x = (errorPage.width * 0.5) + random(-100, 100);
+              y = (errorPage.height * 0.5) + random(-100, 100);
+              errorPage.spawn(x, y);
+            }
+          };
 
-  // Set off some initial particles.
-  var i, x, y;
+          errorPage.spawn = function (x, y) {
 
-  for (i = 0; i < 20; i++) {
-    x = (demo.width * 0.5) + random(-100, 100);
-    y = (demo.height * 0.5) + random(-100, 100);
-    demo.spawn(x, y);
-  }
-};
+            if (particles.length >= maxParticles)
+              pool.push(particles.shift());
 
-demo.spawn = function (x, y) {
+            particle = pool.length ? pool.pop() : new Particle();
+            particle.init(x, y, random(5, 40));
 
-  if (particles.length >= MAX_PARTICLES)
-    pool.push(particles.shift());
+            particle.wander = random(0.5, 2.0);
+            particle.color = random(colors);
+            particle.drag = random(0.9, 0.99);
 
-  particle = pool.length ? pool.pop() : new Particle();
-  particle.init(x, y, random(5, 40));
+            theta = random(TWO_PI);
+            force = random(1, 4);
 
-  particle.wander = random(0.5, 2.0);
-  particle.color = random(COLOURS);
-  particle.drag = random(0.9, 0.99);
+            particle.vx = sin(theta) * force;
+            particle.vy = cos(theta) * force;
 
-  theta = random(TWO_PI);
-  force = random(2, 8);
+            particles.push(particle);
+          }
 
-  particle.vx = sin(theta) * force;
-  particle.vy = cos(theta) * force;
+          errorPage.update = function () {
+            var i, particle;
+            for (i = particles.length - 1; i >= 0; i--) {
+              particle = particles[i];
+              if (particle.alive) particle.move();
+              else pool.push(particles.splice(i, 1)[0]);
+            }
+          };
 
-  particles.push(particle);
-}
+          errorPage.draw = function () {
+            errorPage.globalCompositeOperation = 'luminosity';
+            for (var i = particles.length - 1; i >= 0; i--) {
+              particles[i].draw(errorPage);
+            }
+          };
 
-demo.update = function () {
-  var i, particle;
-  for (i = particles.length - 1; i >= 0; i--) {
-    particle = particles[i];
-    if (particle.alive) particle.move();
-    else pool.push(particles.splice(i, 1)[0]);
-  }
-};
+          errorPage.mousemove = function () {
+            var particle, theta, force, touch, max, i, j, n;
+            for (i = 0, n = errorPage.touches.length; i < n; i++) {
+              touch = errorPage.touches[i], max = 2;
+              for (j = 0; j < max; j++) errorPage.spawn(touch.x, touch.y);
+            }
+        };
+      </script>
 
-demo.draw = function () {
-  demo.globalCompositeOperation = 'lighter';
-  for (var i = particles.length - 1; i >= 0; i--) {
-    particles[i].draw(demo);
-  }
-};
-
-demo.mousemove = function () {
-  var particle, theta, force, touch, max, i, j, n;
-  for (i = 0, n = demo.touches.length; i < n; i++) {
-    touch = demo.touches[i], max = 1;
-    for (j = 0; j < max; j++) demo.spawn(touch.x, touch.y);
-  }
-};
-</script>
-
-</body>
-</html>
+    </body>
+    </html>
