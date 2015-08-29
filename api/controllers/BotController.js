@@ -49,12 +49,12 @@ module.exports = {
     }
 
     function startTimer(slug, delay) {
-      console.log("[BOT] Setting timer for " + slug + "...")
+      // console.log("[BOT] Setting timer for " + slug + "...")
       setTimeout( function () { getRecent(slug) }, delay);
     }
 
     function getRecent(slug) {
-      console.log("[BOT] Looking at " + slug + "...")
+      // console.log("[BOT] Looking at " + slug + "...")
       request('http://www.reddit.com/r/'+slug+'.json?limit=50', function (error, response, body) {
         if (!error && response.statusCode == 200) {
           var json = JSON.parse(body);
@@ -80,9 +80,9 @@ module.exports = {
             }
 
           }
-          console.log("[BOT] Successfully fetched " + slug);
+          // console.log("[BOT] Successfully fetched " + slug);
         } else {
-          console.log("[BOT] Error fetching " + slug);
+          // console.log("[BOT] Error fetching " + slug);
           return;
         }
       });
@@ -95,10 +95,28 @@ function postEntry(data, slug) {
     Entry.create(data)
     .exec( function (err, newEntry) {
       if (newEntry !== undefined) {
+        getMediaEmbed(newEntry.id, newEntry.media, 0);
         console.log("[BOT] Created new entry in " + slug);
       }
     })
   });
+
+  function getMediaEmbed(which, uri, delay) {
+    setTimeout( function () {
+      var api = "http://api.embed.ly/1/oembed?key=8f0ccd90b8974261a8d908e5f409f7cb&url="+uri;
+      request(api, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          Entry.update(which, { oembed: body })
+          .exec( function (err, doc) {
+            return;
+          })
+        } else {
+          return console.log("error", body, api); 
+        }
+      });
+    }, delay);
+
+  }
 }
 },
 
@@ -237,12 +255,13 @@ function getMediaEmbed(api, entry) {
 fixEmbeds: function () {
   // find all NSFW entries
 
-  Entry.find({ nsfw: true })
+  Entry.find({ where: { nsfw: true, oembed: undefined }, limit: 500, sort: 'createdAt DESC'  })
   .exec(filterData);
 
   function filterData(err,data) {
-    var delay = 3000;
-    for (var x = 0; x < data.length; x++) {
+    var delay = 500;
+    console.log("There are "+ data.length +" entries without oembeds...");
+    for (var x = data.length-1; x > 0; --x) {;
       var uri = data[x].media;
       if (!data[x].oembed) {
         getMediaEmbed(data[x].id, uri, delay * x);
@@ -253,7 +272,7 @@ fixEmbeds: function () {
   function getMediaEmbed(which, uri, delay) {
     setTimeout( function () {
       console.log("Finding " + which)
-      var api = "http://api.embed.ly/1/oembed?url="+uri+"&key=8f0ccd90b8974261a8d908e5f409f7cb";
+      var api = "http://api.embed.ly/1/oembed?key=8f0ccd90b8974261a8d908e5f409f7cb&url="+uri;
       request(api, function (error, response, body) {
         if (!error && response.statusCode == 200) {
           Entry.update(which, { oembed: body })
@@ -263,7 +282,7 @@ fixEmbeds: function () {
             return;
           })
         } else {
-          return console.log("error", error); 
+          return console.log("error", body, api); 
         }
       });
     }, delay);
