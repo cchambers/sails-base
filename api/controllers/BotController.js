@@ -143,6 +143,7 @@ postRandom: function() {
       }
     }
 
+    if (sub == null) return false;
     var badsub = (ignoreSubs.indexOf(sub.toLowerCase()) > -1) ? true : false;
 
     if (badsub) {
