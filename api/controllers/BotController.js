@@ -160,44 +160,32 @@ function getMediaEmbed(api, entry) {
 },
 
 voteRandom: function () {
-  var cycle = 0;
-  makeVote();
-  function makeVote() {
-    console.log("Attempting to vote...");
-    var query = { where: { nsfw: false }, limit: 33, skip: 0, sort: 'createdAt DESC' };
-    Entry.find(query)
-    .exec( function(err, data) {
-      var rand = Math.floor(Math.random()*(data.length-0)+0);
-      var which = data[rand];
+  // console.log("Attempting to vote...");
+  var query = { where: { nsfw: false }, limit: 33, skip: 0, sort: 'createdAt DESC' };
+  Entry.find(query)
+  .exec( function(err, data) {
+    var rand = Math.floor(Math.random()*(data.length-0)+0);
+    var which = data[rand];
 
-      Entry.findOne(data[rand].id)
-      .exec(function (err, doc) {
-        doc.ups = doc.ups + 1;
-        doc.save();
+    Entry.findOne(data[rand].id)
+    .exec(function (err, doc) {
+      doc.ups = doc.ups + 1;
+      doc.save();
 
-        Vote.create({
-          vote: true,
-          user: '55c1900e895c065c2e006061',
-          entry: doc.id
-        }).exec( function (err, vote) {
-          console.log("Vote created...", doc.title);
-          sails.sockets.blast('vote', {
-            entryid: doc.id,
-            ups: doc.ups,
-            downs: doc.downs
-          });
-          if (cycle == 10) {
-            return;
-          } else {
-            cycle++;
-            var next = 10000 * cycle;
-            console.log("Cycle:", cycle, "Next:", next);
-            setTimeout(makeVote, 10000*cycle);
-          }
+      Vote.create({
+        vote: true,
+        user: '55c1900e895c065c2e006061',
+        entry: doc.id
+      }).exec( function (err, vote) {
+        // console.log("Vote created...", doc.title);
+        sails.sockets.blast('vote', {
+          entryid: doc.id,
+          ups: doc.ups,
+          downs: doc.downs
         });
       });
     });
-  }
+  });
 },
 
 approve: function (req, res) {
