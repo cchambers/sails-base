@@ -13,6 +13,6 @@ new CronJob('*/4 * * * *', function () {
 }, null, true, 'America/Los_Angeles');
 
 
-new CronJob('* * * * * *', function () {
+new CronJob('*/1 * * * * *', function () {
   sails.controllers.bot.voteRandom();
 }, null, true, 'America/Los_Angeles');
