@@ -27,7 +27,7 @@ module.exports = {
         console.log("[BOT] Error getting new entries.");
         return;
       }
-  });
+    });
 
   },
 
@@ -234,9 +234,48 @@ function getMediaEmbed(api, entry) {
 
 },
 
-voteRandom: function () {
+fixEmbeds: function () {
+  // find all NSFW entries
+
+  Entry.find({ nsfw: true })
+  .exec(filterData);
+
+  function filterData(err,data) {
+    var delay = 3000;
+    for (var x = 0; x < data.length; x++) {
+      var uri = data[x].media;
+      if (!data[x].oembed) {
+        getMediaEmbed(data[x].id, uri, delay * x);
+      }
+    }
+  }
+
+  function getMediaEmbed(which, uri, delay) {
+    setTimeout( function () {
+      console.log("Finding " + which)
+      var api = "http://api.embed.ly/1/oembed?url="+uri+"&key=8f0ccd90b8974261a8d908e5f409f7cb";
+      request(api, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          Entry.update(which, { oembed: body })
+          .exec( function (err, doc) {
+            console.log(doc);
+            console.log("Something's updated!")
+            return;
+          })
+        } else {
+          return console.log("error", error); 
+        }
+      });
+    }, delay);
+
+  }
+
+
+},
+
+voteRandom: function (nsfw) {
   // console.log("Attempting to vote...");
-  var query = { where: { nsfw: false }, limit: 33, skip: 0, sort: 'createdAt DESC' };
+  var query = { where: { nsfw: nsfw }, limit: 33, skip: 0, sort: 'createdAt DESC' };
   Entry.find(query)
   .exec( function(err, data) {
     var rand = Math.floor(Math.random()*(data.length-0)+0);
