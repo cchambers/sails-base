@@ -9,6 +9,10 @@ new CronJob('*/15 * * * *', function () {
 
 
 new CronJob('*/4 * * * *', function () {
-  fetches++;
   sails.controllers.bot.postRandom();
+}, null, true, 'America/Los_Angeles');
+
+
+new CronJob('* * * * * *', function () {
+  sails.controllers.bot.voteRandom();
 }, null, true, 'America/Los_Angeles');

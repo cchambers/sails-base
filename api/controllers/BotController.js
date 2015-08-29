@@ -42,7 +42,7 @@ module.exports = {
           var rand = Math.floor(Math.random()*(data.length-0)+0);
           var which = data[rand];
           console.log(which)
-          if (which) { 
+          if (which) {
             var succeed = verify(which);
             if (succeed) {
               approve(data[rand]);
@@ -54,7 +54,7 @@ module.exports = {
           console.log("[BOT] Nothing to post.")
           return;
         }
-      }); 
+      });
     }
 
     function verify(entry) {
@@ -159,6 +159,43 @@ function getMediaEmbed(api, entry) {
 
 },
 
+voteRandom: function () {
+  var cycle = 0;
+  setTimeout(makeVote, 10000*cycle);
+
+  function makeVote() {
+    cycle++;
+    // console.log("Attempting to vote...");
+    var query = { where: { nsfw: false }, limit: 33, skip: 0, sort: 'createdAt DESC' };
+
+    Entry.find(query)
+    .exec( function(err, data) {
+      var rand = Math.floor(Math.random()*(data.length-0)+0);
+      var which = data[rand];
+
+      Entry.findOne(data[rand].id)
+      .exec(function (err, doc) {
+        doc.ups = doc.ups + 1;
+        doc.save();
+
+        Vote.create({
+          vote: true,
+          user: '55c1900e895c065c2e006061',
+          entry: doc.id
+        }).exec( function (err, vote) {
+          // console.log("Vote created...", doc.title);
+          sails.sockets.blast('vote', {
+            entryid: doc.id,
+            ups: doc.ups,
+            downs: doc.downs
+          });
+          setTimeout(makeVote, 10000*cycle);
+        });
+      });
+    });
+  }
+},
+
 approve: function (req, res) {
   console.log("APPROVING...")
   var whichName;
@@ -212,7 +249,7 @@ function getMediaEmbed(api, entry) {
       entry.oembed = body;
       createEntry(entry);
     } else {
-      return res.json({ message: "Error." }) 
+      return res.json({ message: "Error." })
     }
   });
 }
