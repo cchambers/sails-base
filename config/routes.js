@@ -31,6 +31,7 @@ module.exports.routes = {
   'post /edit/entry/:id': 'EntryController.submitEdit',
   'post /delete/entry/:id': 'EntryController.delete',
   'post /tag/entry': 'EntryController.tag',
+  'get /tag/nsfw': 'FrontpageController.nsfwIndex',
 
   // 'get /op/makeadmin': 'UserController.makeadmin',
 

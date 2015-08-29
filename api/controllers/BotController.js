@@ -21,107 +21,178 @@ module.exports = {
             });
           }
         }
-        console.log({ message: "Success. We created new entries on fetch " + fetches });
+        console.log("[BOT] Success. We created new entries on fetch " + fetches);
         return;
       } else {
-        console.log({ message: "Error." });
+        console.log("[BOT] Error getting new entries.");
         return;
       }
-    });
+  });
 
   },
 
-  postRandom: function() {
+  fGet: function () {
+    // get list of NSFW subs
+    var cycle = 15000; // 15 second cycle
+    Sub.find({ nsfw: true })
+    .exec( function (err, data) {
+      digest(data);
+    });
 
-    getRandom();
+    function digest(data) {
+      var len = data.length;
+      var delay = cycle/len;
+      for (var x = 0; x < len; x++) {
+        var slug = data[x].slug;
+        startTimer(slug, cycle*x);
+      }
+    }
 
-    function getRandom() {
-      Botted.find({ reviewed: {$eq: false } })
-      .exec( function (err, data) {
-        if (data) {
-          var rand = Math.floor(Math.random()*(data.length-0)+0);
-          var which = data[rand];
-          console.log(which)
-          if (which) {
-            var succeed = verify(which);
-            if (succeed) {
-              approve(data[rand]);
-            } else {
-              ignore(data[rand]);
+    function startTimer(slug, delay) {
+      console.log("[BOT] Setting timer for " + slug + "...")
+      setTimeout( function () { getRecent(slug) }, delay);
+    }
+
+    function getRecent(slug) {
+      console.log("[BOT] Looking at " + slug + "...")
+      request('http://www.reddit.com/r/'+slug+'.json?limit=50', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          var json = JSON.parse(body);
+          var entries = json.data.children;
+          var howmany = 0;
+          var newdata = [];
+          console.log("[BOT] Filtering " + entries.length + " entries...")
+          for (entry in entries) {
+            var data = {
+              postedTo: slug,
+              title: entries[entry].data.title,
+              media: entries[entry].data.url,
+              nsfw: true,
+              slug: entries[entry].data.title.toLowerCase().replace(/[^a-zA-Z0-9\s]/g,'').replace(/\s/g, "-"),
+              ups: 1,
+              downs: 0,
+              postedBy: '55e1f77c3c8656996c230eb0',
+              user: '55e1f77c3c8656996c230eaf',
             }
+
+            if (data.media) {
+              postEntry(data, slug);
+            }
+
           }
+          console.log("[BOT] Successfully fetched " + slug);
         } else {
-          console.log("[BOT] Nothing to post.")
+          console.log("[BOT] Error fetching " + slug);
           return;
         }
       });
-    }
+}
 
-    function verify(entry) {
-      var ignoreSubs = ["blackpeopletwitter", "blog", "announcements", "girlsfinishingthejob", "ama", "tifu", "eli5", "dota2", "leagueoflegends", "4chan"];
-      var ignoreTitles = [ " i ", " i'm ", " i'll ", " my ", " ama "];
-      var title = entry.title;
-      var sub = entry.postedTo;
-      var succeed = true;
-
-      var lowerTitle = title.toLowerCase();
-      for ( var x = 0; x < ignoreTitles.length; x++ ) {
-        if (lowerTitle.indexOf(ignoreTitles[x]) > -1) {
-          console.log("Bad title.")
-          succeed = false;
-        }
+function postEntry(data, slug) {
+  Sub.findOne({ slug: slug })
+  .exec( function (err, doc) {
+    data.subs = [doc.id];
+    Entry.create(data)
+    .exec( function (err, newEntry) {
+      if (newEntry !== undefined) {
+        console.log("[BOT] Created new entry in " + slug);
       }
+    })
+  });
+}
+},
 
-      var badsub = (ignoreSubs.indexOf(sub.toLowerCase()) > -1) ? true : false;
+postRandom: function() {
 
-      if (badsub) {
-        succeed = false;
-        console.log("Bad sub.", sub)
-      }
+  getRandom();
 
-      return succeed;
-    }
-
-    function ignore(entry) {
-      Botted.findOne(entry.id)
-      .exec( function (err, doc) {
-        doc.reviewed = true;
-        doc.save();
-        console.log("[BOT] Entry ignored.")
-        getRandom();
-      });
-    }
-
-    function approve(entry) {
-      Name.find({ user: '55c1900e895c065c2e006061' })
-      .exec( function (err, data) {
+  function getRandom() {
+    Botted.find({ reviewed: {$eq: false } })
+    .exec( function (err, data) {
+      if (data) {
         var rand = Math.floor(Math.random()*(data.length-0)+0);
-        whichName = data[rand].id;
-        andGo(entry);
-      });
+        var which = data[rand];
+        console.log(which)
+        if (which) {
+          var succeed = verify(which);
+          if (succeed) {
+            approve(data[rand]);
+          } else {
+            ignore(data[rand]);
+          }
+        }
+      } else {
+        console.log("[BOT] Nothing to post.")
+        return;
+      }
+    });
+  }
+
+  function verify(entry) {
+    var ignoreSubs = ["blackpeopletwitter", "blog", "announcements", "girlsfinishingthejob", "ama", "tifu", "eli5", "dota2", "leagueoflegends", "4chan"];
+    var ignoreTitles = [ " i ", " i'm ", " i'll ", " my ", " ama "];
+    var title = entry.title;
+    var sub = entry.postedTo;
+    var succeed = true;
+
+    var lowerTitle = title.toLowerCase();
+    for ( var x = 0; x < ignoreTitles.length; x++ ) {
+      if (lowerTitle.indexOf(ignoreTitles[x]) > -1) {
+        console.log("Bad title.")
+        succeed = false;
+      }
     }
 
-    function andGo(entry) {
-      Botted.findOne(entry.id)
-      .exec( function (err, doc) {
-        doc.reviewed = true;
-        doc.save();
-        var subslug = doc.postedTo;
-        Sub.findOne({ name: subslug })
-        .exec( function (err, sub) {
-          if (sub == undefined) {
-            var sub = {
-              id: '55c2af394d9e89df572ba5ba'
-            }
+    var badsub = (ignoreSubs.indexOf(sub.toLowerCase()) > -1) ? true : false;
+
+    if (badsub) {
+      succeed = false;
+      console.log("Bad sub.", sub)
+    }
+
+    return succeed;
+  }
+
+  function ignore(entry) {
+    Botted.findOne(entry.id)
+    .exec( function (err, doc) {
+      doc.reviewed = true;
+      doc.save();
+      console.log("[BOT] Entry ignored.")
+      getRandom();
+    });
+  }
+
+  function approve(entry) {
+    Name.find({ user: '55c1900e895c065c2e006061' })
+    .exec( function (err, data) {
+      var rand = Math.floor(Math.random()*(data.length-0)+0);
+      whichName = data[rand].id;
+      andGo(entry);
+    });
+  }
+
+  function andGo(entry) {
+    Botted.findOne(entry.id)
+    .exec( function (err, doc) {
+      doc.reviewed = true;
+      doc.save();
+      var subslug = doc.postedTo;
+      Sub.findOne({ name: subslug })
+      .exec( function (err, sub) {
+        if (sub == undefined) {
+          var sub = {
+            id: '55c2af394d9e89df572ba5ba'
           }
-          var entry = {
-            postedBy: whichName,
-            title: doc.title,
-            slug: doc.title.toLowerCase().replace(/[^a-zA-Z0-9\s]/g,'').replace(/\s/g, "-"),
-            media: doc.media || "",
-            postedTo: sub.id,
-            subs: [sub.id],
-            nsfw: doc.nsfw,
+        }
+        var entry = {
+          postedBy: whichName,
+          title: doc.title,
+          slug: doc.title.toLowerCase().replace(/[^a-zA-Z0-9\s]/g,'').replace(/\s/g, "-"),
+          media: doc.media || "",
+          postedTo: sub.id,
+          subs: [sub.id],
+          nsfw: doc.nsfw,
             ups: 1, // Math.floor(Math.random() * 12) + 4,
             downs: 0, //Math.floor(Math.random() * 6) + 2
           }
@@ -133,13 +204,16 @@ module.exports = {
             createEntry(entry);
           }
         });
-      });
+    });
 }
 function createEntry(entry) {
   Entry.create(entry)
   .exec( function (err, doc) {
-    if (err) return res.json(err)
-      console.log("[BOT] Entry created!");
+    if (err) {
+      console.log("[BOT] ERROR!")
+      return
+    }
+    console.log("[BOT] Entry created!");
     return;
   });
 }

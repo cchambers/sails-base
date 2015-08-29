@@ -10,6 +10,7 @@ module.exports = {
   create: function (req, res) {
     // SANITIZE SLUG AND NAME
     // check if slug or name exists
+    console.log(req.body);
     Sub.find({ $or: [ { name: req.body.name }, { slug: req.body.slug } ] })
     .exec( function (err, data) {
       if(err) return next(err);

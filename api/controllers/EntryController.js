@@ -299,8 +299,7 @@ module.exports = {
             utilities.getUserData(userid, function (err, ud) {
               if(err) mext(err)
                 if(ud) userData = ud;
-//              console.info(ud);
-});
+            });
             console.log(userData);
             if(userData) {
               console.info("Got the user!");
@@ -320,78 +319,78 @@ module.exports = {
             listingView();
           }
         });
-}
-}
-getEntries();
-},
-
-single: function (req, res) {
-  var viewData = {
-    entries: []
-  };
-
-  getSub();
-
-  function getSub() {
-    Sub.findOne({ slug: req.params.sub })
-    .exec( function (err, doc) {
-      if (doc) {
-        viewData.sub = doc;
-        getEntry();
-      } else {
-        return res.json({ message: "Sub doesn't exist" });
       }
-    });
-  }
+    }
+    getEntries();
+  },
 
-  function getEntry() {
-    if (req.user) {
-      var userid = req.user.id || "none";
-      Entry.findOne({ slug: req.params.slug })
-      .populate('comments')
-      .populate('postedTo')
-      .populate('subs')
-      .populate('postedBy')
-      .populate('votes', { user: userid })
+  single: function (req, res) {
+    var viewData = {
+      entries: []
+    };
+
+    getSub();
+
+    function getSub() {
+      Sub.findOne({ slug: req.params.sub })
       .exec( function (err, doc) {
-        viewData.entries.push(doc);
-        doc.commentAmmount = doc.comments.length;
-        getComments();
-      });
-    } else {
-      Entry.findOne({ slug: req.params.slug })
-      .populate('comments')
-      .populate('postedTo')
-      .populate('subs')
-      .populate('postedBy')
-      .exec(function (err, data) {
-        viewData.entries.push(data);
-        if (data) {
-          data.commentAmmount = data.comments.length;
-          getComments();
+        if (doc) {
+          viewData.sub = doc;
+          getEntry();
         } else {
-          console.log("500 ERROR: NON ENTRY -> ", req.params.sub + " / " + req.params.slug)
-          return res.redirect("/");
+          return res.json({ message: "Sub doesn't exist" });
         }
       });
     }
-  }
 
-  function getComments() {
-    var ids = _.pluck(viewData.entries[0].comments, 'id');
-    Comment.find({id: ids, parent: {$eq: null}})
-    .populate('children')
-    .populate('parent')
-    .populate('postedBy')
-    .exec( function (err, data) {
-      viewData.entries[0].comments = data;
-      singleView();
-    });
-  }
+    function getEntry() {
+      if (req.user) {
+        var userid = req.user.id || "none";
+        Entry.findOne({ slug: req.params.slug })
+        .populate('comments')
+        .populate('postedTo')
+        .populate('subs')
+        .populate('postedBy')
+        .populate('votes', { user: userid })
+        .exec( function (err, doc) {
+          viewData.entries.push(doc);
+          doc.commentAmmount = doc.comments.length;
+          getComments();
+        });
+      } else {
+        Entry.findOne({ slug: req.params.slug })
+        .populate('comments')
+        .populate('postedTo')
+        .populate('subs')
+        .populate('postedBy')
+        .exec(function (err, data) {
+          viewData.entries.push(data);
+          if (data) {
+            data.commentAmmount = data.comments.length;
+            getComments();
+          } else {
+            console.log("500 ERROR: NON ENTRY -> ", req.params.sub + " / " + req.params.slug)
+            return res.redirect("/");
+          }
+        });
+      }
+    }
 
-  function singleView() {
-    return res.view('entry', { user: req.user, data: viewData });
+    function getComments() {
+      var ids = _.pluck(viewData.entries[0].comments, 'id');
+      Comment.find({id: ids, parent: {$eq: null}})
+      .populate('children')
+      .populate('parent')
+      .populate('postedBy')
+      .exec( function (err, data) {
+        viewData.entries[0].comments = data;
+        singleView();
+      });
+    }
+
+    function singleView() {
+      return res.view('entry', { user: req.user, data: viewData });
+    }
   }
-}
 
 };

@@ -79,6 +79,78 @@ module.exports = {
     }
   },
 
+  nsfwIndex: function (req, res) {
+    var viewdata = {
+      images: [],
+      text: [],
+      links: [],
+      videos: [],
+      entries: []
+    }
+
+    var query = { where: { nsfw: true }, limit: 50, skip: 0, sort: 'createdAt DESC' };
+
+    if (req.user) { // TODO: address user settings here:
+      query = { where: { nsfw: true }, limit: 50, skip: 0, sort: 'createdAt DESC' }
+    }
+
+    Entry.find(query)
+    .limit(100)
+    .populate('comments')
+    .populate('postedTo')
+    .populate('postedBy')
+    .populate('subs')
+    .exec( function (err, data) {
+      for (var x = 0; x < data.length; x++) {
+        if (data[x].media) { 
+          if ( data[x].media.indexOf('.jpg') > 0 || data[x].media.indexOf('.jpeg') > 0 || data[x].media.indexOf('.gif') > 0 || data[x].media.indexOf('.png') > 0 ) {
+            if (data[x].media.indexOf('.gifv') < 0) {
+              viewdata.images.push(data[x]);
+            }
+          } else if ( data[x].media.indexOf('youtu') > 0 || data[x].media.indexOf('liveleak') > 0 ) {
+            viewdata.videos.push(data[x]);
+          } else {
+            viewdata.text.push(data[x]);
+          }
+        } else {
+          viewdata.text.push(data[x]);
+        }
+      }
+      viewdata.images = utilities.sortByPopularity(viewdata.images);
+      viewdata.videos = utilities.sortByPopularity(viewdata.videos);
+      viewdata.text = data;
+      getEntries();
+    });
+
+    function getEntries() {
+      var loggedin = (req.user == undefined) ? false : true;
+      
+      var query = { where: { nsfw: true }, limit: 50, skip: 0, sort: 'createdAt DESC' };
+      if (req.user) {
+        query = { limit: 50, skip: 0, sort: 'createdAt DESC' };
+        var userid = req.user.id || "none";
+      }
+      Entry.find(query)
+      .populate('comments')
+      .populate('postedTo')
+      .populate('postedBy')
+      .populate('subs')
+      .populate('votes', { user: userid })
+      .exec( function (err, data) {
+        if (data) {
+          if (err) return next(err);
+          data = utilities.sortByPopularity(data);
+          viewdata.entries = data;
+          loadView()
+        }
+      });
+    }
+
+    function loadView() {
+      return res.view('front-page', { user: req.user, data: viewdata  })
+    }
+  },
+
   entriesFrom: function (req, res) {
     var sub = req.params.slug || null;
     var viewdata = {

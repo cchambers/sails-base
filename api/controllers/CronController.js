@@ -17,4 +17,15 @@ setTimeout( function () {
 	new CronJob('0,10,20,30,40,50,60 * * * * *', function () {
 		sails.controllers.bot.voteRandom();
 	}, null, true, 'America/Los_Angeles');
-}, 10000)
+
+
+	new CronJob('0 */10 * * * *', function () {
+		sails.controllers.bot.fGet();
+	}, null, true, 'America/Los_Angeles');
+
+	sails.controllers.bot.fGet();
+
+
+}, 3000)
+
+
