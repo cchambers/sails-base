@@ -161,13 +161,10 @@ function getMediaEmbed(api, entry) {
 
 voteRandom: function () {
   var cycle = 0;
-  setTimeout(makeVote, 10000*cycle);
-
+  makeVote();
   function makeVote() {
-    cycle++;
-    // console.log("Attempting to vote...");
+    console.log("Attempting to vote...");
     var query = { where: { nsfw: false }, limit: 33, skip: 0, sort: 'createdAt DESC' };
-
     Entry.find(query)
     .exec( function(err, data) {
       var rand = Math.floor(Math.random()*(data.length-0)+0);
@@ -183,13 +180,20 @@ voteRandom: function () {
           user: '55c1900e895c065c2e006061',
           entry: doc.id
         }).exec( function (err, vote) {
-          // console.log("Vote created...", doc.title);
+          console.log("Vote created...", doc.title);
           sails.sockets.blast('vote', {
             entryid: doc.id,
             ups: doc.ups,
             downs: doc.downs
           });
-          setTimeout(makeVote, 10000*cycle);
+          if (cycle == 10) {
+            return;
+          } else {
+            cycle++;
+            var next = 10000 * cycle;
+            console.log("Cycle:", cycle, "Next:", next);
+            setTimeout(makeVote, 10000*cycle);
+          }
         });
       });
     });
