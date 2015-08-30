@@ -7,7 +7,7 @@ module.exports = {
         var json = JSON.parse(body);
         var entries = json.data.children;
         var howmany = 0;
-        console.log("[BOT] Filtering " + entries.length + " entries...")
+        // console.log("[BOT] Filtering " + entries.length + " entries...")
         for (entry in entries) {
           var data = {
             postedTo: entries[entry].data.subreddit,
@@ -61,7 +61,7 @@ module.exports = {
           var entries = json.data.children;
           var howmany = 0;
           var newdata = [];
-          console.log("[BOT] Filtering " + entries.length + " entries...")
+          // console.log("[BOT] Filtering " + entries.length + " entries...")
           for (entry in entries) {
             var data = {
               postedTo: slug,
