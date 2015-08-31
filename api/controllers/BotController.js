@@ -32,7 +32,6 @@ module.exports = {
   },
 
   fGet: function () {
-    // get list of NSFW subs
     var cycle = 15000; // 15 second cycle
     Sub.find({ nsfw: true })
     .exec( function (err, data) {
@@ -91,14 +90,16 @@ module.exports = {
 function postEntry(data, slug) {
   Sub.findOne({ slug: slug })
   .exec( function (err, doc) {
-    data.subs = [doc.id];
-    Entry.create(data)
-    .exec( function (err, newEntry) {
-      if (newEntry !== undefined) {
-        getMediaEmbed(newEntry.id, newEntry.media, 0);
-        console.log("[BOT] Created new entry in " + slug);
-      }
-    })
+    if (doc) {
+      data.subs = [doc.id];
+      Entry.create(data)
+      .exec( function (err, newEntry) {
+        if (newEntry !== undefined) {
+          getMediaEmbed(newEntry.id, newEntry.media, 0);
+          console.log("[BOT] Created new entry in " + slug);
+        }
+      })
+    }
   });
 
   function getMediaEmbed(which, uri, delay) {
@@ -111,7 +112,7 @@ function postEntry(data, slug) {
             return;
           })
         } else {
-          return console.log("error", body, api); 
+          return console.log("[BOT] getMediaEmbed() error", api); 
         }
       });
     }, delay);
@@ -130,7 +131,6 @@ postRandom: function() {
       if (data) {
         var rand = Math.floor(Math.random()*(data.length-0)+0);
         var which = data[rand];
-        console.log(which)
         if (which) {
           var succeed = verify(which);
           if (succeed) {
@@ -156,7 +156,7 @@ postRandom: function() {
     var lowerTitle = title.toLowerCase();
     for ( var x = 0; x < ignoreTitles.length; x++ ) {
       if (lowerTitle.indexOf(ignoreTitles[x]) > -1) {
-        console.log("Bad title.")
+        //console.log("Bad title.")
         succeed = false;
       }
     }
@@ -166,7 +166,7 @@ postRandom: function() {
 
     if (badsub) {
       succeed = false;
-      console.log("Bad sub.", sub)
+      //console.log("Bad sub.", sub)
     }
 
     return succeed;
@@ -177,7 +177,7 @@ postRandom: function() {
     .exec( function (err, doc) {
       doc.reviewed = true;
       doc.save();
-      console.log("[BOT] Entry ignored.")
+      //console.log("[BOT] Entry ignored.")
       getRandom();
     });
   }
@@ -229,7 +229,7 @@ function createEntry(entry) {
   Entry.create(entry)
   .exec( function (err, doc) {
     if (err) {
-      console.log("[BOT] ERROR!")
+      console.log("[BOT] createEntry() ERROR!")
       return
     }
     console.log("[BOT] Entry created!");
@@ -243,7 +243,7 @@ function getMediaEmbed(api, entry) {
       entry.oembed = body;
       createEntry(entry);
     } else {
-      console.log("[BOT] ERROR.")
+      console.log("[BOT] getMediaEmbed() ERROR!")
       return;
     }
   });
@@ -271,18 +271,18 @@ fixEmbeds: function () {
 
   function getMediaEmbed(which, uri, delay) {
     setTimeout( function () {
-      console.log("Finding " + which)
+      // console.log("Finding " + which)
       var api = "http://api.embed.ly/1/oembed?key=8f0ccd90b8974261a8d908e5f409f7cb&url="+uri;
       request(api, function (error, response, body) {
         if (!error && response.statusCode == 200) {
           Entry.update(which, { oembed: body })
           .exec( function (err, doc) {
-            console.log(doc);
-            console.log("Something's updated!")
+            //console.log(doc);
+            //console.log("Something's updated!")
             return;
           })
         } else {
-          return console.log("error", body, api); 
+          //return console.log("error", body, api); 
         }
       });
     }, delay);
@@ -297,19 +297,20 @@ voteRandom: function (nsfw) {
   var query = { where: { nsfw: nsfw }, limit: 33, skip: 0, sort: 'createdAt DESC' };
   Entry.find(query)
   .exec( function(err, data) {
-    var rand = Math.floor(Math.random()*(data.length-0)+0);
-    var which = data[rand];
+    if (data) {
+      var rand = Math.floor(Math.random()*(data.length-0)+0);
+      var which = data[rand];
 
-    Entry.findOne(data[rand].id)
-    .exec(function (err, doc) {
-      doc.ups = doc.ups + 1;
-      doc.save();
+      Entry.findOne(data[rand].id)
+      .exec(function (err, doc) {
+        doc.ups = doc.ups + 1;
+        doc.save();
 
-      Vote.create({
-        vote: true,
-        user: '55c1900e895c065c2e006061',
-        entry: doc.id
-      }).exec( function (err, vote) {
+        Vote.create({
+          vote: true,
+          user: '55c1900e895c065c2e006061',
+          entry: doc.id
+        }).exec( function (err, vote) {
         // console.log("Vote created...", doc.title);
         sails.sockets.blast('vote', {
           entryid: doc.id,
@@ -317,7 +318,9 @@ voteRandom: function (nsfw) {
           downs: doc.downs
         });
       });
-    });
+      });
+    }
+
   });
 },
 
@@ -369,7 +372,6 @@ approve: function (req, res) {
 
 function getMediaEmbed(api, entry) {
   request(api, function (error, response, body) {
-    console.log(api);
     if (!error && response.statusCode == 200) {
       entry.oembed = body;
       createEntry(entry);

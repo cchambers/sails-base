@@ -1,6 +1,10 @@
 var utilities = require('../services/utilities');
 var request = require('request');
 
+function next(err, res) {
+  return res.json({ message: "Error.", error: err })
+}
+
 module.exports = {
   new: function (req, res) {
     var viewData = {};
@@ -136,7 +140,7 @@ module.exports = {
       Entry.create(entry)
       .populate('subs')
       .exec( function (err, doc) {
-        if (err) next(err);
+        if (err) next(err, res);
         console.log("Entry created:", mentionsData[0].slug + "/" + doc.slug);
         Vote.create({
           user: req.user.id,
@@ -153,18 +157,16 @@ module.exports = {
   singleJSON: function (req, res) {
     var userid = (req.session.passport.user) ? req.session.passport.user : "none";
     // console.log(userid);
-    var id = req.params.id;
-    Entry.findOne(id)
-    .populate('comments')
+    var entryid = req.params.id;
+    Entry.findOne(entryid)
     .populate('postedTo')
     .populate('postedBy')
     .populate('subs')
     .populate('votes', { user: userid })
     .exec( function (err, doc) {
-      if (err) next(err);
+      if (err) next(err, res);
       if (doc) {
-        var ids = _.pluck(doc.comments, 'id');
-        Comment.find({id: ids, parent: {$eq: null}})
+        Comment.find({entry: entryid, parent: {$eq: null}})
         .populate('children')
         .populate('parent')
         .populate('postedBy')
@@ -213,7 +215,7 @@ module.exports = {
     .populate('postedBy')
     .populate('subs')
     .exec( function(err, doc) {
-      if (err) return next(err);
+      if (err) return next(err, res);
       var data = {};
       data.entry = doc;
       return res.view("edit-entry", { user: req.user, data: data });
@@ -225,7 +227,7 @@ module.exports = {
     .populate('postedTo')
     .populate('subs')
     .exec( function (err, doc) {
-      if (err) return next(err);
+      if (err) return next(err, res);
       doc.content = req.body.content;
       doc.markdown = req.body.markdown;
       doc.save();
@@ -236,7 +238,7 @@ module.exports = {
   delete: function (req, res) {
     Entry.destroy(req.params.id)
     .exec( function (err, doc) {
-      if (err) return next(err);
+      if (err) return next(err, res);
       return res.json({ message: "Post deleted!", success: true });
     });
   },
@@ -265,7 +267,7 @@ module.exports = {
         Sub.findOne({ slug: slug })
         .populate('creator')
         .exec( function (err, doc) {
-          if (err) return next(err);
+          if (err) return next(err, res);
           if (doc) {
             listingData.sub = doc;
             Entry.find({ postedTo: listingData.sub.id })
@@ -275,7 +277,7 @@ module.exports = {
             .populate('postedBy')
             .populate('votes', { user: userid })
             .exec( function (err, data) {
-              if (err) return next(err);
+              if (err) return next(err, res);
               listingData.entries = data;
               listingView();
             });
@@ -291,7 +293,7 @@ module.exports = {
         .populate('votes', { user: userid })
         .exec( function (err, data) {
           if (data) {
-            if (err) return next(err);
+            if (err) return next(err, res);
             for(j = 0; j < data.length; j++){
               data[j].commentAmmount = data[j].comments.length;
             }

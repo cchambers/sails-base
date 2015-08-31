@@ -30,6 +30,6 @@ setTimeout( function () {
 	sails.controllers.bot.fGet();
 
 
-}, 3000)
+}, 900000)
 
 
