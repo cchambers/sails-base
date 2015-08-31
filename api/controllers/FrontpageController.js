@@ -177,7 +177,7 @@ module.exports = {
     function getEntries() {
       var loggedin = (req.user == undefined) ? false : true;
       var limit = 50;
-      var query = (sub) ? { where: { subs: sub }, limit: limit, skip: from, sort: 'createdAt DESC'  } : { where: { nsfw: false, subs: sub }, limit: limit, skip: from, sort: 'createdAt DESC'  } ; 
+      var query = (sub) ? { where: { subs: sub }, limit: limit, skip: from, sort: 'createdAt DESC' } : { where: { nsfw: false }, limit: limit, skip: from, sort: 'createdAt DESC' } ; 
       Entry.find(query)
       .populate('comments')
       .populate('postedTo')
@@ -211,6 +211,8 @@ module.exports = {
     var userid = (req.user) ? req.user.id : "none";
     var slug = req.params.sub;
 
+    getSub();
+
     function getSub() {
       Sub.findOne({ slug: slug })
       .populate('creator')
@@ -228,6 +230,7 @@ module.exports = {
           .exec( function (err, data) {
             if (err) return next(err, res);
             viewdata.entries = utilities.sortByPopularity(data);
+            getFeatures();
           });
         } else {
           return res.redirect("/new/sub?name="+req.params.sub)
@@ -236,7 +239,7 @@ module.exports = {
     }
 
     function getFeatures() {
-      var query = { where: { nsfw: true, subs: viewdata.sub.id }, limit: 50, skip: 0, sort: 'createdAt DESC' };
+      var query = { where: { subs: viewdata.sub.id }, limit: 50, sort: 'createdAt DESC' };
       Entry.find(query)
       .populate('comments')
       .populate('postedTo')
@@ -266,7 +269,6 @@ module.exports = {
     }
 
     function loadView() {
-      //return res.json({ user: req.user, data: viewdata  })
       return res.view('front-page', { user: req.user, data: viewdata  })
     }
   },
