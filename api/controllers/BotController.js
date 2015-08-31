@@ -301,13 +301,19 @@ voteRandom: function (nsfw) {
       var rand = Math.floor(Math.random()*(data.length-0)+0);
       var which = data[rand];
 
+      var vote = ( Math.floor(Math.random()*(10-0)+0) >= 3 ) ? true : false;
+
       Entry.findOne(data[rand].id)
       .exec(function (err, doc) {
-        doc.ups = doc.ups + 1;
+        if (vote) {
+          doc.ups = doc.ups + 1;
+        } else { 
+          doc.downs + 1;
+        }
         doc.save();
 
         Vote.create({
-          vote: true,
+          vote: vote,
           user: '55c1900e895c065c2e006061',
           entry: doc.id
         }).exec( function (err, vote) {
