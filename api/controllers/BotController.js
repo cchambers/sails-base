@@ -308,7 +308,7 @@ voteRandom: function (nsfw) {
         if (vote) {
           doc.ups = doc.ups + 1;
         } else { 
-          doc.downs + 1;
+          doc.downs = doc.downs + 1;
         }
         doc.save();
 
