@@ -33,7 +33,8 @@
             var oembed = JSON.parse(entry.oembed);
             var thumb = oembed.thumbnail_url;
             if (thumb != "" && thumb != undefined) { %>
-            <div class="thumb" style="background-image:url(<%= thumb %>)">
+            <div class="thumb">
+            <img src="<%= thumb %>" />
             </div>
             <% }
           } %>
