@@ -153,7 +153,7 @@ var app = {
       $("body").on("keyup", "input[name=sub-search]", function (e) {
         clearTimeout(app.timers.search);
         var $list = $("ul.sub-search");
-        
+
         var val = $(this).val();
 
         var url = "/search/subs/";
@@ -176,6 +176,62 @@ var app = {
           }
         }, 100);
       });
+
+      $("body").on("keyup", "input[name=user-search]", function (e) {
+        clearTimeout(app.timers.search);
+        var $list = $("ul.user-search");
+        
+        var val = $(this).val();
+
+        var url = "/search/users/";
+        app.timers.search = setTimeout( function () {
+          if (val == "") {
+            $list.html("");
+          } else {
+
+            var inputdata = { query: val };
+            io.socket.post(url, inputdata, function (data) {
+              $els = [];
+              for (var x = 0; x < data.data.length; x++) {
+                $el = $("<li />", {
+                  text: data.data[x].name
+                });
+                $els.push($el);
+              }
+              $list.html($els);
+            });
+          }
+        }, 100);
+      });
+
+      $("body").on("keyup", "input[name=entry-search]", function (e) {
+        clearTimeout(app.timers.search);
+        var $list = $("ul.entry-search");
+        
+        var val = $(this).val();
+
+        var url = "/search/entries/";
+        app.timers.search = setTimeout( function () {
+          if (val == "") {
+            $list.html("");
+          } else {
+
+            var inputdata = { query: val };
+            io.socket.post(url, inputdata, function (data) {
+              console.log(data);
+              $els = [];
+              for (var x = 0; x < data.data.length; x++) {
+                $el = $("<li />", {
+                  html: "<a href='/sub/"+data.data[x].subs[0].slug+"/"+data.data[x].slug+"'>"+data.data[x].title+"</a>"
+                });
+                $els.push($el);
+              }
+              $list.html($els);
+            });
+          }
+        }, 100);
+      });
+
 
       $(".mention").mentionsInput({
         onDataRequest: function (mode, query, callback) {
