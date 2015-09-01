@@ -218,7 +218,6 @@ var app = {
 
             var inputdata = { query: val };
             io.socket.post(url, inputdata, function (data) {
-              console.log(data);
               $els = [];
               for (var x = 0; x < data.data.length; x++) {
                 $el = $("<li />", {
