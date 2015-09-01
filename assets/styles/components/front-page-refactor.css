@@ -40,13 +40,21 @@
   position: absolute;
   top: .75rem;
   left: .75rem;
-}
-
-.nail {
-  height: 100%;
-  width: 100%;
   background-size: cover;
   background-position: center center;
+}
+.thumb:before {
+  display: block;
+  content: '\2668';
+  position: absolute;
+  color: red;
+  font-size: 3rem;
+  color: #DF3D82;
+  opacity: .5;
+  width: 100%;
+  text-align: center;
+  line-height: 4.75rem;
+  z-index: -1;
 }
 
 .height-set {  

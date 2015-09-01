@@ -323,7 +323,7 @@ var app = {
       });
 
       io.socket.on("ping", function(){
-        io.socket.emit("pong");
+        // pong
       });
 
       io.socket.on("disconnect", function(){
