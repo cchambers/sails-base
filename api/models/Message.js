@@ -16,6 +16,11 @@ module.exports = {
       model: 'name',
       required: true
     },
+
+    participants: {
+      collection: 'name',
+      via: 'conversations'
+    },
     
     message: {
       type: 'string',

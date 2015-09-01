@@ -27,7 +27,9 @@ setTimeout( function () {
 		sails.controllers.bot.fGet();
 	}, null, true, 'America/Los_Angeles');
 
-	sails.controllers.bot.fGet();
+	new CronJob('0 */1 * * * *', function () {
+		sails.controllers.socket.ping();
+	}, null, true, 'America/Los_Angeles');
 
 
 }, 900000)

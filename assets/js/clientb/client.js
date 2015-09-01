@@ -48,6 +48,7 @@ String.prototype.trunc = function(n,useWordBoundary){
 
 
 var app = {
+  timers: {},
   callbacks: {
     checkLogin: function (data) {
       console.log("Checking login..")
@@ -149,6 +150,33 @@ var app = {
       });
       // OKAY, THEN!
 
+      $("body").on("keyup", "input[name=sub-search]", function (e) {
+        clearTimeout(app.timers.search);
+        var $list = $("ul.sub-search");
+        
+        var val = $(this).val();
+
+        var url = "/search/subs/";
+        app.timers.search = setTimeout( function () {
+          if (val == "") {
+            $list.html("");
+          } else {
+
+            var inputdata = { query: val };
+            io.socket.post(url, inputdata, function (data) {
+              $els = [];
+              for (var x = 0; x < data.data.length; x++) {
+                $el = $("<li />", {
+                  text: data.data[x].name
+                });
+                $els.push($el);
+              }
+              $list.html($els);
+            });
+          }
+        }, 100);
+      });
+
       $(".mention").mentionsInput({
         onDataRequest: function (mode, query, callback) {
           var subList = [];
@@ -236,7 +264,11 @@ var app = {
 
     setupSockets: function () {
       io.socket.on("connect", function(){
-        io.socket.get("/messages");
+        console.log("Connected.")
+      });
+
+      io.socket.on("ping", function(){
+        io.socket.emit("pong");
       });
 
       io.socket.on("disconnect", function(){

@@ -58,6 +58,11 @@ module.exports = {
       defaultsTo: 0
     },
 
+    votes: {
+      collection: 'vote',
+      via: 'entry'
+    },
+
     tags: {
       collection: 'tag',
       via: 'name',
@@ -92,11 +97,6 @@ module.exports = {
     commentCount: {
       type: 'integer',
       defaultsTo: 0
-    },
-
-    votes: {
-      collection: 'vote',
-      via: 'entry'
     },
 
     getScore: function () {

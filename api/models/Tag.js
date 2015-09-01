@@ -14,8 +14,6 @@ module.exports = {
       type: 'integer',
       defaultsTo: 1
     },
-
-   
   }
 };
 

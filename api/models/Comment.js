@@ -41,6 +41,11 @@ module.exports = {
       defaultsTo: 0
     },
 
+    votes: {
+      collection: 'vote',
+      via: 'comment'
+    },
+
     tags: {
       collection: 'tag',
       via: 'name'

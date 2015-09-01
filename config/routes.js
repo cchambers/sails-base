@@ -66,6 +66,10 @@ module.exports.routes = {
 
   'get /subs': 'SubController.subsJSON',
 
+  'get /search': 'SearchController.index',
+  'post /search/subs': 'SearchController.subs',
+  'post /search/users': 'SearchController.users',
+
   'get /404': 'ErrorController.fourOhFour',
   'get /403': 'ErrorController.fourOhThree',
   'get /500': 'ErrorController.fiveOhOh'

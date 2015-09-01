@@ -19,6 +19,11 @@ module.exports = {
       collection: 'entry',
       via: 'postedBy'
     },
+
+    conversations: {
+      collection: 'message',
+      via: 'from'
+    },
     
     comments: {
       collection: 'comment',
