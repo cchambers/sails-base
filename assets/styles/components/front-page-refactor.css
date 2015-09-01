@@ -33,24 +33,18 @@
   display: none;
 }
 
-
 .thumb {
-  height: 6rem;
-  width: 15rem;
+  height: 4.75rem;
+  width: 6rem;
   overflow: hidden;
-  transform: skew(45deg) translateY(-50%) translateZ(0);
-  -ms-transform: skew(45deg) translateY(-50%) translateZ(0);
   position: absolute;
-  top: 50%;
-  right: -6rem;
-  transition: all 400ms ease-in;
+  top: .75rem;
+  left: .75rem;
 }
 
 .nail {
   height: 100%;
   width: 100%;
-  transform: scale(1.5) skew(-45deg);
-  -ms-transform: scale(1.5) skew(-45deg);
   background-size: cover;
   background-position: center center;
 }
@@ -311,7 +305,7 @@ ul.text-entries li + li {
 }
 
 .entries article.has-media {
-  padding-right: 15rem;
+  padding-left: 7.5rem;
 }
 
 .loaded-view h1 {

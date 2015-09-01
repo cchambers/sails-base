@@ -148,7 +148,7 @@ postRandom: function() {
 
   function verify(entry) {
     var ignoreSubs = ["blackpeopletwitter", "blog", "announcements", "girlsfinishingthejob", "ama", "tifu", "eli5", "dota2", "leagueoflegends", "4chan"];
-    var ignoreTitles = [ " i ", " i'm ", " i'll ", " my ", " ama "];
+    var ignoreTitles = [ " i ", "i'm ", "i'll ", "my ", " ama "];
     var title = entry.title;
     var sub = entry.postedTo;
     var succeed = true;
@@ -167,6 +167,10 @@ postRandom: function() {
     if (badsub) {
       succeed = false;
       //console.log("Bad sub.", sub)
+    }
+
+    if (entry.media.indexOf("reddit") >= 0) {
+      succeed = false;
     }
 
     return succeed;
