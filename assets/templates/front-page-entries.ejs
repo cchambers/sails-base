@@ -23,29 +23,31 @@
       <cite>
         <strong><%= entry.postedBy.name %></strong> &rarr;
         <% for (var x = 0; x < entry.subs.length; x++) { %>
+        <% if (entry.subs[x]) { %>
         <% if (x > 0) { %>
         / 
         <% } %>
         <a href="/sub/<%= entry.subs[x].slug %>/<%= entry.slug %>"><%= entry.subs[x].name %></a>
-        <% } %>
-        <span class="timesince"><%= timeSince(date) %> ago</span>
-      </cite>
-      <footer>
-        <div class="permalink">
-          <a href="/sub/<%= entry.subs[0].slug %>/<%= entry.slug %>#comments"><%= entry.commentCount %>&nbsp;comments</a>
-        </div>
-        <div class="score">
-          <span class="totes"><%= entry.ups - entry.downs %></span>
-          <span class="calculated"> &rarr; (<span class="ups"><%= entry.ups %></span> - <span class="downs"><%= entry.downs %></span>)</span>
-        </div>
-      </footer>
-      <ul class="tags">
-        <% if (entry.nsfw) { %><li>NSFW</li> <% } %>
-        <% if (entry.nsfl) { %><li>NSFL</li><% } %>
-        <% if (entry.media) { 
-          if (entry.media.indexOf('.gif') > 0){ %><li>GIF</li>
-          <% }
-        } %>
-      </ul>
-    </article>
-    <% } %>
+        <% }
+      } %>
+      <span class="timesince"><%= timeSince(date) %> ago</span>
+    </cite>
+    <footer>
+      <div class="score">
+        <span class="totes"><%= entry.ups - entry.downs %></span>
+        <span class="calculated"> &rarr; (<span class="ups"><%= entry.ups %></span> - <span class="downs"><%= entry.downs %></span>)</span>
+      </div>
+    </footer>
+    <div class="permalink">
+      <a href="/sub/<%= entry.subs[0].slug %>/<%= entry.slug %>#comments"><%= entry.commentCount %>&nbsp;comments</a>
+    </div>
+    <ul class="tags">
+      <% if (entry.nsfw) { %><li>NSFW</li> <% } %>
+      <% if (entry.nsfl) { %><li>NSFL</li><% } %>
+      <% if (entry.media) { 
+        if (entry.media.indexOf('.gif') > 0){ %><li>GIF</li>
+        <% }
+      } %>
+    </ul>
+  </article>
+  <% } %>

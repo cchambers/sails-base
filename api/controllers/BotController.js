@@ -309,18 +309,19 @@ voteRandom: function (nsfw) {
 
       Entry.findOne(data[rand].id)
       .exec(function (err, doc) {
-        if (vote) {
-          doc.ups = doc.ups + 1;
-        } else { 
-          doc.downs = doc.downs + 1;
-        }
-        doc.save();
+        if (doc) { 
+          if (vote) {
+            doc.ups = doc.ups + 1;
+          } else { 
+            doc.downs = doc.downs + 1;
+          }
+          doc.save();
 
-        Vote.create({
-          vote: vote,
-          user: '55c1900e895c065c2e006061',
-          entry: doc.id
-        }).exec( function (err, vote) {
+          Vote.create({
+            vote: vote,
+            user: '55c1900e895c065c2e006061',
+            entry: doc.id
+          }).exec( function (err, vote) {
         // console.log("Vote created...", doc.title);
         sails.sockets.blast('vote', {
           entryid: doc.id,
@@ -328,10 +329,11 @@ voteRandom: function (nsfw) {
           downs: doc.downs
         });
       });
-      });
+        });
     }
+  }
 
-  });
+});
 },
 
 approve: function (req, res) {

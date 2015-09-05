@@ -99,7 +99,7 @@
         <% if (user) {  %>
         <div class="row make-comment" id="make-comment">
           <div class="new-thing">
-            <form method="POST" data-callback="makeComment" action="/new/comment">
+            <form method="POST" class="new-comment" data-callback="makeComment" action="/new/comment">
               <div class="row pad-bottom-light">
                 <input type="text" name="entryid" hidden value="<%= entry.id %>">
                 <label for="title">Add a new comment</label>

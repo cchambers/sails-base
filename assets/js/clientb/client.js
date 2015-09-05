@@ -534,6 +534,7 @@ var app = {
   },
 
   frontPage: {
+    loading: false,
     depth: 0,
     sub: 'all',
     height: window.innerHeight,
@@ -562,8 +563,8 @@ var app = {
       $(".front-page").on("scroll", function (e) {
         if (scrollBounce) clearTimeout(scrollBounce);
         scrollBounce = setTimeout( function () {
-          if ($(".front-page article").last().offset().top < app.frontPage.height*2) {
-            app.frontPage.depth++;
+          if ($(".front-page article").last().offset().top < app.frontPage.height*2 && !app.frontPage.loading) {
+            app.frontPage.loading = true;
             app.frontPage.loadMoreEntries();
           } 
         }, 100);
@@ -583,7 +584,9 @@ var app = {
         data: { },
         success: function (data) {
           var html = new EJS({ url: '/templates/front-page-entries.ejs' }).render(data);
-          $(".front-page").append(html);
+          $(".front-page .loading").before(html);
+          app.frontPage.depth++;
+          app.frontPage.loading = false;
         }
       });
     },
