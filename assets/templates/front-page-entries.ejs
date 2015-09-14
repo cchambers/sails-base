@@ -34,14 +34,13 @@
         <span class="timesince"><%= timeSince(date) %> ago</span>
       </cite>
       <footer>
+        <div class="permalink">
+          <a href="/sub/<%= entry.subs[0].slug %>/<%= entry.slug %>#comments"><%= entry.commentCount %>&nbsp;comments</a>
+        </div>
         <div class="score">
           <span class="totes"><%= entry.ups - entry.downs %></span>
           <span class="calculated"> &rarr; (<span class="ups"><%= entry.ups %></span> - <span class="downs"><%= entry.downs %></span>)</span>
         </div>
-        <div class="permalink">
-          <a href="/sub/<%= entry.subs[0].slug %>/<%= entry.slug %>#comments"><%= entry.commentCount %>&nbsp;comments</a>
-        </div>
-
       </footer>
       <ul class="tags">
         <% if (entry.nsfw) { %><li>NSFW</li> <% } %>
