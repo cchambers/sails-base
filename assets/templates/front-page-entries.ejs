@@ -1,53 +1,56 @@
-  <% 
-  for (which in entries) { 
-   var entry = entries[which]; 
-   var date = new Date(entry.createdAt);
-   %>
-   <article class="row entry <% if (entry.oembed && entry.ombed != "") { %> has-media<% } %><% if (entry.sticky) { %> sticky<% } %><% if (entry.nsfw) { %> nsfw<% } %>" data-timestamp="<%= date %>" data-id="<%= entry.id %>" id="<%= entry.id %>">
+  <%
+  for (which in entries) {
+    if (entries[which].subs[0] == undefined || !entries[which].subs || !entries[which].postedBy) { console.log("ERROR AT ENTRY:",entries[which]) } else {
+     var entry = entries[which];
+     var date = new Date(entry.createdAt);
+     %>
+     <article class="row entry <% if (entry.oembed && entry.ombed != "") { %> has-media<% } %><% if (entry.sticky) { %> sticky<% } %><% if (entry.nsfw) { %> nsfw<% } %>" data-timestamp="<%= date %>" data-id="<%= entry.id %>" id="<%= entry.id %>">
 
-     <% if (entry.oembed && entry.ombed != "") { 
-      var oembed = JSON.parse(entry.oembed);
-      var thumb = oembed.thumbnail_url; %>
-      <div class="thumb">
-        <% if (thumb != "" && thumb != undefined) { %>
-        <img src="<%= thumb %>" />
+       <% if (entry.oembed && entry.ombed != "") {
+        var oembed = JSON.parse(entry.oembed);
+        var thumb = oembed.thumbnail_url; %>
+        <div class="thumb">
+          <% if (thumb != "" && thumb != undefined) { %>
+          <img src="<%= thumb %>" />
+          <% } %>
+        </div>
         <% } %>
-      </div>
-      <% } %>
-      <header>
-        <h1>
-          <%= entry.title %>
-        </h1>
-      </header>
-      
-      <cite>
-        <strong><%= entry.postedBy.name %></strong> &rarr;
-        <% for (var x = 0; x < entry.subs.length; x++) { %>
-        <% if (entry.subs[x]) { %>
-        <% if (x > 0) { %>
-        / 
-        <% } %>
-        <a href="/sub/<%= entry.subs[x].slug %>/<%= entry.slug %>"><%= entry.subs[x].name %></a>
-        <% }
-      } %>
-      <span class="timesince"><%= timeSince(date) %> ago</span>
-    </cite>
-    <footer>
-      <div class="score">
-        <span class="totes"><%= entry.ups - entry.downs %></span>
-        <span class="calculated"> &rarr; (<span class="ups"><%= entry.ups %></span> - <span class="downs"><%= entry.downs %></span>)</span>
-      </div>
-    </footer>
-    <div class="permalink">
-      <a href="/sub/<%= entry.subs[0].slug %>/<%= entry.slug %>#comments"><%= entry.commentCount %>&nbsp;comments</a>
-    </div>
-    <ul class="tags">
-      <% if (entry.nsfw) { %><li>NSFW</li> <% } %>
-      <% if (entry.nsfl) { %><li>NSFL</li><% } %>
-      <% if (entry.media) { 
-        if (entry.media.indexOf('.gif') > 0){ %><li>GIF</li>
-        <% }
-      } %>
-    </ul>
-  </article>
-  <% } %>
+        <header>
+          <h1>
+            <%= entry.title %>
+          </h1>
+        </header>
+
+        <cite>
+          <strong><%= entry.postedBy.name %></strong> &rarr;
+          <% for (var x = 0; x < entry.subs.length; x++) { %>
+          <% if (entry.subs[x]) { %>
+          <% if (x > 0) { %>
+          /
+          <% } %>
+          <a href="/sub/<%= entry.subs[x].slug %>/<%= entry.slug %>"><%= entry.subs[x].name %></a>
+          <% }
+        } %>
+        <span class="timesince"><%= timeSince(date) %> ago</span>
+      </cite>
+      <footer>
+        <div class="score">
+          <span class="totes"><%= entry.ups - entry.downs %></span>
+          <span class="calculated"> &rarr; (<span class="ups"><%= entry.ups %></span> - <span class="downs"><%= entry.downs %></span>)</span>
+        </div>
+        <div class="permalink">
+          <a href="/sub/<%= entry.subs[0].slug %>/<%= entry.slug %>#comments"><%= entry.commentCount %>&nbsp;comments</a>
+        </div>
+
+      </footer>
+      <ul class="tags">
+        <% if (entry.nsfw) { %><li>NSFW</li> <% } %>
+        <% if (entry.nsfl) { %><li>NSFL</li><% } %>
+        <% if (entry.media) {
+          if (entry.media.indexOf('.gif') > 0){ %><li>GIF</li>
+          <% }
+        } %>
+      </ul>
+    </article>
+    <% }
+  } %>
