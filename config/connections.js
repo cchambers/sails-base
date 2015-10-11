@@ -5,7 +5,7 @@ module.exports.connections = {
 
   mongodb: {
     adapter: 'sails-mongo',
-    host: 'gravy.io',
+    host: 'localhost',
     port: 27017,
     user: 'site',
     password: '#YQLnjz#5Kv2',
