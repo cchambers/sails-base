@@ -68,8 +68,8 @@ module.exports.session = {
   ***************************************************************************/
 
   adapter: 'mongo',
-  host: 'ds045882.mongolab.com',
-  port: 45882,
+  host: 'gravy.io',
+  port: 27017,
   db: 'gravy',
   username: 'site',
   password: '#YQLnjz#5Kv2',
