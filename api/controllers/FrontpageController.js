@@ -20,10 +20,10 @@ module.exports = {
       entries: []
     }
 
-    var query = { where: { nsfw: false, subs: '55c2af394d9e89df572ba5ba' }, limit: 50, skip: 0, sort: 'createdAt DESC' };
+    var query = { where: { nsfw: false }, limit: 50, skip: 0, sort: 'createdAt DESC' };
 
     if (req.user) { // TODO: address user settings here:
-      query = { where: { nsfw: false, subs: '55c2af394d9e89df572ba5ba' }, limit: 50, skip: 0, sort: 'createdAt DESC' }
+      query = { where: { nsfw: false }, limit: 50, skip: 0, sort: 'createdAt DESC' }
     }
 
     Entry.find(query)
@@ -55,11 +55,9 @@ module.exports = {
 
     function getEntries() {
       var loggedin = (req.user == undefined) ? false : true;
-      
-      var query = { where: { nsfw: false, subs: '55c2af394d9e89df572ba5ba' }, limit: 50, skip: 0, sort: 'createdAt DESC' }
-      
+      var query = { where: { nsfw: false }, limit: 50, skip: 0, sort: 'createdAt DESC' }
       if (req.user) { // TODO: CHECK USER SETTINGS
-        query = { where: { nsfw: false, subs: '55c2af394d9e89df572ba5ba' }, limit: 50, skip: 0, sort: 'createdAt DESC' }
+        query = { where: { nsfw: false }, limit: 50, skip: 0, sort: 'createdAt DESC' }
         var userid = req.user.id || "none";
       }
 

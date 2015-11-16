@@ -2,12 +2,11 @@ module.exports.routes = {
 
   'get /fixembeds': 'BotController.fixEmbeds',
   '/': 'FrontpageController.index',
-  'get /all': 'EntryController.listing',
+  'get /all': 'EntryController.list',
   'get /userlist': 'UserController.list',
   'get /sublist': 'SubController.list',
 
   'get /offline': 'UserController.offline',
-
 
   'get /me': 'UserController.myProfile',
 

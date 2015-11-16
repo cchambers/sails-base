@@ -2,21 +2,21 @@ var CronJob = require('cron').CronJob;
 var fetches = 0;
 
 
-// setTimeout( function () {
-// 	new CronJob('0 */15 * * * *', function () {
-// 		fetches++;
-// 		sails.controllers.bot.get(fetches);
-// 	}, null, true, 'America/Los_Angeles');
+setTimeout( function () {
+	new CronJob('0 */5 * * * *', function () {
+		fetches++;
+		sails.controllers.bot.get(fetches);
+	}, null, true, 'America/Los_Angeles');
 
 
-// 	new CronJob('0 */4 * * * *', function () {
-// 		sails.controllers.bot.postRandom();
-// 	}, null, true, 'America/Los_Angeles');
+	new CronJob('0 */7 * * * *', function () {
+		sails.controllers.bot.postRandom();
+	}, null, true, 'America/Los_Angeles');
 
 
-// 	new CronJob('0,10,20,30,40,50,60 * * * * *', function () {
-// 		sails.controllers.bot.voteRandom(false);
-// 	}, null, true, 'America/Los_Angeles');
+	// new CronJob('0,10,20,30,40,50,60 * * * * *', function () {
+	// 	sails.controllers.bot.voteRandom(false);
+	// }, null, true, 'America/Los_Angeles');
 
 
 // 	new CronJob('5,15,25,35,45,55 * * * * *', function () {
@@ -32,6 +32,6 @@ var fetches = 0;
 // 	}, null, true, 'America/Los_Angeles');
 
 
-// }, 900000)
+ }, 45000)
 
 

@@ -21,7 +21,7 @@ module.exports = {
             });
           }
         }
-        console.log("[BOT] Success. We created new entries on fetch " + fetches);
+        if (howmany > 0) console.log("[BOT] Success. We created new entries on fetch " + fetches);
         return;
       } else {
         console.log("[BOT] Error getting new entries.");
@@ -122,16 +122,20 @@ function postEntry(data, slug) {
 },
 
 postRandom: function() {
-
+  // console.log("Attempting post...")
   getRandom();
 
   function getRandom() {
-    Botted.find({ reviewed: {$eq: false } })
+    Botted.find({ reviewed: { $eq: false } })
     .exec( function (err, data) {
-      if (data) {
+      if (err) {
+        console.log("ERR",err);
+      }
+      if (data.length > 0) {
         var rand = Math.floor(Math.random()*(data.length-0)+0);
         var which = data[rand];
         if (which) {
+          console.log("Checking...")
           var succeed = verify(which);
           if (succeed) {
             approve(data[rand]);
@@ -177,6 +181,7 @@ postRandom: function() {
   }
 
   function ignore(entry) {
+    console.log("[BOT] Ignoring:",entry)
     Botted.findOne(entry.id)
     .exec( function (err, doc) {
       doc.reviewed = true;
@@ -187,6 +192,7 @@ postRandom: function() {
   }
 
   function approve(entry) {
+    console.log("[BOT] Approving:", entry);
     Name.find({ user: '55c1900e895c065c2e006061' })
     .exec( function (err, data) {
       var rand = Math.floor(Math.random()*(data.length-0)+0);
@@ -196,6 +202,7 @@ postRandom: function() {
   }
 
   function andGo(entry) {
+    console.log("GOING")
     Botted.findOne(entry.id)
     .exec( function (err, doc) {
       doc.reviewed = true;
@@ -229,6 +236,7 @@ postRandom: function() {
         });
     });
 }
+
 function createEntry(entry) {
   Entry.create(entry)
   .exec( function (err, doc) {
@@ -236,7 +244,7 @@ function createEntry(entry) {
       console.log("[BOT] createEntry() ERROR!")
       return
     }
-    console.log("[BOT] Entry created!");
+    console.log("[BOT] Entry created!", doc);
     return;
   });
 }
@@ -397,8 +405,10 @@ function createEntry(entry) {
   Entry.create(entry)
   .exec( function (err, doc) {
     if (err) return res.json(err)
+      console.log(entry);
       return res.json({ message: "Success!" })
   });
+  console.log("FAILURE", entry)
 }
 
 },

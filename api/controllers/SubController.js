@@ -78,7 +78,8 @@ module.exports = {
   },
 
   list: function (req, res) {
-    Sub.find()
+    var query = { where: { nsfw: false } }
+    Sub.find(query)
     .populate('creator')
     .exec( function (err, data) {
       if (err) return next(err);

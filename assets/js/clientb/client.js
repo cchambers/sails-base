@@ -137,6 +137,12 @@ var app = {
         app.site.submitForm($form);
       });
 
+
+      $("body").on("click", ".media img", function () {
+        $(this).toggleClass("active");
+      });
+
+
       $("form").on("keyup", "input", function (e){
         if (e.which == 13) {
           var $form = $(this).parents("form").first();
