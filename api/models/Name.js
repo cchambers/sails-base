@@ -10,25 +10,25 @@ module.exports = {
       unique: true 
     },
     
-    votes: {
-      collection: 'vote',
-      via: 'name'
-    },
+    // votes: {
+    //   collection: 'vote',
+    //   via: 'name'
+    // },
     
-    entries: {
-      collection: 'entry',
-      via: 'postedBy'
-    },
+    // entries: {
+    //   collection: 'entry',
+    //   via: 'postedBy'
+    // },
 
-    conversations: {
-      collection: 'message',
-      via: 'from'
-    },
+    // conversations: {
+    //   collection: 'message',
+    //   via: 'from'
+    // },
     
-    comments: {
-      collection: 'comment',
-      via: 'postedBy'
-    },
+    // comments: {
+    //   collection: 'comment',
+    //   via: 'postedBy'
+    // },
     
     active: {
       type: 'boolean',

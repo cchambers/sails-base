@@ -1,4 +1,4 @@
-var utilities = require('../services/utilities');
+var Utilities = require('../services/Utilities');
 
 module.exports = {
   create: function (req, res) {
@@ -15,7 +15,7 @@ module.exports = {
             name: req.body.username,
             user: user
           }).exec( function (err, doc) {
-            utilities.sendMail(req.body.email, "Welcome to the sauce!", utilities.mail.welcome(req.body.username, user));
+            Utilities.sendMail(req.body.email, "Welcome to the sauce!", Utilities.mail.welcome(req.body.username, user));
             return res.json({ message: "Welcome to the sauce!", callback: "signUp" })
           });
         } else {
@@ -70,7 +70,6 @@ module.exports = {
 
   myProfile: function (req, res) {
     User.findOne(req.user.id) 
-    .populate('votes') 
     .populate('names')
     .exec( function (err, data) {
       if (err) return next(err);
@@ -80,7 +79,6 @@ module.exports = {
 
   userProfile: function (req, res) {
     User.find({ username: req.user.username })
-    .populate('entries')
     .then( function (data) {
       return res.view('user-profile', { user: req.user, data: data });
     });

@@ -45,16 +45,6 @@ module.exports = {
       defaultsTo: true
     },
 
-    votes: {
-      collection: 'vote',
-      via: 'user'
-    },
-
-    entries: {
-      collection: 'entry',
-      via: 'user'
-    },
-
     toJSON: function() {
       var obj = this.toObject();
       delete obj.password;

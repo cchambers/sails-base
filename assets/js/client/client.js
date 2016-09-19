@@ -1,25 +1,19 @@
 /*\
-  The Sauce
-  Client File
+  SAILS BASE CLIENT FILE
   Functions: 
-  - callbacks: An object of callback functions that are run when a after a form submission response.
   - init: Kicks off the app.
+  - callbacks: An object of callback functions that are run when a after a form submission response 
+    using that forms data-callback attribute. 
   - setup: A place for binds.
   - setupSockets: Configures socket emissions and reactions for the app.
-  - loadEntry: Loads a single entry into the SPA's main view.
   - submitForm: Handles the submission of every form on the website! Takes an optional
     data-callback attribute for running on success.
-  - tagEntry: Currently sets NSFW/NSFL tags on posts.
-  - switchNames: Switches the user's name.
-  - editSub: 
-  - submitEntryEdit: removed.
+  Utilities:
   - slug: Takes a single string and returns the slug version. Eventually this needs to check
     the database to see if the slug exists and then increment based on the response.
   - generateSlug: Generates a slug as the user is typing in on the "New Sub" page.
-  - updatePreview: Updates the preview box while a user is creating a new entry.
   - convertMarkdown: Takes one param of markdown and returns HTML.
   - keypressHandler: Function for handling keypress events.
-  - 
 /*\
 \*/
 

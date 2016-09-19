@@ -1,18 +1,17 @@
 {
-  "name": "sauce",
+  "name": "sails-base",
   "private": true,
-  "version": "0.0.1c",
-  "description": "a thought aggregator",
+  "version": "0.0.1",
+  "description": "A mast for the sail.",
   "keywords": [],
   "engines": {
-    "node": "0.12.7"
+    "node": "4.5.0"
   },
   "dependencies": {
     "bcryptjs": "",
-    "cron": "",
     "connect-mongo": "",
+    "cron": "",
     "ejs": "~0.8.4",
-    "lodash": "",
     "grunt": "0.4.0",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-coffee": "~0.10.1",
@@ -20,18 +19,20 @@
     "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-jst": "~0.6.0",
     "grunt-contrib-less": "0.11.1",
+    "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-sails-linker": "~0.9.5",
     "grunt-sync": "~0.0.4",
+    "include-all": "~0.1.3",
+    "lodash": "",
     "mongodb": "",
     "nodemailer": "",
     "nodemailer-direct-transport": "^1.0.2",
     "nodemailer-smtp-transport": "^1.0.3",
-    "request": "2.60.0",
-    "include-all": "~0.1.3",
     "passport": "^0.2.2",
     "passport-local": "~1.0.0",
     "rc": "~0.5.0",
+    "request": "2.60.0",
     "sails": "~0.11.0",
     "sails-disk": "~0.10.0",
     "sails-mongo": "^0.11.2"
@@ -43,8 +44,8 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mzl0f9/sauce.git"
+    "url": "git://github.com/cchambers/sails-base.git"
   },
-  "author": "mzl0f9",
+  "author": "cchambers@github",
   "license": ""
 }
