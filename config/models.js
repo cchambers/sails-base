@@ -1,4 +1,4 @@
 module.exports.models = {
-  connection: 'mongodb',
+  connection: 'local',
   migrate: 'alter'
 };

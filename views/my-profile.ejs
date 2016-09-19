@@ -3,7 +3,7 @@
     <h1 class="pad-lips">
     <%= data.email %>
     </h1>
-    <div class="row new-thing">
+    <!--div class="row new-thing">
       <% for (var x = 0; x < data.names.length; x ++) { %>
       <div class="row pad-bottom-light<% if (data.names[x].name == data.username) { %> active<% } %>">
         <a href="#" class="button primary switch-to" data-name="<%= data.names[x].name %>">switch to</a> <%= data.names[x].name %>
@@ -32,18 +32,6 @@
         </div>
       </form>
       <% } %>
-    </div>
+    </div-->
 
-    <p>
-
-    </p>
-    <hr>
-    <h1 class="pad-lips">
-    Settings
-    </h1>
-    <div class="row pad-bottom-light lh30 settings"> 
-      <input type="checkbox" id="hide-nsfw" name="nsfw" <% if(data.hidensfw) { %>checked<% } %>></input><label for="hide-nsfw">Hide all NSFW</label> 
-      <input type="checkbox" id="hide-nsfl" name="nsfl" <% if(data.hidensfl) { %>checked<% } %>><label class="float-left" for="hide-nsfl">Hide all NSFL</label>
-    </div>
-  </div>
 </a>

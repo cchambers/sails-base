@@ -67,13 +67,13 @@ module.exports.session = {
   *                                                                          *
   ***************************************************************************/
 
-  adapter: 'mongo',
-  host: 'gravy.io',
-  port: 27017,
-  db: 'gravy',
-  username: 'site',
-  password: '#YQLnjz#5Kv2',
-  collection: 'sessions',
+  // adapter: 'mongo',
+  // host: 'gravy.io',
+  // port: 27017,
+  // db: 'gravy',
+  // username: 'site',
+  // password: '#YQLnjz#5Kv2',
+  // collection: 'sessions',
 
   /***************************************************************************
   *                                                                          *

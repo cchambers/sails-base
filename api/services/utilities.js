@@ -3,8 +3,8 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: 'gravyisthesauce@gmail.com',
-    pass: 'GRAVYpass2015'
+    user: 'user@gmail.com',
+    pass: 'pw'
   }
 });
 
@@ -26,7 +26,7 @@ module.exports = {
     var text = body;
     var html = body;
     var mailOptions = {
-      from: '♨ The Sauce<gravyisthesauce@gmail.com>', // sender address
+      from: 'Name <user@gmail.com>', // sender address
       to: to, // list of receivers
       subject: subject, // Subject line
       text: text, // plaintext body

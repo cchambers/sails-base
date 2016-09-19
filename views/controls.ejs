@@ -1,28 +1,13 @@
-<a href="#controls" class="triple-bar">≡</a>
+<!--a href="#controls" class="triple-bar">≡</a-->
 
 <div class="panel" id="controls">
-<a href="#back" class="close-panel-inner">&times;</a>
+<!--a href="#back" class="close-panel-inner">&times;</a-->
   <% if (req.user) {  %>
-  <div class="userinfo">
-    you are posting as <a href="/me"><span class="bold"><%= req.user.username %></span></a>
-  </div>
-  <ul>
-    <li><a class="trigger-new-entry" href="/new/entry<% if (data.sub) { %>/<%= data.sub.slug %><% } %>">new entry</a></li>
-    <li><a class="trigger-new-sub" href="/new/sub">create sub</a></li>
-    <li><a class="trigger-list-subs" href="/sublist">list subs</a></li>
-    <li><a class="trigger-log-out" href="/logout">log out</a></li>
-    <% if ( data.sub && (data.sub.creator.name == req.user.username) ) { %>
-    <li class="pink bold pad-left-light">moderator:</li>
-    <li><a class="trigger-edit-sub" href="/sub/<%= data.sub.slug %>/edit">edit <%= data.sub.name %></a></li>
-    <% } %>
-    <% if (req.user.admin) { %>
-    <%- include admin-controls %>
-    <% } %>
-  </ul>
+    <div class="userinfo">
+      you are logged in as <a href="/me"><span class="bold"><%= req.user.username %></span></a>. <a href="/logout">log out</a>
+    </div>
   <% } else { %>
-  <%- include login-form %>
-  <%- include signup-form %>
+    <%- include login-form %>
+    <%- include signup-form %>
   <% } %>
 </div>
-
-<a href="#" class="close-panel"></a>

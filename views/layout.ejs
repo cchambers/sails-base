@@ -16,42 +16,15 @@ if (data == undefined) {
 <!DOCTYPE html>
 <html class="<% if (req.user) { %>logged-in<% if (req.user.admin) { %> admin<%} }  %>">
 <head>
-  <title>the sauce ♨ 
-    <% if (data && data.sub) { %>
-    <%=  data.sub.name %>
-    <%  }  %>
+  <title>
+    Mast
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="author" href="humans.txt" />
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,900italic,700italic,500italic,400italic,100italic,300italic,900,700,500,100,300' rel='stylesheet' type='text/css'>
   <!--STYLES-->
-  <link rel="stylesheet" href="/styles/components/article-section-baseline.css">
-  <link rel="stylesheet" href="/styles/components/button.css">
-  <link rel="stylesheet" href="/styles/components/codemirror.css">
-  <link rel="stylesheet" href="/styles/components/colors.css">
-  <link rel="stylesheet" href="/styles/components/comment.css">
-  <link rel="stylesheet" href="/styles/components/control-panel.css">
-  <link rel="stylesheet" href="/styles/components/entry-overlay.css">
-  <link rel="stylesheet" href="/styles/components/entry.css">
-  <link rel="stylesheet" href="/styles/components/forms.css">
-  <link rel="stylesheet" href="/styles/components/front-page-refactor.css">
-  <link rel="stylesheet" href="/styles/components/icons.css">
-  <link rel="stylesheet" href="/styles/components/links.css">
-  <link rel="stylesheet" href="/styles/components/media.css">
-  <link rel="stylesheet" href="/styles/components/mentionsInput.css">
-  <link rel="stylesheet" href="/styles/components/notice.css">
-  <link rel="stylesheet" href="/styles/components/profile-page.css">
-  <link rel="stylesheet" href="/styles/components/score.css">
-  <link rel="stylesheet" href="/styles/components/tags.css">
-  <link rel="stylesheet" href="/styles/components/tip.css">
-  <link rel="stylesheet" href="/styles/components/userlist.css">
-  <link rel="stylesheet" href="/styles/components/vote.css">
   <link rel="stylesheet" href="/styles/framework/basi.css">
   <link rel="stylesheet" href="/styles/importer.css">
-  <link rel="stylesheet" href="/styles/theme/loaded-view.css">
-  <link rel="stylesheet" href="/styles/theme/open-sans.css">
-  <link rel="stylesheet" href="/styles/theme/refactor.css">
-  <link rel="stylesheet" href="/styles/theme/sauce.css">
   <!--STYLES END-->
   <% if(data && data.sub) { %>
   <style> <%= data.sub.css %> </style>
@@ -61,18 +34,11 @@ if (data == undefined) {
 <body>
   <header>
     <div class="logo">
-      <a href="/">the sauce</a>
+      <a href="/">title/home</a>
     </div>
-    <div class="state">
-      <% if (data && data.sub) { %>
-      <a href="/sub/<%= data.sub.slug %>"><%= data.sub.name %></a>
-      <%  } else { %>
-      alpha
-      <%  }  %>
-    </div>
-    <%- include controls %>
   </header>
   <main class="row height-set">
+    <%- include controls %>
     <%- body %>
   </main>
   <footer></footer>
@@ -90,15 +56,10 @@ if (data == undefined) {
   <script src="/js/dependencies/sails.io.js"></script>
   <script src="/js/dependencies/jquery.js"></script>
   <script src="/js/dependencies/underscore-min.js"></script>
-  <script src="/js/client/clientCodeMirror.js"></script>
-  <script src="/js/client/codemirror.actual.js"></script>
-  <script src="/js/client/codemirror.css.js"></script>
   <script src="/js/client/ejs_production.js"></script>
-  <script src="/js/client/jquery.elastic.js"></script>
-  <script src="/js/client/jquery.mentionsInput.js"></script>
-  <script src="/js/client/showdown.js"></script>
   <script src="/js/client/showdown.min.js"></script>
   <script src="/js/clientb/client.js"></script>
+  <script src="/js/clientb/methods.js"></script>
   <!--SCRIPTS END-->
 </body>
 </html>
