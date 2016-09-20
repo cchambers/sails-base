@@ -87,6 +87,12 @@ var app = {
       });
 
 
+      $("body").on("click", ".swap-panel-forms", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $(".panel-form").toggle();
+      })
+
       $("form").on("keyup", "input", function (e) {
         if (e.which == 13) {
           var $form = $(this).parents("form").first();
