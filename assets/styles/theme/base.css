@@ -1,0 +1,28 @@
+h1, 
+h2,
+h3,
+h4,
+h5 {
+    font-weight: normal;
+}
+
+.control input {
+  outline: none;
+  display: block;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: 0.3rem;
+  background: #ECEFF1;
+  padding: 1.5rem;
+  color: #212121 !important;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  border: 0.2rem solid transparent;
+  transition: all 300ms ease;
+}
+.control input.field-error:not(:focus) {
+  animation: error 300ms 3 linear;
+  border: 1px solid #F44336;
+}
