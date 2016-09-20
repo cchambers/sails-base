@@ -39,24 +39,21 @@ if (data == undefined) {
 
   <body>
     <header>
-      <div class="contain">
-        <div class="logo">
-          <a href="/">title/home</a>
-          <%- include controls %>
-        </div>
-      </div>
+      <%- include header %>
     </header>
     <main class="row">
       <%- body %>
     </main>
-    <footer></footer>
+    <footer>
+      <%- include footer %>
+    </footer>
 
-    <% 
-  if (typeof(data) == "object") {
-    if (data.pageJSON) { %>
-      <script>var data = <%- JSON.stringify(data.pageJSON) %>;</script>
-      <% } 
-  }%>
+      <% 
+      if (typeof(data) == "object") {
+        if (data.pageJSON) { %>
+          <script>var data = <%- JSON.stringify(data.pageJSON) %>;</script>
+          <% } 
+      }%>
         <!--TEMPLATES-->
         
         <!--TEMPLATES END-->
